@@ -4,8 +4,6 @@
 // 이 파일 맨 위에 'use client' 지시어를 추가해야 합니다.
 import {
   isServer,
-  MutationCache,
-  QueryCache,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
