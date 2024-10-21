@@ -1,9 +1,5 @@
 const CardPage = () => {
-  return (
-    <div>
-
-    </div>
-  );
+  return <div></div>;
 };
 
 export default CardPage;
