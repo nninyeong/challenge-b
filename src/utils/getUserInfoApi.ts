@@ -12,6 +12,4 @@ export const getUserInfoApi = async (): Promise<User | null> => {
     console.log('Mypage getUser error', error);
     return null;
   }
-
-  return data.session?.user || null;
 };

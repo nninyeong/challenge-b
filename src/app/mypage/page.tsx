@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import defaultImage from '@/assets/images/defaultImg.jpg';
-import { createClient, getIsLogin } from '@/utils/supabase/server';
+import { getIsLogin } from '@/utils/supabase/server';
 import { SiTinyletter } from 'react-icons/si';
 import { TiExport } from 'react-icons/ti';
 import { FaFileDownload } from 'react-icons/fa';
@@ -9,19 +9,16 @@ import { MdOutlineQuestionAnswer } from 'react-icons/md';
 import { GoHeartFill } from 'react-icons/go';
 import { MdRateReview } from 'react-icons/md';
 import { redirect } from 'next/navigation';
+import { getUserInfo } from '@/utils/server-action';
+import LogoutButton from '@/components/mypage/LogoutButton';
 
 const MyPage = async (): Promise<JSX.Element | null> => {
   const isLogin = await getIsLogin();
   if (!isLogin) {
     redirect('/signin');
   }
-
-  const serverClient = createClient();
-  const {
-    data: { user },
-  } = await serverClient.auth.getUser();
-
-  const profileUrl = user?.user_metadata?.avatar_url || defaultImage;
+  const user = await getUserInfo();
+  const profileUrl = user?.user?.user_metadata?.avatar_url || defaultImage;
 
   return (
     <div className='w-[375px] mx-auto bg-gray-700'>
@@ -34,10 +31,11 @@ const MyPage = async (): Promise<JSX.Element | null> => {
                 width={100}
                 height={100}
                 alt='profileImage'
-                style={{ borderRadius: '50%' }}
+                style={{ borderRadius: '50%', width: 'auto' }}
+                priority
               />
             </div>
-            <h2 className='font-bold text-2xl'>{user?.user_metadata?.full_name}</h2>
+            <h2 className='font-bold text-2xl'>{user?.user?.user_metadata?.full_name}</h2>
           </div>
         ) : (
           <div>정보가 없습니다</div>
@@ -64,9 +62,8 @@ const MyPage = async (): Promise<JSX.Element | null> => {
             </ul>
           ))}
         </nav>
-        <div className='w-full bg-gray-400 text-black font-bold p-4 mt-12 mb-12 rounded text-center cursor-pointer'>
-          로그아웃
-        </div>
+
+        <LogoutButton />
       </div>
     </div>
   );
