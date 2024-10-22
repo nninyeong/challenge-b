@@ -57,7 +57,7 @@ const ReviewForm = ({ userId }: { userId: string | undefined }) => {
 
     const { error } = await browserClient
       .from('reviews')
-      .insert([{ user_id: userId, content: formData.content, image_url: imageUrls }])
+      .insert([{ user_id: userId!, content: formData.content, image_url: imageUrls }])
       .select();
 
     if (error) {
