@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const Navigation = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   return (
-    <div>
+    <div className='flex gap-3'>
       <Link href='/review'>후기</Link>
       {isAuthenticated ? (
         <>

@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import Navigation from '@/components/layouts/Navigation';
+import Link from 'next/link';
 
 const Header = async () => {
   const client = createClient();
@@ -11,7 +12,8 @@ const Header = async () => {
   }
 
   return (
-    <header>
+    <header className='w-full h-[64px] bg-gray-400 flex justify-around items-center'>
+      <Link href='/'>BI</Link>
       <Navigation isAuthenticated={isAuthenticated} />
     </header>
   );
