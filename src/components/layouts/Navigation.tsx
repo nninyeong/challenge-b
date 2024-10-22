@@ -2,18 +2,14 @@
 import Link from 'next/link';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
+import useSignOut from '@/hooks/auth/useSignOut';
 
 const Navigation = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
-  const client = createClient();
-  const router = useRouter();
-
-  const handleSignOut = async () => {
-    await client.auth.signOut();
-    router.refresh();
-  };
+  const { handleSignOut } = useSignOut();
 
   return (
     <div>
+      <Link href='/review'>후기</Link>
       {isAuthenticated ? (
         <>
           <Link href='/mypage'>마이페이지</Link>
