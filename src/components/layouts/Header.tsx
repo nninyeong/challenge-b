@@ -1,12 +1,13 @@
 import { createClient } from '@/utils/supabase/server';
 import Navigation from '@/components/layouts/Navigation';
 import Link from 'next/link';
+import { UserData } from '@/types/supabaseMethod.types';
 
 const Header = async () => {
   const client = createClient();
-  const { data } = await client.auth.getUser();
+  const { data }: UserData = await client.auth.getUser();
 
-  let isAuthenticated = false;
+  let isAuthenticated: boolean = false;
   if (data.user) {
     isAuthenticated = true;
   }

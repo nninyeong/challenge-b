@@ -1,26 +1,7 @@
 'use client';
+import { handleGoogleSignIn, handleKakaoSignIn } from '@/utils/supabase/signIn';
 
-import { createClient } from '@/utils/supabase/client';
 const SignInPage = () => {
-  const client = createClient();
-  const handleGoogleSignIn = () => {
-    client.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: window.origin + '/auth/callback',
-      },
-    });
-  };
-
-  const handleKakaoSignIn = async () => {
-    await client.auth.signInWithOAuth({
-      provider: 'kakao',
-      options: {
-        redirectTo: window.origin + '/auth/callback',
-      },
-    });
-  };
-
   return (
     <div className='flex flex-col items-center'>
       <div className='bg-amber-300 w-[88px] h-[88px] my-[80px]'>로고</div>
