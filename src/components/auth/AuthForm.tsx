@@ -3,8 +3,12 @@
 import { useForm } from 'react-hook-form';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
+import { SignInFormValues, SignUpFormValues } from '@/types/auth.types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signInSchema, signUpSchema } from '@/lib/zod/authSchema';
+import InputForValidate from '@/components/auth/InputForValidate';
 
-const AuthForm = () => {
+const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
   const client = createClient();
   const router = useRouter();
 
@@ -68,47 +72,36 @@ const AuthForm = () => {
         onSubmit={handleSubmit(handleAuthSubmit)}
         className='flex flex-col gap-[24px] mt-[50px]'
       >
-        <div>
-          <input
-            type='text'
-            className='border rounded w-full h-[48px] px-5'
-            placeholder='이메일'
-            {...register('email')}
-          />
-          {errors.email && <p className='text-red-500 text-sm'>{errors.email.message}</p>}
-        </div>
-        <div>
-          <input
-            id='password'
-            type='password'
-            className='border rounded w-full h-[48px] px-5'
-            placeholder='비밀번호'
-            {...register('password')}
-          />
-          {errors.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
-        </div>
+        <InputForValidate
+          type='text'
+          placeholder='이메일'
+          validateFor='email'
+          register={register}
+          errorMessage={errors.email?.message}
+        />
+        <InputForValidate
+          type='password'
+          placeholder='비밀번호'
+          validateFor='password'
+          register={register}
+          errorMessage={errors.password?.message}
+        />
         {mode === 'signup' && (
           <>
-            <div>
-              <input
-                id='passwordCheck'
-                type='password'
-                className='border rounded w-full h-[48px] px-5'
-                placeholder='비밀번호 확인'
-                {...register('passwordCheck')}
-              />
-              {'passwordCheck' in errors && <p className='text-red-500 text-sm'>{errors.passwordCheck?.message}</p>}
-            </div>
-            <div>
-              <input
-                id='username'
-                type='text'
-                className='border rounded w-full h-[48px] px-5'
-                placeholder='이름'
-                {...register('username')}
-              />
-              {'username' in errors && <p className='text-red-500 text-sm'>{errors.username?.message}</p>}
-            </div>
+            <InputForValidate
+              type='password'
+              placeholder='비밀번호 확인'
+              validateFor='passwordCheck'
+              register={register}
+              errorMessage={'passwordCheck' in errors ? errors.passwordCheck?.message : undefined}
+            />
+            <InputForValidate
+              type='text'
+              placeholder='이름'
+              validateFor='username'
+              register={register}
+              errorMessage={'username' in errors ? errors.username?.message : undefined}
+            />
           </>
         )}
         <button

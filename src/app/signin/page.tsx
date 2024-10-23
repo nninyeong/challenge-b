@@ -1,5 +1,6 @@
 'use client';
 import { handleGoogleSignIn, handleKakaoSignIn } from '@/utils/supabase/signIn';
+import { useRouter } from 'next/navigation';
 
 const SignInPage = () => {
   const router = useRouter();
