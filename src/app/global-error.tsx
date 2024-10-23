@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
+const GlobalError = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
   const { refresh } = useRouter();
   useEffect(() => {
     console.error(error);
@@ -24,4 +24,4 @@ const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: ()
     </div>
   );
 };
-export default Error;
+export default GlobalError;
