@@ -8,7 +8,7 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
   const client = createClient();
 
   useEffect(() => {
-    const { data: authListener } = client.auth.onAuthStateChange((event, session) => {
+    const { data: authListener } = client.auth.onAuthStateChange((event) => {
       if (event === 'SIGNED_IN') {
         setIsAuthenticated(true);
       } else if (event === 'SIGNED_OUT') {
