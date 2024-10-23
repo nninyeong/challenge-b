@@ -3,7 +3,7 @@ import { SignInFormValues, SignUpFormValues } from '@/types/auth.types';
 
 const InputForValidate = ({ type = 'text', placeholder, validateFor, register, errorMessage }: InputFieldProps) => {
   return (
-    <div className='flex flex-col gap-1 w-full'>
+    <div className='grid grid-rows-[50px_8px] w-full'>
       <input
         type={type}
         placeholder={placeholder}
