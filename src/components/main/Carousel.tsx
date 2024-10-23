@@ -1,71 +1,45 @@
 'use client';
 
+import { Review } from '@/types/reviewData.types';
+import { createClient } from '@/utils/supabase/client';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
-
 import { useEffect, useState } from 'react';
 
 const Carousel = () => {
-  const reviewArr = [
-    {
-      id: '1',
-      user_id: '시작 시작',
-      content: 'The hike was amazing, with beautiful scenery!',
-      image_url: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=800&q=80',
-    },
-
-    {
-      id: '2',
-      user_id: 'user2',
-      content: 'Challenging trail but totally worth it. Would go again!',
-      image_url: 'https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=800&q=80',
-    },
-
-    {
-      id: '3',
-      user_id: 'user3',
-      content: 'Loved the peaceful atmosphere. Perfect for a weekend getaway.',
-      image_url: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
-    },
-
-    {
-      id: '4',
-      user_id: 'user4',
-      content: 'Great hike, but be prepared for steep climbs.',
-      image_url: 'https://images.unsplash.com/photo-1546525848-3ce03ca516f6?auto=format&fit=crop&w=800&q=80',
-    },
-
-    {
-      id: '5',
-      user_id: 'user5',
-      content: 'Amazing views at the top, the sunset was breathtaking.',
-      image_url: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
-    },
-
-    {
-      id: '6',
-      user_id: 'user 6',
-      content: 'Good for beginners, easy trails with lots of resting spots.',
-      image_url: 'https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=800&q=80',
-    },
-
-    {
-      id: '7',
-      user_id: 'user 7',
-      content: 'Good for beginners, easy trails with lots of resting spots.',
-      image_url: 'https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=800&q=80',
-    },
-
-    {
-      id: '8',
-      user_id: '끝 끝',
-      content: 'Good for beginners, easy trails with lots of resting spots.',
-      image_url: 'https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=800&q=80',
-    },
-  ];
-
-  const extendedReviewArr = [reviewArr[reviewArr.length - 1], ...reviewArr, ...reviewArr, ...reviewArr];
-
+  const browserClient = createClient();
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const getReviews = async () => {
+    const response = await browserClient
+      .from('reviews')
+      .select('*')
+      .filter('image_url', 'neq', '[]')
+      .order('created_at', { ascending: false })
+      .limit(8);
+
+    if (response.error) {
+      console.log(response.error);
+    }
+
+    if (response.data === null) {
+      return [];
+    }
+
+    return response.data;
+  };
+
+  const { data: reviewsData = [], isLoading } = useQuery({
+    queryKey: ['reviews'],
+    queryFn: getReviews,
+  });
+
+  const extendedReviewArr: Review[] = [
+    reviewsData[reviewsData.length - 1],
+    ...reviewsData,
+    ...reviewsData,
+    ...reviewsData,
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -73,23 +47,26 @@ const Carousel = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [extendedReviewArr.length]);
 
   useEffect(() => {
     if (currentIndex === extendedReviewArr.length - 17) {
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         setCurrentIndex(0);
       }, 500);
+
+      return () => clearTimeout(timeout);
     }
   }, [currentIndex, extendedReviewArr.length]);
 
   const getCarouselStyle = () => {
     return {
-      transform: `translateX(${-currentIndex * (216 + 16)}px`,
-
-      transition: `${currentIndex == 0 ? 'none' : 'transform 0.5s ease-in-out'}`,
+      transform: `translateX(${-currentIndex * (216 + 16)}px)`,
+      transition: currentIndex === 0 ? 'none' : 'transform 0.5s ease-in-out',
     };
   };
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className='overflow-hidden w-full'>
@@ -98,24 +75,25 @@ const Carousel = () => {
         style={getCarouselStyle()}
       >
         {extendedReviewArr.map((review, index) => {
+          const imgUrls = review.image_url as string[] | null; // 배열로 단언
           return (
             <div
-              key={`${review.id} - ${index}`}
+              key={`${review.id}-${index}`}
               className='mx-[8px]'
             >
               <div className='relative w-[216px] h-[222px] rounded-t-lg overflow-hidden'>
-                <Image
-                  src={review.image_url}
-                  alt='리뷰 이미지'
-                  layout='fill'
-                  objectFit='cover'
-                  priority
-                />
+                {imgUrls && imgUrls.length > 0 && (
+                  <Image
+                    src={imgUrls[0]}
+                    alt='리뷰 이미지'
+                    layout='fill'
+                    objectFit='cover'
+                    priority
+                  />
+                )}
               </div>
-
               <div className='w-[216px] h-[104px] border-2 rounded-b-lg'>
-                <p>{review.user_id}</p>
-
+                <p>{review.user_name}</p>
                 <p>{review.content}</p>
               </div>
             </div>
