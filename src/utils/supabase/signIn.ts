@@ -2,6 +2,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { createClient } from '@/utils/supabase/client';
 
 const client: SupabaseClient = createClient();
+
 export const handleGoogleSignIn: () => Promise<void> = async () => {
   try {
     await client.auth.signInWithOAuth({

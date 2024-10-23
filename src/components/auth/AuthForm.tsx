@@ -1,16 +1,14 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { createClient } from '@/utils/supabase/client';
-import { useRouter } from 'next/navigation';
 import { SignInFormValues, SignUpFormValues } from '@/types/auth.types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signInSchema, signUpSchema } from '@/lib/zod/authSchema';
 import InputForValidate from '@/components/auth/InputForValidate';
+import useAuthWithEmail from '@/hooks/auth/useAuthWithEmail';
 
 const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
-  const client = createClient();
-  const router = useRouter();
+  const { emailSignUp, emailSignIn } = useAuthWithEmail();
 
   const {
     register,
@@ -27,42 +25,12 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
   });
 
   const handleAuthSubmit = async (formData: SignUpFormValues | SignInFormValues) => {
-    const { email, password, username } = formData as SignUpFormValues;
-
     if (mode === 'signup') {
-      const { error } = await client.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            username,
-            display_name: username,
-          },
-        },
-      });
-
-      if (error) {
-        console.error('회원가입 오류: ', error);
-        alert(`회원가입에 문제가 생겼습니다. 다시 한 번 시도해주세요. (${error.message})`);
-      } else {
-        alert('회원가입 성공');
-        router.push('/signin/email');
-      }
+      await emailSignUp(formData as SignUpFormValues);
     }
 
     if (mode === 'signin') {
-      const { error } = await client.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        console.error('로그인 에러: ', error);
-        alert(`로그인에 문제가 생겼습니다. 다시 한 번 시도해주세요. (${error.message})`);
-      } else {
-        router.refresh();
-        router.push('/');
-      }
+      await emailSignIn(formData as SignInFormValues);
     }
   };
 

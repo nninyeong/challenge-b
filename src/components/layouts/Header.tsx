@@ -8,7 +8,7 @@ const Header = async () => {
   return (
     <header className='w-full h-[64px] bg-gray-400 flex justify-around items-center'>
       <Link href='/'>BI</Link>
-      <Navigation isAuthenticated={isAuthenticated} />
+      <Navigation initialAuthState={isAuthenticated} />
     </header>
   );
 };
