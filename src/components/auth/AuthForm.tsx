@@ -8,9 +8,12 @@ const AuthForm = () => {
   const client = createClient();
   const router = useRouter();
 
-  // TODO: zod 유효성검사 추가
-
-  const { register, handleSubmit, reset, setValue } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormValues | SignInFormValues>({
+    resolver: zodResolver(mode === 'signup' ? signUpSchema : signInSchema),
     defaultValues: {
       username: '',
       email: '',
@@ -19,55 +22,101 @@ const AuthForm = () => {
     },
   });
 
-  const handleAuthSubmit = async (formData) => {
-    const { email, password, username } = formData;
+  const handleAuthSubmit = async (formData: SignUpFormValues | SignInFormValues) => {
+    const { email, password, username } = formData as SignUpFormValues;
 
-    const { data, error } = await client.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          username,
+    if (mode === 'signup') {
+      const { error } = await client.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            username,
+            display_name: username,
+          },
         },
-      },
-    });
+      });
 
-    if (error) {
-      console.error('회원가입 오류: ', error);
-      alert('오류가 발생했습니다. 다시 한 번 시도해주세요.');
-    } else {
-      alert('회원가입 성공');
-      router.push('/signin');
+      if (error) {
+        console.error('회원가입 오류: ', error);
+        alert(`회원가입에 문제가 생겼습니다. 다시 한 번 시도해주세요. (${error.message})`);
+      } else {
+        alert('회원가입 성공');
+        router.push('/signin/email');
+      }
+    }
+
+    if (mode === 'signin') {
+      const { error } = await client.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        console.error('로그인 에러: ', error);
+        alert(`로그인에 문제가 생겼습니다. 다시 한 번 시도해주세요. (${error.message})`);
+      } else {
+        router.refresh();
+        router.push('/');
+      }
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(handleAuthSubmit)}>
-        <label htmlFor='email'>이메일</label>
-        <input
-          id='email'
-          {...register('email')}
-        />
-        <label htmlFor='password'>비밀번호</label>
-        <input
-          id='password'
-          type='password'
-          {...register('password')}
-        />
-        <label htmlFor='passwordCheck'>비밀번호 확인</label>
-        <input
-          id='passwordCheck'
-          type='password'
-          {...register('passwordCheck')}
-        />
-        <label htmlFor='username'>이름</label>
-        <input
-          id='username'
-          type='text'
-          {...register('username')}
-        />
-        <button type='submit'>회원가입</button>
+      <form
+        onSubmit={handleSubmit(handleAuthSubmit)}
+        className='flex flex-col gap-[24px] mt-[50px]'
+      >
+        <div>
+          <input
+            type='text'
+            className='border rounded w-full h-[48px] px-5'
+            placeholder='이메일'
+            {...register('email')}
+          />
+          {errors.email && <p className='text-red-500 text-sm'>{errors.email.message}</p>}
+        </div>
+        <div>
+          <input
+            id='password'
+            type='password'
+            className='border rounded w-full h-[48px] px-5'
+            placeholder='비밀번호'
+            {...register('password')}
+          />
+          {errors.password && <p className='text-red-500 text-sm'>{errors.password.message}</p>}
+        </div>
+        {mode === 'signup' && (
+          <>
+            <div>
+              <input
+                id='passwordCheck'
+                type='password'
+                className='border rounded w-full h-[48px] px-5'
+                placeholder='비밀번호 확인'
+                {...register('passwordCheck')}
+              />
+              {'passwordCheck' in errors && <p className='text-red-500 text-sm'>{errors.passwordCheck?.message}</p>}
+            </div>
+            <div>
+              <input
+                id='username'
+                type='text'
+                className='border rounded w-full h-[48px] px-5'
+                placeholder='이름'
+                {...register('username')}
+              />
+              {'username' in errors && <p className='text-red-500 text-sm'>{errors.username?.message}</p>}
+            </div>
+          </>
+        )}
+        <button
+          type='submit'
+          className='w-full border rounded h-[56px]'
+        >
+          {mode === 'signup' ? '회원가입' : '로그인'}
+        </button>
       </form>
     </div>
   );
