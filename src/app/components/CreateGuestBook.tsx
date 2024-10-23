@@ -19,11 +19,11 @@ const CreateGuestBook: React.FC<{ invitationId: string; onClick: () => void }> =
   const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
-  
+
   const handleGuestBookSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if(!name || !password || !message) {
+    if (!name || !password || !message) {
       alert('모든 정보를 입력해주세요.');
       return;
     }
@@ -44,7 +44,7 @@ const CreateGuestBook: React.FC<{ invitationId: string; onClick: () => void }> =
       alert('방명록이 저장되었습니다.');
       onClick();
     }
-  }
+  };
 
   return (
     <div className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/80'>
