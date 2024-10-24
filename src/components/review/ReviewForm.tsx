@@ -18,7 +18,7 @@ const reviewInputSchema = z.object({
   image: z.array(z.instanceof(File).nullable()).optional(),
 });
 
-const ReviewForm = ({ userId }: { userId: string | undefined }) => {
+const ReviewForm = ({ userId, userName }: { userId: string | undefined; userName: string | undefined }) => {
   const {
     register,
     handleSubmit,
@@ -57,7 +57,7 @@ const ReviewForm = ({ userId }: { userId: string | undefined }) => {
 
     const { error } = await browserClient
       .from('reviews')
-      .insert([{ user_id: userId!, content: formData.content, image_url: imageUrls }])
+      .insert([{ user_id: userId!, content: formData.content, image_url: imageUrls, user_name: userName! }])
       .select();
 
     if (error) {
