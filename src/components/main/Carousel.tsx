@@ -34,12 +34,7 @@ const Carousel = () => {
     queryFn: getReviews,
   });
 
-  const extendedReviewArr: Review[] = [
-    reviewsData[reviewsData.length - 1],
-    ...reviewsData,
-    ...reviewsData,
-    ...reviewsData,
-  ];
+  const extendedReviewArr: Review[] = [...reviewsData, ...reviewsData, ...reviewsData];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,7 +45,7 @@ const Carousel = () => {
   }, [extendedReviewArr.length]);
 
   useEffect(() => {
-    if (currentIndex === extendedReviewArr.length - 17) {
+    if (currentIndex === extendedReviewArr.length - 16) {
       const timeout = setTimeout(() => {
         setCurrentIndex(0);
       }, 500);
