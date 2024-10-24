@@ -4,6 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+
         hostname: 'lh3.googleusercontent.com',
         port: '',
         pathname: '/**',
@@ -11,6 +12,18 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: 'k.kakaocdn.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'llgxyrndifqzbvolykbu.supabase.co',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com',
         port: '',
         pathname: '/**',
       },
