@@ -1,6 +1,8 @@
 'use client';
 import AccountInput from '@/components/create/AccountInput';
+import AttendanceInput from '@/components/create/AttendanceInput';
 import AccountPreView from '@/components/create/preview/AccountPreView';
+import AttendancePreview from '@/components/create/preview/AttendancePreview';
 import { AccountInfoType } from '@/types/accountType.type';
 import { useEffect, useRef, useState } from 'react';
 import { Control, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
@@ -11,6 +13,7 @@ export type FormType = {
   test2: string;
   test3: string;
   account: AccountInfoType;
+  showAttendanceButton: boolean;
 };
 
 const Test1Watch = ({ control }: { control: Control<FormType> }) => {
@@ -56,12 +59,14 @@ const CreateCardPage = () => {
           { bank: '', accountNumber: '', depositor: '' },
         ],
       },
+      showAttendanceButton: false,
     },
   });
 
   const onSubmit = (data: FormType) => console.log(data);
   const [currentStep, setCurrentStep] = useState(1);
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -153,6 +158,12 @@ const CreateCardPage = () => {
       >
         <AccountPreView control={methods.control} />
       </div>
+      <div
+        style={{ minHeight: 'calc(100vh - 114px)' }}
+        ref={refs[4]}
+      >
+        <AttendancePreview control={methods.control} />
+      </div>
 
       <div className='fixed bottom-0 left-0 right-0 px-4'>
         <FormProvider {...methods}>
@@ -190,8 +201,11 @@ const CreateCardPage = () => {
             <div style={{ display: currentStep === 4 ? 'block' : 'none' }}>
               <AccountInput />
             </div>
+            <div style={{ display: currentStep === 5 ? 'block' : 'none' }}>
+              <AttendanceInput />
+            </div>
             <button
-              style={{ display: currentStep === 4 ? 'block' : 'none' }}
+              style={{ display: currentStep === 5 ? 'block' : 'none' }}
               type='submit'
             >
               제출

@@ -8,7 +8,7 @@ const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry;
   return (
     <div className='bg-red-100'>
       <div>
-        <span onClick={handleDeleteModalClick}>x</span>
+        <span onClick={handleDeleteModalClick}>x  {/* 나중에 아이콘으로 변경 필요 */}</span>
       </div>
       <div>{guestBook.name}</div>
       <div>{guestBook.content}</div>

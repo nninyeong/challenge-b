@@ -41,5 +41,5 @@ export type InvitationFormType = {
   wedding_info: WeddingInfoType;
   account: AccountInfoType;
   guestbook: any;
-  attendance: any;
+  attendance: boolean;
 };
