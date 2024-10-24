@@ -1,3 +1,5 @@
+import ReviewsCarousel from '@/components/main/ReviewsCarousel';
+
 export default async function Home() {
-  return <div></div>;
+  return <ReviewsCarousel />;
 }
