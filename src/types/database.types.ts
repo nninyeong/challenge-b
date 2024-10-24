@@ -39,6 +39,7 @@ export type Database = {
         Row: {
           content: string | null;
           created_at: string;
+          guestbook_id: string;
           invitation_id: string;
           name: string | null;
           password: string | null;
@@ -46,6 +47,7 @@ export type Database = {
         Insert: {
           content?: string | null;
           created_at?: string;
+          guestbook_id?: string;
           invitation_id?: string;
           name?: string | null;
           password?: string | null;
@@ -53,6 +55,7 @@ export type Database = {
         Update: {
           content?: string | null;
           created_at?: string;
+          guestbook_id?: string;
           invitation_id?: string;
           name?: string | null;
           password?: string | null;
@@ -132,23 +135,25 @@ export type Database = {
           content: string;
           created_at: string;
           id: string;
-          image_url: string[];
+          image_url: string[] | null;
           user_id: string;
-          user_name: string;
+          user_name: string | null;
         };
         Insert: {
           content: string;
           created_at?: string;
           id?: string;
-          image_url?: Json | null;
+          image_url?: string[] | null;
           user_id: string;
+          user_name?: string | null;
         };
         Update: {
           content?: string;
           created_at?: string;
           id?: string;
-          image_url?: Json | null;
+          image_url?: string[] | null;
           user_id?: string;
+          user_name?: string | null;
         };
         Relationships: [];
       };
