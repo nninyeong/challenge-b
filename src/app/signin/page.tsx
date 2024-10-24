@@ -1,7 +1,13 @@
 'use client';
 import { handleGoogleSignIn, handleKakaoSignIn } from '@/utils/supabase/signIn';
+import { useRouter } from 'next/navigation';
 
 const SignInPage = () => {
+  const router = useRouter();
+  const handleMoveToEmailSignIn = () => {
+    router.push('/signin/email');
+  };
+
   return (
     <div className='flex flex-col items-center'>
       <div className='bg-amber-300 w-[88px] h-[88px] my-[80px]'>로고</div>
@@ -21,7 +27,7 @@ const SignInPage = () => {
         <p>또는</p>
         <button
           className='w-full h-[56px] border rounded'
-          onClick={() => alert('아직 준비중인 기능입니다')}
+          onClick={handleMoveToEmailSignIn}
         >
           이메일로 시작하기
         </button>
