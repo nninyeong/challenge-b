@@ -38,7 +38,32 @@ const WeddingInfoInput = () => {
         </div>
       </div>
       <h3 className='font-bold'>예식 장소</h3>
-      <div></div>
+      <div className='grid grid-cols-[80px_1fr]'>
+        <label className='leading-[32px]'>주소</label>
+        <div className='grid grid-cols-[1fr_auto] gap-[8px]'>
+          <input
+            readOnly={true}
+            value='검색한 주소 연결?'
+            className='h-[32px] rounded pl-3 min-w-0'
+            {...register('wedding_info.weddingHallAddress')}
+          />
+          <button className='bg-primary300 rounded w-[55px] h-[32px] text-white font-bold'>검색</button>
+        </div>
+      </div>
+      <div className='grid grid-cols-[80px_1fr]'>
+        <label className='leading-[32px]'>예식장명</label>
+        <input
+          className='h-[32px] rounded pl-3'
+          {...register('wedding_info.weddingHallName')}
+        />
+      </div>
+      <div className='grid grid-cols-[80px_1fr]'>
+        <label className='leading-[32px]'>연락처</label>
+        <input
+          className='h-[32px] rounded pl-3'
+          {...register('wedding_info.weddingHallContact')}
+        />
+      </div>
     </div>
   );
 };
