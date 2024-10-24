@@ -44,8 +44,9 @@ const ReviewPage = () => {
 
   return (
     <div className='flex flex-col w-full'>
-      <ReviewImage reviews={reviews} />
       <h1>후기</h1>
+      <ReviewImage />
+
       <div>
         <ReviewCard reviews={reviews} />
       </div>

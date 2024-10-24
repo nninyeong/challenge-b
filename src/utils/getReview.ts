@@ -1,5 +1,6 @@
 import { Review } from '@/types/review.types';
 import browserClient from './supabase/client';
+import { supabase } from './supabase/createClient';
 
 type ReviewProps = {
   pageParam: number;
@@ -22,5 +23,39 @@ export const getReview = async ({ pageParam = 0, row }: ReviewProps): Promise<Re
   } catch (error) {
     console.error(error);
     throw error;
+  }
+};
+
+export const getAllImageReviews = async (): Promise<Review[]> => {
+  try {
+    const { data, error } = await browserClient.from('reviews').select('*');
+
+    if (error) {
+      console.error(error);
+      throw new Error('모든 데이터를 가져오는 데 문제가 발생했습니다.');
+    }
+
+    const reviewsWithImages = data.filter((review) => Array.isArray(review.image_url) && review.image_url.length > 0);
+
+    console.log(reviewsWithImages);
+    return reviewsWithImages as unknown as Review[];
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getAuthUsersProfile = async () => {
+  try {
+    const { data, error } = await supabase.auth.admin.listUsers();
+
+    if (error) {
+      console.error('Error fetching users:', error);
+      return [];
+    }
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
   }
 };
