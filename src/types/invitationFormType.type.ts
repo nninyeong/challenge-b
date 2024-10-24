@@ -21,10 +21,10 @@ type PersonalInfoType = {
 
 type WeddingInfoType = {
   date: string;
-  time: { hour: number; minute: number };
-  weddingHoleAddress: string;
-  weddingHoleName: string;
-  weddingHolePhone: string;
+  time: { hour: string; minute: string };
+  weddingHallAddress: string;
+  weddingHallName: string;
+  weddingHallContact: string;
 };
 
 export type InvitationFormType = {
