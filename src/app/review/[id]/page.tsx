@@ -1,22 +1,35 @@
+import ReviewContentsBox from '@/components/review/ReviewContentsBox';
+import ReviewSlide from '@/components/review/ReviewSlide';
 import { getReviewDetail } from '@/utils/server-action';
-import Image from 'next/image';
 
 interface ParamsType {
   id: string;
 }
+type Test = {
+  id: string;
+  created_at: string;
+  user_id: string;
+  content: string;
+  image_url: string[];
+  user_name: string;
+};
+
 const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
-  console.log(params.id);
-  const reviewData = await getReviewDetail(params.id);
-  console.log(reviewData);
+  const reviewData: Test = await getReviewDetail(params.id);
+
   return (
-    <div>
-      <div className=''>
-        <Image
-          src={reviewData.image_url[0]}
-          fill
-          alt={`${reviewData.id} 리뷰`}
-        />
-      </div>
+    <div
+      className='relative'
+      style={{ minHeight: 'calc(100vh - 114px)' }}
+    >
+      <ReviewSlide images={reviewData.image_url} />
+
+      <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60'></div>
+      <ReviewContentsBox
+        writer={reviewData.user_name}
+        content={reviewData.content}
+        created={reviewData.created_at}
+      />
     </div>
   );
 };
