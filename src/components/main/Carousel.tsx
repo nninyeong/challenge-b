@@ -75,7 +75,7 @@ const Carousel = () => {
         style={getCarouselStyle()}
       >
         {extendedReviewArr.map((review, index) => {
-          const imgUrls = review.image_url as string[] | null; // 배열로 단언
+          const imgUrls = review.image_url as string[] | null;
           return (
             <div
               key={`${review.id}-${index}`}
