@@ -1,8 +1,8 @@
-import { GuestBookEntry } from './GuestBook';
 import useGuestBookDeleteButton from '@/hooks/modals/useGuestBookDeleteButton';
-import DeleteGuestBookModal from '@/app/components/DeleteGuestBookModal'
+import DeleteGuestBookModal from '@/app/components/DeleteGuestBookModal';
+import { GuestBookEntry } from '@/types/guestBookEntry.types';
 
-const GuestBookCard = ({ guestBook }: { guestBook: GuestBookEntry }) => {
+const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry; invitationId: string }) => {
   const { showDeleteModal, handleDeleteModalClick } = useGuestBookDeleteButton();
 
   return (
@@ -12,7 +12,14 @@ const GuestBookCard = ({ guestBook }: { guestBook: GuestBookEntry }) => {
       </div>
       <div>{guestBook.name}</div>
       <div>{guestBook.content}</div>
-      {showDeleteModal && <DeleteGuestBookModal id={guestBook.guestbook_id} signedPassword={guestBook.password} onClick={handleDeleteModalClick} />}
+      {showDeleteModal && (
+        <DeleteGuestBookModal
+          invitationId={invitationId}
+          id={guestBook.guestbook_id}
+          signedPassword={guestBook.password}
+          onClick={handleDeleteModalClick}
+        />
+      )}
     </div>
   );
 };

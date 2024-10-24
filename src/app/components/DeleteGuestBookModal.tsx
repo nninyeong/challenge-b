@@ -1,35 +1,30 @@
 'use client';
 
-import browserClient from '@/utils/supabase/client';
 import { useState } from 'react';
+import useDeleteGuestBookEntry from '@/hooks/modals/useDeleteGuestBookEntry';
 
-const CreateGuestBook: React.FC<{ id: string | null; signedPassword: string | null; onClick: () => void }> = ({
-  id,
-  signedPassword,
-  onClick,
-}) => {
+const CreateGuestBook: React.FC<{
+  invitationId: string;
+  id: string | null;
+  signedPassword: string | null;
+  onClick: () => void;
+}> = ({ invitationId, id, signedPassword, onClick }) => {
   const [password, setPassword] = useState('');
+  const { mutate: deleteGuestBookEntry } = useDeleteGuestBookEntry(invitationId, id, signedPassword, onClick);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleGuestBookDelete = async (e: React.FormEvent) => {
+  const handleGuestBookDelete = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (id !== null && password === signedPassword) {
-      const { error } = await browserClient.from('guestbook').delete().eq('guestbook_id', id);
-
-      if (error) {
-        console.error('Error inserting data:', error);
-        alert('방명록을 삭제하는 중 오류가 발생했습니다.');
-      } else {
-        alert('방명록이 삭제되었습니다.');
-        onClick();
-      }
-    } else {
-      alert('패스워드가 일치하지 않습니다');
+    if (!password) {
+      alert('패스워드를 입력해주세요.');
+      return;
     }
+
+    deleteGuestBookEntry(password);
   };
 
   return (
