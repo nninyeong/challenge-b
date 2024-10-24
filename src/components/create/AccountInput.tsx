@@ -41,14 +41,14 @@ const AccountInput = () => {
           onClick={() => setAccountType('groom')}
           className={`${accountType === 'groom' ? 'bg-[#FF6666] text-white' : 'text-[#8c8c8c]'} rounded-full w-[130px] h-[30px]`}
         >
-          신랑 측 계좌번호
+          신랑측 계좌번호
         </button>
         <button
           type='button'
           onClick={() => setAccountType('bride')}
           className={`${accountType === 'bride' ? 'bg-[#FF6666] text-white' : 'text-[#8c8c8c]'} rounded-full w-[130px] h-[30px]`}
         >
-          신부 측 계좌번호
+          신부측 계좌번호
         </button>
       </div>
 
