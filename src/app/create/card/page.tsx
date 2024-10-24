@@ -1,9 +1,8 @@
 'use client';
 import AccountInput from '@/components/create/AccountInput';
 import AccountPreView from '@/components/create/preview/AccountPreView';
-import { AccountInfoType } from '@/types/accountType.type';
 import { useEffect, useRef, useState } from 'react';
-import { Control, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
