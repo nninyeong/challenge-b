@@ -1,7 +1,10 @@
 'use client';
 import AccountInput from '@/components/create/AccountInput';
+import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import AccountPreView from '@/components/create/preview/AccountPreView';
+import PersonalInfoPreView from '@/components/create/preview/PersonalInfoPreView';
 import { AccountInfoType } from '@/types/accountType.type';
+import { PersonalInfoType } from '@/types/invitationFormType.type';
 import { useEffect, useRef, useState } from 'react';
 import { Control, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
@@ -9,7 +12,7 @@ import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 export type FormType = {
   test1: string;
   test2: string;
-  test3: string;
+  personalInfo: PersonalInfoType;
   account: AccountInfoType;
 };
 
@@ -27,13 +30,6 @@ const Test2Watch = ({ control }: { control: Control<FormType> }) => {
   });
   return <p>Watch: {test2Watch}</p>;
 };
-const Test3Watch = ({ control }: { control: Control<FormType> }) => {
-  const test3Watch = useWatch({
-    control,
-    name: 'test3',
-  });
-  return <p>Watch: {test3Watch}</p>;
-};
 
 const CreateCardPage = () => {
   const methods = useForm({
@@ -41,7 +37,29 @@ const CreateCardPage = () => {
     defaultValues: {
       test1: '',
       test2: '',
-      test3: '',
+      personalInfo: {
+        bride: {
+          name: '',
+          phoneNumber: '',
+          fatherName: '',
+          fatherPhoneNumber: '',
+          isFatherDeceased: false,
+          motherName: '',
+          motherPhoneNumber: '',
+          isMotherDeceased: false,
+        },
+
+        groom: {
+          name: '',
+          phoneNumber: '',
+          fatherName: '',
+          fatherPhoneNumber: '',
+          isFatherDeceased: false,
+          motherName: '',
+          motherPhoneNumber: '',
+          isMotherDeceased: false,
+        },
+      },
       account: {
         title: '',
         content: '',
@@ -144,8 +162,7 @@ const CreateCardPage = () => {
         style={{ minHeight: 'calc(100vh - 114px)' }}
         ref={refs[2]}
       >
-        테스트3
-        <Test3Watch control={methods.control} />
+        <PersonalInfoPreView control={methods.control} />
       </div>
       <div
         style={{ minHeight: 'calc(100vh - 114px)' }}
@@ -185,7 +202,7 @@ const CreateCardPage = () => {
               <InputTest2 />
             </div>
             <div style={{ display: currentStep === 3 ? 'block' : 'none' }}>
-              <InputTest3 />
+              <PersonalInfoInput />
             </div>
             <div style={{ display: currentStep === 4 ? 'block' : 'none' }}>
               <AccountInput />
@@ -222,18 +239,6 @@ const InputTest2 = () => {
       <input
         {...register('test2')}
         placeholder='input2'
-      />
-    </div>
-  );
-};
-
-const InputTest3 = () => {
-  const { register } = useFormContext();
-  return (
-    <div>
-      <input
-        {...register('test3')}
-        placeholder='input3'
       />
     </div>
   );
