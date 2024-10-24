@@ -1,7 +1,7 @@
 'use client';
 
 import useGuestBookButton from '@/hooks/modals/useGuestBookButton';
-import CreateGuestBook from './CreateGuestBook';
+import CreateGuestBookModal from './CreateGuestBookModal';
 import browserClient from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 import GuestBookCard from './GuestBookCard';
@@ -59,7 +59,7 @@ const GuestBook = () => {
         ))}
       </div>
       {showCreateModal && (
-        <CreateGuestBook
+        <CreateGuestBookModal
           invitationId={invitationId}
           onClick={handleCreateModalClick}
         />
