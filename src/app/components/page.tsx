@@ -1,6 +1,6 @@
 import React from 'react';
-import AttendanceButton from './AttendanceButton';
-import GuestBook from './GuestBook';
+import AttendanceButton from '../../components/attendance/AttendanceButton';
+import GuestBook from '../../components/guestbook/GuestBook';
 
 const ComponentTestpage = () => {
   return (

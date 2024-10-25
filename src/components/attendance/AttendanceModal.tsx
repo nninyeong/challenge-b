@@ -1,6 +1,7 @@
 'use client';
 
 import useAttendanceModal from '@/hooks/modals/useAttendanceModal';
+import { useEffect } from 'react';
 
 const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> = ({ invitationId, onClick }) => {
   const {
@@ -15,9 +16,16 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
     handleAttendanceModalSubmit,
   } = useAttendanceModal(invitationId, onClick);
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   return (
-    <div className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/80'>
-      <div className='bg-white text-black w-[350px] h-auto p-4 rounded-md'>
+    <div className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/80 z-20'>
+      <div className='bg-white text-black w-[343px] h-auto p-4 rounded-md'>
         <div
           className='cursor-pointer'
           onClick={onClick}

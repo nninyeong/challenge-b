@@ -1,5 +1,5 @@
 import useGuestBookDeleteButton from '@/hooks/modals/useGuestBookDeleteButton';
-import DeleteGuestBookModal from '@/app/components/DeleteGuestBookModal';
+import DeleteGuestBookModal from '@/components/guestbook/DeleteGuestBookModal';
 import { GuestBookEntry } from '@/types/guestBookEntry.types';
 
 const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry; invitationId: string }) => {

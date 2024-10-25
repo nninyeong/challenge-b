@@ -1,7 +1,7 @@
 'use client';
 import AccountInput from '@/components/create/AccountInput';
-import AttendanceInput from '@/components/create/AttendanceInput';
-import AttendancePreview from '@/components/create/preview/AttendancePreview';
+import GuestInfoInput from '@/components/create/GuestInfoInput';
+import GuestInfoPreview from '@/components/create/preview/GuestInfoPreview';
 import AccountPreView from '@/components/create/preview/AccountPreView';
 import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -11,6 +11,8 @@ import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
+import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
+import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
@@ -61,12 +63,20 @@ const CreateCardPage = () => {
         weddingHallName: '',
         weddingHallContact: '',
       },
+      navigation_detail: {
+        map: false,
+        navigation_button: false,
+        car: '',
+        subway: '',
+        bus: '',
+      },
     },
   });
 
   const onSubmit = (data: InvitationFormType) => console.log(data);
   const [currentStep, setCurrentStep] = useState(1);
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -151,18 +161,25 @@ const CreateCardPage = () => {
       >
         <WeddingInfoPreView control={methods.control} />
       </div>
-      {/*참석여부*/}
+      {/* 지도, 교통정보 */}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[3]}
       >
-        <AttendancePreview control={methods.control} />
+        <NavigationDetailsPreview control={methods.control} />
+      </div>
+      {/*참석여부*/}
+      <div
+        className='min-h-[calc(100vh-114px)]'
+        ref={refs[4]}
+      >
+        <GuestInfoPreview control={methods.control} />
       </div>
 
-      <div className='fixed bottom-0 left-0 right-0 px-4'>
+      <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
         <FormProvider {...methods}>
           <form
-            className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px]'
+            className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <div className='w-full flex items-center justify-end'>
@@ -186,7 +203,8 @@ const CreateCardPage = () => {
             {currentStep === 1 && <PersonalInfoInput />}
             {currentStep === 2 && <AccountInput />}
             {currentStep === 3 && <WeddingInfoInput />}
-            {currentStep === 4 && <AttendanceInput />}
+            {currentStep === 4 && <NavigationDetailInput />}
+            {currentStep === 5 && <GuestInfoInput />}
             {currentStep === refs.length && (
               <button
                 className='w-full'
