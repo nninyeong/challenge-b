@@ -14,7 +14,6 @@ const WeddingInfoInput = () => {
   };
 
   const setAddress = (value: Address) => {
-    console.log(value.address);
     setValue('wedding_info.weddingHallAddress', value.address);
     document.body.style.overflow = 'auto';
     setShowAddressModal(false);
@@ -66,13 +65,14 @@ const WeddingInfoInput = () => {
         <div className='grid grid-cols-[1fr_auto] gap-[8px]'>
           <input
             readOnly={true}
-            value='검색한 주소 연결?'
+            placeholder='주소를 검색해주세요.'
             className='h-[32px] rounded pl-3 min-w-0'
             {...register('wedding_info.weddingHallAddress')}
           />
           <button
             className='bg-primary300 rounded w-[55px] h-[32px] text-white font-bold'
             onClick={openAddressModal}
+            type='button'
           >
             검색
           </button>
