@@ -11,6 +11,8 @@ import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
+import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
+import MainPhotoInput from '@/components/create/MainPhotoInput';
 
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
@@ -67,6 +69,7 @@ const CreateCardPage = () => {
   const onSubmit = (data: InvitationFormType) => console.log(data);
   const [currentStep, setCurrentStep] = useState(1);
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -131,30 +134,37 @@ const CreateCardPage = () => {
   console.log(currentStep);
   return (
     <div className='relative w-full h-full'>
+      {/*대표사진 프리뷰*/}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[0]}
+      >
+        <MainPhotoPreView control={methods.control} />
+      </div>
+      <div
+        className='min-h-[calc(100vh-114px)]'
+        ref={refs[1]}
       >
         <PersonalInfoPreview control={methods.control} />
       </div>
       {/*r계좌 프리뷰*/}
       <div
         className='min-h-[calc(100vh-114px)]'
-        ref={refs[1]}
+        ref={refs[2]}
       >
         <AccountPreView control={methods.control} />
       </div>
       {/*웨딩 정보 프리뷰*/}
       <div
         className='min-h-[calc(100vh-114px)]'
-        ref={refs[2]}
+        ref={refs[3]}
       >
         <WeddingInfoPreView control={methods.control} />
       </div>
       {/*참석여부*/}
       <div
         className='min-h-[calc(100vh-114px)]'
-        ref={refs[3]}
+        ref={refs[4]}
       >
         <AttendancePreview control={methods.control} />
       </div>
@@ -183,10 +193,11 @@ const CreateCardPage = () => {
                 <MdNavigateNext />
               </button>
             </div>
-            {currentStep === 1 && <PersonalInfoInput />}
-            {currentStep === 2 && <AccountInput />}
-            {currentStep === 3 && <WeddingInfoInput />}
-            {currentStep === 4 && <AttendanceInput />}
+            {currentStep === 1 && <MainPhotoInput />}
+            {currentStep === 2 && <PersonalInfoInput />}
+            {currentStep === 3 && <AccountInput />}
+            {currentStep === 4 && <WeddingInfoInput />}
+            {currentStep === 5 && <AttendanceInput />}
             {currentStep === refs.length && (
               <button
                 className='w-full'
