@@ -13,9 +13,40 @@ import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import { createClient } from '@/utils/supabase/client';
 import { getUserInfo } from '@/utils/server-action';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const CreateCardPage = () => {
   const browserClient = createClient();
+  const queryClient = useQueryClient();
+
+  const { data: existingInvitation } = useQuery({
+    queryKey: ['invitation'],
+    queryFn: async () => {
+      const user = await getUserInfo();
+      const { data, error } = await browserClient.from('invitation').select('*').eq('user_id', user.user.id).single();
+      if (error) {
+        console.error(error);
+      }
+      return data;
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (formattedData: InvitationFormType) => {
+      const user = await getUserInfo();
+
+      const { error } = existingInvitation
+        ? await browserClient.from('invitation').update(formattedData).eq('user_id', user.user.id)
+        : await browserClient.from('invitation').insert([formattedData]);
+
+      if (error) {
+        console.error(error);
+      } else {
+        existingInvitation ? alert('수정 완료되었습니다.') : alert('제출 완료되었습니다.');
+      }
+    },
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
 
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
@@ -85,16 +116,11 @@ const CreateCardPage = () => {
       greeting_message: '',
       user_id: user?.user?.id,
     };
-
-    const { error } = await browserClient.from('invitation').insert([formattedData]);
-
-    if (error) {
-      console.error(error);
-    } else {
-      alert('제출 완료되었습니다.');
-    }
     console.log(invitationData);
+
+    mutation.mutate(formattedData);
   };
+
   const [currentStep, setCurrentStep] = useState(1);
   const refs = [
     useRef<HTMLDivElement | null>(null),
