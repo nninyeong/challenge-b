@@ -3,7 +3,7 @@ import { getUserInfo } from '@/utils/server-action';
 
 const WriteReviewPage = async () => {
   const user = await getUserInfo();
-  console.log(user);
+
   return (
     <div>
       <ReviewForm

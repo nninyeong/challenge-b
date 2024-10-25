@@ -4,6 +4,7 @@ export type Review = {
   created_at: string;
   content: string;
   image_url: string[];
+  user_id: string;
 };
 
 export type ReviewResponse = {
