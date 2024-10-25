@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getAuthUsersProfile } from '@/utils/getReview';
-import { UsersResponse, User } from '@/types/users.types';
+import { User } from '@/types/users.types';
 
 type ReviewsCardProp = {
   reviews: Review[];
@@ -33,7 +33,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
     data: users,
     isLoading,
     isError,
-  } = useQuery<UsersResponse>({
+  } = useQuery({
     queryKey: ['authUsers'],
     queryFn: getAuthUsersProfile,
   });

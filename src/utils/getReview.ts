@@ -1,6 +1,7 @@
 import { Review } from '@/types/review.types';
 import browserClient from './supabase/client';
 import { supabase } from './supabase/createClient';
+import { UsersResponse } from '@/types/users.types';
 
 type ReviewProps = {
   pageParam: number;
@@ -47,14 +48,14 @@ export const getAllImageReviews = async (): Promise<Review[]> => {
 
 export const getAuthUsersProfile = async () => {
   try {
-    const { data, error } = await supabase.auth.admin.listUsers();
+    const { data } = await supabase.auth.admin.listUsers();
 
-    if (error) {
-      console.error('Error fetching users:', error);
-      return [];
-    }
+    // if (error) {
+    //   console.error('Error fetching users:', error);
+    //   return [];
+    // }
     console.log(data);
-    return data;
+    return data as unknown as UsersResponse;
   } catch (error) {
     console.error(error);
   }
