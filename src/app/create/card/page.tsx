@@ -1,5 +1,6 @@
 'use client';
 import AccountInput from '@/components/create/AccountInput';
+import MainViewInput from '@/components/create/MainViewInput';
 import AccountPreView from '@/components/create/preview/AccountPreView';
 import { AccountInfoType } from '@/types/accountType.type';
 import { useEffect, useRef, useState } from 'react';
@@ -62,6 +63,7 @@ const CreateCardPage = () => {
   const onSubmit = (data: FormType) => console.log(data);
   const [currentStep, setCurrentStep] = useState(1);
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -153,7 +155,12 @@ const CreateCardPage = () => {
       >
         <AccountPreView control={methods.control} />
       </div>
-
+      <div
+        style={{ minHeight: 'calc(100vh - 114px)' }}
+        ref={refs[4]}
+      >
+        테스트4
+      </div>
       <div className='fixed bottom-0 left-0 right-0 px-4'>
         <FormProvider {...methods}>
           <form
@@ -190,8 +197,11 @@ const CreateCardPage = () => {
             <div style={{ display: currentStep === 4 ? 'block' : 'none' }}>
               <AccountInput />
             </div>
+            <div style={{ display: currentStep === 5 ? 'block' : 'none' }}>
+              <MainViewInput />
+            </div>
             <button
-              style={{ display: currentStep === 4 ? 'block' : 'none' }}
+              style={{ display: currentStep === 6 ? 'block' : 'none' }}
               type='submit'
             >
               제출
