@@ -96,7 +96,7 @@ export type Database = {
           bg_color: Json;
           created_at?: string;
           gallery: Json;
-          gretting_message: Json;
+          greeting_message: Json;
           guestbook: Json;
           id?: string;
           img_ratio?: Json | null;

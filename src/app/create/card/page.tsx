@@ -11,8 +11,12 @@ import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
+import { createClient } from '@/utils/supabase/client';
+import { getUserInfo } from '@/utils/server-action';
 
 const CreateCardPage = () => {
+  const browserClient = createClient();
+
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
@@ -64,7 +68,33 @@ const CreateCardPage = () => {
     },
   });
 
-  const onSubmit = (data: InvitationFormType) => console.log(data);
+  const onSubmit = async (invitationData: InvitationFormType) => {
+    const user = await getUserInfo();
+
+    // 폼 완료되면 수정해야함
+    const formattedData = {
+      ...invitationData,
+      gallery: '',
+      type: '',
+      mood: '',
+      main_view: '',
+      bg_color: '',
+      sticker: '',
+      img_ratio: '',
+      main_text: '',
+      greeting_message: '',
+      user_id: user?.user?.id,
+    };
+
+    const { error } = await browserClient.from('invitation').insert([formattedData]);
+
+    if (error) {
+      console.error(error);
+    } else {
+      alert('제출 완료되었습니다.');
+    }
+    console.log(invitationData);
+  };
   const [currentStep, setCurrentStep] = useState(1);
   const refs = [
     useRef<HTMLDivElement | null>(null),

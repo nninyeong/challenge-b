@@ -12,14 +12,14 @@ const PersonalInfoInput = () => {
           <input
             type='text'
             placeholder='이름'
-            {...register('personalInfo.groom.name')}
+            {...register('personal_info.groom.name')}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
           <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>아들</p>
           <input
             type='text'
             placeholder='- 없이 입력'
-            {...register('personalInfo.groom.phonNumber')}
+            {...register('personal_info.groom.phonNumber')}
             className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
         </div>
@@ -29,7 +29,7 @@ const PersonalInfoInput = () => {
           <input
             type='text'
             placeholder='성함'
-            {...register('personalInfo.groom.fatherName')}
+            {...register('personal_info.groom.fatherName')}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
           <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>
@@ -38,12 +38,12 @@ const PersonalInfoInput = () => {
           <input
             type='text'
             placeholder='01012345678'
-            {...register('personalInfo.groom.fatherPhoneNumber')}
+            {...register('personal_info.groom.fatherPhoneNumber')}
             className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
           <input
             type='checkbox'
-            {...register('personalInfo.groom.isFatherDeceased')}
+            {...register('personal_info.groom.isFatherDeceased')}
           />
           <label>故</label>
         </div>
@@ -53,7 +53,7 @@ const PersonalInfoInput = () => {
           <input
             type='text'
             placeholder='성함'
-            {...register('personalInfo.groom.motherName')}
+            {...register('personal_info.groom.motherName')}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
           <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>
@@ -62,12 +62,12 @@ const PersonalInfoInput = () => {
           <input
             type='text'
             placeholder='01012345678'
-            {...register('personalInfo.groom.motherPhoneNumber')}
+            {...register('personal_info.groom.motherPhoneNumber')}
             className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
           <input
             type='checkbox'
-            {...register('personalInfo.groom.isMotherDeceased')}
+            {...register('personal_info.groom.isMotherDeceased')}
           />
           <label>故</label>
         </div>
@@ -79,14 +79,14 @@ const PersonalInfoInput = () => {
           <input
             type='text'
             placeholder='이름'
-            {...register('personalInfo.bride.name')}
+            {...register('personal_info.bride.name')}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
           <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>딸</p>
           <input
             type='text'
             placeholder='01012345678'
-            {...register('personalInfo.bride.phoneNumber')}
+            {...register('personal_info.bride.phoneNumber')}
             className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
         </div>
@@ -96,7 +96,7 @@ const PersonalInfoInput = () => {
           <input
             type='text'
             placeholder='성함'
-            {...register('personalInfo.bride.fatherName')}
+            {...register('personal_info.bride.fatherName')}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
           <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>
@@ -105,12 +105,12 @@ const PersonalInfoInput = () => {
           <input
             type='text'
             placeholder='01012345678'
-            {...register('personalInfo.bride.fatherPhoneNumber')}
+            {...register('personal_info.bride.fatherPhoneNumber')}
             className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
           <input
             type='checkbox'
-            {...register('personalInfo.bride.isFatherDeceased')}
+            {...register('personal_info.bride.isFatherDeceased')}
           />
           <label>故</label>
         </div>
@@ -120,7 +120,7 @@ const PersonalInfoInput = () => {
           <input
             type='text'
             placeholder='성함'
-            {...register('personalInfo.bride.motherName')}
+            {...register('personal_info.bride.motherName')}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
           <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>
@@ -129,12 +129,12 @@ const PersonalInfoInput = () => {
           <input
             type='text'
             placeholder='01012345678'
-            {...register('personalInfo.bride.motherPhoneNumber')}
+            {...register('personal_info.bride.motherPhoneNumber')}
             className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
           />
           <input
             type='checkbox'
-            {...register('personalInfo.bride.isMotherDeceased')}
+            {...register('personal_info.bride.isMotherDeceased')}
           />
           <label>故</label>
         </div>
