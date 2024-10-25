@@ -1,34 +1,22 @@
 'use client';
 import AccountInput from '@/components/create/AccountInput';
 import AttendanceInput from '@/components/create/AttendanceInput';
-import AccountPreView from '@/components/create/preview/AccountPreView';
 import AttendancePreview from '@/components/create/preview/AttendancePreview';
-import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import AccountPreView from '@/components/create/preview/AccountPreView';
-import PersonalInfoPreView from '@/components/create/preview/PersonalInfoPreView';
-import { AccountInfoType } from '@/types/accountType.type';
-import { PersonalInfoType } from '@/types/invitationFormType.type';
 import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
+import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
+import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 
-export type FormType = {
-  test1: string;
-  test2: string;
-  personalInfo: PersonalInfoType;
-  account: AccountInfoType;
-  guestbook: boolean;
-  attendance: boolean;
-};
-        
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
-      personalInfo: {
+      personal_info: {
         bride: {
           name: '',
           phoneNumber: '',
@@ -79,7 +67,6 @@ const CreateCardPage = () => {
   const onSubmit = (data: InvitationFormType) => console.log(data);
   const [currentStep, setCurrentStep] = useState(1);
   const refs = [
-    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -145,21 +132,29 @@ const CreateCardPage = () => {
   return (
     <div className='relative w-full h-full'>
       <div
-        style={{ minHeight: 'calc(100vh - 114px)' }}
+        className='min-h-[calc(100vh-114px)]'
         ref={refs[0]}
       >
-        <AccountPreView control={methods.control} />
+        <PersonalInfoPreview control={methods.control} />
       </div>
+      {/*r계좌 프리뷰*/}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[1]}
       >
+        <AccountPreView control={methods.control} />
+      </div>
+      {/*웨딩 정보 프리뷰*/}
+      <div
+        className='min-h-[calc(100vh-114px)]'
+        ref={refs[2]}
+      >
         <WeddingInfoPreView control={methods.control} />
       </div>
-      </div>
+      {/*참석여부*/}
       <div
-        style={{ minHeight: 'calc(100vh - 114px)' }}
-        ref={refs[4]}
+        className='min-h-[calc(100vh-114px)]'
+        ref={refs[3]}
       >
         <AttendancePreview control={methods.control} />
       </div>
@@ -188,17 +183,14 @@ const CreateCardPage = () => {
                 <MdNavigateNext />
               </button>
             </div>
-            <div style={{ display: currentStep === 1 ? 'block' : 'none' }}>
-              <AccountInput />
-            </div>
-            <div style={{ display: currentStep === 5 ? 'block' : 'none' }}>
-              <AttendanceInput />
-            </div>
-            {currentStep === 2 && <WeddingInfoInput />}
+            {currentStep === 1 && <PersonalInfoInput />}
+            {currentStep === 2 && <AccountInput />}
+            {currentStep === 3 && <WeddingInfoInput />}
+            {currentStep === 4 && <AttendanceInput />}
             {currentStep === refs.length && (
               <button
                 className='w-full'
-                type='submit '
+                type='submit'
               >
                 제출
               </button>
