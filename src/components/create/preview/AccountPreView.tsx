@@ -1,8 +1,8 @@
 'use client';
-import { FormType } from '@/app/create/card/page';
 import { Control, useWatch } from 'react-hook-form';
+import { InvitationFormType } from '@/types/invitationFormType.type';
 
-const AccountPreView = ({ control }: { control: Control<FormType> }) => {
+const AccountPreView = ({ control }: { control: Control<InvitationFormType> }) => {
   const accountWatch = useWatch({
     control,
     name: 'account',

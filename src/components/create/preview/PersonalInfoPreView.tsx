@@ -1,12 +1,12 @@
 'use client';
-import { FormType } from '@/app/create/card/page';
 import { Control, useWatch } from 'react-hook-form';
 import PersonalInfoCard from '../PersonalInfoCard';
+import { InvitationFormType } from '@/types/invitationFormType.type';
 
-const PersonalInfoPreview = ({ control }: { control: Control<FormType> }) => {
+const PersonalInfoPreview = ({ control }: { control: Control<InvitationFormType> }) => {
   const personaInfoWatch = useWatch({
     control,
-    name: 'personalInfo',
+    name: 'personal_info',
   });
 
   return (
