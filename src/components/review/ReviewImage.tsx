@@ -71,7 +71,7 @@ const ReviewImage = () => {
             {firstImage && (
               <Image
                 src={firstImage}
-                alt={`후기 이미지 ${reviewIndex + 1}`}
+                alt={`${reviewIndex + 1}`}
                 fill
                 style={{ objectFit: 'cover' }}
                 sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
