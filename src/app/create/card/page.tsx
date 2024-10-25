@@ -13,7 +13,8 @@ export type FormType = {
   test2: string;
   test3: string;
   account: AccountInfoType;
-  showAttendanceButton: boolean;
+  guestbook: boolean;
+  attendance: boolean;
 };
 
 const Test1Watch = ({ control }: { control: Control<FormType> }) => {
@@ -59,7 +60,8 @@ const CreateCardPage = () => {
           { bank: '', accountNumber: '', depositor: '' },
         ],
       },
-      showAttendanceButton: false,
+      guestbook: false,
+      attendance: false,
     },
   });
 

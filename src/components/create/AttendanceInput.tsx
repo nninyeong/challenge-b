@@ -7,9 +7,16 @@ const AttendanceInput = () => {
       <label>
         <input
           type="checkbox"
-          {...register('showAttendanceButton')}
+          {...register('attendance')}
         />
-        출석 버튼 보기
+        참석 의사 전달 사용
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          {...register('guestbook')}
+        />
+        방명록 사용
       </label>
     </div>
   );

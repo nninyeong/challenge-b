@@ -6,7 +6,7 @@ const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry;
   const { showDeleteModal, handleDeleteModalClick } = useGuestBookDeleteButton();
 
   return (
-    <div className='bg-red-100'>
+    <div className='bg-red-100 text-black'>
       <div>
         <span onClick={handleDeleteModalClick}>x  {/* 나중에 아이콘으로 변경 필요 */}</span>
       </div>
