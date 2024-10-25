@@ -17,5 +17,6 @@ export const getUserInfo = async () => {
   if (error || !data?.user) {
     return redirect('/signin');
   }
+
   return data;
 };

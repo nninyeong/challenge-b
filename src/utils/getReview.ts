@@ -1,5 +1,7 @@
 import { Review } from '@/types/review.types';
 import browserClient from './supabase/client';
+import { supabase } from './supabase/createClient';
+import { UsersResponse } from '@/types/users.types';
 
 type ReviewProps = {
   pageParam: number;
@@ -7,20 +9,36 @@ type ReviewProps = {
 };
 
 export const getReview = async ({ pageParam = 0, row }: ReviewProps): Promise<Review[]> => {
-  try {
-    const { data, error } = await browserClient
-      .from('reviews')
-      .select('*')
-      .range(pageParam, pageParam + row - 1);
+  const { data, error } = await browserClient
+    .from('reviews')
+    .select('*')
+    .range(pageParam, pageParam + row - 1);
 
-    if (error) {
-      console.error(error);
-      throw new Error('데이터를 가져오는 데 문제가 발생했습니다.');
-    }
-    console.log(data);
-    return data as unknown as Review[];
-  } catch (error) {
+  if (error) {
     console.error(error);
-    throw error;
+    throw new Error('데이터를 가져오는 데 문제가 발생했습니다.');
   }
+
+  return data as unknown as Review[];
+};
+
+export const getAllImageReviews = async (): Promise<Review[]> => {
+  const { data, error } = await browserClient.from('reviews').select('*');
+
+  if (error) {
+    console.error(error);
+    throw new Error('모든 데이터를 가져오는 데 문제가 발생했습니다.');
+  }
+
+  const reviewsWithImages = data.filter((review) => Array.isArray(review.image_url) && review.image_url.length > 0);
+
+  return reviewsWithImages as unknown as Review[];
+};
+
+export const getAuthUsersProfile = async () => {
+  const { data, error } = await supabase.auth.admin.listUsers();
+  if (error) {
+    throw new Error('모든 데이터를 가져오는 데 문제가 발생했습니다.');
+  }
+  return data as unknown as UsersResponse;
 };
