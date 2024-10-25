@@ -1,30 +1,27 @@
 import { AccountInfoType } from './accountType.type';
 
-type PersonalInfoType = {
-  groomName: string;
-  groomPhone: string;
-  groomFatherName: string;
-  groomFatherPhone: string;
-  groomFatherAlive: boolean;
-  groomMotherName: string;
-  groomMotherPhone: string;
-  groomMotherAlive: boolean;
-  brideName: string;
-  bridePhone: string;
-  brideFatherName: string;
-  brideFatherPhone: string;
-  brideFatherAlive: boolean;
-  brideMotherName: string;
-  brideMotherPhone: string;
-  brideMotherAlive: boolean;
+type PersonalType = {
+  name: string;
+  phoneNumber: string;
+  fatherName: string;
+  fatherPhoneNumber: string;
+  isFatherDeceased: boolean;
+  motherName: string;
+  motherPhoneNumber: string;
+  isMotherDeceased: boolean;
+};
+
+export type PersonalInfoType = {
+  bride: PersonalType;
+  groom: PersonalType;
 };
 
 type WeddingInfoType = {
   date: string;
-  time: { hour: number; minute: number };
-  weddingHoleAddress: string;
-  weddingHoleName: string;
-  weddingHolePhone: string;
+  time: { hour: string; minute: string };
+  weddingHallAddress: string;
+  weddingHallName: string;
+  weddingHallContact: string;
 };
 
 export type InvitationFormType = {
