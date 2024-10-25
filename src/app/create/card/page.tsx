@@ -1,5 +1,8 @@
 'use client';
 import AccountInput from '@/components/create/AccountInput';
+import AttendanceInput from '@/components/create/AttendanceInput';
+import AccountPreView from '@/components/create/preview/AccountPreView';
+import AttendancePreview from '@/components/create/preview/AttendancePreview';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import AccountPreView from '@/components/create/preview/AccountPreView';
 import PersonalInfoPreView from '@/components/create/preview/PersonalInfoPreView';
@@ -17,6 +20,8 @@ export type FormType = {
   test2: string;
   personalInfo: PersonalInfoType;
   account: AccountInfoType;
+  guestbook: boolean;
+  attendance: boolean;
 };
         
 const CreateCardPage = () => {
@@ -59,6 +64,8 @@ const CreateCardPage = () => {
           { bank: '', accountNumber: '', depositor: '' },
         ],
       },
+      guestbook: false,
+      attendance: false,
       wedding_info: {
         date: '',
         time: { hour: '', minute: '' },
@@ -71,7 +78,13 @@ const CreateCardPage = () => {
 
   const onSubmit = (data: InvitationFormType) => console.log(data);
   const [currentStep, setCurrentStep] = useState(1);
-  const refs = [useRef<HTMLDivElement | null>(null), useRef<HTMLDivElement | null>(null)];
+  const refs = [
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+  ];
 
   const handleNext = () => {
     if (currentStep < refs.length) {
@@ -144,6 +157,12 @@ const CreateCardPage = () => {
         <WeddingInfoPreView control={methods.control} />
       </div>
       </div>
+      <div
+        style={{ minHeight: 'calc(100vh - 114px)' }}
+        ref={refs[4]}
+      >
+        <AttendancePreview control={methods.control} />
+      </div>
 
       <div className='fixed bottom-0 left-0 right-0 px-4'>
         <FormProvider {...methods}>
@@ -171,6 +190,9 @@ const CreateCardPage = () => {
             </div>
             <div style={{ display: currentStep === 1 ? 'block' : 'none' }}>
               <AccountInput />
+            </div>
+            <div style={{ display: currentStep === 5 ? 'block' : 'none' }}>
+              <AttendanceInput />
             </div>
             {currentStep === 2 && <WeddingInfoInput />}
             {currentStep === refs.length && (
