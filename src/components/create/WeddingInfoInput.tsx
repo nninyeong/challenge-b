@@ -1,7 +1,25 @@
+'use client';
 import { useFormContext } from 'react-hook-form';
+import { Address } from 'react-daum-postcode';
+import { useState } from 'react';
+import AddressModal from '@/components/create/modal/AddressModal';
 
 const WeddingInfoInput = () => {
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
+
+  const [showAddressModal, setShowAddressModal] = useState(false);
+  const openAddressModal = () => {
+    document.body.style.overflow = 'hidden';
+    setShowAddressModal(true);
+  };
+
+  const setAddress = (value: Address) => {
+    console.log(value.address);
+    setValue('wedding_info.weddingHallAddress', value.address);
+    document.body.style.overflow = 'auto';
+    setShowAddressModal(false);
+  };
+
   return (
     <div className='flex flex-col gap-[8px]'>
       <h3 className='font-bold'>예식 일시</h3>
@@ -24,7 +42,12 @@ const WeddingInfoInput = () => {
             {Array(24)
               .fill(null)
               .map((_, hour) => (
-                <option value={String(hour).padStart(2, '0')}>{String(hour).padStart(2, '0')}시</option>
+                <option
+                  key={`hour${hour}`}
+                  value={String(hour).padStart(2, '0')}
+                >
+                  {String(hour).padStart(2, '0')}시
+                </option>
               ))}
           </select>
           <select
@@ -47,7 +70,13 @@ const WeddingInfoInput = () => {
             className='h-[32px] rounded pl-3 min-w-0'
             {...register('wedding_info.weddingHallAddress')}
           />
-          <button className='bg-primary300 rounded w-[55px] h-[32px] text-white font-bold'>검색</button>
+          <button
+            className='bg-primary300 rounded w-[55px] h-[32px] text-white font-bold'
+            onClick={openAddressModal}
+          >
+            검색
+          </button>
+          {showAddressModal && <AddressModal onComplete={setAddress} />}
         </div>
       </div>
       <div className='grid grid-cols-[80px_1fr]'>
