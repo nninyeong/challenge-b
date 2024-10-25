@@ -22,7 +22,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
           className='cursor-pointer'
           onClick={onClick}
         >
-          X
+          X {/* 나중에 아이콘으로 변경 필요 */}
         </div>
         <form onSubmit={handleAttendanceModalSubmit}>
           <div className='grid grid-cols-2 gap-4'>

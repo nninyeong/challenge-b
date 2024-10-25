@@ -28,7 +28,7 @@ const CreateGuestBookModal: React.FC<{ invitationId: string; onClick: () => void
           className='cursor-pointer'
           onClick={onClick}
         >
-          X
+          X {/* 나중에 아이콘으로 변경 필요 */}
         </div>
         <form onSubmit={handleSubmit}>
           <label className='flex gap-3'>

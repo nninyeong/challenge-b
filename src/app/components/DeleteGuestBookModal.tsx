@@ -34,7 +34,7 @@ const CreateGuestBook: React.FC<{
           className='cursor-pointer'
           onClick={onClick}
         >
-          X
+          X {/* 나중에 아이콘으로 변경 필요 */}
         </div>
         <form onSubmit={handleGuestBookDelete}>
           <label className='flex gap-3'>
