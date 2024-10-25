@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getAuthUsersProfile } from '@/utils/getReview';
 import { User } from '@/types/users.types';
+import { GoPlus } from 'react-icons/go';
 
 type ReviewsCardProp = {
   reviews: Review[];
@@ -68,7 +69,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
             key={review.id}
             className='w-full h-auto flex border border-solid border-l-0 border-r-0 border-t-0 mb-4 pb-4 cursor-pointer relative'
           >
-            <div className='w-[130px] h-[130px] rounded flex flex-shrink-0'>
+            <div className='w-[130px] h-[130px] rounded flex flex-shrink-0 relative'>
               <Image
                 key={review.id}
                 src={firstImage || defaultImg}
@@ -80,6 +81,11 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
                 onClick={firstImage ? handleReviewDetail : undefined}
                 sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
               />
+              {review?.image_url.length > 1 && (
+                <div className='absolute right-1 bottom-1 bg-gray-800 rounded'>
+                  <GoPlus size={25} />
+                </div>
+              )}
             </div>
 
             <div
