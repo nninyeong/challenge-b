@@ -47,7 +47,7 @@ const WeddingInfoInput = () => {
             className='h-[32px] rounded pl-3 min-w-0'
             {...register('wedding_info.weddingHallAddress')}
           />
-          <button className='bg-primary300 rounded w-[55px] h-[32px] text-white font-bold'>검색</button>
+          <button className='bg-primary-300 rounded w-[55px] h-[32px] text-white font-bold'>검색</button>
         </div>
       </div>
       <div className='grid grid-cols-[80px_1fr]'>
