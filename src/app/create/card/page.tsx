@@ -1,6 +1,10 @@
 'use client';
 import AccountInput from '@/components/create/AccountInput';
+import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import AccountPreView from '@/components/create/preview/AccountPreView';
+import PersonalInfoPreView from '@/components/create/preview/PersonalInfoPreView';
+import { AccountInfoType } from '@/types/accountType.type';
+import { PersonalInfoType } from '@/types/invitationFormType.type';
 import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
@@ -8,10 +12,39 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 
+export type FormType = {
+  test1: string;
+  test2: string;
+  personalInfo: PersonalInfoType;
+  account: AccountInfoType;
+};
+        
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
+      personalInfo: {
+        bride: {
+          name: '',
+          phoneNumber: '',
+          fatherName: '',
+          fatherPhoneNumber: '',
+          isFatherDeceased: false,
+          motherName: '',
+          motherPhoneNumber: '',
+          isMotherDeceased: false,
+        },
+        groom: {
+          name: '',
+          phoneNumber: '',
+          fatherName: '',
+          fatherPhoneNumber: '',
+          isFatherDeceased: false,
+          motherName: '',
+          motherPhoneNumber: '',
+          isMotherDeceased: false,
+        },
+      },
       account: {
         title: '',
         content: '',
@@ -109,6 +142,7 @@ const CreateCardPage = () => {
         ref={refs[1]}
       >
         <WeddingInfoPreView control={methods.control} />
+      </div>
       </div>
 
       <div className='fixed bottom-0 left-0 right-0 px-4'>
