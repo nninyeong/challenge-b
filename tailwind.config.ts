@@ -54,6 +54,7 @@ const config: Config = {
           100: '#f0f0f0',
           50: '#f5f5f5',
         },
+        system: '#e90000',
         gray200: '#D9D9D9',
       },
     },
