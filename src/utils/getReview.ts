@@ -19,7 +19,7 @@ export const getReview = async ({ pageParam = 0, row }: ReviewProps): Promise<Re
       console.error(error);
       throw new Error('데이터를 가져오는 데 문제가 발생했습니다.');
     }
-    console.log(data);
+
     return data as unknown as Review[];
   } catch (error) {
     console.error(error);
@@ -38,7 +38,6 @@ export const getAllImageReviews = async (): Promise<Review[]> => {
 
     const reviewsWithImages = data.filter((review) => Array.isArray(review.image_url) && review.image_url.length > 0);
 
-    console.log(reviewsWithImages);
     return reviewsWithImages as unknown as Review[];
   } catch (error) {
     console.error(error);
@@ -50,11 +49,6 @@ export const getAuthUsersProfile = async () => {
   try {
     const { data } = await supabase.auth.admin.listUsers();
 
-    // if (error) {
-    //   console.error('Error fetching users:', error);
-    //   return [];
-    // }
-    console.log(data);
     return data as unknown as UsersResponse;
   } catch (error) {
     console.error(error);
