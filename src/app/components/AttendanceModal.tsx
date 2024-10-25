@@ -16,14 +16,14 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
   } = useAttendanceModal(invitationId, onClick);
 
   return (
-    <div
-      className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/80'
-      onClick={onClick}
-    >
-      <div
-        className='bg-white text-black w-[350px] h-auto p-4 rounded-md'
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/80'>
+      <div className='bg-white text-black w-[350px] h-auto p-4 rounded-md'>
+        <div
+          className='cursor-pointer'
+          onClick={onClick}
+        >
+          X
+        </div>
         <form onSubmit={handleAttendanceModalSubmit}>
           <div className='grid grid-cols-2 gap-4'>
             <label className='col-span-2 font-semibold'>구분</label>
