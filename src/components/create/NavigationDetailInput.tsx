@@ -33,21 +33,21 @@ const NavigationDetailInput = () => {
           type='text'
           placeholder='네비찍으시오.'
           {...register('navigation_detail.car')}
-          className='h-[32px] w-[250px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+          className='h-[32px] w-[250px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
         />
         <label className='w-[50px]'>지하철</label>
         <input
           type='text'
           placeholder='지하철역에서 얼마나 걸리는가'
           {...register('navigation_detail.subway')}
-          className='h-[32px] w-[250px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+          className='h-[32px] w-[250px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
         />
         <label className='w-[50px]'>버스</label>
         <input
           type='text'
           placeholder='몇번을 타고 어디에서 내리세요'
           {...register('navigation_detail.bus')}
-          className='h-[32px] w-[250px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+          className='h-[32px] w-[250px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
         />
       </div>
     </>
