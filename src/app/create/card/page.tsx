@@ -6,8 +6,11 @@ import PersonalInfoPreView from '@/components/create/preview/PersonalInfoPreView
 import { AccountInfoType } from '@/types/accountType.type';
 import { PersonalInfoType } from '@/types/invitationFormType.type';
 import { useEffect, useRef, useState } from 'react';
-import { Control, FormProvider, useForm, useFormContext, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
+import { InvitationFormType } from '@/types/invitationFormType.type';
+import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
+import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 
 export type FormType = {
   test1: string;
@@ -15,28 +18,11 @@ export type FormType = {
   personalInfo: PersonalInfoType;
   account: AccountInfoType;
 };
-
-const Test1Watch = ({ control }: { control: Control<FormType> }) => {
-  const test1Watch = useWatch({
-    control,
-    name: 'test1',
-  });
-  return <p>Watch: {test1Watch}</p>;
-};
-const Test2Watch = ({ control }: { control: Control<FormType> }) => {
-  const test2Watch = useWatch({
-    control,
-    name: 'test2',
-  });
-  return <p>Watch: {test2Watch}</p>;
-};
-
+        
 const CreateCardPage = () => {
-  const methods = useForm({
+  const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
-      test1: '',
-      test2: '',
       personalInfo: {
         bride: {
           name: '',
@@ -48,7 +34,6 @@ const CreateCardPage = () => {
           motherPhoneNumber: '',
           isMotherDeceased: false,
         },
-
         groom: {
           name: '',
           phoneNumber: '',
@@ -74,17 +59,19 @@ const CreateCardPage = () => {
           { bank: '', accountNumber: '', depositor: '' },
         ],
       },
+      wedding_info: {
+        date: '',
+        time: { hour: '', minute: '' },
+        weddingHallAddress: '',
+        weddingHallName: '',
+        weddingHallContact: '',
+      },
     },
   });
 
-  const onSubmit = (data: FormType) => console.log(data);
+  const onSubmit = (data: InvitationFormType) => console.log(data);
   const [currentStep, setCurrentStep] = useState(1);
-  const refs = [
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-  ];
+  const refs = [useRef<HTMLDivElement | null>(null), useRef<HTMLDivElement | null>(null)];
 
   const handleNext = () => {
     if (currentStep < refs.length) {
@@ -148,27 +135,14 @@ const CreateCardPage = () => {
         style={{ minHeight: 'calc(100vh - 114px)' }}
         ref={refs[0]}
       >
-        테스트1
-        <Test1Watch control={methods.control} />
+        <AccountPreView control={methods.control} />
       </div>
       <div
-        style={{ minHeight: 'calc(100vh - 114px)' }}
+        className='min-h-[calc(100vh-114px)]'
         ref={refs[1]}
       >
-        테스트2
-        <Test2Watch control={methods.control} />
+        <WeddingInfoPreView control={methods.control} />
       </div>
-      <div
-        style={{ minHeight: 'calc(100vh - 114px)' }}
-        ref={refs[2]}
-      >
-        <PersonalInfoPreView control={methods.control} />
-      </div>
-      <div
-        style={{ minHeight: 'calc(100vh - 114px)' }}
-        ref={refs[3]}
-      >
-        <AccountPreView control={methods.control} />
       </div>
 
       <div className='fixed bottom-0 left-0 right-0 px-4'>
@@ -196,50 +170,20 @@ const CreateCardPage = () => {
               </button>
             </div>
             <div style={{ display: currentStep === 1 ? 'block' : 'none' }}>
-              <InputTest1 />
-            </div>
-            <div style={{ display: currentStep === 2 ? 'block' : 'none' }}>
-              <InputTest2 />
-            </div>
-            <div style={{ display: currentStep === 3 ? 'block' : 'none' }}>
-              <PersonalInfoInput />
-            </div>
-            <div style={{ display: currentStep === 4 ? 'block' : 'none' }}>
               <AccountInput />
             </div>
-            <button
-              style={{ display: currentStep === 4 ? 'block' : 'none' }}
-              type='submit'
-            >
-              제출
-            </button>
+            {currentStep === 2 && <WeddingInfoInput />}
+            {currentStep === refs.length && (
+              <button
+                className='w-full'
+                type='submit '
+              >
+                제출
+              </button>
+            )}
           </form>
         </FormProvider>
       </div>
-    </div>
-  );
-};
-
-const InputTest1 = () => {
-  const { register } = useFormContext();
-  return (
-    <div>
-      <input
-        {...register('test1')}
-        placeholder='input1'
-      />
-    </div>
-  );
-};
-
-const InputTest2 = () => {
-  const { register } = useFormContext();
-  return (
-    <div>
-      <input
-        {...register('test2')}
-        placeholder='input2'
-      />
     </div>
   );
 };
