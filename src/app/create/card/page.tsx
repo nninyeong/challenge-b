@@ -70,6 +70,7 @@ const CreateCardPage = () => {
 
   const onSubmit = (data: InvitationFormType) => console.log(data);
   const [currentStep, setCurrentStep] = useState(1);
+  const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const refs = [
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -77,6 +78,16 @@ const CreateCardPage = () => {
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
   ];
+
+  useEffect(() => {
+    const subscription = methods.watch((value) => {
+      const color = value.main_view.color;
+      if (color) {
+        setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
+      }
+      return () => subscription.unsubscribe();
+    });
+  }, [methods]);
 
   const handleNext = () => {
     if (currentStep < refs.length) {
@@ -137,7 +148,7 @@ const CreateCardPage = () => {
     <div
       className='relative w-full h-full'
       style={{
-        backgroundColor: `rgba(${methods.watch('main_view.color.r')},${methods.watch('main_view.color.g')},${methods.watch('main_view.color.b')},${methods.watch('main_view.color.a')})`,
+        backgroundColor: backgroundColor,
       }}
     >
       <div
