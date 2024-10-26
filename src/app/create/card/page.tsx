@@ -6,7 +6,6 @@ import AccountPreView from '@/components/create/preview/AccountPreView';
 import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
-import { InvitationFormType } from '@/types/invitationFormType.type';
 import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
@@ -14,6 +13,7 @@ import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import { createClient } from '@/utils/supabase/client';
 import { getUserInfo } from '@/utils/server-action';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { InvitationFormType } from '@/types/invitationFormType.type';
 
 const CreateCardPage = () => {
   const browserClient = createClient();
@@ -23,11 +23,17 @@ const CreateCardPage = () => {
     queryKey: ['invitation'],
     queryFn: async () => {
       const user = await getUserInfo();
-      const { data, error } = await browserClient.from('invitation').select('*').eq('user_id', user.user.id).single();
-      if (error) {
-        console.error(error);
+
+      if (user) {
+        const { data, error } = await browserClient.from('invitation').select('*').eq('user_id', user.user.id).single();
+
+        if (error) {
+          console.error(error);
+          return null;
+        }
+        return data ?? null;
       }
-      return data;
+      return null;
     },
   });
 
@@ -96,12 +102,26 @@ const CreateCardPage = () => {
         weddingHallName: '',
         weddingHallContact: '',
       },
+      gallery: '',
+      type: '',
+      mood: '',
+      main_view: '',
+      bg_color: '',
+      stickers: '',
+      img_ratio: '',
+      main_text: '',
+      greeting_message: '',
     },
   });
+  const { reset } = methods;
+
+  useEffect(() => {
+    if (existingInvitation) {
+      reset(existingInvitation);
+    }
+  }, [existingInvitation]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
-    const user = await getUserInfo();
-
     // 폼 완료되면 수정해야함
     const formattedData = {
       ...invitationData,
@@ -110,11 +130,10 @@ const CreateCardPage = () => {
       mood: '',
       main_view: '',
       bg_color: '',
-      sticker: '',
+      stickers: '',
       img_ratio: '',
       main_text: '',
       greeting_message: '',
-      user_id: user?.user?.id,
     };
     console.log(invitationData);
 

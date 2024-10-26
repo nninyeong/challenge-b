@@ -30,7 +30,7 @@ export type InvitationFormType = {
   mood: any;
   main_view: any;
   bg_color: any;
-  sticker: any;
+  stickers: any;
   img_ratio: any;
   main_text: any;
   personal_info: PersonalInfoType;
