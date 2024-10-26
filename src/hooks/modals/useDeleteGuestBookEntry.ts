@@ -28,6 +28,7 @@ const useDeleteGuestBookEntry = (
         queryKey: QUERY_KEYS.guestBook(invitationId),
       });
       onSuccess();
+      alert('방명록 삭제를 완료했습니다.');
     },
     onError: (error: Error) => {
       console.error(error.message);
