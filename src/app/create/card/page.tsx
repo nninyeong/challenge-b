@@ -66,7 +66,6 @@ const CreateCardPage = () => {
       navigation_detail: {
         map: false,
         navigation_button: false,
-        car: '',
         subway: '',
         bus: '',
       },

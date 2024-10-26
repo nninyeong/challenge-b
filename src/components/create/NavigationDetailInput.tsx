@@ -28,13 +28,6 @@ const NavigationDetailInput = () => {
       </div>
       <div>
         <div>교통수단 표시</div>
-        <label className='w-[50px]'>자가용</label>
-        <input
-          type='text'
-          placeholder='네비찍으시오.'
-          {...register('navigation_detail.car')}
-          className='h-[32px] w-[250px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
-        />
         <label className='w-[50px]'>지하철</label>
         <input
           type='text'

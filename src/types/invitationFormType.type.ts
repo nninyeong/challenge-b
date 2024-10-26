@@ -27,7 +27,6 @@ type WeddingInfoType = {
 type NavigationDetailType = {
   map: boolean;
   navigation_button: boolean;
-  car: string;
   subway: string;
   bus: string;
 }
