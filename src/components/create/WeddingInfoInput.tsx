@@ -70,7 +70,7 @@ const WeddingInfoInput = () => {
             {...register('wedding_info.weddingHallAddress')}
           />
           <button
-            className='bg-primary300 rounded w-[55px] h-[32px] text-white font-bold'
+            className='bg-primary-300 rounded w-[55px] h-[32px] text-white font-bold'
             onClick={openAddressModal}
             type='button'
           >

@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import FlexColCenterContainer from '../FlexColCenterContainer';
 
 const AccountInput = () => {
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
@@ -17,7 +18,7 @@ const AccountInput = () => {
   });
 
   return (
-    <div className='flex flex-col text-sm gap-4 items-center justify-center w-full'>
+    <FlexColCenterContainer className='text-sm gap-4 w-full'>
       <div className='flex gap-3 h-[32px] w-full'>
         <label className='self-center w-[50px]'>제목</label>
         <input
@@ -79,7 +80,7 @@ const AccountInput = () => {
           </div>
         ))}
       </div>
-    </div>
+    </FlexColCenterContainer>
   );
 };
 

@@ -13,11 +13,15 @@ import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
+import MainViewInput from '@/components/create/MainViewInput';
 
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
+      main_view: {
+        color: '#ffffff',
+      },
       personal_info: {
         bride: {
           name: '',
@@ -75,13 +79,25 @@ const CreateCardPage = () => {
 
   const onSubmit = (data: InvitationFormType) => console.log(data);
   const [currentStep, setCurrentStep] = useState(1);
+  const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const refs = [
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
   ];
+
+  useEffect(() => {
+    const subscription = methods.watch((value) => {
+      const color = value.main_view.color;
+      if (color) {
+        setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
+      }
+      return () => subscription.unsubscribe();
+    });
+  }, [methods]);
 
   const handleNext = () => {
     if (currentStep < refs.length) {
@@ -138,9 +154,13 @@ const CreateCardPage = () => {
       });
     };
   }, [refs]);
-  console.log(currentStep);
   return (
-    <div className='relative w-full h-full'>
+    <div
+      className='relative w-full h-full'
+      style={{
+        backgroundColor: backgroundColor,
+      }}
+    >
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[0]}
@@ -175,6 +195,13 @@ const CreateCardPage = () => {
       >
         <GuestInfoPreview control={methods.control} />
       </div>
+      {/*참석여부*/}
+      <div
+        className='min-h-[calc(100vh-114px)]'
+        ref={refs[5]}
+      >
+        colorpalette
+      </div>
 
       <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
         <FormProvider {...methods}>
@@ -205,6 +232,7 @@ const CreateCardPage = () => {
             {currentStep === 3 && <WeddingInfoInput />}
             {currentStep === 4 && <NavigationDetailInput />}
             {currentStep === 5 && <GuestInfoInput />}
+            {currentStep === 6 && <MainViewInput />}
             {currentStep === refs.length && (
               <button
                 className='w-full'
