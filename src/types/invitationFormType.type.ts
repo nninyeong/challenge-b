@@ -47,4 +47,5 @@ export type InvitationFormType = {
   navigation_detail: NavigationDetailType;
   guestbook: boolean;
   attendance: boolean;
+  d_day: boolean;
 };

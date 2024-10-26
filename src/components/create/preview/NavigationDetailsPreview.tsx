@@ -1,5 +1,6 @@
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { Control, useWatch } from 'react-hook-form';
+import NavigationDetailCard from '../NavigationDetailCard';
 
 const NavigationDetailsPreview = ({ control }: { control: Control<InvitationFormType> }) => {
   const navigationDetail = useWatch({
@@ -11,17 +12,17 @@ const NavigationDetailsPreview = ({ control }: { control: Control<InvitationForm
       <div>NavigationDetailsPreview</div>
       {navigationDetail.map && <div>Map</div>}
       {navigationDetail.navigation_button && <div>navigation_button</div>}
-      {navigationDetail.subway && (
-        <div>
-          <div>지하철</div>
-          <div>{navigationDetail.subway}</div>
-        </div>
-      )}
       {navigationDetail.bus && (
-        <div>
-          <div>버스</div>
-          <div>{navigationDetail.bus}</div>
-        </div>
+        <NavigationDetailCard
+          label={'버스'}
+          info={navigationDetail.bus}
+        />
+      )}
+      {navigationDetail.subway && (
+        <NavigationDetailCard
+          label={'지하철'}
+          info={navigationDetail.subway}
+        />
       )}
     </>
   );

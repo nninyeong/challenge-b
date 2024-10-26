@@ -1,4 +1,4 @@
-import { useFormContext, useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from 'react-hook-form';
 
 const GuestInfoInput = () => {
   const { register } = useFormContext();
@@ -8,26 +8,39 @@ const GuestInfoInput = () => {
   const guestBookCondition = useWatch({
     name: 'guestbook',
   });
+  const dDayCondition = useWatch({
+    name: 'd_day',
+  });
   return (
     <>
       <div>
         <div>방명록</div>
         <label>
           <input
-            type="checkbox"
+            type='checkbox'
             {...register('guestbook')}
           />
-          {guestBookCondition ? "방명록 사용" : "사용안함"}
+          {guestBookCondition ? <span>방명록 사용</span> : <span>사용안함</span>}
+        </label>
+      </div>
+      <div>
+        <div>디데이</div>
+        <label>
+          <input
+            type='checkbox'
+            {...register('d_day')}
+          />
+          {dDayCondition ? <span>디데이 사용</span> : <span>사용안함</span>}
         </label>
       </div>
       <div>
         <div>참석의사 · RSVP</div>
         <label>
           <input
-            type="checkbox"
+            type='checkbox'
             {...register('attendance')}
           />
-          {attendanceCondition ? "참석 의사 전달 사용" : "사용안함"}
+          {attendanceCondition ? <span>참석 의사 전달 사용</span> : <span>사용안함</span>}
         </label>
       </div>
     </>

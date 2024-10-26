@@ -14,10 +14,15 @@ const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> })
     control,
     name: 'guestbook',
   });
+  const dDayCount = useWatch({
+    control,
+    name: 'd_day',
+  });
   return (
     <>
-      {attendanceButton && <AttendanceButton />}
       {guestBookButton && <GuestBook />}
+      {attendanceButton && <AttendanceButton />}
+      {dDayCount && <>D-Day</>}
     </>
   );
 };

@@ -56,6 +56,7 @@ const CreateCardPage = () => {
       },
       guestbook: false,
       attendance: false,
+      d_day: false,
       wedding_info: {
         date: '',
         time: { hour: '', minute: '' },
