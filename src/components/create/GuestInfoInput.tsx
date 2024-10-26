@@ -14,7 +14,7 @@ const GuestInfoInput = () => {
   return (
     <>
       <div>
-        <div>방명록</div>
+        <div className='text-[18px] font-bold'>방명록</div>
         <label>
           <input
             type='checkbox'
@@ -24,7 +24,7 @@ const GuestInfoInput = () => {
         </label>
       </div>
       <div>
-        <div>디데이</div>
+        <div className='text-[18px] font-bold'>디데이</div>
         <label>
           <input
             type='checkbox'
@@ -34,7 +34,7 @@ const GuestInfoInput = () => {
         </label>
       </div>
       <div>
-        <div>참석의사 · RSVP</div>
+        <div className='text-[18px] font-bold'>참석의사 · RSVP</div>
         <label>
           <input
             type='checkbox'

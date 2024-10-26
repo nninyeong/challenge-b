@@ -4,6 +4,7 @@ import AttendanceButton from '@/components/attendance/AttendanceButton';
 import GuestBook from '@/components/guestbook/GuestBook';
 import { Control, useWatch } from 'react-hook-form';
 import { InvitationFormType } from '@/types/invitationFormType.type';
+import DdayCounter from '@/components/ddaycounter/DdayCounter';
 
 const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> }) => {
   const attendanceButton = useWatch({
@@ -18,11 +19,15 @@ const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> })
     control,
     name: 'd_day',
   });
+  const weddingInfoDate = useWatch({
+    control,
+    name: 'wedding_info',
+  });
   return (
     <>
       {guestBookButton && <GuestBook />}
       {attendanceButton && <AttendanceButton />}
-      {dDayCount && <>D-Day</>}
+      {dDayCount && <DdayCounter weddingInfoDate={weddingInfoDate.date} />}
     </>
   );
 };
