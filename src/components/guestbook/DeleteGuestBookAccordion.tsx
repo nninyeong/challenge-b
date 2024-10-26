@@ -28,7 +28,7 @@ const DeleteGuestBookAccordion = ({
       alert('패스워드를 입력해주세요.');
       return;
     }
-
+    
     deleteGuestBookEntry(password);
   };
 
