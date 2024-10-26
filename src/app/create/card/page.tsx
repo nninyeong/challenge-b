@@ -14,6 +14,7 @@ import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
+import StickerInput from '@/components/create/StickerInput';
 
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
@@ -22,6 +23,7 @@ const CreateCardPage = () => {
       main_view: {
         color: '#ffffff',
       },
+      stickers: [],
       personal_info: {
         bride: {
           name: '',
@@ -81,6 +83,7 @@ const CreateCardPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -202,6 +205,18 @@ const CreateCardPage = () => {
       >
         colorpalette
       </div>
+      {/*스티커 붙이기*/}
+      <div
+        className='min-h-[calc(100vh-114px)]'
+        ref={refs[6]}
+      >
+        <div
+          id='main-photo'
+          className='w-full h-[400px] bg-amber-100 relative'
+        >
+          임시 메인사진 영역
+        </div>
+      </div>
 
       <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
         <FormProvider {...methods}>
@@ -233,6 +248,7 @@ const CreateCardPage = () => {
             {currentStep === 4 && <NavigationDetailInput />}
             {currentStep === 5 && <GuestInfoInput />}
             {currentStep === 6 && <MainViewInput />}
+            {currentStep === 7 && <StickerInput />}
             {currentStep === refs.length && (
               <button
                 className='w-full'
