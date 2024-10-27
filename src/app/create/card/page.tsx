@@ -35,7 +35,7 @@ const CreateCardPage = () => {
         console.error(error);
       }
 
-      return data ?? null;
+      return data;
     },
   });
 
