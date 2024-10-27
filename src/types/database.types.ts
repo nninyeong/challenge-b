@@ -95,23 +95,23 @@ export type Database = {
         Insert: {
           account: Json;
           attendance: Json;
-          bg_color?: Json;
+          bg_color: Json;
           created_at?: string;
           gallery: Json;
-          greeting_message?: Json;
+          greeting_message: Json;
           guestbook: Json;
           id?: string;
           img_ratio?: Json | null;
-          main_text?: Json;
-          main_view?: Json;
-          mood?: Json;
-          personal_info?: Json;
+          main_text: Json;
+          main_view: Json;
+          mood: Json;
+          personal_info: Json;
           stickers?: Json | null;
-          type?: Json;
+          type: Json;
           user_id?: string;
-          wedding_info?: Json;
+          wedding_info: Json;
           navigation_detail?: Json | null;
-          d_day?: Json | null;
+          d_day: Json | null;
         };
         Update: {
           account?: Json;
@@ -131,8 +131,8 @@ export type Database = {
           type?: Json;
           user_id?: string;
           wedding_info?: Json;
-          navigation_detail?: Json | null;
-          d_day?: Json | null;
+          navigation_detail: Json | null;
+          d_day: Json | null;
         };
         Relationships: [];
       };
