@@ -135,7 +135,6 @@ const CreateCardPage = () => {
         wedding_info: existingInvitation.wedding_info as WeddingInfoType,
         account: existingInvitation.account as AccountInfoType,
       };
-      console.log(transformedInvitation);
 
       reset(transformedInvitation);
     }
