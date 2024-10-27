@@ -16,7 +16,7 @@ export type PersonalInfoType = {
   groom: PersonalType;
 };
 
-type WeddingInfoType = {
+export type WeddingInfoType = {
   date: string;
   time: { hour: string; minute: string };
   weddingHallAddress: string;

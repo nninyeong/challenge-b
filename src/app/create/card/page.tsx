@@ -13,7 +13,8 @@ import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import { createClient } from '@/utils/supabase/client';
 import { getUserInfo } from '@/utils/server-action';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { InvitationFormType } from '@/types/invitationFormType.type';
+import { InvitationFormType, PersonalInfoType, WeddingInfoType } from '@/types/invitationFormType.type';
+import { AccountInfoType } from '@/types/accountType.type';
 
 const CreateCardPage = () => {
   const browserClient = createClient();
@@ -24,26 +25,27 @@ const CreateCardPage = () => {
     queryFn: async () => {
       const user = await getUserInfo();
 
-      if (user) {
-        const { data, error } = await browserClient.from('invitation').select('*').eq('user_id', user.user.id).single();
+      const { data, error } = await browserClient
+        .from('invitation')
+        .select('*')
+        .eq('user_id', user.user.id)
+        .maybeSingle();
 
-        if (error) {
-          console.error(error);
-          return null;
-        }
-        return data ?? null;
+      if (error) {
+        console.error(error);
       }
-      return null;
+
+      return data ?? null;
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (formattedData: InvitationFormType) => {
+    mutationFn: async (invitationData: InvitationFormType) => {
       const user = await getUserInfo();
 
       const { error } = existingInvitation
-        ? await browserClient.from('invitation').update(formattedData).eq('user_id', user.user.id)
-        : await browserClient.from('invitation').insert([formattedData]);
+        ? await browserClient.from('invitation').update(invitationData).eq('user_id', user.user.id)
+        : await browserClient.from('invitation').insert([invitationData]);
 
       if (error) {
         console.error(error);
@@ -117,27 +119,30 @@ const CreateCardPage = () => {
 
   useEffect(() => {
     if (existingInvitation) {
-      reset(existingInvitation);
+      const transformedInvitation: InvitationFormType = {
+        gallery: existingInvitation.gallery,
+        type: existingInvitation.type,
+        mood: existingInvitation.mood,
+        main_view: existingInvitation.main_view,
+        bg_color: existingInvitation.bg_color,
+        stickers: existingInvitation.stickers,
+        img_ratio: existingInvitation.img_ratio,
+        main_text: existingInvitation.main_text,
+        greeting_message: existingInvitation.greeting_message,
+        guestbook: existingInvitation.guestbook as boolean,
+        attendance: existingInvitation.attendance as boolean,
+        personal_info: existingInvitation.personal_info as PersonalInfoType,
+        wedding_info: existingInvitation.wedding_info as WeddingInfoType,
+        account: existingInvitation.account as AccountInfoType,
+      };
+      console.log(transformedInvitation);
+
+      reset(transformedInvitation);
     }
   }, [existingInvitation]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
-    // 폼 완료되면 수정해야함
-    const formattedData = {
-      ...invitationData,
-      gallery: '',
-      type: '',
-      mood: '',
-      main_view: '',
-      bg_color: '',
-      stickers: '',
-      img_ratio: '',
-      main_text: '',
-      greeting_message: '',
-    };
-    console.log(invitationData);
-
-    mutation.mutate(formattedData);
+    mutation.mutate(invitationData);
   };
 
   const [currentStep, setCurrentStep] = useState(1);
