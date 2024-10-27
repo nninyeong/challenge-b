@@ -1,3 +1,4 @@
+import MapView from "@/components/map/MapView";
 import { InvitationFormType } from "@/types/invitationFormType.type"
 import { Control, useWatch } from "react-hook-form"
 
@@ -6,10 +7,14 @@ const NavigationDetailsPreview = ({ control }: { control: Control<InvitationForm
     control,
     name: 'navigation_detail',
   });
+  const weddingInfoWatch = useWatch({
+    control,
+    name: 'wedding_info',
+  });
   return (
     <>
       <div>NavigationDetailsPreview</div>
-      {navigationDetail.map && <div>Map</div>}
+      {navigationDetail.map && <MapView address={weddingInfoWatch.weddingHallAddress} />}
       {navigationDetail.navigation_button && <div>navigation_button</div>}
       {navigationDetail.car && <div><div>자가용</div><div>{navigationDetail.car}</div></div>}
       {navigationDetail.subway && <div><div>지하철</div><div>{navigationDetail.subway}</div></div>}
