@@ -1,8 +1,7 @@
 import { useFormContext } from 'react-hook-form';
-import { useAllStickers } from '@/hooks/queries/useStickers';
+import { useAllStickers } from '@/hooks/queries/useGetStickers';
 import { useState } from 'react';
 import StickerCategoryButton from '@/components/create/stickerInput/StickerCategoryButton';
-import Image from 'next/image';
 import StickerSlot from '@/components/create/stickerInput/StickerSlot';
 
 const StickerInput = () => {
@@ -33,11 +32,21 @@ const StickerInput = () => {
 
     if (selectedCategory === null) {
       return Object.keys(stickerByCategory).flatMap((category) =>
-        stickerByCategory[category].map((sticker) => <StickerSlot sticker={sticker} />),
+        stickerByCategory[category].map((sticker) => (
+          <StickerSlot
+            key={sticker.id}
+            sticker={sticker}
+          />
+        )),
       );
     }
 
-    return stickerByCategory[selectedCategory].map((sticker) => <StickerSlot sticker={sticker} />);
+    return stickerByCategory[selectedCategory].map((sticker) => (
+      <StickerSlot
+        key={sticker.id}
+        sticker={sticker}
+      />
+    ));
   };
 
   return (
@@ -45,6 +54,7 @@ const StickerInput = () => {
       <div>
         {categories.map((category) => (
           <StickerCategoryButton
+            key={`${category}-button`}
             category={category}
             onClick={() => {
               handleSelectCategory(category);
