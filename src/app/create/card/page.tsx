@@ -23,6 +23,7 @@ import { AccountInfoType } from '@/types/accountType.type';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
+import { Invitation } from '@/types/InvitationData.type';
 
 const CreateCardPage = () => {
   const browserClient = createClient();
@@ -69,10 +70,10 @@ const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
-      main_view: {
+      mainView: {
         color: '#ffffff',
       },
-      personal_info: {
+      personalInfo: {
         bride: {
           name: '',
           phoneNumber: '',
@@ -110,16 +111,16 @@ const CreateCardPage = () => {
       },
       guestbook: false,
       attendance: false,
-      wedding_info: {
+      weddingInfo: {
         date: '',
         time: { hour: '', minute: '' },
         weddingHallAddress: '',
         weddingHallName: '',
         weddingHallContact: '',
       },
-      navigation_detail: {
+      navigationDetail: {
         map: false,
-        navigation_button: false,
+        navigationButton: false,
         car: '',
         subway: '',
         bus: '',
@@ -127,37 +128,40 @@ const CreateCardPage = () => {
       gallery: '',
       type: '',
       mood: '',
-      bg_color: '',
+      bgColor: '',
       stickers: '',
-      img_ratio: '',
-      main_text: '',
-      greeting_message: '',
-      d_day: false,
+      imgRatio: '',
+      mainText: '',
+      greetingMessage: '',
+      dDay: false,
     },
   });
   const { reset } = methods;
 
+  const transformInvitation = (invitation: Invitation): InvitationFormType => {
+    return {
+      gallery: invitation.gallery,
+      type: invitation.type,
+      mood: invitation.mood,
+      mainView: invitation.main_view,
+      bgColor: invitation.bg_color,
+      stickers: invitation.stickers,
+      imgRatio: invitation.img_ratio,
+      mainText: invitation.main_text,
+      greetingMessage: invitation.greeting_message,
+      guestbook: invitation.guestbook as boolean,
+      attendance: invitation.attendance as boolean,
+      personalInfo: invitation.personal_info as PersonalInfoType,
+      weddingInfo: invitation.wedding_info as WeddingInfoType,
+      account: invitation.account as AccountInfoType,
+      navigationDetail: invitation.navigation_detail as NavigationDetailType,
+      dDay: invitation.d_day as boolean,
+    };
+  };
+
   useEffect(() => {
     if (existingInvitation) {
-      const transformedInvitation: InvitationFormType = {
-        gallery: existingInvitation.gallery,
-        type: existingInvitation.type,
-        mood: existingInvitation.mood,
-        main_view: existingInvitation.main_view,
-        bg_color: existingInvitation.bg_color,
-        stickers: existingInvitation.stickers,
-        img_ratio: existingInvitation.img_ratio,
-        main_text: existingInvitation.main_text,
-        greeting_message: existingInvitation.greeting_message,
-        guestbook: existingInvitation.guestbook as boolean,
-        attendance: existingInvitation.attendance as boolean,
-        personal_info: existingInvitation.personal_info as PersonalInfoType,
-        wedding_info: existingInvitation.wedding_info as WeddingInfoType,
-        account: existingInvitation.account as AccountInfoType,
-        navigation_detail: existingInvitation.navigation_detail as NavigationDetailType,
-        d_day: existingInvitation.d_day as boolean,
-      };
-
+      const transformedInvitation = transformInvitation(existingInvitation);
       reset(transformedInvitation);
     }
   }, [existingInvitation]);
@@ -179,7 +183,7 @@ const CreateCardPage = () => {
 
   useEffect(() => {
     const subscription = methods.watch((value) => {
-      const color = value.main_view.color;
+      const color = value.mainView.color;
       if (color) {
         setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
       }

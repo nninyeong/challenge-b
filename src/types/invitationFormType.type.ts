@@ -26,7 +26,7 @@ export type WeddingInfoType = {
 
 export type NavigationDetailType = {
   map: boolean;
-  navigation_button: boolean;
+  navigationButton: boolean;
   car: string;
   subway: string;
   bus: string;
@@ -36,17 +36,17 @@ export type InvitationFormType = {
   gallery: any;
   type: any;
   mood: any;
-  main_view: any;
-  bg_color: any;
+  mainView: any;
+  bgColor: any;
   stickers: any;
-  img_ratio: any;
-  main_text: any;
-  personal_info: PersonalInfoType;
-  greeting_message: any;
-  wedding_info: WeddingInfoType;
+  imgRatio: any;
+  mainText: any;
+  personalInfo: PersonalInfoType;
+  greetingMessage: any;
+  weddingInfo: WeddingInfoType;
   account: AccountInfoType;
-  navigation_detail: NavigationDetailType;
+  navigationDetail: NavigationDetailType;
   guestbook: boolean;
   attendance: boolean;
-  d_day: boolean;
+  dDay: boolean;
 };
