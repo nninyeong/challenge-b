@@ -35,7 +35,7 @@ const StickerInput = () => {
         stickerByCategory[category].map((sticker) => (
           <StickerSlot
             key={sticker.id}
-            sticker={sticker}
+            stickerImage={sticker}
           />
         )),
       );
@@ -44,7 +44,7 @@ const StickerInput = () => {
     return stickerByCategory[selectedCategory].map((sticker) => (
       <StickerSlot
         key={sticker.id}
-        sticker={sticker}
+        stickerImage={sticker}
       />
     ));
   };

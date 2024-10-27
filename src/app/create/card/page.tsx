@@ -15,6 +15,7 @@ import NavigationDetailsPreview from '@/components/create/preview/NavigationDeta
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
 import StickerInput from '@/components/create/StickerInput';
+import StickerPreview from '@/components/create/preview/StickerPreview';
 
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
@@ -215,6 +216,7 @@ const CreateCardPage = () => {
           className='w-full h-[400px] bg-amber-100 relative'
         >
           임시 메인사진 영역
+          <StickerPreview control={methods.control} />
         </div>
       </div>
 

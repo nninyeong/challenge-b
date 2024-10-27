@@ -35,6 +35,7 @@ type NavigationDetailType = {
 export type Sticker = {
   id: string;
   stickerImageId: string;
+  url: string;
   posX: string;
   posY: string;
 };
