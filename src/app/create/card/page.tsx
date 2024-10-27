@@ -1,7 +1,7 @@
 'use client';
 import AccountInput from '@/components/create/AccountInput';
-import AttendanceInput from '@/components/create/AttendanceInput';
-import AttendancePreview from '@/components/create/preview/AttendancePreview';
+import GuestInfoInput from '@/components/create/GuestInfoInput';
+import GuestInfoPreview from '@/components/create/preview/GuestInfoPreview';
 import AccountPreView from '@/components/create/preview/AccountPreView';
 import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -13,8 +13,16 @@ import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import { createClient } from '@/utils/supabase/client';
 import { getUserInfo } from '@/utils/server-action';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { InvitationFormType, PersonalInfoType, WeddingInfoType } from '@/types/invitationFormType.type';
+import {
+  InvitationFormType,
+  NavigationDetailType,
+  PersonalInfoType,
+  WeddingInfoType,
+} from '@/types/invitationFormType.type';
 import { AccountInfoType } from '@/types/accountType.type';
+import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
+import NavigationDetailInput from '@/components/create/NavigationDetailInput';
+import MainViewInput from '@/components/create/MainViewInput';
 
 const CreateCardPage = () => {
   const browserClient = createClient();
@@ -59,6 +67,9 @@ const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
+      main_view: {
+        color: '#ffffff',
+      },
       personal_info: {
         bride: {
           name: '',
@@ -104,15 +115,22 @@ const CreateCardPage = () => {
         weddingHallName: '',
         weddingHallContact: '',
       },
+      navigation_detail: {
+        map: false,
+        navigation_button: false,
+        car: '',
+        subway: '',
+        bus: '',
+      },
       gallery: '',
       type: '',
       mood: '',
-      main_view: '',
       bg_color: '',
       stickers: '',
       img_ratio: '',
       main_text: '',
       greeting_message: '',
+      d_day: false,
     },
   });
   const { reset } = methods;
@@ -134,6 +152,8 @@ const CreateCardPage = () => {
         personal_info: existingInvitation.personal_info as PersonalInfoType,
         wedding_info: existingInvitation.wedding_info as WeddingInfoType,
         account: existingInvitation.account as AccountInfoType,
+        navigation_detail: existingInvitation.navigation_detail as NavigationDetailType,
+        d_day: existingInvitation.d_day as boolean,
       };
 
       reset(transformedInvitation);
@@ -145,12 +165,25 @@ const CreateCardPage = () => {
   };
 
   const [currentStep, setCurrentStep] = useState(1);
+  const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const refs = [
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
   ];
+
+  useEffect(() => {
+    const subscription = methods.watch((value) => {
+      const color = value.main_view.color;
+      if (color) {
+        setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
+      }
+      return () => subscription.unsubscribe();
+    });
+  }, [methods]);
 
   const handleNext = () => {
     if (currentStep < refs.length) {
@@ -207,9 +240,13 @@ const CreateCardPage = () => {
       });
     };
   }, [refs]);
-  console.log(currentStep);
   return (
-    <div className='relative w-full h-full'>
+    <div
+      className='relative w-full h-full'
+      style={{
+        backgroundColor: backgroundColor,
+      }}
+    >
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[0]}
@@ -230,18 +267,32 @@ const CreateCardPage = () => {
       >
         <WeddingInfoPreView control={methods.control} />
       </div>
-      {/*참석여부*/}
+      {/* 지도, 교통정보 */}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[3]}
       >
-        <AttendancePreview control={methods.control} />
+        <NavigationDetailsPreview control={methods.control} />
+      </div>
+      {/*참석여부*/}
+      <div
+        className='min-h-[calc(100vh-114px)]'
+        ref={refs[4]}
+      >
+        <GuestInfoPreview control={methods.control} />
+      </div>
+      {/*참석여부*/}
+      <div
+        className='min-h-[calc(100vh-114px)]'
+        ref={refs[5]}
+      >
+        colorpalette
       </div>
 
-      <div className='fixed bottom-0 left-0 right-0 px-4'>
+      <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
         <FormProvider {...methods}>
           <form
-            className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px]'
+            className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <div className='w-full flex items-center justify-end'>
@@ -265,7 +316,9 @@ const CreateCardPage = () => {
             {currentStep === 1 && <PersonalInfoInput />}
             {currentStep === 2 && <AccountInput />}
             {currentStep === 3 && <WeddingInfoInput />}
-            {currentStep === 4 && <AttendanceInput />}
+            {currentStep === 4 && <NavigationDetailInput />}
+            {currentStep === 5 && <GuestInfoInput />}
+            {currentStep === 6 && <MainViewInput />}
             {currentStep === refs.length && (
               <button
                 className='w-full'

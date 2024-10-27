@@ -16,10 +16,9 @@ const GuestBook = () => {
 
   return (
     <div>
-      <div>GuestBook</div>
-      <div>방명록</div>
+      <div className='text-center'>GUEST BOOK</div>
       <div
-        className='cursor-pointer'
+        className='cursor-pointer text-center'
         onClick={handleCreateModalClick}
       >
         작성하기
