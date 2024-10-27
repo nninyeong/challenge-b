@@ -22,6 +22,8 @@ const OBSERVER_OPTIONS = {
   threshold: 0.9,
 };
 
+const DELAY_TIME: number = 300;
+
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
@@ -105,14 +107,14 @@ const CreateCardPage = () => {
       isNavigating.current = true;
       setCurrentStep((prev) => prev + 1);
     }
-  }, 300);
+  }, DELAY_TIME);
 
   const handleDebouncedPrevious = debounce(() => {
     if (currentStep > 1) {
       isNavigating.current = true;
       setCurrentStep((prev) => prev - 1);
     }
-  }, 300);
+  }, DELAY_TIME);
 
   const observerCallback = (entries: IntersectionObserverEntry[]) => {
     if (isNavigating.current) return; // 수동 전환 중에는 옵저버 무시
@@ -152,7 +154,7 @@ const CreateCardPage = () => {
     });
   };
 
-  const manageScrollswithButtons = () => {
+  const scrollEvent = () => {
     if (refs[currentStep - 1].current) {
       refs[currentStep - 1].current?.scrollIntoView({
         behavior: 'smooth',
@@ -161,7 +163,7 @@ const CreateCardPage = () => {
     }
     setTimeout(() => {
       isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
-    }, 300); // 스크롤 애니메이션 지속 시간 후 재활성화
+    }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
   };
 
   useEffect(() => {
@@ -169,14 +171,14 @@ const CreateCardPage = () => {
   }, [methods]);
 
   useEffect(() => {
-    manageScrollswithButtons();
+    scrollEvent();
   }, [currentStep]);
 
   useEffect(() => {
     unsubscribeObservers();
     observeObserver();
     return () => unsubscribeObservers();
-  }, [currentStep, refs]);
+  }, [currentStep]);
 
   return (
     <div
