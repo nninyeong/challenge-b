@@ -11,9 +11,6 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
   if (error) {
     throw new Error('스티커 fetch 에러: ', error);
   }
-
-  console.log('fetched data: ', data);
-
   const stickersByCategory: Record<string, StickerImage[]> = {};
 
   data?.forEach((file) => {
