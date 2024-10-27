@@ -155,7 +155,7 @@ const CreateCardPage = () => {
   };
 
   const scrollEvent = () => {
-    if (refs[currentStep - 1].current) {
+    if (currentStep > 3 && refs[currentStep - 1].current) {
       refs[currentStep - 1].current?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
