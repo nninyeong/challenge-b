@@ -28,23 +28,21 @@ const DeleteGuestBookAccordion = ({
       alert('패스워드를 입력해주세요.');
       return;
     }
-    
+
     deleteGuestBookEntry(password);
   };
 
   return (
-    <div className='p-4 bg-white text-black border rounded-md mt-2'>
+    <div className='px-4 bg-white text-black mt-2'>
       <form onSubmit={handleGuestBookDelete}>
-        <label className='flex gap-3'>
-          비밀번호
-          <input
-            type='password'
-            className='border-gray-500 border outline-none p-1'
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </label>
-        <button type='submit'>삭제하기</button>
+        <input
+          type='password'
+          className='border-gray-500 border outline-none p-1 w-full mb-2'
+          value={password}
+          placeholder='비밀번호를 입력하세요.'
+          onChange={handlePasswordChange}
+        />
+        <button className='w-full mb-2' type='submit'>삭제하기</button>
       </form>
     </div>
   );

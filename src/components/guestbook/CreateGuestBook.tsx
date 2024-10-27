@@ -30,34 +30,34 @@ const CreateGuestBook: React.FC<{ invitationId: string }> = ({ invitationId }) =
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className='w-full px-4 mb-2'>
           <input
             type='text'
-            className='border-gray-500 border outline-none col-span-2 p-1'
+            className='border-gray-500 border outline-none col-span-2 p-1 w-full'
             value={name}
             placeholder='이름'
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div>
+        <div className='w-full px-4 mb-2'>
           <input
             type='password'
-            className='border-gray-500 border outline-none col-span-2 p-1'
+            className='border-gray-500 border outline-none col-span-2 p-1 w-full'
             value={password}
             placeholder='비밀번호'
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div>
+        <div className='w-full px-4 mb-2'>
           <input
             type='text'
-            className='border-gray-500 border outline-none col-span-2 p-1'
+            className='border-gray-500 border outline-none col-span-2 p-1 w-full'
             value={message}
             placeholder='축하메세지'
             onChange={(e) => setMessage(e.target.value)}
           />
         </div>
-        <button type='submit'>작성하기</button>
+        <button className='w-full px-4' type='submit'>작성하기</button>
       </form>
     </div>
   );
