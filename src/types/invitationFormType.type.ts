@@ -32,7 +32,7 @@ type NavigationDetailType = {
   bus: string;
 };
 
-export type Sticker = {
+export type StickerType = {
   id: string;
   stickerImageId: string;
   url: string;
@@ -46,7 +46,7 @@ export type InvitationFormType = {
   mood: any;
   main_view: any;
   bg_color: any;
-  stickers: Sticker[];
+  stickers: StickerType[];
   img_ratio: any;
   main_text: any;
   personal_info: PersonalInfoType;
