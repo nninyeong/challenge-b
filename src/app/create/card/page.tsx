@@ -28,23 +28,25 @@ const CreateCardPage = () => {
   const browserClient = createClient();
   const queryClient = useQueryClient();
 
+  const getExistingInvitation = async () => {
+    const user = await getUserInfo();
+
+    const { data, error } = await browserClient
+      .from('invitation')
+      .select('*')
+      .eq('user_id', user.user.id)
+      .maybeSingle();
+
+    if (error) {
+      console.error(error);
+    }
+
+    return data;
+  };
+
   const { data: existingInvitation } = useQuery({
     queryKey: ['invitation'],
-    queryFn: async () => {
-      const user = await getUserInfo();
-
-      const { data, error } = await browserClient
-        .from('invitation')
-        .select('*')
-        .eq('user_id', user.user.id)
-        .maybeSingle();
-
-      if (error) {
-        console.error(error);
-      }
-
-      return data;
-    },
+    queryFn: getExistingInvitation,
   });
 
   const mutation = useMutation({
