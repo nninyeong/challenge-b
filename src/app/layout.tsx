@@ -32,6 +32,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           <main className='h-full w-full flex-1'>{children}</main>
+          <div id='modal'></div>
           <Footer />
         </Providers>
       </body>
