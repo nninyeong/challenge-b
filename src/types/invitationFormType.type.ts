@@ -30,13 +30,14 @@ type NavigationDetailType = {
   car: string;
   subway: string;
   bus: string;
-}
+};
 
-type Sticker = {
+export type Sticker = {
   id: string;
-  stickerId: string;
-  position: {x: number; y: number};
-}
+  stickerImageId: string;
+  posX: string;
+  posY: string;
+};
 
 export type InvitationFormType = {
   gallery: any;
