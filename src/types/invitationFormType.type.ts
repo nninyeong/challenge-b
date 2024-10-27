@@ -30,7 +30,7 @@ type NavigationDetailType = {
   car: string;
   subway: string;
   bus: string;
-}
+};
 
 export type InvitationFormType = {
   gallery: any;
@@ -48,4 +48,5 @@ export type InvitationFormType = {
   navigation_detail: NavigationDetailType;
   guestbook: boolean;
   attendance: boolean;
+  d_day: boolean;
 };

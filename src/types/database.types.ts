@@ -89,6 +89,8 @@ export type Database = {
           type: Json;
           user_id: string;
           wedding_info: Json;
+          navigation_detail: Json | null;
+          d_day: Json;
         };
         Insert: {
           account: Json;
@@ -108,6 +110,8 @@ export type Database = {
           type: Json;
           user_id?: string;
           wedding_info: Json;
+          navigation_detail: Json | null;
+          d_day: Json;
         };
         Update: {
           account?: Json;
@@ -127,6 +131,8 @@ export type Database = {
           type?: Json;
           user_id?: string;
           wedding_info?: Json;
+          navigation_detail: Json | null;
+          d_day: Json;
         };
         Relationships: [];
       };
