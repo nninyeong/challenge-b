@@ -24,7 +24,7 @@ export type WeddingInfoType = {
   weddingHallContact: string;
 };
 
-type NavigationDetailType = {
+export type NavigationDetailType = {
   map: boolean;
   navigation_button: boolean;
   car: string;
