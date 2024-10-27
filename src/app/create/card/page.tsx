@@ -54,9 +54,11 @@ const CreateCardPage = () => {
     mutationFn: async (invitationData: InvitationFormType) => {
       const user = await getUserInfo();
 
+      const convertedInvitation = underscoreInvitation(invitationData);
+
       const { error } = existingInvitation
-        ? await browserClient.from('invitation').update(invitationData).eq('user_id', user.user.id)
-        : await browserClient.from('invitation').insert([invitationData]);
+        ? await browserClient.from('invitation').update(convertedInvitation).eq('user_id', user.user.id)
+        : await browserClient.from('invitation').insert([convertedInvitation]);
 
       if (error) {
         console.error(error);
@@ -138,7 +140,7 @@ const CreateCardPage = () => {
   });
   const { reset } = methods;
 
-  const transformInvitation = (invitation: Invitation): InvitationFormType => {
+  const camelizeInvitation = (invitation: Invitation): InvitationFormType => {
     return {
       gallery: invitation.gallery,
       type: invitation.type,
@@ -159,10 +161,30 @@ const CreateCardPage = () => {
     };
   };
 
+  const underscoreInvitation = (invitation: InvitationFormType) => {
+    return {
+      gallery: invitation.gallery,
+      type: invitation.type,
+      mood: invitation.mood,
+      main_view: invitation.mainView,
+      bg_color: invitation.bgColor,
+      stickers: invitation.stickers,
+      img_ratio: invitation.imgRatio,
+      main_text: invitation.mainText,
+      greeting_message: invitation.greetingMessage,
+      guestbook: invitation.guestbook as boolean,
+      attendance: invitation.attendance as boolean,
+      personal_info: invitation.personalInfo as PersonalInfoType,
+      wedding_info: invitation.weddingInfo as WeddingInfoType,
+      account: invitation.account as AccountInfoType,
+      navigation_detail: invitation.navigationDetail as NavigationDetailType,
+      d_day: invitation.dDay as boolean,
+    };
+  };
   useEffect(() => {
     if (existingInvitation) {
-      const transformedInvitation = transformInvitation(existingInvitation);
-      reset(transformedInvitation);
+      const convertedInvitation = camelizeInvitation(existingInvitation);
+      reset(convertedInvitation);
     }
   }, [existingInvitation]);
 
