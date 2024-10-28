@@ -7,6 +7,7 @@ import FlexColCenterContainer from '../FlexColCenterContainer';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import ColorPaletteModal from './ColorPaletteModal';
+import { ColorType } from '@/types/invitationFormType.type';
 const COLOR_DEFAULT_PALETTE: ColorType[] = [
   { r: 0, g: 0, b: 0, a: 1, name: '블랙' }, // #000000
   { r: 90, g: 90, b: 90, a: 1, name: '그레이' }, // #5A5A5A
@@ -17,13 +18,7 @@ const COLOR_DEFAULT_PALETTE: ColorType[] = [
   { r: 147, g: 115, b: 156, a: 1, name: '퍼플' }, // #93739C
   { r: 226, g: 205, b: 175, a: 1, name: '베이지' }, // #E2CDAF
 ] as const;
-export type ColorType = {
-  r: number;
-  g: number;
-  b: number;
-  a: number;
-  name: string;
-};
+
 const MainViewInput = () => {
   const { setValue } = useFormContext();
   const [myColor, setMyColor] = useState<ColorType>({ r: 255, g: 255, b: 255, a: 1, name: '커스텀' });
@@ -42,7 +37,7 @@ const MainViewInput = () => {
           <button
             type='button'
             className='w-[30px] h-[30px] border-2 border-solid rounded-full flex justify-center items-center bg-white'
-            onClick={() => setValue('mainView.color', { r: 255, g: 255, b: 255, a: 1 })}
+            onClick={() => setValue('bgColor', { r: 255, g: 255, b: 255, a: 1 })}
           >
             <ImSpinner11 className='rotate-90' />
           </button>
@@ -56,7 +51,7 @@ const MainViewInput = () => {
             >
               <button
                 type='button'
-                onClick={() => setValue('mainView.color', colorElement)}
+                onClick={() => setValue('bgColor', colorElement)}
                 className={`w-[30px] h-[30px] border-2 border-solid border-white rounded-full`}
                 style={{
                   backgroundColor: `rgba(${colorElement.r},${colorElement.g},${colorElement.b},${colorElement.a})`,
