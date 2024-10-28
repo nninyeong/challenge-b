@@ -6,7 +6,7 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 const PersonalInfoPreview = ({ control }: { control: Control<InvitationFormType> }) => {
   const personaInfoWatch = useWatch({
     control,
-    name: 'personal_info',
+    name: 'personalInfo',
   });
 
   return (

@@ -1,3 +1,5 @@
+import { hostname } from 'os';
+
 /** @types {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -27,6 +29,7 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      { protocol: 'http', hostname: 'img1.kakaocdn.net', port: '', pathname: '/**' },
     ],
     formats: ['image/avif', 'image/webp'],
   },

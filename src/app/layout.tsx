@@ -5,6 +5,7 @@ import Providers from '@/app/provider';
 import Header from '@/components/layouts/Header';
 import Footer from '@/components/layouts/Footer';
 import Script from 'next/script';
+import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -29,11 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen w-full`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] w-full`}
+      >
         <Script
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services,clusterer&autoload=false`}
           strategy='beforeInteractive'
         />
+        <SetScreenHeight />
         <Providers>
           <Header />
           <main className='h-full w-full flex-1'>{children}</main>

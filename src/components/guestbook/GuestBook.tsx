@@ -1,12 +1,10 @@
 'use client';
 
 import useGuestBookEntries from '@/hooks/modals/useGuestBookEntries';
-import useGuestBookButton from '@/hooks/modals/useGuestBookButton';
-import CreateGuestBookModal from './CreateGuestBookModal';
+import CreateGuestBook from './CreateGuestBook';
 import GuestBookCard from './GuestBookCard';
 
 const GuestBook = () => {
-  const { showCreateModal, handleCreateModalClick } = useGuestBookButton();
   const invitationId = '4cf95008-dd98-4810-875b-354cd38a6505'; // 추후 청첩장 id를 넣는 방식으로 변경
 
   const { data: guestBooks = [], isLoading, error } = useGuestBookEntries(invitationId);
@@ -17,12 +15,7 @@ const GuestBook = () => {
   return (
     <div>
       <div className='text-center'>GUEST BOOK</div>
-      <div
-        className='cursor-pointer text-center'
-        onClick={handleCreateModalClick}
-      >
-        작성하기
-      </div>
+      <CreateGuestBook invitationId={invitationId}/>
       <div>
         {guestBooks.map((guestBook) => (
           <GuestBookCard
@@ -32,12 +25,6 @@ const GuestBook = () => {
           />
         ))}
       </div>
-      {showCreateModal && (
-        <CreateGuestBookModal
-          invitationId={invitationId}
-          onClick={handleCreateModalClick}
-        />
-      )}
     </div>
   );
 };

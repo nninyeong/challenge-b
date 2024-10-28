@@ -4,7 +4,7 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 const WeddingInfoPreView = ({ control }: { control: Control<InvitationFormType> }) => {
   const weddingInfoWatch = useWatch({
     control,
-    name: 'wedding_info',
+    name: 'weddingInfo',
   });
 
   return (

@@ -11,7 +11,9 @@ const MapView = ({ address }: { address: string }) => {
       {coords ? (
         <Map
           center={coords}
-          className='w-full h-[400px]'
+          zoomable={false}
+          draggable={false}
+          className='w-full h-[328px] rounded-3xl'
         >
           <MapMarker position={coords} />
         </Map>
