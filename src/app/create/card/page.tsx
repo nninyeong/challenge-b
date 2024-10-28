@@ -248,7 +248,6 @@ const CreateCardPage = () => {
       }
     });
   };
-  console.log(currentStep);
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
       const color = value.bgColor;
@@ -284,7 +283,7 @@ const CreateCardPage = () => {
     observeObserver();
     return () => unsubscribeObservers();
   }, [currentStep, refs]);
-  console.log(refs[currentStep - 1]);
+
   return (
     <div
       className='relative w-full h-full'
