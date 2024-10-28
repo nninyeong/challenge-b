@@ -11,6 +11,7 @@ import { MdRateReview } from 'react-icons/md';
 import { redirect } from 'next/navigation';
 import { getUserInfo } from '@/utils/server-action';
 import LogoutButton from '@/components/mypage/LogoutButton';
+import Link from 'next/link';
 
 const MyPage = async (): Promise<JSX.Element | null> => {
   const isLogin = await getIsLogin();
@@ -40,6 +41,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
         ) : (
           <div>정보가 없습니다</div>
         )}
+        <Link href={`/create/card`}>수정</Link>
         <div className='flex justify-around gap-8 mt-12'>
           {MENUCARDS.map((menucard) => (
             <div

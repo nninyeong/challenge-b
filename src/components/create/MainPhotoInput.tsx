@@ -15,14 +15,14 @@ const FONTMENU = [
 
 const MainPhotoInput = () => {
   const { register, watch, setValue } = useFormContext();
-  const introduceContent = watch('mainPhoto_info.introduceContent');
+  const introduceContent = watch('mainPhotoInfo.introduceContent');
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setValue('mainPhoto_info.imageUrl', reader.result as string);
+        setValue('mainPhotoInfo.imageUrl', reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -39,19 +39,19 @@ const MainPhotoInput = () => {
             <input
               type='text'
               placeholder='좌측'
-              {...register('mainPhoto_info.leftName')}
+              {...register('mainPhotoInfo.leftName')}
               className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
             />
             <input
               type='text'
               placeholder='♥︎'
-              {...register('mainPhoto_info.icon')}
+              {...register('mainPhotoInfo.icon')}
               className='h-[32px] w-[42px] pl-4 pr-4 border text-[12px] rounded-[8px] placeholder:text-center text-black'
             />
             <input
               type='text'
               placeholder='우측'
-              {...register('mainPhoto_info.rightName')}
+              {...register('mainPhotoInfo.rightName')}
               className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
             />
           </div>
@@ -89,7 +89,11 @@ const MainPhotoInput = () => {
           <TextEditor
             placeholder='메인화면 문구를 설정해주세요'
             value={introduceContent || ''}
+<<<<<<< HEAD
             onChange={(value) => setValue('mainPhoto_info.introduceContent', value)}
+=======
+            onChange={(value) => setValue('mainPhotoInfo.introduceContent', value)} // 수정된 부분
+>>>>>>> 47c314fa42b0e75260190edd6e3ba37a9cce48ae
           />
         </div>
       </div>
