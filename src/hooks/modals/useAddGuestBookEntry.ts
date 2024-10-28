@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import browserClient from '@/utils/supabase/client';
 import { QUERY_KEYS } from '../queries/queryKeys';
 
-const useAddGuestBookEntry = (invitationId: string, onSuccess: () => void) => {
+const useAddGuestBookEntry = ({ invitationId, resetInput }: { invitationId: string; resetInput: () => void }) => {
   const queryClient = useQueryClient();
 
   const insertGuestBook = async (name: string, password: string, content: string) => {
@@ -27,7 +27,8 @@ const useAddGuestBookEntry = (invitationId: string, onSuccess: () => void) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.guestBook(invitationId),
       });
-      onSuccess();
+      alert('방명록이 작성되었습니다.');
+      resetInput();
     },
     onError: (error: Error) => {
       console.error(error.message);
