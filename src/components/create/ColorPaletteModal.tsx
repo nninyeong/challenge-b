@@ -2,7 +2,7 @@
 
 import { Alpha, Hue, Saturation, useColor } from 'react-color-palette';
 import { useFormContext } from 'react-hook-form';
-import { ColorType } from './MainViewInput';
+import { ColorType } from '@/types/invitationFormType.type';
 import FlexColCenterContainer from '../FlexColCenterContainer';
 
 const ColorPaletteModal = ({
