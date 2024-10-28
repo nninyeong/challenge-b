@@ -15,16 +15,28 @@ import { getUserInfo } from '@/utils/server-action';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   InvitationFormType,
+  MainPhotoType,
   NavigationDetailType,
   PersonalInfoType,
   WeddingInfoType,
 } from '@/types/invitationFormType.type';
 import { AccountInfoType } from '@/types/accountType.type';
+import { Invitation } from '@/types/InvitationData.type';
+import { useInvitationQuery } from '@/hooks/queries/useInvitationQuery';
+import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
+import MainPhotoInput from '@/components/create/MainPhotoInput';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
-import { Invitation } from '@/types/InvitationData.type';
-import { useInvitationQuery } from '@/hooks/queries/useInvitationQuery';
+import { debounce } from '@/utils/debounce';
+
+const OBSERVER_OPTIONS = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0.9,
+};
+
+const DELAY_TIME: number = 300;
 
 const CreateCardPage = () => {
   const browserClient = createClient();
@@ -101,6 +113,11 @@ const CreateCardPage = () => {
         weddingHallName: '',
         weddingHallContact: '',
       },
+      mainPhotoInfo: {
+        leftName: '',
+        rightName: '',
+        icon: '',
+      },
       navigationDetail: {
         map: false,
         navigationButton: false,
@@ -139,6 +156,7 @@ const CreateCardPage = () => {
       account: invitation.account as AccountInfoType,
       navigationDetail: invitation.navigation_detail as NavigationDetailType,
       dDay: invitation.d_day as boolean,
+      mainPhotoInfo: invitation.main_photo_info as MainPhotoType,
     };
   };
 
@@ -160,8 +178,10 @@ const CreateCardPage = () => {
       account: invitation.account as AccountInfoType,
       navigation_detail: invitation.navigationDetail as NavigationDetailType,
       d_day: invitation.dDay as boolean,
+      main_photo_info: invitation.mainPhotoInfo as MainPhotoType,
     };
   };
+
   useEffect(() => {
     if (existingInvitation) {
       const convertedInvitation = camelizeInvitation(existingInvitation);
@@ -182,9 +202,55 @@ const CreateCardPage = () => {
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
   ];
 
-  useEffect(() => {
+  const observers = useRef<IntersectionObserver[]>([]);
+  const isNavigating = useRef<boolean>(false);
+
+  const handleDebouncedNext = debounce(() => {
+    if (currentStep < refs.length) {
+      isNavigating.current = true;
+      setCurrentStep((prev) => prev + 1);
+    }
+  }, DELAY_TIME);
+
+  const handleDebouncedPrevious = debounce(() => {
+    if (currentStep > 1) {
+      isNavigating.current = true;
+      setCurrentStep((prev) => prev - 1);
+    }
+  }, DELAY_TIME);
+
+  const observerCallback = (entries: IntersectionObserverEntry[]) => {
+    if (isNavigating.current) return; // 수동 전환 중에는 옵저버 무시
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const currentStepIndex = refs.findIndex((ref) => ref.current === entry.target);
+        if (currentStepIndex + 1 !== currentStep) {
+          setCurrentStep(currentStepIndex + 1);
+        }
+      }
+    });
+  };
+
+  const unsubscribeObservers = () => {
+    observers.current.forEach((observer, index) => {
+      if (refs[index]?.current) observer.unobserve(refs[index].current!);
+    });
+  };
+
+  const observeObserver = () => {
+    refs.forEach((ref, index) => {
+      if (ref.current) {
+        const observer = new IntersectionObserver(observerCallback, OBSERVER_OPTIONS);
+        observer.observe(ref.current);
+        observers.current[index] = observer;
+      }
+    });
+  };
+
+  const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
       const color = value.mainView.color;
       if (color) {
@@ -192,63 +258,34 @@ const CreateCardPage = () => {
       }
       return () => subscription.unsubscribe();
     });
-  }, [methods]);
-
-  const handleNext = () => {
-    if (currentStep < refs.length) {
-      setCurrentStep((prev) => prev + 1);
-    }
   };
 
-  const handlePrevious = () => {
-    if (currentStep > 1) {
-      setCurrentStep((prev) => prev - 1);
-    }
-  };
-
-  useEffect(() => {
-    if (refs[currentStep - 1].current) {
+  const scrollEvent = () => {
+    if (currentStep > 3 && refs[currentStep - 1].current) {
       refs[currentStep - 1].current?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
     }
+    setTimeout(() => {
+      isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
+    }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
+  };
+
+  useEffect(() => {
+    subscribeBackgroundColor();
+  }, [methods]);
+
+  useEffect(() => {
+    scrollEvent();
   }, [currentStep]);
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.9,
-    };
+    unsubscribeObservers();
+    observeObserver();
+    return () => unsubscribeObservers();
+  }, [currentStep]);
 
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const stepIndex = refs.findIndex((ref) => ref.current === entry.target);
-          if (stepIndex !== -1) {
-            setCurrentStep(stepIndex + 1);
-          }
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    refs.forEach((ref) => {
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-    });
-
-    return () => {
-      refs.forEach((ref) => {
-        if (ref.current) {
-          observer.unobserve(ref.current);
-        }
-      });
-    };
-  }, [refs]);
   return (
     <div
       className='relative w-full h-full'
@@ -256,41 +293,43 @@ const CreateCardPage = () => {
         backgroundColor: backgroundColor,
       }}
     >
+      {/*대표사진 프리뷰*/}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[0]}
       >
-        <PersonalInfoPreview control={methods.control} />
+        <MainPhotoPreView control={methods.control} />
       </div>
-      {/*r계좌 프리뷰*/}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[1]}
       >
-        <AccountPreView control={methods.control} />
+        <PersonalInfoPreview control={methods.control} />
       </div>
-      {/*웨딩 정보 프리뷰*/}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[2]}
       >
-        <WeddingInfoPreView control={methods.control} />
+        <AccountPreView control={methods.control} />
       </div>
-      {/* 지도, 교통정보 */}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[3]}
       >
+        <WeddingInfoPreView control={methods.control} />
+      </div>
+      <div
+        className='min-h-[calc(100vh-114px)]'
+        ref={refs[4]}
+      >
         <NavigationDetailsPreview control={methods.control} />
       </div>
-      {/*참석여부*/}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[4]}
       >
         <GuestInfoPreview control={methods.control} />
       </div>
-      {/*참석여부*/}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[5]}
@@ -307,7 +346,7 @@ const CreateCardPage = () => {
             <div className='w-full flex items-center justify-end'>
               <button
                 type='button'
-                onClick={handlePrevious}
+                onClick={handleDebouncedPrevious}
                 className='bg-red-300'
                 disabled={currentStep === 1}
               >
@@ -316,18 +355,20 @@ const CreateCardPage = () => {
               <button
                 className='bg-blue-300'
                 type='button'
-                onClick={handleNext}
+                onClick={handleDebouncedNext}
                 disabled={currentStep === refs.length}
               >
                 <MdNavigateNext />
               </button>
             </div>
-            {currentStep === 1 && <PersonalInfoInput />}
-            {currentStep === 2 && <AccountInput />}
-            {currentStep === 3 && <WeddingInfoInput />}
-            {currentStep === 4 && <NavigationDetailInput />}
-            {currentStep === 5 && <GuestInfoInput />}
-            {currentStep === 6 && <MainViewInput />}
+
+            {currentStep === 1 && <MainPhotoInput />}
+            {currentStep === 2 && <PersonalInfoInput />}
+            {currentStep === 3 && <AccountInput />}
+            {currentStep === 4 && <WeddingInfoInput />}
+            {currentStep === 5 && <NavigationDetailInput />}
+            {currentStep === 6 && <GuestInfoInput />}
+            {currentStep === 7 && <MainViewInput />}
             {currentStep === refs.length && (
               <button
                 className='w-full'
