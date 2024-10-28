@@ -18,6 +18,7 @@ import {
   MainPhotoType,
   NavigationDetailType,
   PersonalInfoType,
+  StickerType,
   WeddingInfoType,
 } from '@/types/invitationFormType.type';
 import { AccountInfoType } from '@/types/accountType.type';
@@ -147,7 +148,7 @@ const CreateCardPage = () => {
       mood: invitation.mood,
       mainView: invitation.main_view,
       bgColor: invitation.bg_color,
-      stickers: invitation.stickers,
+      stickers: invitation.stickers as StickerType[],
       imgRatio: invitation.img_ratio,
       mainText: invitation.main_text,
       greetingMessage: invitation.greeting_message,
@@ -169,7 +170,7 @@ const CreateCardPage = () => {
       mood: invitation.mood,
       main_view: invitation.mainView,
       bg_color: invitation.bgColor,
-      stickers: invitation.stickers,
+      stickers: invitation.stickers as StickerType[],
       img_ratio: invitation.imgRatio,
       main_text: invitation.mainText,
       greeting_message: invitation.greetingMessage,
@@ -198,6 +199,7 @@ const CreateCardPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
