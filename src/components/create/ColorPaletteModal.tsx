@@ -16,7 +16,7 @@ const ColorPaletteModal = ({
   const { setValue } = useFormContext();
 
   const handleApplyButton = () => {
-    setValue('main_view.color', { ...color.rgb, name: '커스텀' });
+    setValue('mainView.color', { ...color.rgb, name: '커스텀' });
     setMyColor({ ...color.rgb, name: '커스텀' });
     setOpenModal(false);
   };
