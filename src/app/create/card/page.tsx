@@ -63,6 +63,11 @@ const CreateCardPage = () => {
         weddingHallName: '',
         weddingHallContact: '',
       },
+      mainPhoto_info: {
+        leftName: '',
+        rightName: '',
+        icon: '',
+      },
     },
   });
 

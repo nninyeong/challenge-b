@@ -24,6 +24,13 @@ type WeddingInfoType = {
   weddingHallContact: string;
 };
 
+export type MainPhotoType = {
+  leftName: string;
+  rightName: string;
+  icon: string;
+  introduceContent: string;
+  imageUrl: string;
+};
 export type InvitationFormType = {
   gallery: any;
   type: any;
@@ -39,4 +46,5 @@ export type InvitationFormType = {
   account: AccountInfoType;
   guestbook: boolean;
   attendance: boolean;
+  mainPhoto_info: MainPhotoType;
 };
