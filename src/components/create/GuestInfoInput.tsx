@@ -9,7 +9,7 @@ const GuestInfoInput = () => {
     name: 'guestbook',
   });
   const dDayCondition = useWatch({
-    name: 'd_day',
+    name: 'dDay',
   });
   return (
     <>
@@ -28,7 +28,7 @@ const GuestInfoInput = () => {
         <label>
           <input
             type='checkbox'
-            {...register('d_day')}
+            {...register('dDay')}
           />
           {dDayCondition ? <span>디데이 사용</span> : <span>사용안함</span>}
         </label>
