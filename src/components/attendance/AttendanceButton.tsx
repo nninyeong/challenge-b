@@ -10,7 +10,7 @@ const AttendanceButton = () => {
   return (
     <>
       <div
-        className='cursor-pointer'
+        className='cursor-pointer text-center'
         onClick={handleModalClick}
       >
         참석 여부 전달

@@ -24,6 +24,7 @@ type WeddingInfoType = {
   weddingHallContact: string;
 };
 
+
 export type MainPhotoType = {
   leftName: string;
   rightName: string;
@@ -31,6 +32,16 @@ export type MainPhotoType = {
   introduceContent: string;
   imageUrl: string;
 };
+
+type NavigationDetailType = {
+  map: boolean;
+  navigation_button: boolean;
+  car: string;
+  subway: string;
+  bus: string;
+}
+
+
 export type InvitationFormType = {
   gallery: any;
   type: any;
@@ -44,6 +55,7 @@ export type InvitationFormType = {
   greeting_message: any;
   wedding_info: WeddingInfoType;
   account: AccountInfoType;
+  navigation_detail: NavigationDetailType;
   guestbook: boolean;
   attendance: boolean;
   mainPhoto_info: MainPhotoType;

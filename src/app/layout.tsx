@@ -4,6 +4,7 @@ import './globals.css';
 import Providers from '@/app/provider';
 import Header from '@/components/layouts/Header';
 import Footer from '@/components/layouts/Footer';
+import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -28,10 +29,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen w-full`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] w-full`}
+      >
+        <SetScreenHeight />
         <Providers>
           <Header />
           <main className='h-full w-full flex-1'>{children}</main>
+          <div id='modal'></div>
           <Footer />
         </Providers>
       </body>
