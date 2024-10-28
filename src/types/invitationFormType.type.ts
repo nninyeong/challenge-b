@@ -40,17 +40,37 @@ export type NavigationDetailType = {
   bus: string;
 };
 
+type GalleryType = {
+  images: File[];
+};
+
+type ImageRatioType = {
+  ratio: string;
+  position: number;
+};
+
+type GreetingMessageType = {
+  title: string;
+  content: string;
+};
+export type ColorType = {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+  name: string;
+};
 export type InvitationFormType = {
-  gallery: any;
-  type: any;
-  mood: any;
-  mainView: any;
-  bgColor: any;
-  stickers: any;
-  imgRatio: any;
-  mainText: any;
+  gallery: GalleryType;
+  type: 'scroll' | 'slide';
+  mood: string;
+  mainView: string;
+  bgColor: ColorType;
+  stickers: File[];
+  imgRatio: ImageRatioType;
+  mainText: string;
   personalInfo: PersonalInfoType;
-  greetingMessage: any;
+  greetingMessage: GreetingMessageType;
   weddingInfo: WeddingInfoType;
   account: AccountInfoType;
   navigationDetail: NavigationDetailType;

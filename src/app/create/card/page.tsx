@@ -65,9 +65,7 @@ const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
-      mainView: {
-        color: '#ffffff',
-      },
+      bgColor: { r: 255, g: 255, b: 255, a: 1, name: '흰색' },
       personalInfo: {
         bride: {
           name: '',
@@ -125,14 +123,13 @@ const CreateCardPage = () => {
         subway: '',
         bus: '',
       },
-      gallery: '',
-      type: '',
+      gallery: { images: [] },
+      type: 'scroll',
       mood: '',
-      bgColor: '',
-      stickers: '',
-      imgRatio: '',
+      stickers: [],
+      imgRatio: {},
       mainText: '',
-      greetingMessage: '',
+      greetingMessage: {},
       dDay: false,
     },
   });
@@ -147,7 +144,7 @@ const CreateCardPage = () => {
       bgColor: invitation.bg_color,
       stickers: invitation.stickers,
       imgRatio: invitation.img_ratio,
-      mainText: invitation.main_text,
+      mainText: invitation.main_text as string,
       greetingMessage: invitation.greeting_message,
       guestbook: invitation.guestbook as boolean,
       attendance: invitation.attendance as boolean,
@@ -252,7 +249,7 @@ const CreateCardPage = () => {
 
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
-      const color = value.mainView.color;
+      const color = value.bgColor;
       if (color) {
         setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
       }
