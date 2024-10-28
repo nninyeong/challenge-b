@@ -26,6 +26,7 @@ body {
   }
 }
 
+/* Font-face 설정 */
 @font-face {
   font-family: 'BMDOHYEON';
   src: url('../../public/assets/fonts/BMDOHYEON_ttf.ttf');
@@ -35,10 +36,12 @@ body {
   font-family: 'NanumPen';
   src: url('../../public/assets/fonts/NanumPen.ttf');
 }
+
 @font-face {
   font-family: 'Cafe24';
   src: url('../../public/assets/fonts/Cafe24Ohsquare-v2.0.ttf');
 }
+
 @font-face {
   font-family: 'SCDream1';
   src: url('../../public/assets/fonts/SCDream1.otf');
@@ -47,4 +50,27 @@ body {
 @font-face {
   font-family: 'Main';
   src: url('../../public/assets/fonts/SUIT-Medium.otf');
+}
+
+.custom-quill-editor .ql-toolbar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  background: white;
+  height: 30px;
+  align-items: center;
+}
+
+.custom-quill-editor .ql-toolbar button,
+.custom-quill-editor .ql-toolbar .ql-picker {
+  height: 24px;
+  width: 24px;
+  font-size: 10px;
+}
+
+.custom-quill-editor .ql-editor {
+  background: white;
+  height: 50px;
+  font-size: 10px;
+  color: black;
 }

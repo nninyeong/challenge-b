@@ -57,6 +57,12 @@ const config: Config = {
         system: '#e90000',
         gray200: '#D9D9D9',
       },
+      fontFamily: {
+        Bmdohyeon: ['BMDOHYEON'],
+        NanumPen: ['NanumPen'],
+        Cafe24: ['Cafe24'],
+        SCDream1: ['SCDream1'],
+      },
     },
   },
   plugins: [],
