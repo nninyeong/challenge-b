@@ -77,7 +77,7 @@ export type Database = {
           bg_color: Json;
           created_at: string;
           gallery: Json;
-          gretting_message: Json;
+          greeting_message: Json;
           guestbook: Json;
           id: string;
           img_ratio: Json | null;
@@ -85,10 +85,13 @@ export type Database = {
           main_view: Json;
           mood: Json;
           personal_info: Json;
-          sticker: Json | null;
+          stickers: Json | null;
           type: Json;
           user_id: string;
           wedding_info: Json;
+          navigation_detail: Json | null;
+          d_day: Json;
+          main_photo_info: Json;
         };
         Insert: {
           account: Json;
@@ -96,7 +99,7 @@ export type Database = {
           bg_color: Json;
           created_at?: string;
           gallery: Json;
-          gretting_message: Json;
+          greeting_message: Json;
           guestbook: Json;
           id?: string;
           img_ratio?: Json | null;
@@ -104,10 +107,13 @@ export type Database = {
           main_view: Json;
           mood: Json;
           personal_info: Json;
-          sticker?: Json | null;
+          stickers?: Json | null;
           type: Json;
           user_id?: string;
           wedding_info: Json;
+          navigation_detail?: Json | null;
+          d_day: Json | null;
+          main_photo_info: Json;
         };
         Update: {
           account?: Json;
@@ -115,7 +121,7 @@ export type Database = {
           bg_color?: Json;
           created_at?: string;
           gallery?: Json;
-          gretting_message?: Json;
+          greeting_message?: Json;
           guestbook?: Json;
           id?: string;
           img_ratio?: Json | null;
@@ -123,10 +129,13 @@ export type Database = {
           main_view?: Json;
           mood?: Json;
           personal_info?: Json;
-          sticker?: Json | null;
+          stickers?: Json | null;
           type?: Json;
           user_id?: string;
           wedding_info?: Json;
+          navigation_detail?: Json | null;
+          d_day?: Json | null;
+          main_photo_info?: Json;
         };
         Relationships: [];
       };

@@ -16,7 +16,7 @@ export type PersonalInfoType = {
   groom: PersonalType;
 };
 
-type WeddingInfoType = {
+export type WeddingInfoType = {
   date: string;
   time: { hour: string; minute: string };
   weddingHallAddress: string;
@@ -24,9 +24,17 @@ type WeddingInfoType = {
   weddingHallContact: string;
 };
 
-type NavigationDetailType = {
+export type MainPhotoType = {
+  leftName: string;
+  rightName: string;
+  icon: string;
+  introduceContent: string;
+  imageUrl: string;
+};
+
+export type NavigationDetailType = {
   map: boolean;
-  navigation_button: boolean;
+  navigationButton: boolean;
   car: string;
   subway: string;
   bus: string;
@@ -36,16 +44,18 @@ export type InvitationFormType = {
   gallery: any;
   type: any;
   mood: any;
-  main_view: any;
-  bg_color: any;
-  sticker: any;
-  img_ratio: any;
-  main_text: any;
-  personal_info: PersonalInfoType;
-  greeting_message: any;
-  wedding_info: WeddingInfoType;
+  mainView: any;
+  bgColor: any;
+  stickers: any;
+  imgRatio: any;
+  mainText: any;
+  personalInfo: PersonalInfoType;
+  greetingMessage: any;
+  weddingInfo: WeddingInfoType;
   account: AccountInfoType;
-  navigation_detail: NavigationDetailType;
+  navigationDetail: NavigationDetailType;
   guestbook: boolean;
   attendance: boolean;
+  dDay: boolean;
+  mainPhotoInfo: MainPhotoType;
 };
