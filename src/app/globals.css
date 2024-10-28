@@ -25,3 +25,26 @@ body {
     text-wrap: balance;
   }
 }
+
+@font-face {
+  font-family: 'BMDOHYEON';
+  src: url('../../public/assets/fonts/BMDOHYEON_ttf.ttf');
+}
+
+@font-face {
+  font-family: 'NanumPen';
+  src: url('../../public/assets/fonts/NanumPen.ttf');
+}
+@font-face {
+  font-family: 'Cafe24';
+  src: url('../../public/assets/fonts/Cafe24Ohsquare-v2.0.ttf');
+}
+@font-face {
+  font-family: 'SCDream1';
+  src: url('../../public/assets/fonts/SCDream1.otf');
+}
+
+@font-face {
+  font-family: 'Main';
+  src: url('../../public/assets/fonts/SUIT-Medium.otf');
+}

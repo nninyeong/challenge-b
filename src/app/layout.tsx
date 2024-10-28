@@ -6,14 +6,9 @@ import Header from '@/components/layouts/Header';
 import Footer from '@/components/layouts/Footer';
 import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-  weight: '100 900',
-});
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
+const SuitMedium = localFont({
+  src: '../../public/assets/fonts/SUIT-Medium.otf',
+  variable: '--font-suit',
   weight: '100 900',
 });
 
@@ -29,9 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] w-full`}
-      >
+      <body className={`${SuitMedium.variable}  antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] w-full`}>
         <SetScreenHeight />
         <Providers>
           <Header />

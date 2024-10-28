@@ -70,7 +70,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
             <div className='w-[130px] h-[130px] rounded flex flex-shrink-0 relative'>
               <Image
                 key={review.id}
-                src={firstImage || '/images/defaultImg.jpg'}
+                src={firstImage || '/assets/images/defaultImg.jpg'}
                 alt={'후기 이미지'}
                 width={100}
                 height={100}

@@ -18,7 +18,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
     redirect('/signin');
   }
   const user = await getUserInfo();
-  const profileUrl = user?.user?.user_metadata?.avatar_url || "/images/defaultImg.jpg";
+  const profileUrl = user?.user?.user_metadata?.avatar_url || '/assets/images/defaultImg.jpg';
 
   return (
     <div className='w-[375px] mx-auto bg-gray-700'>
