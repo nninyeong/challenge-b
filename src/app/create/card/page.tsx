@@ -132,24 +132,43 @@ const CreateCardPage = () => {
   const { reset } = methods;
 
   useEffect(() => {
-    // @TODO : 데이터 존재하지 않으면 로컬스토리지 값 가져오는 로직 만들기
-    if (existingInvitation) {
-      const convertedInvitation = converToCamelCase(existingInvitation);
-      reset(convertedInvitation);
-    }
-  }, [existingInvitation]);
+    const loadFormData = async () => {
+      const { data: user } = await browserClient.auth.getUser();
+      const localData = localStorage.getItem('invitationFormData');
+
+      if (!user.user) {
+        if (localData) {
+          reset(JSON.parse(localData));
+        } else {
+          reset();
+        }
+      } else {
+        if (existingInvitation) {
+          const convertedInvitation = converToCamelCase(existingInvitation);
+          reset(convertedInvitation);
+        } else {
+          if (localData) {
+            reset(JSON.parse(localData));
+          } else {
+            reset();
+          }
+        }
+      }
+    };
+
+    loadFormData();
+  }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
-    const { data: user, error } = await browserClient.auth.getUser();
-
-    if (error) {
-      console.error(error);
-    }
+    const { data: user } = await browserClient.auth.getUser();
 
     if (!user.user) {
-      // @TODO : 로컬스토리지에 저장하는 로직 만들기
+      localStorage.setItem('invitationFormData', JSON.stringify(invitationData));
       alert('생성을 원하시면 로그인 해주세요!');
-    } else if (existingInvitation) {
+      return;
+    }
+
+    if (existingInvitation) {
       updateInvitation(invitationData);
     } else {
       insertInvitation(invitationData);
