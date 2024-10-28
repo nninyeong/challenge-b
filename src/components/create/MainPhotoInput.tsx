@@ -1,15 +1,14 @@
 'use client';
 import { useFormContext } from 'react-hook-form';
 import TextEditor from './TextEditor';
-
 import { FaPlus } from 'react-icons/fa6';
 
 const FONTMENU = [
-  { name: '나눔손글씨', font: '' },
-  { name: '카페24 아네모네', font: '' },
+  { name: '나눔손글씨', font: 'NanumPen' },
+  { name: '카페24 아네모네', font: 'Cafe24' },
   { name: '제주고딕', font: '' },
-  { name: '배달의민족 도현체', font: '' },
-  { name: '에스코어 드림', font: '' },
+  { name: '배달의민족 도현체', font: 'Bmdohyeon' },
+  { name: '에스코어 드림', font: 'SCDream1' },
   { name: '눈누 난나체', font: '' },
 ];
 
@@ -62,7 +61,8 @@ const MainPhotoInput = () => {
           {FONTMENU.map((font) => (
             <div
               key={font.name}
-              className='bg-gray-300 p-1 text-black bg-gray-100 hover:bg-primary300 hover:text-white rounded-md font-bold text-center cursor-pointer text-[14px] '
+              onClick={() => setValue('mainPhotoInfo.fontName', font.font)}
+              className=' p-1 text-black bg-gray-100 hover:bg-primary300 hover:text-white rounded-md font-bold text-center cursor-pointer text-[14px] '
             >
               {font.name}
             </div>

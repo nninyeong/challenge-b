@@ -115,6 +115,9 @@ const CreateCardPage = () => {
         leftName: '',
         rightName: '',
         icon: '',
+        introduceContent: '',
+        imageUrl: '',
+        fontName: '',
       },
       navigationDetail: {
         map: false,
@@ -192,6 +195,8 @@ const CreateCardPage = () => {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
+  const [selectedFont, setSelectedFont] = useState<string>('main');
+
   const refs = [
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -246,10 +251,19 @@ const CreateCardPage = () => {
       }
     });
   };
-
+  const subscribeFont = () => {
+    const subscriptionFont = methods.watch((value) => {
+      const font = value?.mainPhotoInfo?.fontName;
+      if (font) {
+        setSelectedFont(font);
+      }
+      return () => subscriptionFont.unsubscribe();
+    });
+  };
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
       const color = value.bgColor;
+      console.log(color);
       if (color) {
         setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
       }
@@ -271,6 +285,7 @@ const CreateCardPage = () => {
 
   useEffect(() => {
     subscribeBackgroundColor();
+    subscribeFont();
   }, [methods]);
 
   useEffect(() => {
@@ -282,12 +297,13 @@ const CreateCardPage = () => {
     observeObserver();
     return () => unsubscribeObservers();
   }, [currentStep]);
-
+  console.log(selectedFont);
   return (
     <div
-      className='relative w-full h-full'
+      className={`relative w-full h-full font-${selectedFont}`}
       style={{
         backgroundColor: backgroundColor,
+        fontFamily: selectedFont,
       }}
     >
       {/*대표사진 프리뷰*/}
