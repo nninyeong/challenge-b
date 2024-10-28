@@ -24,6 +24,15 @@ type WeddingInfoType = {
   weddingHallContact: string;
 };
 
+
+export type MainPhotoType = {
+  leftName: string;
+  rightName: string;
+  icon: string;
+  introduceContent: string;
+  imageUrl: string;
+};
+
 type NavigationDetailType = {
   map: boolean;
   navigation_button: boolean;
@@ -39,6 +48,7 @@ export type StickerType = {
   posX: string;
   posY: string;
 };
+
 
 export type InvitationFormType = {
   gallery: any;
@@ -56,4 +66,5 @@ export type InvitationFormType = {
   navigation_detail: NavigationDetailType;
   guestbook: boolean;
   attendance: boolean;
+  mainPhoto_info: MainPhotoType;
 };
