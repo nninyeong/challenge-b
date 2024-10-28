@@ -1,8 +1,7 @@
 'use client';
 import { useFormContext } from 'react-hook-form';
 import TextEditor from './TextEditor';
-import { MainPhotoType } from '@/types/invitationFormType.type';
-import { postMainImg } from '@/utils/invitationUploadImg';
+
 import { FaPlus } from 'react-icons/fa6';
 
 const FONTMENU = [
@@ -17,18 +16,6 @@ const FONTMENU = [
 const MainPhotoInput = () => {
   const { register, watch, setValue } = useFormContext();
   const introduceContent = watch('mainPhoto_info.introduceContent');
-
-  const onSubmit = async (data: MainPhotoType) => {
-    const mainPhotoInfo = {
-      leftName: data.leftName,
-      rightName: data.rightName,
-      icon: data.icon,
-      introduceContent: data.introduceContent,
-      imageUrl: data.imageUrl,
-    };
-
-    await postMainImg(mainPhotoInfo);
-  };
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -102,7 +89,7 @@ const MainPhotoInput = () => {
           <TextEditor
             placeholder='메인화면 문구를 설정해주세요'
             value={introduceContent || ''}
-            onChange={(value) => setValue('mainPhoto_info.introduceContent', value)} // 수정된 부분
+            onChange={(value) => setValue('mainPhoto_info.introduceContent', value)}
           />
         </div>
       </div>
