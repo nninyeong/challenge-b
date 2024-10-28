@@ -12,6 +12,7 @@ type ReviewsCardProp = {
   reviews: Review[];
 };
 
+const MAX_CONTENT_LENGTH = 100;
 const ReviewCard = ({ reviews }: ReviewsCardProp) => {
   const router = useRouter();
   const [expandedReview, setExpandedReview] = useState<string | null>(null);
@@ -19,8 +20,6 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
   const toggleContent = (id: string) => {
     setExpandedReview((prev) => (prev === id ? null : id));
   };
-
-  const MAX_CONTENT_LENGTH = 100;
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);

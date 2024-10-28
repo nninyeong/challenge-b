@@ -11,6 +11,8 @@ import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
+import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
+import MainPhotoInput from '@/components/create/MainPhotoInput';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
@@ -76,6 +78,11 @@ const CreateCardPage = () => {
         weddingHallName: '',
         weddingHallContact: '',
       },
+      mainPhoto_info: {
+        leftName: '',
+        rightName: '',
+        icon: '',
+      },
       navigation_detail: {
         map: false,
         navigation_button: false,
@@ -89,6 +96,7 @@ const CreateCardPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -187,27 +195,34 @@ const CreateCardPage = () => {
         backgroundColor: backgroundColor,
       }}
     >
+      {/*대표사진 프리뷰*/}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[0]}
       >
-        <PersonalInfoPreview control={methods.control} />
+        <MainPhotoPreView control={methods.control} />
       </div>
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[1]}
       >
-        <AccountPreView control={methods.control} />
+        <PersonalInfoPreview control={methods.control} />
       </div>
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[2]}
       >
-        <WeddingInfoPreView control={methods.control} />
+        <AccountPreView control={methods.control} />
       </div>
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[3]}
+      >
+        <WeddingInfoPreView control={methods.control} />
+      </div>
+      <div
+        className='min-h-[calc(100vh-114px)]'
+        ref={refs[4]}
       >
         <NavigationDetailsPreview control={methods.control} />
       </div>
@@ -248,12 +263,14 @@ const CreateCardPage = () => {
                 <MdNavigateNext />
               </button>
             </div>
-            {currentStep === 1 && <PersonalInfoInput />}
-            {currentStep === 2 && <AccountInput />}
-            {currentStep === 3 && <WeddingInfoInput />}
-            {currentStep === 4 && <NavigationDetailInput />}
-            {currentStep === 5 && <GuestInfoInput />}
-            {currentStep === 6 && <MainViewInput />}
+
+            {currentStep === 1 && <MainPhotoInput />}
+            {currentStep === 2 && <PersonalInfoInput />}
+            {currentStep === 3 && <AccountInput />}
+            {currentStep === 4 && <WeddingInfoInput />}
+            {currentStep === 5 && <NavigationDetailInput />}
+            {currentStep === 6 && <GuestInfoInput />}
+            {currentStep === 7 && <MainViewInput />}
             {currentStep === refs.length && (
               <button
                 className='w-full'
