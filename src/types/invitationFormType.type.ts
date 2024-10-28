@@ -30,7 +30,7 @@ type NavigationDetailType = {
   car: string;
   subway: string;
   bus: string;
-}
+};
 
 export type InvitationFormType = {
   gallery: any;
