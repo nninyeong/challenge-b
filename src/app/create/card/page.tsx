@@ -14,6 +14,7 @@ import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
+import OnBoarding from '@/components/create/OnBoarding';
 
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
@@ -80,6 +81,7 @@ const CreateCardPage = () => {
   const onSubmit = (data: InvitationFormType) => console.log(data);
   const [currentStep, setCurrentStep] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
+  const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const refs = [
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -110,6 +112,24 @@ const CreateCardPage = () => {
       setCurrentStep((prev) => prev - 1);
     }
   };
+
+  const preventScroll = (e: Event) => e.preventDefault();
+  useEffect(() => {
+    if (!isOnboardingComplete) {
+      document.addEventListener('scroll', preventScroll, { passive: false });
+      document.addEventListener('touchmove', preventScroll, { passive: false });
+      document.addEventListener('wheel', preventScroll, { passive: false });
+    } else {
+      document.removeEventListener('scroll', preventScroll);
+      document.removeEventListener('touchmove', preventScroll);
+      document.removeEventListener('wheel', preventScroll);
+    }
+    return () => {
+      document.removeEventListener('scroll', preventScroll);
+      document.removeEventListener('touchmove', preventScroll);
+      document.removeEventListener('wheel', preventScroll);
+    };
+  }, [isOnboardingComplete]);
 
   useEffect(() => {
     if (refs[currentStep - 1].current) {
@@ -161,6 +181,10 @@ const CreateCardPage = () => {
         backgroundColor: backgroundColor,
       }}
     >
+      <OnBoarding
+        setIsOnboardingComplete={setIsOnboardingComplete}
+        isOnboardingComplete={isOnboardingComplete}
+      />
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[0]}
