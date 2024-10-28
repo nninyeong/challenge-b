@@ -5,7 +5,7 @@ import { Control, useWatch } from 'react-hook-form';
 const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> }) => {
   const mainPhotoInfo = useWatch({
     control,
-    name: 'mainPhoto_info',
+    name: 'mainPhotoInfo',
   });
 
   return (

@@ -6,11 +6,23 @@ import AccountPreView from '@/components/create/preview/AccountPreView';
 import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
-import { InvitationFormType } from '@/types/invitationFormType.type';
 import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
+import { createClient } from '@/utils/supabase/client';
+import { getUserInfo } from '@/utils/server-action';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  InvitationFormType,
+  MainPhotoType,
+  NavigationDetailType,
+  PersonalInfoType,
+  WeddingInfoType,
+} from '@/types/invitationFormType.type';
+import { AccountInfoType } from '@/types/accountType.type';
+import { Invitation } from '@/types/InvitationData.type';
+import { useInvitationQuery } from '@/hooks/queries/useInvitationQuery';
 import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
 import MainPhotoInput from '@/components/create/MainPhotoInput';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
@@ -29,14 +41,37 @@ const OBSERVER_OPTIONS = {
 const DELAY_TIME: number = 300;
 
 const CreateCardPage = () => {
+  const browserClient = createClient();
+  const queryClient = useQueryClient();
+  const { data: existingInvitation } = useInvitationQuery();
+
+  const mutation = useMutation({
+    mutationFn: async (invitationData: InvitationFormType) => {
+      const user = await getUserInfo();
+
+      const convertedInvitation = underscoreInvitation(invitationData);
+
+      const { error } = existingInvitation
+        ? await browserClient.from('invitation').update(convertedInvitation).eq('user_id', user.user.id)
+        : await browserClient.from('invitation').insert([convertedInvitation]);
+
+      if (error) {
+        console.error(error);
+      } else {
+        existingInvitation ? alert('수정 완료되었습니다.') : alert('제출 완료되었습니다.');
+      }
+    },
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
+
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
-      main_view: {
+      mainView: {
         color: '#ffffff',
       },
       stickers: [],
-      personal_info: {
+      personalInfo: {
         bride: {
           name: '',
           phoneNumber: '',
@@ -74,27 +109,91 @@ const CreateCardPage = () => {
       },
       guestbook: false,
       attendance: false,
-      wedding_info: {
+      weddingInfo: {
         date: '',
         time: { hour: '', minute: '' },
         weddingHallAddress: '',
         weddingHallName: '',
         weddingHallContact: '',
       },
-      mainPhoto_info: {
+      mainPhotoInfo: {
         leftName: '',
         rightName: '',
         icon: '',
       },
-      navigation_detail: {
+      navigationDetail: {
         map: false,
-        navigation_button: false,
+        navigationButton: false,
         car: '',
         subway: '',
         bus: '',
       },
+      gallery: '',
+      type: '',
+      mood: '',
+      bgColor: '',
+      imgRatio: '',
+      mainText: '',
+      greetingMessage: '',
+      dDay: false,
     },
   });
+  const { reset } = methods;
+
+  const camelizeInvitation = (invitation: Invitation): InvitationFormType => {
+    return {
+      gallery: invitation.gallery,
+      type: invitation.type,
+      mood: invitation.mood,
+      mainView: invitation.main_view,
+      bgColor: invitation.bg_color,
+      stickers: invitation.stickers,
+      imgRatio: invitation.img_ratio,
+      mainText: invitation.main_text,
+      greetingMessage: invitation.greeting_message,
+      guestbook: invitation.guestbook as boolean,
+      attendance: invitation.attendance as boolean,
+      personalInfo: invitation.personal_info as PersonalInfoType,
+      weddingInfo: invitation.wedding_info as WeddingInfoType,
+      account: invitation.account as AccountInfoType,
+      navigationDetail: invitation.navigation_detail as NavigationDetailType,
+      dDay: invitation.d_day as boolean,
+      mainPhotoInfo: invitation.main_photo_info as MainPhotoType,
+    };
+  };
+
+  const underscoreInvitation = (invitation: InvitationFormType) => {
+    return {
+      gallery: invitation.gallery,
+      type: invitation.type,
+      mood: invitation.mood,
+      main_view: invitation.mainView,
+      bg_color: invitation.bgColor,
+      stickers: invitation.stickers,
+      img_ratio: invitation.imgRatio,
+      main_text: invitation.mainText,
+      greeting_message: invitation.greetingMessage,
+      guestbook: invitation.guestbook as boolean,
+      attendance: invitation.attendance as boolean,
+      personal_info: invitation.personalInfo as PersonalInfoType,
+      wedding_info: invitation.weddingInfo as WeddingInfoType,
+      account: invitation.account as AccountInfoType,
+      navigation_detail: invitation.navigationDetail as NavigationDetailType,
+      d_day: invitation.dDay as boolean,
+      main_photo_info: invitation.mainPhotoInfo as MainPhotoType,
+    };
+  };
+
+  useEffect(() => {
+    if (existingInvitation) {
+      const convertedInvitation = camelizeInvitation(existingInvitation);
+      reset(convertedInvitation);
+    }
+  }, [existingInvitation]);
+
+  const onSubmit = async (invitationData: InvitationFormType) => {
+    mutation.mutate(invitationData);
+  };
 
   const [currentStep, setCurrentStep] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
@@ -110,8 +209,6 @@ const CreateCardPage = () => {
 
   const observers = useRef<IntersectionObserver[]>([]);
   const isNavigating = useRef<boolean>(false);
-
-  const onSubmit = (data: InvitationFormType) => console.log(data);
 
   const handleDebouncedNext = debounce(() => {
     if (currentStep < refs.length) {
@@ -157,7 +254,7 @@ const CreateCardPage = () => {
 
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
-      const color = value.main_view.color;
+      const color = value.mainView.color;
       if (color) {
         setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
       }
