@@ -1,11 +1,11 @@
 'use client';
 
+import useAttendanceButton from '@/hooks/attendance/useAttendanceButton';
 import AttendanceModal from './AttendanceModal';
-import useAttendanceButton from '@/hooks/modals/useAttendanceButton';
 
 const AttendanceButton = () => {
   const { showModal, handleModalClick } = useAttendanceButton();
-  const invitationId = '4cf95008-dd98-4810-875b-354cd38a6505'; // 추후 청첩장 id를 넣는 방식으로 변경
+  const invitationId = '6ae529a2-725d-4e2d-ac26-07bd9e86aa34'; // @TODO 추후 청첩장 id를 넣는 방식으로 변경
 
   return (
     <>
