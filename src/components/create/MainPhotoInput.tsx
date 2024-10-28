@@ -27,7 +27,7 @@ const MainPhotoInput = () => {
       imageUrl: data.imageUrl,
     };
 
-    // await postMainImg(mainPhotoInfo);
+    await postMainImg(mainPhotoInfo);
   };
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
