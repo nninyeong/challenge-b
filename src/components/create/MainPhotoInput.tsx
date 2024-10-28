@@ -2,7 +2,7 @@
 import { useFormContext } from 'react-hook-form';
 import TextEditor from './TextEditor';
 import { MainPhotoType } from '@/types/invitationFormType.type';
-import { postMainImg } from '@/utils/invitationUploadImg';
+// import { postMainImg } from '@/utils/invitationUploadImg';
 import { FaPlus } from 'react-icons/fa6';
 
 const FONTMENU = [
@@ -99,11 +99,11 @@ const MainPhotoInput = () => {
             onChange={handleFileChange}
           />
 
-          <TextEditor
+          {/* <TextEditor
             placeholder='메인화면 문구를 설정해주세요'
             value={introduceContent || ''}
             onChange={(value) => setValue('mainPhotoInfo.introduceContent', value)} // 수정된 부분
-          />
+          /> */}
         </div>
       </div>
     </div>

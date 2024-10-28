@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const useLatLng = (address: string) => {
   const [coords, setCoords] = useState<{ lat: number; lng: number }>({ lat: 33.450701, lng: 126.570667 });
 
-  const fetchCoordinates = useCallback(() => {
+  const fetchCoordinates = () => {
     if (!address) return;
 
     kakao.maps.load(() => {
@@ -18,7 +18,7 @@ const useLatLng = (address: string) => {
         }
       });
     });
-  }, [address]);
+  };
 
   useEffect(() => {
     fetchCoordinates();
