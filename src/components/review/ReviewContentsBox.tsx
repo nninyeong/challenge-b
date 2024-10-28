@@ -16,7 +16,6 @@ const ReviewContentsBox = ({ writer, content, created }: PropsType) => {
   const toggleContent = () => {
     setIsExpanded((prev) => !prev);
   };
-  content = content.repeat(30);
 
   const sliceContent = (review: string) => {
     const isContentLengthOverMaxLength = review.length > MAX_CONTENT_LENGTH;
