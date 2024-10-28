@@ -2,7 +2,7 @@
 import { useFormContext } from 'react-hook-form';
 import TextEditor from './TextEditor';
 import { MainPhotoType } from '@/types/invitationFormType.type';
-import { postMainImg } from '@/utils/invitationUploadImg';
+// import { postMainImg } from '@/utils/invitationUploadImg';
 import { FaPlus } from 'react-icons/fa6';
 
 const FONTMENU = [
@@ -27,7 +27,7 @@ const MainPhotoInput = () => {
       imageUrl: data.imageUrl,
     };
 
-    await postMainImg(mainPhotoInfo);
+    // await postMainImg(mainPhotoInfo);
   };
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {

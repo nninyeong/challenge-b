@@ -2,7 +2,7 @@
 import { getUserInfo } from '@/utils/server-action';
 import { createClient } from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from './queryKeys';
+import { QUERY_KEYS } from '../queryKeys';
 
 const getExistingInvitation = async () => {
   const browserClient = createClient();
@@ -17,7 +17,7 @@ const getExistingInvitation = async () => {
   return data;
 };
 
-export const useInvitationQuery = () => {
+export const useGetInvitationQuery = () => {
   return useQuery({
     queryKey: QUERY_KEYS.invitation(),
     queryFn: getExistingInvitation,
