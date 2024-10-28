@@ -12,7 +12,7 @@ import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import { createClient } from '@/utils/supabase/client';
 import { getUserInfo } from '@/utils/server-action';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   InvitationFormType,
   NavigationDetailType,
@@ -24,31 +24,12 @@ import NavigationDetailsPreview from '@/components/create/preview/NavigationDeta
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
 import { Invitation } from '@/types/InvitationData.type';
+import { useInvitationQuery } from '@/hooks/queries/useInvitationQuery';
 
 const CreateCardPage = () => {
   const browserClient = createClient();
   const queryClient = useQueryClient();
-
-  const getExistingInvitation = async () => {
-    const user = await getUserInfo();
-
-    const { data, error } = await browserClient
-      .from('invitation')
-      .select('*')
-      .eq('user_id', user.user.id)
-      .maybeSingle();
-
-    if (error) {
-      console.error(error);
-    }
-
-    return data;
-  };
-
-  const { data: existingInvitation } = useQuery({
-    queryKey: ['invitation'],
-    queryFn: getExistingInvitation,
-  });
+  const { data: existingInvitation } = useInvitationQuery();
 
   const mutation = useMutation({
     mutationFn: async (invitationData: InvitationFormType) => {
