@@ -29,6 +29,7 @@ import NavigationDetailsPreview from '@/components/create/preview/NavigationDeta
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
 import { debounce } from '@/utils/debounce';
+import OnBoarding from '@/components/create/OnBoarding';
 
 const OBSERVER_OPTIONS = {
   root: null,
@@ -37,7 +38,6 @@ const OBSERVER_OPTIONS = {
 };
 
 const DELAY_TIME: number = 300;
-import OnBoarding from '@/components/create/OnBoarding';
 
 const CreateCardPage = () => {
   const browserClient = createClient();
@@ -251,7 +251,7 @@ const CreateCardPage = () => {
       }
     });
   };
-
+  console.log(currentStep);
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
       const color = value.mainView.color;
@@ -262,26 +262,8 @@ const CreateCardPage = () => {
     });
   };
 
-  const preventScroll = (e: Event) => e.preventDefault();
-  // useEffect(() => {
-  //   if (!isOnboardingComplete) {
-  //     document.addEventListener('scroll', preventScroll, { passive: false });
-  //     document.addEventListener('touchmove', preventScroll, { passive: false });
-  //     document.addEventListener('wheel', preventScroll, { passive: false });
-  //   } else {
-  //     document.removeEventListener('scroll', preventScroll);
-  //     document.removeEventListener('touchmove', preventScroll);
-  //     document.removeEventListener('wheel', preventScroll);
-  //   }
-  //   return () => {
-  //     document.removeEventListener('scroll', preventScroll);
-  //     document.removeEventListener('touchmove', preventScroll);
-  //     document.removeEventListener('wheel', preventScroll);
-  //   };
-  // }, [isOnboardingComplete]);
-
   const scrollEvent = () => {
-    if (currentStep > 3 && refs[currentStep - 1].current) {
+    if (refs[currentStep - 1].current) {
       refs[currentStep - 1].current?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -304,8 +286,8 @@ const CreateCardPage = () => {
     unsubscribeObservers();
     observeObserver();
     return () => unsubscribeObservers();
-  }, [currentStep]);
-
+  }, [currentStep, refs]);
+  console.log(refs[currentStep - 1]);
   return (
     <div
       className='relative w-full h-full'
@@ -313,97 +295,100 @@ const CreateCardPage = () => {
         backgroundColor: backgroundColor,
       }}
     >
-      {/*대표사진 프리뷰*/}
       {/* <OnBoarding
         setIsOnboardingComplete={setIsOnboardingComplete}
         isOnboardingComplete={isOnboardingComplete}
       /> */}
+      {/*대표사진 프리뷰*/}
       <div
         className='min-h-[calc(100vh-114px)]'
         ref={refs[0]}
       >
         <MainPhotoPreView control={methods.control} />
       </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[1]}
-      >
-        <PersonalInfoPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[2]}
-      >
-        <AccountPreView control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[3]}
-      >
-        <WeddingInfoPreView control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[4]}
-      >
-        <NavigationDetailsPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[5]}
-      >
-        <GuestInfoPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[6]}
-      >
-        colorpalette
-      </div>
-
-      <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-        <FormProvider {...methods}>
-          <form
-            className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
-            onSubmit={methods.handleSubmit(onSubmit)}
+      {isOnboardingComplete ? (
+        <>
+          <div
+            className='min-h-[calc(100vh-114px)]'
+            ref={refs[1]}
           >
-            <div className='w-full flex items-center justify-end'>
-              <button
-                type='button'
-                onClick={handleDebouncedPrevious}
-                className='bg-red-300'
-                disabled={currentStep === 1}
-              >
-                <MdNavigateBefore />
-              </button>
-              <button
-                className='bg-blue-300'
-                type='button'
-                onClick={handleDebouncedNext}
-                disabled={currentStep === refs.length}
-              >
-                <MdNavigateNext />
-              </button>
-            </div>
+            colorpalette
+          </div>
+          <div
+            className='min-h-[calc(100vh-114px)]'
+            ref={refs[2]}
+          >
+            <PersonalInfoPreview control={methods.control} />
+          </div>
+          <div
+            className='min-h-[calc(100vh-114px)]'
+            ref={refs[3]}
+          >
+            <AccountPreView control={methods.control} />
+            <WeddingInfoPreView control={methods.control} />
+          </div>
+          <div
+            className='min-h-[calc(100vh-114px)]'
+            ref={refs[4]}
+          >
+            <NavigationDetailsPreview control={methods.control} />
+          </div>
+          <div
+            className='min-h-[calc(100vh-114px)]'
+            ref={refs[5]}
+          >
+            <GuestInfoPreview control={methods.control} />
+          </div>
+          <div
+            className='min-h-[calc(100vh-114px)]'
+            ref={refs[6]}
+          ></div>
 
-            {currentStep === 1 && <MainPhotoInput />}
-            {currentStep === 2 && <PersonalInfoInput />}
-            {currentStep === 3 && <AccountInput />}
-            {currentStep === 4 && <WeddingInfoInput />}
-            {currentStep === 5 && <NavigationDetailInput />}
-            {currentStep === 6 && <GuestInfoInput />}
-            {currentStep === 7 && <MainViewInput />}
-            {currentStep === refs.length && (
-              <button
-                className='w-full'
-                type='submit'
+          <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
+            <FormProvider {...methods}>
+              <form
+                className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
+                onSubmit={methods.handleSubmit(onSubmit)}
               >
-                제출
-              </button>
-            )}
-          </form>
-        </FormProvider>
-      </div>
+                <div className='w-full flex items-center justify-end'>
+                  <button
+                    type='button'
+                    onClick={handleDebouncedPrevious}
+                    className='bg-red-300'
+                    disabled={currentStep === 1}
+                  >
+                    <MdNavigateBefore />
+                  </button>
+                  <button
+                    className='bg-blue-300'
+                    type='button'
+                    onClick={handleDebouncedNext}
+                    disabled={currentStep === refs.length}
+                  >
+                    <MdNavigateNext />
+                  </button>
+                </div>
+
+                {currentStep === 1 && <MainPhotoInput />}
+                {currentStep === 2 && <MainViewInput />}
+                {currentStep === 3 && <PersonalInfoInput />}
+                {currentStep === 4 && <AccountInput />}
+                {currentStep === 5 && <WeddingInfoInput />}
+                {currentStep === 6 && <NavigationDetailInput />}
+                {currentStep === 7 && <GuestInfoInput />}
+                {currentStep === refs.length && (
+                  <button
+                    className='w-full'
+                    type='submit'
+                  >
+                    제출
+                  </button>
+                )}
+              </form>
+            </FormProvider>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 };
