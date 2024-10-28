@@ -3,9 +3,9 @@
 import { useState } from 'react';
 
 const ONBOARDING_MOCK_DATA = [
-  { title: 'Welcome!', description: 'This is the first onboarding screen.' },
-  { title: 'Features', description: "Learn about our app's features." },
-  { title: 'Get Started', description: "Let's get started using the app!" },
+  { title: '스크롤 해주세요' },
+  { title: '스크롤 시 입력폼 업데이트' },
+  { title: '접고 펼치며 자유롭게 제작해요' },
 ];
 const OnBoarding = ({
   isOnboardingComplete,
@@ -25,11 +25,10 @@ const OnBoarding = ({
   return (
     <div
       onClick={handleNextStep}
-      className={`${isOnboardingComplete ? 'hidden' : 'flex'}  overflow-hidden absolute flex-col items-center justify-center w-full h-screen text-center cursor-pointer bg-black bg-opacity-50`}
+      className={`${isOnboardingComplete ? 'hidden' : 'flex'} inset-0 bg-gradient-to-b from-transparent text-white
+      to-black overflow-hidden absolute flex-col items-center justify-end w-full h-full text-center cursor-pointer bg-opacity-60`}
     >
       <h2>{ONBOARDING_MOCK_DATA[onBoardStep].title}</h2>
-      <p>{ONBOARDING_MOCK_DATA[onBoardStep].description}</p>
-      <p>Tap or click to continue</p>
     </div>
   );
 };
