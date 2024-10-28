@@ -16,11 +16,11 @@ const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> })
   });
   const dDayCount = useWatch({
     control,
-    name: 'd_day',
+    name: 'dDay',
   });
   const weddingInfoDate = useWatch({
     control,
-    name: 'wedding_info',
+    name: 'weddingInfo',
   });
   return (
     <>

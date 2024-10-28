@@ -32,7 +32,7 @@ const NavigationDetailInput = () => {
           <input
             type='text'
             placeholder='오시는 길 내용을 입력하세요.'
-            {...register('navigation_detail.subway')}
+            {...register('navigationDetail.subway')}
             className='h-[32px] w-full pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
           />
         </div>
@@ -41,7 +41,7 @@ const NavigationDetailInput = () => {
           <input
             type='text'
             placeholder='오시는 길 내용을 입력하세요.'
-            {...register('navigation_detail.bus')}
+            {...register('navigationDetail.bus')}
             className='h-[32px] w-full pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
           />
         </div>
