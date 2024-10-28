@@ -14,7 +14,7 @@ const WeddingInfoInput = () => {
   };
 
   const setAddress = (value: Address) => {
-    setValue('wedding_info.weddingHallAddress', value.address);
+    setValue('weddingInfo.weddingHallAddress', value.address);
     document.body.style.overflow = 'auto';
     setShowAddressModal(false);
   };
@@ -25,7 +25,7 @@ const WeddingInfoInput = () => {
       <div className='grid grid-cols-[80px_1fr]'>
         <label className='leading-[32px]'>예식일</label>
         <input
-          {...register('wedding_info.date')}
+          {...register('weddingInfo.date')}
           placeholder='2024-11-21'
           className='h-[32px] rounded pl-3'
         />
@@ -34,7 +34,7 @@ const WeddingInfoInput = () => {
         <label>예식 시간</label>
         <div className='flex gap-[8px]'>
           <select
-            {...register('wedding_info.time.hour')}
+            {...register('weddingInfo.time.hour')}
             className='h-[32px] rounded flex-1'
             defaultValue='00'
           >
@@ -50,7 +50,7 @@ const WeddingInfoInput = () => {
               ))}
           </select>
           <select
-            {...register('wedding_info.time.minute')}
+            {...register('weddingInfo.time.minute')}
             className='h-[32px] rounded flex-1'
             defaultValue='00'
           >
@@ -67,7 +67,7 @@ const WeddingInfoInput = () => {
             readOnly={true}
             placeholder='주소를 검색해주세요.'
             className='h-[32px] rounded pl-3 min-w-0'
-            {...register('wedding_info.weddingHallAddress')}
+            {...register('weddingInfo.weddingHallAddress')}
           />
           <button
             className='bg-primary-300 rounded w-[55px] h-[32px] text-white font-bold'
@@ -83,14 +83,14 @@ const WeddingInfoInput = () => {
         <label className='leading-[32px]'>예식장명</label>
         <input
           className='h-[32px] rounded pl-3'
-          {...register('wedding_info.weddingHallName')}
+          {...register('weddingInfo.weddingHallName')}
         />
       </div>
       <div className='grid grid-cols-[80px_1fr]'>
         <label className='leading-[32px]'>연락처</label>
         <input
           className='h-[32px] rounded pl-3'
-          {...register('wedding_info.weddingHallContact')}
+          {...register('weddingInfo.weddingHallContact')}
         />
       </div>
     </div>

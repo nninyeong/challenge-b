@@ -42,7 +42,7 @@ const MainViewInput = () => {
           <button
             type='button'
             className='w-[30px] h-[30px] border-2 border-solid rounded-full flex justify-center items-center bg-white'
-            onClick={() => setValue('main_view.color', { r: 255, g: 255, b: 255, a: 1 })}
+            onClick={() => setValue('mainView.color', { r: 255, g: 255, b: 255, a: 1 })}
           >
             <ImSpinner11 className='rotate-90' />
           </button>
@@ -56,7 +56,7 @@ const MainViewInput = () => {
             >
               <button
                 type='button'
-                onClick={() => setValue('main_view.color', colorElement)}
+                onClick={() => setValue('mainView.color', colorElement)}
                 className={`w-[30px] h-[30px] border-2 border-solid border-white rounded-full`}
                 style={{
                   backgroundColor: `rgba(${colorElement.r},${colorElement.g},${colorElement.b},${colorElement.a})`,

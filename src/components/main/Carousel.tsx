@@ -19,7 +19,7 @@ const Carousel = () => {
       .limit(8);
 
     if (response.error) {
-      console.log(response.error);
+      console.error(response.error);
     }
 
     if (response.data === null) {
