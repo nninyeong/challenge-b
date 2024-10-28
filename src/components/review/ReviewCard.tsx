@@ -1,5 +1,4 @@
 import { Review } from '@/types/review.types';
-import defaultImg from '@/assets/images/defaultImg.jpg';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -71,7 +70,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
             <div className='w-[130px] h-[130px] rounded flex flex-shrink-0 relative'>
               <Image
                 key={review.id}
-                src={firstImage || defaultImg}
+                src={firstImage || '/images/defaultImg.jpg'}
                 alt={'후기 이미지'}
                 width={100}
                 height={100}
@@ -92,7 +91,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
             >
               <div className='flex ml-4 items-center flex-shrink-0'>
                 <Image
-                  src={user.user_metadata.avatar_url || defaultImg}
+                  src={user.user_metadata.avatar_url || '/images/defaultImg.jpg'}
                   alt='profile'
                   width={30}
                   height={30}
