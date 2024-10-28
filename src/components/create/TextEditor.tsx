@@ -8,7 +8,6 @@ interface TextEditorProps {
   placeholder: string;
 }
 
-// ReactQuill을 동적으로 import합니다.
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const TextEditor = ({ value, onChange, placeholder }: TextEditorProps) => {
@@ -16,16 +15,12 @@ const TextEditor = ({ value, onChange, placeholder }: TextEditorProps) => {
     toolbar: [['bold', 'italic', 'underline', { color: [] }, { background: [] }]],
   };
 
-  const handleChange = (content: string) => {
-    onChange(content.trim() === '' ? '' : content);
-  };
-
   return (
     <div>
       <ReactQuill
         placeholder={placeholder}
         value={value || ''}
-        onChange={handleChange}
+        onChange={(value) => onChange(value)}
         theme='snow'
         modules={modules}
         className='custom-quill-editor'

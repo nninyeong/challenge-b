@@ -6,10 +6,10 @@ import { FaPlus } from 'react-icons/fa6';
 const FONTMENU = [
   { name: '나눔손글씨', font: 'NanumPen' },
   { name: '카페24 아네모네', font: 'Cafe24' },
-  { name: '제주고딕', font: '' },
+  { name: '제주고딕', font: 'JejuGothic' },
   { name: '배달의민족 도현체', font: 'Bmdohyeon' },
   { name: '에스코어 드림', font: 'SCDream1' },
-  { name: '눈누 난나체', font: '' },
+  { name: '눈누 난나체', font: 'Main' },
 ];
 
 const MainPhotoInput = () => {

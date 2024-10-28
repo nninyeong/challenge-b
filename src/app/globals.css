@@ -52,6 +52,10 @@ body {
   src: url('../../public/assets/fonts/SUIT-Medium.otf');
 }
 
+@font-face{
+  font-family:"JejuGothic";
+  src: url('../../public/assets/fonts/JejuGothic.ttf');
+}
 .custom-quill-editor .ql-toolbar {
   display: flex;
   justify-content: center;
