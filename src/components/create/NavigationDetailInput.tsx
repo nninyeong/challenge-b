@@ -10,7 +10,7 @@ const NavigationDetailInput = () => {
           <input
             type='checkbox'
             className='mr-2'
-            {...register('navigation_detail.map')}
+            {...register('navigationDetail.map')}
           />
           지도 표시
         </label>
@@ -20,7 +20,7 @@ const NavigationDetailInput = () => {
           <input
             type='checkbox'
             className='mr-2'
-            {...register('navigation_detail.navigation_button')}
+            {...register('navigationDetail.navigationButton')}
           />
           <span className='text-[14px]'>네비게이션 앱 버튼 표시</span>
           <span className='text-[12px] text-gray-400'>(카카오내비, 티맵, 네이버)</span>

@@ -5,7 +5,7 @@ import NavigationDetailCard from '../NavigationDetailCard';
 const NavigationDetailsPreview = ({ control }: { control: Control<InvitationFormType> }) => {
   const navigationDetail = useWatch({
     control,
-    name: 'navigation_detail',
+    name: 'navigationDetail',
   });
   return (
     <>
