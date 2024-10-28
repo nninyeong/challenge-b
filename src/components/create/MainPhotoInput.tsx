@@ -89,11 +89,7 @@ const MainPhotoInput = () => {
           <TextEditor
             placeholder='메인화면 문구를 설정해주세요'
             value={introduceContent || ''}
-<<<<<<< HEAD
-            onChange={(value) => setValue('mainPhoto_info.introduceContent', value)}
-=======
-            onChange={(value) => setValue('mainPhotoInfo.introduceContent', value)} // 수정된 부분
->>>>>>> 47c314fa42b0e75260190edd6e3ba37a9cce48ae
+            onChange={(value) => setValue('mainPhotoInfo.introduceContent', value)}
           />
         </div>
       </div>

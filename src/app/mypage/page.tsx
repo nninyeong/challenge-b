@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import defaultImage from '@/assets/images/defaultImg.jpg';
+import defaultImage from '/assets/images/defaultImg.jpg';
 import { getIsLogin } from '@/utils/supabase/server';
 import { SiTinyletter } from 'react-icons/si';
 import { TiExport } from 'react-icons/ti';
