@@ -1,16 +1,16 @@
 import { useState } from 'react';
 
-const useGuestBookButton = () => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+const useGuestBookDeleteButton = () => {
+  const [isAccordionOpen, setAccordionOpen] = useState(false);
 
-  const handleDeleteModalClick = () => {
-    setShowDeleteModal((prevState) => !prevState);
+  const toggleAccordion = () => {
+    setAccordionOpen((prevState) => !prevState);
   };
 
   return {
-    showDeleteModal,
-    handleDeleteModalClick,
+    isAccordionOpen,
+    toggleAccordion,
   };
 };
 
-export default useGuestBookButton;
+export default useGuestBookDeleteButton;
