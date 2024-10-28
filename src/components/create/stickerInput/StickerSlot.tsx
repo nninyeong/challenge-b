@@ -15,7 +15,6 @@ const StickerSlot = ({ stickerImage }: PropsType) => {
 
   const handleSelectSticker = () => {
     const stickers = stickersWatch || [];
-    console.log('prevStickers: ', stickers);
 
     stickers.push({
       id: `${crypto.randomUUID()}-${stickerImage.id}`,
@@ -24,6 +23,7 @@ const StickerSlot = ({ stickerImage }: PropsType) => {
       posX: '0',
       posY: '0',
     });
+
     setValue('stickers', stickers);
   };
 

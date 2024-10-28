@@ -1,14 +1,12 @@
-import { useFormContext } from 'react-hook-form';
-import { useAllStickers } from '@/hooks/queries/useGetStickers';
+import { useGetAllStickers } from '@/hooks/queries/useGetStickers';
 import { useState } from 'react';
 import StickerCategoryButton from '@/components/create/stickerInput/StickerCategoryButton';
 import StickerSlot from '@/components/create/stickerInput/StickerSlot';
 
 const StickerInput = () => {
-  const { setValue } = useFormContext();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const { data: stickerByCategory, isLoading, error } = useAllStickers();
+  const { data: stickerByCategory, isLoading, error } = useGetAllStickers();
   if (isLoading) {
     return <div>Loading...</div>;
   }

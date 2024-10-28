@@ -9,8 +9,10 @@ const client = createClient();
 const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
   const { data, error } = await client.storage.from('stickers').list('', { limit: 1000 });
   if (error) {
+    console.error(error);
     throw new Error('스티커 fetch 에러: ', error);
   }
+
   const stickersByCategory: Record<string, StickerImage[]> = {};
 
   data?.forEach((file) => {
@@ -33,10 +35,9 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
   return stickersByCategory;
 };
 
-export const useAllStickers = () => {
+export const useGetAllStickers = () => {
   return useQuery({
     queryKey: QUERY_KEYS.stickerImages(),
     queryFn: fetchAllStickerImages,
-    staleTime: 60 * 60 * 1000,
   });
 };

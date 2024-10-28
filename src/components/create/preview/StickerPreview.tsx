@@ -1,6 +1,7 @@
 import { Control, useWatch } from 'react-hook-form';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import Image from 'next/image';
+import Sticker from '@/components/create/stickerInput/Sticker';
+import { useRef } from 'react';
 
 const StickerPreview = ({ control }: { control: Control<InvitationFormType> }) => {
   const stickersWatch = useWatch({
@@ -8,17 +9,24 @@ const StickerPreview = ({ control }: { control: Control<InvitationFormType> }) =
     name: 'stickers',
   });
 
-  console.log('StickerPreview: ', stickersWatch);
+  const previewRef = useRef<HTMLDivElement | null>(null);
+  const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
 
   return (
-    <div className='w-full h-full'>
+    <div
+      className='w-full h-full relative'
+      ref={previewRef}
+      onDrop={preventDefaultBehaviour}
+      onDragOver={preventDefaultBehaviour}
+    >
       {stickersWatch?.map((sticker) => (
-        <Image
-          src={sticker.url}
-          alt={sticker.stickerImageId}
+        <Sticker
           key={sticker.id}
-          width={100}
-          height={100}
+          sticker={sticker}
+          previewRef={previewRef}
         />
       ))}
     </div>
