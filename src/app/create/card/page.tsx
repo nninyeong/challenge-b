@@ -295,10 +295,10 @@ const CreateCardPage = () => {
         backgroundColor: backgroundColor,
       }}
     >
-      {/* <OnBoarding
+      <OnBoarding
         setIsOnboardingComplete={setIsOnboardingComplete}
         isOnboardingComplete={isOnboardingComplete}
-      /> */}
+      />
       {/*대표사진 프리뷰*/}
       <div
         className='min-h-[calc(100vh-114px)]'
