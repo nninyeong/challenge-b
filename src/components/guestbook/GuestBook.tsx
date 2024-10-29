@@ -1,11 +1,11 @@
 'use client';
 
-import useGuestBookEntries from '@/hooks/modals/useGuestBookEntries';
+import useGuestBookEntries from '@/hooks/guestbook/useGuestBookEntries';
 import CreateGuestBook from './CreateGuestBook';
 import GuestBookCard from './GuestBookCard';
 
 const GuestBook = () => {
-  const invitationId = '4cf95008-dd98-4810-875b-354cd38a6505'; // 추후 청첩장 id를 넣는 방식으로 변경
+  const invitationId = '6ae529a2-725d-4e2d-ac26-07bd9e86aa34'; // @TODO 추후 청첩장 id를 넣는 방식으로 변경
 
   const { data: guestBooks = [], isLoading, error } = useGuestBookEntries(invitationId);
 

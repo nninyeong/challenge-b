@@ -4,15 +4,15 @@ const NavigationDetailInput = () => {
   const { register } = useFormContext();
   return (
     <>
+      <div>교통수단 표시</div>
       <div>
-        <div>세부사항</div>
         <label className='text-[14px]'>
           <input
             type='checkbox'
             className='mr-2'
             {...register('navigationDetail.map')}
           />
-          지도 사용
+          지도 표시
         </label>
       </div>
       <div>
@@ -26,29 +26,25 @@ const NavigationDetailInput = () => {
           <span className='text-[12px] text-gray-400'>(카카오내비, 티맵, 네이버)</span>
         </label>
       </div>
-      <div>
-        <div>교통수단 표시</div>
-        <label className='w-[50px]'>자가용</label>
-        <input
-          type='text'
-          placeholder='네비찍으시오.'
-          {...register('navigationDetail.car')}
-          className='h-[32px] w-[250px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
-        />
-        <label className='w-[50px]'>지하철</label>
-        <input
-          type='text'
-          placeholder='지하철역에서 얼마나 걸리는가'
-          {...register('navigationDetail.subway')}
-          className='h-[32px] w-[250px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
-        />
-        <label className='w-[50px]'>버스</label>
-        <input
-          type='text'
-          placeholder='몇번을 타고 어디에서 내리세요'
-          {...register('navigationDetail.bus')}
-          className='h-[32px] w-[250px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
-        />
+      <div className='flex flex-col gap-3'>
+        <div className='flex justify-between w-full gap-4'>
+          <label className='flex justify-start items-center text-[14px] w-14'>지하철</label>
+          <input
+            type='text'
+            placeholder='오시는 길 내용을 입력하세요.'
+            {...register('navigationDetail.subway')}
+            className='h-[32px] w-full pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
+          />
+        </div>
+        <div className='flex justify-between'>
+          <label className='flex justify-start items-center text-[14px] w-14 mr-4'>버스</label>
+          <input
+            type='text'
+            placeholder='오시는 길 내용을 입력하세요.'
+            {...register('navigationDetail.bus')}
+            className='h-[32px] w-full pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
+          />
+        </div>
       </div>
     </>
   );

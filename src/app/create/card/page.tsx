@@ -11,19 +11,6 @@ import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import { createClient } from '@/utils/supabase/client';
-import { getUserInfo } from '@/utils/server-action';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  InvitationFormType,
-  MainPhotoType,
-  NavigationDetailType,
-  PersonalInfoType,
-  StickerType,
-  WeddingInfoType,
-} from '@/types/invitationFormType.type';
-import { AccountInfoType } from '@/types/accountType.type';
-import { Invitation } from '@/types/InvitationData.type';
-import { useInvitationQuery } from '@/hooks/queries/useInvitationQuery';
 import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
 import MainPhotoInput from '@/components/create/MainPhotoInput';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
@@ -32,6 +19,14 @@ import MainViewInput from '@/components/create/MainViewInput';
 import StickerInput from '@/components/create/StickerInput';
 import StickerPreview from '@/components/create/preview/StickerPreview';
 import { debounce } from '@/utils/debounce';
+import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
+import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
+import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
+import { converToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
+import OnBoarding from '@/components/create/OnBoarding';
+import { InvitationFormType } from '@/types/invitationFormType.type';
+
+const browserClient = createClient();
 
 const OBSERVER_OPTIONS = {
   root: null,
@@ -42,36 +37,32 @@ const OBSERVER_OPTIONS = {
 const DELAY_TIME: number = 300;
 
 const CreateCardPage = () => {
-  const browserClient = createClient();
-  const queryClient = useQueryClient();
-  const { data: existingInvitation } = useInvitationQuery();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
+  const [selectedFont, setSelectedFont] = useState<string>('main');
+  const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
+  const refs = [
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+  ];
 
-  const mutation = useMutation({
-    mutationFn: async (invitationData: InvitationFormType) => {
-      const user = await getUserInfo();
+  const observers = useRef<IntersectionObserver[]>([]);
+  const isNavigating = useRef<boolean>(false);
 
-      const convertedInvitation = underscoreInvitation(invitationData);
-
-      const { error } = existingInvitation
-        ? await browserClient.from('invitation').update(convertedInvitation).eq('user_id', user.user.id)
-        : await browserClient.from('invitation').insert([convertedInvitation]);
-
-      if (error) {
-        console.error(error);
-      } else {
-        existingInvitation ? alert('수정 완료되었습니다.') : alert('제출 완료되었습니다.');
-      }
-    },
-    onSuccess: () => queryClient.invalidateQueries(),
-  });
+  const { data: existingInvitation } = useGetInvitationQuery();
+  const { mutate: updateInvitation } = useUpdateInvitation();
+  const { mutate: insertInvitation } = useInsertInvitation();
 
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
-      mainView: {
-        color: '#ffffff',
-      },
-      stickers: [],
+      bgColor: { r: 255, g: 255, b: 255, a: 1, name: '흰색' },
       personalInfo: {
         bride: {
           name: '',
@@ -121,96 +112,72 @@ const CreateCardPage = () => {
         leftName: '',
         rightName: '',
         icon: '',
+        introduceContent: '',
+        imageUrl: '',
+        fontName: '',
       },
       navigationDetail: {
         map: false,
         navigationButton: false,
-        car: '',
         subway: '',
         bus: '',
       },
-      gallery: '',
-      type: '',
+      gallery: { images: [] },
+      type: 'scroll',
       mood: '',
-      bgColor: '',
-      imgRatio: '',
+      stickers: [],
+      imgRatio: {},
       mainText: '',
-      greetingMessage: '',
+      greetingMessage: {},
       dDay: false,
     },
   });
+
   const { reset } = methods;
 
-  const camelizeInvitation = (invitation: Invitation): InvitationFormType => {
-    return {
-      gallery: invitation.gallery,
-      type: invitation.type,
-      mood: invitation.mood,
-      mainView: invitation.main_view,
-      bgColor: invitation.bg_color,
-      stickers: invitation.stickers as StickerType[],
-      imgRatio: invitation.img_ratio,
-      mainText: invitation.main_text,
-      greetingMessage: invitation.greeting_message,
-      guestbook: invitation.guestbook as boolean,
-      attendance: invitation.attendance as boolean,
-      personalInfo: invitation.personal_info as PersonalInfoType,
-      weddingInfo: invitation.wedding_info as WeddingInfoType,
-      account: invitation.account as AccountInfoType,
-      navigationDetail: invitation.navigation_detail as NavigationDetailType,
-      dDay: invitation.d_day as boolean,
-      mainPhotoInfo: invitation.main_photo_info as MainPhotoType,
-    };
-  };
-
-  const underscoreInvitation = (invitation: InvitationFormType) => {
-    return {
-      gallery: invitation.gallery,
-      type: invitation.type,
-      mood: invitation.mood,
-      main_view: invitation.mainView,
-      bg_color: invitation.bgColor,
-      stickers: invitation.stickers as StickerType[],
-      img_ratio: invitation.imgRatio,
-      main_text: invitation.mainText,
-      greeting_message: invitation.greetingMessage,
-      guestbook: invitation.guestbook as boolean,
-      attendance: invitation.attendance as boolean,
-      personal_info: invitation.personalInfo as PersonalInfoType,
-      wedding_info: invitation.weddingInfo as WeddingInfoType,
-      account: invitation.account as AccountInfoType,
-      navigation_detail: invitation.navigationDetail as NavigationDetailType,
-      d_day: invitation.dDay as boolean,
-      main_photo_info: invitation.mainPhotoInfo as MainPhotoType,
-    };
-  };
-
   useEffect(() => {
-    if (existingInvitation) {
-      const convertedInvitation = camelizeInvitation(existingInvitation);
-      reset(convertedInvitation);
-    }
-  }, [existingInvitation]);
+    const loadFormData = async () => {
+      const { data: user } = await browserClient.auth.getUser();
+      const localData = localStorage.getItem('invitationFormData');
+
+      if (!user.user) {
+        if (localData) {
+          reset(JSON.parse(localData));
+        } else {
+          reset();
+        }
+      } else {
+        if (existingInvitation) {
+          const convertedInvitation = converToCamelCase(existingInvitation);
+          reset(convertedInvitation);
+        } else {
+          if (localData) {
+            reset(JSON.parse(localData));
+          } else {
+            reset();
+          }
+        }
+      }
+    };
+
+    loadFormData();
+  }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
-    mutation.mutate(invitationData);
+    const { data: user } = await browserClient.auth.getUser();
+
+    if (!user.user) {
+      localStorage.setItem('invitationFormData', JSON.stringify(invitationData));
+      alert('생성을 원하시면 로그인 해주세요!');
+      return;
+    }
+
+    if (existingInvitation) {
+      updateInvitation(invitationData);
+    } else {
+      insertInvitation(invitationData);
+    }
   };
-
-  const [currentStep, setCurrentStep] = useState(1);
-  const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
-  const refs = [
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-  ];
-
-  const observers = useRef<IntersectionObserver[]>([]);
-  const isNavigating = useRef<boolean>(false);
 
   const handleDebouncedNext = debounce(() => {
     if (currentStep < refs.length) {
@@ -253,10 +220,19 @@ const CreateCardPage = () => {
       }
     });
   };
-
+  const subscribeFont = () => {
+    const subscriptionFont = methods.watch((value) => {
+      const font = value?.mainPhotoInfo?.fontName;
+      if (font) {
+        setSelectedFont(font);
+      }
+      return () => subscriptionFont.unsubscribe();
+    });
+  };
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
-      const color = value.mainView.color;
+      const color = value.bgColor;
+
       if (color) {
         setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
       }
@@ -265,7 +241,7 @@ const CreateCardPage = () => {
   };
 
   const scrollEvent = () => {
-    if (currentStep > 3 && refs[currentStep - 1].current) {
+    if (refs[currentStep - 1].current) {
       refs[currentStep - 1].current?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -278,6 +254,7 @@ const CreateCardPage = () => {
 
   useEffect(() => {
     subscribeBackgroundColor();
+    subscribeFont();
   }, [methods]);
 
   useEffect(() => {
@@ -288,116 +265,130 @@ const CreateCardPage = () => {
     unsubscribeObservers();
     observeObserver();
     return () => unsubscribeObservers();
-  }, [currentStep]);
+  }, [currentStep, refs]);
 
   return (
     <div
-      className='relative w-full h-full'
+      className={`relative w-full h-full font-${selectedFont}`}
       style={{
         backgroundColor: backgroundColor,
       }}
     >
-      {/*대표사진 프리뷰*/}
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[0]}
-      >
-        <MainPhotoPreView control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[1]}
-      >
-        <PersonalInfoPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[2]}
-      >
-        <AccountPreView control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[3]}
-      >
-        <WeddingInfoPreView control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[4]}
-      >
-        <NavigationDetailsPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[5]}
-      >
-        <GuestInfoPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[6]}
-      >
-        colorpalette
-      </div>
-      {/*스티커 붙이기*/}
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[7]}
-      >
-        <div
-          id='main-photo'
-          className='w-full h-[400px] bg-amber-100 relative'
-        >
-          임시 메인사진 영역
-          <StickerPreview control={methods.control} />
-        </div>
-      </div>
-
-      <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-        <FormProvider {...methods}>
-          <form
-            className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
-            onSubmit={methods.handleSubmit(onSubmit)}
+      <OnBoarding
+        setIsOnboardingComplete={setIsOnboardingComplete}
+        isOnboardingComplete={isOnboardingComplete}
+      />
+      {isOnboardingComplete ? (
+        <>
+          <div
+            style={{
+              fontFamily: selectedFont,
+            }}
           >
-            <div className='w-full flex items-center justify-end'>
-              <button
-                type='button'
-                onClick={handleDebouncedPrevious}
-                className='bg-red-300'
-                disabled={currentStep === 1}
-              >
-                <MdNavigateBefore />
-              </button>
-              <button
-                className='bg-blue-300'
-                type='button'
-                onClick={handleDebouncedNext}
-                disabled={currentStep === refs.length}
-              >
-                <MdNavigateNext />
-              </button>
+            {/*대표사진 프리뷰*/}
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[0]}
+            >
+              <MainPhotoPreView control={methods.control} />
             </div>
-
-            {currentStep === 1 && <MainPhotoInput />}
-            {currentStep === 2 && <PersonalInfoInput />}
-            {currentStep === 3 && <AccountInput />}
-            {currentStep === 4 && <WeddingInfoInput />}
-            {currentStep === 5 && <NavigationDetailInput />}
-            {currentStep === 6 && <GuestInfoInput />}
-            {currentStep === 7 && <MainViewInput />}
-            {currentStep === 8 && <StickerInput />}
-            {currentStep === refs.length && (
-              <button
-                className='w-full'
-                type='submit'
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[1]}
+            >
+              <PersonalInfoPreview control={methods.control} />
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[2]}
+            >
+              <AccountPreView control={methods.control} />
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[3]}
+            >
+              <WeddingInfoPreView control={methods.control} />
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[4]}
+            >
+              <NavigationDetailsPreview control={methods.control} />
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[5]}
+            >
+              <GuestInfoPreview control={methods.control} />
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[6]}
+            >
+              colorpalette
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[7]}
+            >
+              <div
+                id='main-photo'
+                className='w-full h-[400px] bg-amber-100 relative'
               >
-                제출
-              </button>
-            )}
-          </form>
-        </FormProvider>
-      </div>
+                임시 메인사진 영역
+                <FormProvider {...methods}>
+                  <StickerPreview control={methods.control} />
+                </FormProvider>
+              </div>
+            </div>
+          </div>
+          <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
+            <FormProvider {...methods}>
+              <form
+                className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
+                onSubmit={methods.handleSubmit(onSubmit)}
+              >
+                <div className='w-full flex items-center justify-end'>
+                  <button
+                    type='button'
+                    onClick={handleDebouncedPrevious}
+                    className='bg-red-300'
+                    disabled={currentStep === 1}
+                  >
+                    <MdNavigateBefore />
+                  </button>
+                  <button
+                    className='bg-blue-300'
+                    type='button'
+                    onClick={handleDebouncedNext}
+                    disabled={currentStep === refs.length}
+                  >
+                    <MdNavigateNext />
+                  </button>
+                </div>
+
+                {currentStep === 1 && <MainPhotoInput />}
+                {currentStep === 2 && <MainViewInput />}
+                {currentStep === 3 && <PersonalInfoInput />}
+                {currentStep === 4 && <AccountInput />}
+                {currentStep === 5 && <WeddingInfoInput />}
+                {currentStep === 6 && <NavigationDetailInput />}
+                {currentStep === 7 && <GuestInfoInput />}
+                {currentStep === 8 && <StickerInput />}
+                {currentStep === refs.length && (
+                  <button
+                    className='w-full'
+                    type='submit'
+                  >
+                    제출
+                  </button>
+                )}
+              </form>
+            </FormProvider>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 };

@@ -1,6 +1,5 @@
 'use client';
 
-import { Review } from '@/types/reviewData.types';
 import { createClient } from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -34,7 +33,7 @@ const Carousel = () => {
     queryFn: getReviews,
   });
 
-  const extendedReviewArr: Review[] = [...reviewsData, ...reviewsData, ...reviewsData];
+  const extendedReviewArr = [...reviewsData, ...reviewsData, ...reviewsData];
 
   useEffect(() => {
     const interval = setInterval(() => {
