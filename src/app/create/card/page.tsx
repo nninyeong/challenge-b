@@ -36,6 +36,7 @@ const DELAY_TIME: number = 300;
 const CreateCardPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
+  const [selectedFont, setSelectedFont] = useState<string>('main');
 
   const refs = [
     useRef<HTMLDivElement | null>(null),
@@ -107,6 +108,9 @@ const CreateCardPage = () => {
         leftName: '',
         rightName: '',
         icon: '',
+        introduceContent: '',
+        imageUrl: '',
+        fontName: '',
       },
       navigationDetail: {
         map: false,
@@ -213,10 +217,19 @@ const CreateCardPage = () => {
       }
     });
   };
-
+  const subscribeFont = () => {
+    const subscriptionFont = methods.watch((value) => {
+      const font = value?.mainPhotoInfo?.fontName;
+      if (font) {
+        setSelectedFont(font);
+      }
+      return () => subscriptionFont.unsubscribe();
+    });
+  };
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
       const color = value.bgColor;
+
       if (color) {
         setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
       }
@@ -238,6 +251,7 @@ const CreateCardPage = () => {
 
   useEffect(() => {
     subscribeBackgroundColor();
+    subscribeFont();
   }, [methods]);
 
   useEffect(() => {
@@ -252,55 +266,60 @@ const CreateCardPage = () => {
 
   return (
     <div
-      className='relative w-full h-full'
+      className={`relative w-full h-full font-${selectedFont}`}
       style={{
         backgroundColor: backgroundColor,
       }}
     >
-      {/*대표사진 프리뷰*/}
       <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[0]}
+        style={{
+          fontFamily: selectedFont,
+        }}
       >
-        <MainPhotoPreView control={methods.control} />
+        {/*대표사진 프리뷰*/}
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[0]}
+        >
+          <MainPhotoPreView control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[1]}
+        >
+          <PersonalInfoPreview control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[2]}
+        >
+          <AccountPreView control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[3]}
+        >
+          <WeddingInfoPreView control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[4]}
+        >
+          <NavigationDetailsPreview control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[4]}
+        >
+          <GuestInfoPreview control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[5]}
+        >
+          colorpalette
+        </div>
       </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[1]}
-      >
-        <PersonalInfoPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[2]}
-      >
-        <AccountPreView control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[3]}
-      >
-        <WeddingInfoPreView control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[4]}
-      >
-        <NavigationDetailsPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[4]}
-      >
-        <GuestInfoPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[5]}
-      >
-        colorpalette
-      </div>
-
       <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
         <FormProvider {...methods}>
           <form

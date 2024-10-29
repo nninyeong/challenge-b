@@ -30,6 +30,7 @@ export type MainPhotoType = {
   icon: string;
   introduceContent: string;
   imageUrl: string;
+  fontName: string;
 };
 
 export type NavigationDetailType = {
