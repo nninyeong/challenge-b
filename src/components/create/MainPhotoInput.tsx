@@ -1,8 +1,8 @@
 'use client';
 import { useFormContext } from 'react-hook-form';
 import TextEditor from './TextEditor';
-import { MainPhotoType } from '@/types/invitationFormType.type';
-import { postMainImg } from '@/utils/invitationUploadImg';
+// import { MainPhotoType } from '@/types/invitationFormType.type';
+// import { postMainImg } from '@/utils/invitationUploadImg';
 import { FaPlus } from 'react-icons/fa6';
 
 const FONTMENU = [
@@ -18,17 +18,17 @@ const MainPhotoInput = () => {
   const { register, watch, setValue } = useFormContext();
   const introduceContent = watch('mainPhotoInfo.introduceContent');
 
-  const onSubmit = async (data: MainPhotoType) => {
-    const mainPhotoInfo = {
-      leftName: data.leftName,
-      rightName: data.rightName,
-      icon: data.icon,
-      introduceContent: data.introduceContent,
-      imageUrl: data.imageUrl,
-    };
+  // const onSubmit = async (data: MainPhotoType) => {
+  //   const mainPhotoInfo = {
+  //     leftName: data.leftName,
+  //     rightName: data.rightName,
+  //     icon: data.icon,
+  //     introduceContent: data.introduceContent,
+  //     imageUrl: data.imageUrl,
+  //   };
 
-    await postMainImg(mainPhotoInfo);
-  };
+  //   await postMainImg(mainPhotoInfo);
+  // };
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

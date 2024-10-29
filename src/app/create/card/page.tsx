@@ -11,24 +11,19 @@ import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import { createClient } from '@/utils/supabase/client';
-import { getUserInfo } from '@/utils/server-action';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  InvitationFormType,
-  MainPhotoType,
-  NavigationDetailType,
-  PersonalInfoType,
-  WeddingInfoType,
-} from '@/types/invitationFormType.type';
-import { AccountInfoType } from '@/types/accountType.type';
-import { Invitation } from '@/types/InvitationData.type';
-import { useInvitationQuery } from '@/hooks/queries/useInvitationQuery';
+import { InvitationFormType } from '@/types/invitationFormType.type';
 import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
 import MainPhotoInput from '@/components/create/MainPhotoInput';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
 import { debounce } from '@/utils/debounce';
+import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
+import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
+import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
+import { converToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
+
+const browserClient = createClient();
 
 const OBSERVER_OPTIONS = {
   root: null,
@@ -39,28 +34,25 @@ const OBSERVER_OPTIONS = {
 const DELAY_TIME: number = 300;
 
 const CreateCardPage = () => {
-  const browserClient = createClient();
-  const queryClient = useQueryClient();
-  const { data: existingInvitation } = useInvitationQuery();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
 
-  const mutation = useMutation({
-    mutationFn: async (invitationData: InvitationFormType) => {
-      const user = await getUserInfo();
+  const refs = [
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
+  ];
 
-      const convertedInvitation = underscoreInvitation(invitationData);
+  const observers = useRef<IntersectionObserver[]>([]);
+  const isNavigating = useRef<boolean>(false);
 
-      const { error } = existingInvitation
-        ? await browserClient.from('invitation').update(convertedInvitation).eq('user_id', user.user.id)
-        : await browserClient.from('invitation').insert([convertedInvitation]);
-
-      if (error) {
-        console.error(error);
-      } else {
-        existingInvitation ? alert('수정 완료되었습니다.') : alert('제출 완료되었습니다.');
-      }
-    },
-    onSuccess: () => queryClient.invalidateQueries(),
-  });
+  const { data: existingInvitation } = useGetInvitationQuery();
+  const { mutate: updateInvitation } = useUpdateInvitation();
+  const { mutate: insertInvitation } = useInsertInvitation();
 
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
@@ -133,77 +125,52 @@ const CreateCardPage = () => {
       dDay: false,
     },
   });
+
   const { reset } = methods;
 
-  const camelizeInvitation = (invitation: Invitation): InvitationFormType => {
-    return {
-      gallery: invitation.gallery,
-      type: invitation.type,
-      mood: invitation.mood,
-      mainView: invitation.main_view,
-      bgColor: invitation.bg_color,
-      stickers: invitation.stickers,
-      imgRatio: invitation.img_ratio,
-      mainText: invitation.main_text as string,
-      greetingMessage: invitation.greeting_message,
-      guestbook: invitation.guestbook as boolean,
-      attendance: invitation.attendance as boolean,
-      personalInfo: invitation.personal_info as PersonalInfoType,
-      weddingInfo: invitation.wedding_info as WeddingInfoType,
-      account: invitation.account as AccountInfoType,
-      navigationDetail: invitation.navigation_detail as NavigationDetailType,
-      dDay: invitation.d_day as boolean,
-      mainPhotoInfo: invitation.main_photo_info as MainPhotoType,
-    };
-  };
-
-  const underscoreInvitation = (invitation: InvitationFormType) => {
-    return {
-      gallery: invitation.gallery,
-      type: invitation.type,
-      mood: invitation.mood,
-      main_view: invitation.mainView,
-      bg_color: invitation.bgColor,
-      stickers: invitation.stickers,
-      img_ratio: invitation.imgRatio,
-      main_text: invitation.mainText,
-      greeting_message: invitation.greetingMessage,
-      guestbook: invitation.guestbook as boolean,
-      attendance: invitation.attendance as boolean,
-      personal_info: invitation.personalInfo as PersonalInfoType,
-      wedding_info: invitation.weddingInfo as WeddingInfoType,
-      account: invitation.account as AccountInfoType,
-      navigation_detail: invitation.navigationDetail as NavigationDetailType,
-      d_day: invitation.dDay as boolean,
-      main_photo_info: invitation.mainPhotoInfo as MainPhotoType,
-    };
-  };
-
   useEffect(() => {
-    if (existingInvitation) {
-      const convertedInvitation = camelizeInvitation(existingInvitation);
-      reset(convertedInvitation);
-    }
-  }, [existingInvitation]);
+    const loadFormData = async () => {
+      const { data: user } = await browserClient.auth.getUser();
+      const localData = localStorage.getItem('invitationFormData');
+
+      if (!user.user) {
+        if (localData) {
+          reset(JSON.parse(localData));
+        } else {
+          reset();
+        }
+      } else {
+        if (existingInvitation) {
+          const convertedInvitation = converToCamelCase(existingInvitation);
+          reset(convertedInvitation);
+        } else {
+          if (localData) {
+            reset(JSON.parse(localData));
+          } else {
+            reset();
+          }
+        }
+      }
+    };
+
+    loadFormData();
+  }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
-    mutation.mutate(invitationData);
+    const { data: user } = await browserClient.auth.getUser();
+
+    if (!user.user) {
+      localStorage.setItem('invitationFormData', JSON.stringify(invitationData));
+      alert('생성을 원하시면 로그인 해주세요!');
+      return;
+    }
+
+    if (existingInvitation) {
+      updateInvitation(invitationData);
+    } else {
+      insertInvitation(invitationData);
+    }
   };
-
-  const [currentStep, setCurrentStep] = useState(1);
-  const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
-  const refs = [
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-  ];
-
-  const observers = useRef<IntersectionObserver[]>([]);
-  const isNavigating = useRef<boolean>(false);
 
   const handleDebouncedNext = debounce(() => {
     if (currentStep < refs.length) {
