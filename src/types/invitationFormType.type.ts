@@ -41,16 +41,16 @@ export type NavigationDetailType = {
   bus: string;
 };
 
-type GalleryType = {
+export type GalleryType = {
   images: File[];
 };
 
-type ImageRatioType = {
+export type ImageRatioType = {
   ratio: string;
   position: number;
 };
 
-type GreetingMessageType = {
+export type GreetingMessageType = {
   title: string;
   content: string;
 };
@@ -61,13 +61,22 @@ export type ColorType = {
   a: number;
   name: string;
 };
+
+export type StickerType = {
+  id: string;
+  stickerImageId: string;
+  url: string;
+  posX: string;
+  posY: string;
+};
+
 export type InvitationFormType = {
   gallery: GalleryType;
   type: 'scroll' | 'slide';
   mood: string;
   mainView: string;
   bgColor: ColorType;
-  stickers: File[];
+  stickers: StickerType[];
   imgRatio: ImageRatioType;
   mainText: string;
   personalInfo: PersonalInfoType;
