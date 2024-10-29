@@ -1,5 +1,5 @@
 import { attendanceSchema } from "@/lib/zod/attendanceSchema";
-import { FormData } from "@/types/auth.types";
+import { AttendanceFormData } from "@/types/guestInfo.types";
 import browserClient from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<AttendanceFormData>({
     resolver: zodResolver(attendanceSchema),
     defaultValues: {
       personType: '',
@@ -19,7 +19,7 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
     },
   });
 
-  const handleAttendanceModalSubmit: SubmitHandler<FormData> = async (data) => {
+  const handleAttendanceModalSubmit: SubmitHandler<AttendanceFormData> = async (data) => {
     const { personType, mealOption, name, attendanceCount } = data;
 
     const { error } = await browserClient.from('attendance').insert([

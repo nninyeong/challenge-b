@@ -2,7 +2,7 @@ import { guestBookSchema } from '@/lib/zod/guestBookSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import useAddGuestBookEntry from './useCreateGuestBookEntry';
-import { GuestBookFormData } from '@/types/auth.types';
+import { GuestBookFormData } from '@/types/guestInfo.types';
 
 const useCreateGuestBookInput = (invitationId: string) => {
   const {
