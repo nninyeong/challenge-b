@@ -17,7 +17,6 @@ export default function Home() {
       const userId = data?.user?.id;
 
       if (userId && (from === 'google' || from === 'kakao')) {
-        console.log(from);
         await saveSessionDataToSupabase(client, userId);
       }
 
