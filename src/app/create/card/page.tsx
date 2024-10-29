@@ -115,7 +115,7 @@ const CreateCardPage = () => {
       },
       navigationDetail: {
         map: false,
-        navigation_button: false,
+        navigationButton: false,
         subway: '',
         bus: '',
       },

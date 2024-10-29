@@ -1,6 +1,8 @@
 'use client';
 import { useFormContext } from 'react-hook-form';
 import TextEditor from './TextEditor';
+// import { MainPhotoType } from '@/types/invitationFormType.type';
+// import { postMainImg } from '@/utils/invitationUploadImg';
 import { FaPlus } from 'react-icons/fa6';
 
 const FONTMENU = [
