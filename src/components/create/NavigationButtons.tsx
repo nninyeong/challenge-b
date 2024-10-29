@@ -10,7 +10,6 @@ const NavigationButtons = ({ address, name }: { address: string; name: string })
       <button
         onClick={() =>
           openKakaoMap({
-            startCoords: { spLat: coords.lat, spLng: coords.lng },
             endCoords: { epLat: coords.lat, epLng: coords.lng },
             name: name,
           })
