@@ -35,7 +35,7 @@ export type MainPhotoType = {
 
 export type NavigationDetailType = {
   map: boolean;
-  navigation_button: boolean;
+  navigationButton: boolean;
   subway: string;
   bus: string;
 };
