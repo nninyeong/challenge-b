@@ -1,8 +1,7 @@
 import { AccountInfoType } from '@/types/accountType.type';
-import { Invitation } from '@/types/InvitationData.type';
+import { Invitation } from '@/types/database.type';
 import {
   ColorType,
-  GalleryType,
   GreetingMessageType,
   ImageRatioType,
   InvitationFormType,
