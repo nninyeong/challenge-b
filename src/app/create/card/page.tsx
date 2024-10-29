@@ -303,53 +303,57 @@ const CreateCardPage = () => {
       className={`relative w-full h-full font-${selectedFont}`}
       style={{
         backgroundColor: backgroundColor,
-        fontFamily: selectedFont,
       }}
     >
-      {/*대표사진 프리뷰*/}
       <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[0]}
+        style={{
+          fontFamily: selectedFont,
+        }}
       >
-        <MainPhotoPreView control={methods.control} />
+        {/*대표사진 프리뷰*/}
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[0]}
+        >
+          <MainPhotoPreView control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[1]}
+        >
+          <PersonalInfoPreview control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[2]}
+        >
+          <AccountPreView control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[3]}
+        >
+          <WeddingInfoPreView control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[4]}
+        >
+          <NavigationDetailsPreview control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[4]}
+        >
+          <GuestInfoPreview control={methods.control} />
+        </div>
+        <div
+          className='min-h-[calc(100vh-114px)]'
+          ref={refs[5]}
+        >
+          colorpalette
+        </div>
       </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[1]}
-      >
-        <PersonalInfoPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[2]}
-      >
-        <AccountPreView control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[3]}
-      >
-        <WeddingInfoPreView control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[4]}
-      >
-        <NavigationDetailsPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[4]}
-      >
-        <GuestInfoPreview control={methods.control} />
-      </div>
-      <div
-        className='min-h-[calc(100vh-114px)]'
-        ref={refs[5]}
-      >
-        colorpalette
-      </div>
-
       <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
         <FormProvider {...methods}>
           <form
