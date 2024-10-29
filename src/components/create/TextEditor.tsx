@@ -1,5 +1,6 @@
-import ReactQuill from 'react-quill';
+import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
+import React from 'react';
 
 interface TextEditorProps {
   value: string;
@@ -7,28 +8,22 @@ interface TextEditorProps {
   placeholder: string;
 }
 
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+
 const TextEditor = ({ value, onChange, placeholder }: TextEditorProps) => {
   const modules = {
-    toolbar: [['bold', 'italic', 'underline'], [{ color: [] }], [{ background: [] }], [{ align: [] }]],
-  };
-
-  const handleChange = (content: string) => {
-    if (content.trim() === '') {
-      onChange('');
-    } else {
-      onChange(content);
-    }
+    toolbar: [['bold', 'italic', 'underline', { color: [] }, { background: [] }]],
   };
 
   return (
-    <div className='rounded'>
+    <div>
       <ReactQuill
         placeholder={placeholder}
         value={value || ''}
-        onChange={handleChange}
+        onChange={(value) => onChange(value)}
         theme='snow'
         modules={modules}
-        className='ql-editor w-full h-full rounded bg-white'
+        className='custom-quill-editor'
       />
     </div>
   );
