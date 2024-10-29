@@ -41,9 +41,18 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
         onSubmit={handleSubmit(handleAuthSubmit)}
         className='flex flex-col mt-[40px] w-full'
       >
+        {mode === 'signup' && (
+          <InputForValidate
+            type='text'
+            placeholder='닉네임 최소 2글자'
+            validateFor='username'
+            register={register}
+            errorMessage={'username' in errors ? errors.username?.message : undefined}
+          />
+        )}
         <InputForValidate
           type='text'
-          placeholder='이메일'
+          placeholder='이메일 주소'
           validateFor='email'
           register={register}
           errorMessage={errors.email?.message}
@@ -59,17 +68,10 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
           <>
             <InputForValidate
               type='password'
-              placeholder='비밀번호 확인'
+              placeholder='비밀번호 확인 입력'
               validateFor='passwordCheck'
               register={register}
               errorMessage={'passwordCheck' in errors ? errors.passwordCheck?.message : undefined}
-            />
-            <InputForValidate
-              type='text'
-              placeholder='이름'
-              validateFor='username'
-              register={register}
-              errorMessage={'username' in errors ? errors.username?.message : undefined}
             />
           </>
         )}
