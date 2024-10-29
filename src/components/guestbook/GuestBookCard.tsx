@@ -2,7 +2,7 @@
 
 import { GuestBookEntry } from '@/types/guestBookEntry.types';
 import DeleteGuestBookAccordion from '@/components/guestbook/DeleteGuestBookAccordion';
-import useGuestBookDeleteButton from '@/hooks/modals/useGuestBookDeleteButton';
+import useGuestBookDeleteButton from '@/hooks/guestbook/useGuestBookDeleteButton';
 
 const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry; invitationId: string }) => {
   const { isAccordionOpen, toggleAccordion } = useGuestBookDeleteButton();
@@ -10,7 +10,7 @@ const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry;
   return (
     <div className='border text-black w-full px-4'>
       <div>
-        <span onClick={toggleAccordion}>x {/* 나중에 아이콘으로 변경 필요 */}</span>
+        <span onClick={toggleAccordion}>x {/* @TODO 나중에 아이콘으로 변경 필요 */}</span>
       </div>
       <div>{guestBook.name}</div>
       <div>{guestBook.content}</div>

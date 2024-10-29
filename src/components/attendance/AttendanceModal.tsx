@@ -1,20 +1,10 @@
 'use client';
 
-import useAttendanceModal from '@/hooks/modals/useAttendanceModal';
 import { useEffect } from 'react';
+import useAttendanceModal from '@/hooks/attendance/useAttendanceModal';
 
 const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> = ({ invitationId, onClick }) => {
-  const {
-    personType,
-    mealOption,
-    name,
-    attendanceCount,
-    handlePersonTypeChange,
-    handleMealOptionChange,
-    handleNameChange,
-    handleAttendanceCountChange,
-    handleAttendanceModalSubmit,
-  } = useAttendanceModal(invitationId, onClick);
+  const { register, handleSubmit, handleAttendanceModalSubmit, errors } = useAttendanceModal(invitationId, onClick);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -30,9 +20,9 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
           className='cursor-pointer'
           onClick={onClick}
         >
-          X {/* 나중에 아이콘으로 변경 필요 */}
+          X {/* @TODO 나중에 아이콘으로 변경 필요 */}
         </div>
-        <form onSubmit={handleAttendanceModalSubmit}>
+        <form onSubmit={handleSubmit(handleAttendanceModalSubmit)}>
           <div className='grid grid-cols-2 gap-4'>
             <label className='col-span-2 font-semibold'>구분</label>
             <div>
@@ -40,8 +30,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 <input
                   type='radio'
                   value='신랑'
-                  checked={personType === '신랑'}
-                  onChange={handlePersonTypeChange}
+                  {...register('personType')}
                 />
                 신랑
               </label>
@@ -51,39 +40,35 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 <input
                   type='radio'
                   value='신부'
-                  checked={personType === '신부'}
-                  onChange={handlePersonTypeChange}
+                  {...register('personType')}
                 />
                 신부
               </label>
             </div>
-
+            {errors.personType && <span>{errors.personType.message}</span>}
             <label className='col-span-2 font-semibold'>성함</label>
             <input
               className='border-gray-500 border outline-none col-span-2 p-1'
-              value={name}
-              onChange={handleNameChange}
+              {...register('name')}
             />
-
+            {errors.name && <span>{errors.name.message}</span>}
             <label className='col-span-2 font-semibold'>참석인원</label>
             <input
               className='border-gray-500 border outline-none col-span-2 p-1'
               type='number'
-              value={attendanceCount}
-              onChange={handleAttendanceCountChange}
+              {...register('attendanceCount', {
+                valueAsNumber: true,
+              })}
               placeholder='0-100'
-              min={0}
-              max={100}
             />
-
+            {errors.attendanceCount && <span>{errors.attendanceCount.message}</span>}
             <label className='col-span-2 font-semibold'>식사 여부</label>
             <div>
               <label>
                 <input
                   type='radio'
                   value='예정'
-                  checked={mealOption === '예정'}
-                  onChange={handleMealOptionChange}
+                  {...register('mealOption')}
                 />
                 예정
               </label>
@@ -93,12 +78,12 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 <input
                   type='radio'
                   value='안함'
-                  checked={mealOption === '안함'}
-                  onChange={handleMealOptionChange}
+                  {...register('mealOption')}
                 />
                 안함
               </label>
             </div>
+            {errors.mealOption && <span>{errors.mealOption.message}</span>}
           </div>
           <button className='mt-4 bg-blue-500 text-white py-2 px-4 rounded'>참석 의사 전달하기</button>
         </form>

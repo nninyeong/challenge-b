@@ -1,7 +1,6 @@
 'use client';
 
-import useDeleteGuestBookEntry from '@/hooks/modals/useDeleteGuestBookEntry';
-import { useState } from 'react';
+import useDeleteGuestBookInput from '@/hooks/guestbook/useDeleteGuestBookInput';
 
 const DeleteGuestBookAccordion = ({
   invitationId,
@@ -14,23 +13,12 @@ const DeleteGuestBookAccordion = ({
   signedPassword: string | null;
   onClose: () => void;
 }) => {
-  const [password, setPassword] = useState('');
-  const { mutate: deleteGuestBookEntry } = useDeleteGuestBookEntry(invitationId, id, signedPassword, onClose);
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleGuestBookDelete = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!password) {
-      alert('패스워드를 입력해주세요.');
-      return;
-    }
-
-    deleteGuestBookEntry(password);
-  };
+  const { password, handlePasswordChange, handleGuestBookDelete } = useDeleteGuestBookInput(
+    invitationId,
+    id,
+    signedPassword,
+    onClose,
+  );
 
   return (
     <div className='px-4 bg-white text-black mt-2'>
@@ -42,7 +30,12 @@ const DeleteGuestBookAccordion = ({
           placeholder='비밀번호를 입력하세요.'
           onChange={handlePasswordChange}
         />
-        <button className='w-full mb-2' type='submit'>삭제하기</button>
+        <button
+          className='w-full mb-2'
+          type='submit'
+        >
+          삭제하기
+        </button>
       </form>
     </div>
   );

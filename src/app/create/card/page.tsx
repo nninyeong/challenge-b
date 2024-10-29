@@ -22,6 +22,7 @@ import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitati
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
 import { converToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
+import OnBoarding from '@/components/create/OnBoarding';
 
 const browserClient = createClient();
 
@@ -37,7 +38,7 @@ const CreateCardPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
-
+  const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const refs = [
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -225,7 +226,7 @@ const CreateCardPage = () => {
   };
 
   const scrollEvent = () => {
-    if (currentStep > 3 && refs[currentStep - 1].current) {
+    if (refs[currentStep - 1].current) {
       refs[currentStep - 1].current?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -249,7 +250,7 @@ const CreateCardPage = () => {
     unsubscribeObservers();
     observeObserver();
     return () => unsubscribeObservers();
-  }, [currentStep]);
+  }, [currentStep, refs]);
 
   return (
     <div
@@ -258,98 +259,106 @@ const CreateCardPage = () => {
         backgroundColor: backgroundColor,
       }}
     >
-      <div
-        style={{
-          fontFamily: selectedFont,
-        }}
-      >
-        {/*대표사진 프리뷰*/}
-        <div
-          className='min-h-[calc(100vh-114px)]'
-          ref={refs[0]}
-        >
-          <MainPhotoPreView control={methods.control} />
-        </div>
-        <div
-          className='min-h-[calc(100vh-114px)]'
-          ref={refs[1]}
-        >
-          <PersonalInfoPreview control={methods.control} />
-        </div>
-        <div
-          className='min-h-[calc(100vh-114px)]'
-          ref={refs[2]}
-        >
-          <AccountPreView control={methods.control} />
-        </div>
-        <div
-          className='min-h-[calc(100vh-114px)]'
-          ref={refs[3]}
-        >
-          <WeddingInfoPreView control={methods.control} />
-        </div>
-        <div
-          className='min-h-[calc(100vh-114px)]'
-          ref={refs[4]}
-        >
-          <NavigationDetailsPreview control={methods.control} />
-        </div>
-        <div
-          className='min-h-[calc(100vh-114px)]'
-          ref={refs[5]}
-        >
-          <GuestInfoPreview control={methods.control} />
-        </div>
-        <div
-          className='min-h-[calc(100vh-114px)]'
-          ref={refs[6]}
-        >
-          colorpalette
-        </div>
-      </div>
-      <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-        <FormProvider {...methods}>
-          <form
-            className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
-            onSubmit={methods.handleSubmit(onSubmit)}
+      <OnBoarding
+        setIsOnboardingComplete={setIsOnboardingComplete}
+        isOnboardingComplete={isOnboardingComplete}
+      />
+      {isOnboardingComplete ? (
+        <>
+          <div
+            style={{
+              fontFamily: selectedFont,
+            }}
           >
-            <div className='w-full flex items-center justify-end'>
-              <button
-                type='button'
-                onClick={handleDebouncedPrevious}
-                className='bg-red-300'
-                disabled={currentStep === 1}
-              >
-                <MdNavigateBefore />
-              </button>
-              <button
-                className='bg-blue-300'
-                type='button'
-                onClick={handleDebouncedNext}
-                disabled={currentStep === refs.length}
-              >
-                <MdNavigateNext />
-              </button>
+            {/*대표사진 프리뷰*/}
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[0]}
+            >
+              <MainPhotoPreView control={methods.control} />
             </div>
-
-            {currentStep === 1 && <MainPhotoInput />}
-            {currentStep === 2 && <PersonalInfoInput />}
-            {currentStep === 3 && <AccountInput />}
-            {currentStep === 4 && <WeddingInfoInput />}
-            {currentStep === 5 && <NavigationDetailInput />}
-            {currentStep === 6 && <GuestInfoInput />}
-            {currentStep === 7 && <MainViewInput />}
-            {currentStep === refs.length && (
-              <button
-                className='w-full'
-                type='submit'
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[1]}
+            >
+              <PersonalInfoPreview control={methods.control} />
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[2]}
+            >
+              <AccountPreView control={methods.control} />
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[3]}
+            >
+              <WeddingInfoPreView control={methods.control} />
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[4]}
+            >
+              <NavigationDetailsPreview control={methods.control} />
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[5]}
+            >
+              <GuestInfoPreview control={methods.control} />
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[6]}
+            >
+              colorpalette
+            </div>
+          </div>
+          <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
+            <FormProvider {...methods}>
+              <form
+                className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
+                onSubmit={methods.handleSubmit(onSubmit)}
               >
-                제출
-              </button>
-            )}
-          </form>
-        </FormProvider>
-      </div>
+                <div className='w-full flex items-center justify-end'>
+                  <button
+                    type='button'
+                    onClick={handleDebouncedPrevious}
+                    className='bg-red-300'
+                    disabled={currentStep === 1}
+                  >
+                    <MdNavigateBefore />
+                  </button>
+                  <button
+                    className='bg-blue-300'
+                    type='button'
+                    onClick={handleDebouncedNext}
+                    disabled={currentStep === refs.length}
+                  >
+                    <MdNavigateNext />
+                  </button>
+                </div>
+
+                {currentStep === 1 && <MainPhotoInput />}
+                {currentStep === 2 && <MainViewInput />}
+                {currentStep === 3 && <PersonalInfoInput />}
+                {currentStep === 4 && <AccountInput />}
+                {currentStep === 5 && <WeddingInfoInput />}
+                {currentStep === 6 && <NavigationDetailInput />}
+                {currentStep === 7 && <GuestInfoInput />}
+                {currentStep === refs.length && (
+                  <button
+                    className='w-full'
+                    type='submit'
+                  >
+                    제출
+                  </button>
+                )}
+              </form>
+            </FormProvider>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 };
