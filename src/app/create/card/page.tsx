@@ -22,6 +22,7 @@ import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitati
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
 import { converToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
+import GreetingInput from '@/components/create/GreetingInput';
 
 const browserClient = createClient();
 
@@ -124,7 +125,10 @@ const CreateCardPage = () => {
       stickers: [],
       imgRatio: {},
       mainText: '',
-      greetingMessage: {},
+      greetingMessage: {
+        title: '',
+        content: '',
+      },
       dDay: false,
     },
   });
@@ -275,7 +279,6 @@ const CreateCardPage = () => {
           fontFamily: selectedFont,
         }}
       >
-        {/*대표사진 프리뷰*/}
         <div
           className='min-h-[calc(100vh-114px)]'
           ref={refs[0]}
@@ -317,6 +320,9 @@ const CreateCardPage = () => {
           ref={refs[6]}
         >
           colorpalette
+        </div>
+        <div>
+          <GreetingInput />
         </div>
       </div>
       <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
