@@ -20,7 +20,7 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
           className='relative w-[30px] h-[30px] rounded-t-lg overflow-hidden'
         >
           <Image
-            src='/images/phone.png'
+            src='/assets/images/phone.png'
             alt='전화 이미지'
             layout='fill'
             objectFit='cover'
@@ -31,7 +31,7 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
           className='relative w-[30px] h-[30px] rounded-t-lg overflow-hidden'
         >
           <Image
-            src='/images/mail.png'
+            src='/assets/images/mail.png'
             alt='문자 이미지'
             layout='fill'
             objectFit='cover'

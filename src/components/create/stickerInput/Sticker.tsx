@@ -3,7 +3,7 @@
 import { StickerType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
 import { MutableRefObject, useRef } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { clampValue } from '@/utils/clampValue';
 
 const preventTouchScroll = (e: TouchEvent) => {
@@ -17,11 +17,8 @@ const Sticker = ({
   sticker: StickerType;
   previewRef: MutableRefObject<HTMLDivElement | null>;
 }) => {
-  const { setValue, control } = useFormContext();
-  const stickersWatch = useWatch({
-    control,
-    name: 'stickers',
-  });
+  const { setValue, watch } = useFormContext();
+  const stickersWatch = watch('stickers');
 
   const stickerRef = useRef<HTMLImageElement | null>(null);
   const touchOffset = useRef({ x: 0, y: 0 });
