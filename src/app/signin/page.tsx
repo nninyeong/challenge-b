@@ -1,16 +1,9 @@
 'use client';
 import { handleGoogleSignIn, handleKakaoSignIn } from '@/utils/supabase/signIn';
-import { useRouter } from 'next/navigation';
 import AuthForm from '@/components/auth/AuthForm';
 import Link from 'next/link';
 
 const SignInPage = () => {
-  const router = useRouter();
-
-  const handleMoveToEmailSignIn = () => {
-    router.push('/signin/email');
-  };
-
   const alertComingSoon = () => {
     alert('준비중인 서비스입니다.');
   };
