@@ -1,6 +1,8 @@
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
 import { Control, useWatch } from 'react-hook-form';
+import { ArchSvg, EllipseSvg } from '../CustomSVG';
+import colorConverter from '@/utils/colorConverter';
 
 const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> }) => {
   const mainPhotoInfo = useWatch({
@@ -8,8 +10,13 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
     name: 'mainPhotoInfo',
   });
 
+  const svgBgColor = useWatch({
+    control,
+    name: 'bgColor',
+  });
+
   return (
-    <div className='w-[80%] flex flex-col justify-center item-center mx-auto text-center text-black'>
+    <div className='w-full flex flex-col justify-center item-center mx-auto text-center text-black'>
       <div
         className='quill-preview'
         dangerouslySetInnerHTML={{
@@ -20,13 +27,19 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
         {!mainPhotoInfo?.imageUrl ? (
           <p className='text-gray-500 w-[375px] h-[728px] bg-gray text-center'>이미지가 업로드되지 않았습니다.</p>
         ) : (
-          <Image
-            src={mainPhotoInfo.imageUrl}
-            alt='mainImg'
-            width={375}
-            height={728}
-            className='rounded'
-          />
+          <div className='flex justify-center items-center relative w-[375px] h-[600px]'>
+            <Image
+              src={mainPhotoInfo.imageUrl}
+              alt='mainImg'
+              objectFit='cover'
+              fill
+              className='z-0 rounded-md'
+            />
+            <div className='absolute inset-0 flex justify-center items-center'>
+              <ArchSvg color={svgBgColor} />
+              {/* <EllipseSvg color={svgBgColor} /> */}
+            </div>
+          </div>
         )}
       </div>
       <div className='flex justify-center items-center gap-2 mt-4'>
