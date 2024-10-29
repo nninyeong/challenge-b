@@ -27,7 +27,7 @@ const OnBoarding = ({
     <div
       onClick={handleNextStep}
       className={`${isOnboardingComplete ? 'hidden' : 'flex'} inset-0 bg-gradient-to-b from-transparent text-white
-      to-black overflow-hidden absolute flex-col items-center justify-end w-full h-full text-center cursor-pointer bg-opacity-60 py-5`}
+      to-black overflow-hidden absolute flex-col items-center justify-end w-full min-h-[calc(100vh-114px)] text-center cursor-pointer bg-opacity-60 py-5`}
     >
       <div className='w-[60px] h-[100px] border-2 border-white border-solid rounded-lg flex justify-center items-end pb-2'>
         <OnBoardingStepMotion step={onBoardStep} />
