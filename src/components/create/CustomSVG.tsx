@@ -6,13 +6,13 @@ export const ArchSvg = ({ color }: { color: ColorType }) => {
     <svg
       width='100%'
       height='100%'
-      viewBox='0 189 343 172'
+      viewBox='0 190 343 172'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
     >
       <path
-        fill-rule='evenodd'
-        clip-rule='evenodd'
+        fillRule='evenodd'
+        clipRule='evenodd'
         d='M171.5 0C76.7832 0 0 76.7832 0 171.5V0H171.5ZM171.5 0H343V171.5C343 76.7832 266.217 0 171.5 0Z'
         fill={colorConverter(color)}
       />
