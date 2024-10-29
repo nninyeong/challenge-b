@@ -30,6 +30,7 @@ export type MainPhotoType = {
   icon: string;
   introduceContent: string;
   imageUrl: string;
+  fontName: string;
 };
 
 export type NavigationDetailType = {
@@ -39,17 +40,46 @@ export type NavigationDetailType = {
   bus: string;
 };
 
+export type GalleryType = {
+  images: File[];
+};
+
+export type ImageRatioType = {
+  ratio: string;
+  position: number;
+};
+
+export type GreetingMessageType = {
+  title: string;
+  content: string;
+};
+export type ColorType = {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+  name: string;
+};
+
+export type StickerType = {
+  id: string;
+  stickerImageId: string;
+  url: string;
+  posX: string;
+  posY: string;
+};
+
 export type InvitationFormType = {
-  gallery: any;
-  type: any;
-  mood: any;
-  mainView: any;
-  bgColor: any;
-  stickers: any;
-  imgRatio: any;
-  mainText: any;
+  gallery: GalleryType;
+  type: 'scroll' | 'slide';
+  mood: string;
+  mainView: string;
+  bgColor: ColorType;
+  stickers: StickerType[];
+  imgRatio: ImageRatioType;
+  mainText: string;
   personalInfo: PersonalInfoType;
-  greetingMessage: any;
+  greetingMessage: GreetingMessageType;
   weddingInfo: WeddingInfoType;
   account: AccountInfoType;
   navigationDetail: NavigationDetailType;
