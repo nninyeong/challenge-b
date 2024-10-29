@@ -1,6 +1,8 @@
 'use client';
 import { useFormContext } from 'react-hook-form';
 import TextEditor from './TextEditor';
+// import { MainPhotoType } from '@/types/invitationFormType.type';
+// import { postMainImg } from '@/utils/invitationUploadImg';
 import { FaPlus } from 'react-icons/fa6';
 
 const FONTMENU = [
@@ -89,6 +91,7 @@ const MainPhotoInput = () => {
           placeholder='메인화면 문구를 설정해주세요'
           value={introduceContent || ''}
           onChange={(value) => setValue('mainPhotoInfo.introduceContent', value)}
+          style={{ width: '200px', height: '100%' }}
         />
       </div>
     </div>
