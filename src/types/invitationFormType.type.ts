@@ -30,26 +30,26 @@ export type MainPhotoType = {
   icon: string;
   introduceContent: string;
   imageUrl: string;
+  fontName: string;
 };
 
 export type NavigationDetailType = {
   map: boolean;
   navigationButton: boolean;
-  car: string;
   subway: string;
   bus: string;
 };
 
-type GalleryType = {
+export type GalleryType = {
   images: File[];
 };
 
-type ImageRatioType = {
+export type ImageRatioType = {
   ratio: string;
   position: number;
 };
 
-type GreetingMessageType = {
+export type GreetingMessageType = {
   title: string;
   content: string;
 };
@@ -60,13 +60,22 @@ export type ColorType = {
   a: number;
   name: string;
 };
+
+export type StickerType = {
+  id: string;
+  stickerImageId: string;
+  url: string;
+  posX: string;
+  posY: string;
+};
+
 export type InvitationFormType = {
   gallery: GalleryType;
   type: 'scroll' | 'slide';
   mood: string;
   mainView: string;
   bgColor: ColorType;
-  stickers: File[];
+  stickers: StickerType[];
   imgRatio: ImageRatioType;
   mainText: string;
   personalInfo: PersonalInfoType;

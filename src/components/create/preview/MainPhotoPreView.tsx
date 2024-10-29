@@ -9,20 +9,26 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
   });
 
   return (
-    <div className='p-4 border rounded-md text-center'>
-      <p>{mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요'}</p>
-      {!mainPhotoInfo?.imageUrl ? (
-        <p className='text-gray-500 w-[375px] h-[728px] bg-gray'>이미지가 업로드되지 않았습니다.</p>
-      ) : (
-        <Image
-          src={mainPhotoInfo.imageUrl}
-          alt='mainImg'
-          width={375}
-          height={728}
-          className='rounded'
-        />
-      )}
-
+    <div className='w-[80%] flex flex-col justify-center item-center mx-auto text-center text-black'>
+      <div
+        className='quill-preview'
+        dangerouslySetInnerHTML={{
+          __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
+        }}
+      />
+      <div className='flex justify-center items-center'>
+        {!mainPhotoInfo?.imageUrl ? (
+          <p className='text-gray-500 w-[375px] h-[728px] bg-gray text-center'>이미지가 업로드되지 않았습니다.</p>
+        ) : (
+          <Image
+            src={mainPhotoInfo.imageUrl}
+            alt='mainImg'
+            width={375}
+            height={728}
+            className='rounded'
+          />
+        )}
+      </div>
       <div className='flex justify-center items-center gap-2 mt-4'>
         <p className='text-xl'>{mainPhotoInfo?.leftName || '좌측 이름'}</p>
         <p className='text-xl'>{mainPhotoInfo?.icon || '♥︎'}</p>

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import defaultImage from '@/assets/images/defaultImg.jpg';
 import { getIsLogin } from '@/utils/supabase/server';
 import { SiTinyletter } from 'react-icons/si';
 import { TiExport } from 'react-icons/ti';
@@ -19,7 +18,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
     redirect('/signin');
   }
   const user = await getUserInfo();
-  const profileUrl = user?.user?.user_metadata?.avatar_url || defaultImage;
+  const profileUrl = user?.user?.user_metadata?.avatar_url || '/assets/images/defaultImg.jpg';
 
   return (
     <div className='w-[375px] mx-auto bg-gray-700'>
