@@ -40,13 +40,17 @@ const Sticker = ({
 
     const touch = e.changedTouches[0];
     const relativeX = clampValue(
-      touch.clientX - previewRef.current.getBoundingClientRect().left - touchOffset.current.x,
+      ((touch.clientX - previewRef.current.getBoundingClientRect().left - touchOffset.current.x) /
+        previewRef.current.clientWidth) *
+        100,
       0,
       previewRef.current.clientWidth - stickerRef.current.offsetWidth,
     );
 
     const relativeY = clampValue(
-      touch.clientY - previewRef.current.getBoundingClientRect().top - touchOffset.current.y,
+      ((touch.clientY - previewRef.current.getBoundingClientRect().top - touchOffset.current.y) /
+        previewRef.current.clientHeight) *
+        100,
       0,
       previewRef.current.clientHeight - stickerRef.current.offsetHeight,
     );
@@ -71,8 +75,8 @@ const Sticker = ({
       ref={stickerRef}
       style={{
         position: 'absolute',
-        top: `${sticker.posY}px`,
-        left: `${sticker.posX}px`,
+        top: `${sticker.posY}%`,
+        left: `${sticker.posX}%`,
       }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
