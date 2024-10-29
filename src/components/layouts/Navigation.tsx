@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { saveSessionDataToSupabase } from '@/utils/sessionStorage/sessionStorage';
 
 const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(initialAuthState);
