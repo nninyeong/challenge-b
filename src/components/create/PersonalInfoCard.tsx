@@ -1,4 +1,5 @@
-import Image from 'next/image';
+import { CiMail } from 'react-icons/ci';
+import { IoIosCall } from 'react-icons/io';
 
 type PersonInfoCardProps = {
   label: string | null;
@@ -17,25 +18,15 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
       <div className='flex gap-5'>
         <a
           href={`tel:${phoneNumber}`}
-          className='relative w-[30px] h-[30px] rounded-t-lg overflow-hidden'
+          className='flex justify-center items-center relative rounded-t-lg overflow-hidden'
         >
-          <Image
-            src='/images/phone.png'
-            alt='전화 이미지'
-            layout='fill'
-            objectFit='cover'
-          />
+          <IoIosCall className='text-2xl' />
         </a>
         <a
           href={`sms:${phoneNumber}`}
-          className='relative w-[30px] h-[30px] rounded-t-lg overflow-hidden'
+          className='flex justify-center items-center relative rounded-t-lg overflow-hidden'
         >
-          <Image
-            src='/images/mail.png'
-            alt='문자 이미지'
-            layout='fill'
-            objectFit='cover'
-          />
+          <CiMail className='text-2xl' />
         </a>
       </div>
     </div>

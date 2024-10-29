@@ -9,6 +9,9 @@ const PersonalInfoPreview = ({ control }: { control: Control<InvitationFormType>
     name: 'personalInfo',
   });
 
+  const groom = personaInfoWatch.groom || {};
+  const bride = personaInfoWatch.bride || {};
+
   return (
     <div className='flex flex-col justify-center items-center gap-[30px]'>
       <div className='flex gap-[50px]'>
@@ -17,20 +20,20 @@ const PersonalInfoPreview = ({ control }: { control: Control<InvitationFormType>
             <p>신랑</p>
             <PersonalInfoCard
               label={null}
-              name={personaInfoWatch.groom.name}
-              phoneNumber={personaInfoWatch.groom.phoneNumber}
+              name={groom.name}
+              phoneNumber={groom.phoneNumber}
             />
           </div>
           <p className='text-center'>신랑 측 혼주</p>
           <PersonalInfoCard
             label='아버지'
-            name={personaInfoWatch.groom.fatherName}
-            phoneNumber={personaInfoWatch.groom.fatherPhoneNumber}
+            name={groom.father?.name}
+            phoneNumber={groom.father?.phoneNumber}
           />
           <PersonalInfoCard
             label='어머니'
-            name={personaInfoWatch.groom.motherName}
-            phoneNumber={personaInfoWatch.bride.motherPhoneNumber}
+            name={groom.mother?.name}
+            phoneNumber={bride.mother?.phoneNumber}
           />
         </div>
 
@@ -39,20 +42,20 @@ const PersonalInfoPreview = ({ control }: { control: Control<InvitationFormType>
             <p>신부</p>
             <PersonalInfoCard
               label={null}
-              name={personaInfoWatch.bride.name}
-              phoneNumber={personaInfoWatch.bride.phoneNumber}
+              name={bride.name}
+              phoneNumber={bride.phoneNumber}
             />
           </div>
-          <p className='text-center'>신랑 측 혼주</p>
+          <p className='text-center'>신부 측 혼주</p>
           <PersonalInfoCard
             label='아버지'
-            name={personaInfoWatch.bride.fatherName}
-            phoneNumber={personaInfoWatch.bride.fatherPhoneNumber}
+            name={bride.father?.name}
+            phoneNumber={bride.father?.phoneNumber}
           />
           <PersonalInfoCard
             label='어머니'
-            name={personaInfoWatch.bride.motherName}
-            phoneNumber={personaInfoWatch.bride.motherPhoneNumber}
+            name={bride.mother?.name}
+            phoneNumber={bride.mother?.phoneNumber}
           />
         </div>
       </div>
