@@ -5,6 +5,11 @@ import Image from 'next/image';
 import { MutableRefObject, useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { clampValue } from '@/utils/clampValue';
+
+const preventTouchScroll = (e: TouchEvent) => {
+  e.preventDefault();
+};
+
 const Sticker = ({
   sticker,
   previewRef,
@@ -22,7 +27,7 @@ const Sticker = ({
   const touchOffset = useRef({ x: 0, y: 0 });
 
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
-    document.body.style.overflow = 'hidden';
+    document.addEventListener('touchmove', preventTouchScroll, { passive: false });
     if (!previewRef.current) return;
 
     const touch = e.touches[0];
@@ -35,7 +40,7 @@ const Sticker = ({
   };
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
-    document.body.style.overflow = 'auto';
+    document.removeEventListener('touchmove', preventTouchScroll);
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.changedTouches[0];
