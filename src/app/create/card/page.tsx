@@ -133,27 +133,15 @@ const CreateCardPage = () => {
 
   useEffect(() => {
     const loadFormData = async () => {
-      const { data: user } = await browserClient.auth.getUser();
-      const localData = localStorage.getItem('invitationFormData');
-
-      if (!user.user) {
-        if (localData) {
-          reset(JSON.parse(localData));
-        } else {
-          reset();
-        }
-      } else {
-        if (existingInvitation) {
-          const convertedInvitation = converToCamelCase(existingInvitation);
-          reset(convertedInvitation);
-        } else {
-          if (localData) {
-            reset(JSON.parse(localData));
-          } else {
-            reset();
-          }
-        }
+      if (existingInvitation) {
+        const convertedInvitation = converToCamelCase(existingInvitation);
+        return reset(convertedInvitation);
       }
+      const localData = localStorage.getItem('invitationFormData');
+      if (localData) {
+        return reset(JSON.parse(localData));
+      }
+      reset();
     };
 
     loadFormData();

@@ -1,6 +1,7 @@
 import { SignInFormValues, SignUpFormValues } from '@/types/auth.types';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
+import { saveLocalDataToSupabase } from '@/utils/localStorage/localStorage';
 
 const useAuthWithEmail = () => {
   const router = useRouter();
@@ -8,7 +9,7 @@ const useAuthWithEmail = () => {
 
   const emailSignUp = async (formValues: SignUpFormValues) => {
     const { email, password, username } = formValues;
-    const { error } = await client.auth.signUp({
+    const { data, error } = await client.auth.signUp({
       email,
       password,
       options: {
@@ -24,6 +25,10 @@ const useAuthWithEmail = () => {
       console.error('회원가입 오류: ', error);
       alert(`회원가입에 문제가 생겼습니다. 다시 한 번 시도해주세요. (${error.message})`);
     } else {
+      const userId = data?.user?.id;
+      if (userId) {
+        await saveLocalDataToSupabase(client, userId);
+      }
       alert('회원가입 성공');
       router.push('/mypage');
     }
