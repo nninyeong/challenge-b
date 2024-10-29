@@ -263,7 +263,7 @@ const CreateCardPage = () => {
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
       const color = value.bgColor;
-      console.log(color);
+
       if (color) {
         setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
       }
@@ -297,7 +297,7 @@ const CreateCardPage = () => {
     observeObserver();
     return () => unsubscribeObservers();
   }, [currentStep]);
-  console.log(selectedFont);
+
   return (
     <div
       className={`relative w-full h-full font-${selectedFont}`}
