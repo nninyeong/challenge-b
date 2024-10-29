@@ -12,7 +12,7 @@ import {
   WeddingInfoType,
 } from '@/types/invitationFormType.type';
 
-export const converToCamelCase = (invitation: Invitation): InvitationFormType => {
+export const convertToCamelCase = (invitation: Invitation): InvitationFormType => {
   return {
     gallery: invitation.gallery as { images: [] },
     type: invitation.type as 'scroll' | 'slide',

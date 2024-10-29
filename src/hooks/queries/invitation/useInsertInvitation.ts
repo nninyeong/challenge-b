@@ -27,7 +27,6 @@ export const useInsertInvitation = () => {
     mutationFn: (invitationData: InvitationFormType) => insertInvitation(invitationData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
-      alert('제출 완료되었습니다.');
     },
   });
 };

@@ -1,7 +1,7 @@
 import { SignInFormValues, SignUpFormValues } from '@/types/auth.types';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
-import { saveLocalDataToSupabase } from '@/utils/localStorage/localStorage';
+import { saveSessionDataToSupabase } from '@/utils/sessionStorage/sessionStorage';
 
 const useAuthWithEmail = () => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const useAuthWithEmail = () => {
     } else {
       const userId = data?.user?.id;
       if (userId) {
-        await saveLocalDataToSupabase(client, userId);
+        await saveSessionDataToSupabase(client, userId);
       }
       alert('회원가입 성공');
       router.push('/mypage');
@@ -48,6 +48,10 @@ const useAuthWithEmail = () => {
     }
 
     const { data } = await client.auth.getUser();
+    const userId = data?.user?.id;
+    if (userId) {
+      await saveSessionDataToSupabase(client, userId);
+    }
     console.log('here is emailSinIn Fn, user: ', data.user);
 
     router.refresh();

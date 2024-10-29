@@ -21,7 +21,7 @@ import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
-import { converToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
+import { convertToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
 import OnBoarding from '@/components/create/OnBoarding';
 
 const browserClient = createClient();
@@ -135,12 +135,12 @@ const CreateCardPage = () => {
   useEffect(() => {
     const loadFormData = async () => {
       if (existingInvitation) {
-        const convertedInvitation = converToCamelCase(existingInvitation);
+        const convertedInvitation = convertToCamelCase(existingInvitation);
         return reset(convertedInvitation);
       }
-      const localData = localStorage.getItem('invitationFormData');
-      if (localData) {
-        return reset(JSON.parse(localData));
+      const sessionData = sessionStorage.getItem('invitationFormData');
+      if (sessionData) {
+        return reset(JSON.parse(sessionData));
       }
       reset();
     };
@@ -152,21 +152,34 @@ const CreateCardPage = () => {
     const { data: user } = await browserClient.auth.getUser();
 
     if (!user.user) {
-      localStorage.setItem('invitationFormData', JSON.stringify(invitationData));
+      sessionStorage.setItem('invitationFormData', JSON.stringify(invitationData));
       alert('생성을 원하시면 로그인 해주세요!');
       return;
     }
 
     if (existingInvitation) {
       updateInvitation(invitationData);
-    } else {
-      insertInvitation(invitationData);
+      alert('청첩장이 생성되었습니다.');
     }
   };
 
-  const handleDebouncedNext = debounce(() => {
+  const handleDebouncedNext = debounce(async () => {
     if (currentStep < refs.length) {
       isNavigating.current = true;
+
+      const { data: user } = await browserClient.auth.getUser();
+      const formData = methods.getValues();
+
+      if (!user.user) {
+        sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
+      } else {
+        if (existingInvitation) {
+          updateInvitation(formData);
+        } else {
+          insertInvitation(formData);
+        }
+      }
+
       setCurrentStep((prev) => prev + 1);
     }
   }, DELAY_TIME);

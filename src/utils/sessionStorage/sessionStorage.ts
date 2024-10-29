@@ -1,12 +1,12 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 import { convertToSnakeCase } from '../convert/invitaitonTypeConvert';
 
-export const saveLocalDataToSupabase = async (client: SupabaseClient, userId: string) => {
-  const localData = localStorage.getItem('invitationFormData');
+export const saveSessionDataToSupabase = async (client: SupabaseClient, userId: string) => {
+  const sessionData = sessionStorage.getItem('invitationFormData');
 
-  if (!localData) return;
+  if (!sessionData) return;
 
-  const parsedData = JSON.parse(localData);
+  const parsedData = JSON.parse(sessionData);
   const convertedData = {
     ...convertToSnakeCase(parsedData),
     user_id: userId,
@@ -14,15 +14,12 @@ export const saveLocalDataToSupabase = async (client: SupabaseClient, userId: st
 
   const { data: existingData } = await client.from('invitation').select('user_id').eq('user_id', userId).maybeSingle();
 
-  if (existingData) {
-    localStorage.removeItem('invitationFormData');
-  } else {
+  if (!existingData) {
     const { error } = await client.from('invitation').insert(convertedData);
 
     if (error) {
       console.error(error);
     }
-
-    localStorage.removeItem('invitationFormData');
   }
+  sessionStorage.removeItem('invitationFormData');
 };

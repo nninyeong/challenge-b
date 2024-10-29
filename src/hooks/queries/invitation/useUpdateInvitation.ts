@@ -27,7 +27,6 @@ export const useUpdateInvitation = () => {
     mutationFn: (invitationData: InvitationFormType) => updateInvitation(invitationData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
-      alert('수정 완료되었습니다.');
     },
   });
 };
