@@ -114,8 +114,7 @@ const CreateCardPage = () => {
       },
       navigationDetail: {
         map: false,
-        navigationButton: false,
-        car: '',
+        navigation_button: false,
         subway: '',
         bus: '',
       },
@@ -309,13 +308,13 @@ const CreateCardPage = () => {
         </div>
         <div
           className='min-h-[calc(100vh-114px)]'
-          ref={refs[4]}
+          ref={refs[5]}
         >
           <GuestInfoPreview control={methods.control} />
         </div>
         <div
           className='min-h-[calc(100vh-114px)]'
-          ref={refs[5]}
+          ref={refs[6]}
         >
           colorpalette
         </div>
