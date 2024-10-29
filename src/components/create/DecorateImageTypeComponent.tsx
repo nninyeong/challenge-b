@@ -1,6 +1,6 @@
 'use client';
 
-const DecorateImageTypeComponent = ({ type }: { name: string; type: string }) => {
+const DecorateImageTypeComponent = ({ type }: { type: string }) => {
   const styleConverter = () => {
     const styleStr = 'bg-gray-200 h-[55px]';
     switch (type) {
