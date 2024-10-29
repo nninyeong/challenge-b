@@ -47,12 +47,17 @@ const MainViewInput = () => {
               setSelectedType(item);
               setValue('mainView', item);
             }}
-            className={`p-2 border rounded cursor-pointer flex flex-col justify-center items-center ${
-              selectedType.type === item.type ? 'border-primary-300 bg-primary-100' : 'border-gray-300'
-            }`}
+            className={`p-2 cursor-pointer flex flex-col justify-center items-center `}
           >
-            <DecorateImageTypeComponent type={item.type} />
-            <p>{item.name}</p>
+            <DecorateImageTypeComponent
+              type={item.type}
+              isSelected={selectedType.type === item.type}
+            />
+            <p
+              className={`${selectedType.type === item.type ? 'text-primary-300' : ''} font-semibold text-gray-600 mt-2`}
+            >
+              {item.name}
+            </p>
           </div>
         ))}
       </div>

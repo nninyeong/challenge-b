@@ -1,6 +1,6 @@
 'use client';
 
-const DecorateImageTypeComponent = ({ type }: { type: string }) => {
+const DecorateImageTypeComponent = ({ type, isSelected }: { type: string; isSelected: boolean }) => {
   const styleConverter = () => {
     const styleStr = 'bg-gray-200 h-[55px]';
     switch (type) {
@@ -16,7 +16,11 @@ const DecorateImageTypeComponent = ({ type }: { type: string }) => {
   };
 
   return (
-    <div className='w-[55px] h-[100px] rounded-lg border-2 border-gray-200 flex flex-col justify-end items-center'>
+    <div
+      className={`w-[55px] h-[100px] rounded-lg border-2 border-gray-200 flex flex-col justify-end items-center   ${
+        isSelected ? 'border-primary-300 shadow-primary-200 shadow-sm' : 'border-gray-300'
+      }`}
+    >
       <div className={styleConverter()} />
       <div className='w-[30px] h-[4px] rounded-full bg-gray-200 mt-[6px]' />
       <div className='w-[30px] h-[2px] rounded-full bg-gray-200 mt-[2px]' />
