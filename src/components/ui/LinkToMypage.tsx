@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation';
 
 const LinkToMypage = () => {
   const path = usePathname();
-  console.log(path);
+
   return (
     <Link href='/mypage'>
       <button
