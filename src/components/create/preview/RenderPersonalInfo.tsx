@@ -54,10 +54,11 @@ export const RenderPersonalInfo = ({ type }: Props) => {
           />
         </div>
 
-        <div className='flex justify-end gap-[6px]'>
+        <div className='flex justify-end items-center gap-[6px]'>
           <input
             type='checkbox'
             {...register(`personalInfo.${type}.father.isDeceased`)}
+            className='custom-checkbox'
           />
           <label>故</label>
         </div>
@@ -84,10 +85,11 @@ export const RenderPersonalInfo = ({ type }: Props) => {
           />
         </div>
 
-        <div className='flex justify-end gap-[6px]'>
+        <div className='flex justify-end items-center gap-[6px]'>
           <input
             type='checkbox'
             {...register(`personalInfo.${type}.mother.isDeceased`)}
+            className='custom-checkbox'
           />
           <label>故</label>
         </div>
