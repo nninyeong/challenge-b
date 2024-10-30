@@ -24,86 +24,14 @@ import OnBoarding from '@/components/create/OnBoarding';
 import browserClient from '@/utils/supabase/client';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
+import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 
 const DELAY_TIME: number = 300;
 
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
-    defaultValues: {
-      bgColor: { r: 255, g: 255, b: 255, a: 1, name: '흰색' },
-      personalInfo: {
-        bride: {
-          name: '',
-          phoneNumber: '',
-          fatherName: '',
-          fatherPhoneNumber: '',
-          isFatherDeceased: false,
-          motherName: '',
-          motherPhoneNumber: '',
-          isMotherDeceased: false,
-        },
-        groom: {
-          name: '',
-          phoneNumber: '',
-          fatherName: '',
-          fatherPhoneNumber: '',
-          isFatherDeceased: false,
-          motherName: '',
-          motherPhoneNumber: '',
-          isMotherDeceased: false,
-        },
-      },
-      account: {
-        title: '',
-        content: '',
-        bride: [
-          { bank: '', accountNumber: '', depositor: '' },
-          { bank: '', accountNumber: '', depositor: '' },
-          { bank: '', accountNumber: '', depositor: '' },
-        ],
-        groom: [
-          { bank: '', accountNumber: '', depositor: '' },
-          { bank: '', accountNumber: '', depositor: '' },
-          { bank: '', accountNumber: '', depositor: '' },
-        ],
-      },
-      guestbook: false,
-      attendance: false,
-      weddingInfo: {
-        date: '',
-        time: { hour: '', minute: '' },
-        weddingHallAddress: '',
-        weddingHallName: '',
-        weddingHallContact: '',
-      },
-      mainPhotoInfo: {
-        leftName: '',
-        rightName: '',
-        icon: '',
-        introduceContent: '',
-        imageUrl: '',
-        fontName: '',
-      },
-      navigationDetail: {
-        map: false,
-        navigationButton: false,
-        subway: '',
-        bus: '',
-      },
-      gallery: { images: [] },
-      type: 'scroll',
-      mood: '',
-      stickers: [],
-      imgRatio: {},
-      mainText: '',
-      greetingMessage: {},
-      dDay: false,
-      mainView: {
-        name: '기본',
-        type: 'default',
-      },
-    },
+    defaultValues: INVITATION_DEFAULT_VALUE,
   });
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
@@ -227,7 +155,6 @@ const CreateCardPage = () => {
       isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
     }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
   };
-
   useEffect(() => {
     subscribeBackgroundColor();
     subscribeFont();
