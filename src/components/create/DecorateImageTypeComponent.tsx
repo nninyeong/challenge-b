@@ -1,17 +1,25 @@
 'use client';
 
+const STYLE_LIST = {
+  fill: ' w-full',
+  arch: ' w-[40px] rounded-t-full',
+  ellipse: ' w-[40px] rounded-t-full rounded-b-full',
+  default: ' w-[40px]',
+} as const;
+
+const DEFAULT_STYLE = 'bg-gray-200 h-[55px]' as const;
+
 const DecorateImageTypeComponent = ({ type, isSelected }: { type: string; isSelected: boolean }) => {
   const styleConverter = () => {
-    const styleStr = 'bg-gray-200 h-[55px]';
     switch (type) {
       case 'fill':
-        return styleStr + ' w-full';
+        return DEFAULT_STYLE + STYLE_LIST.fill;
       case 'arch':
-        return styleStr + ' w-[40px] rounded-t-full';
+        return DEFAULT_STYLE + STYLE_LIST.arch;
       case 'ellipse':
-        return styleStr + ' w-[40px] rounded-t-full rounded-b-full';
+        return DEFAULT_STYLE + STYLE_LIST.ellipse;
       default:
-        return styleStr + ' w-[40px]';
+        return DEFAULT_STYLE + STYLE_LIST.default;
     }
   };
 
