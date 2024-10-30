@@ -2,6 +2,7 @@ import { AccountInfoType } from '@/types/accountType.type';
 import { Invitation } from '@/types/database.type';
 import {
   ColorType,
+  DecorateImageType,
   GreetingMessageType,
   ImageRatioType,
   InvitationFormType,
@@ -17,7 +18,7 @@ export const convertToCamelCase = (invitation: Invitation): InvitationFormType =
     gallery: invitation.gallery as { images: [] },
     type: invitation.type as 'scroll' | 'slide',
     mood: invitation.mood as string,
-    mainView: invitation.main_view as string,
+    mainView: invitation.main_view as DecorateImageType,
     bgColor: invitation.bg_color as ColorType,
     stickers: invitation.stickers as StickerType[],
     imgRatio: invitation.img_ratio as ImageRatioType,

@@ -73,11 +73,16 @@ export type StickerType = {
   posY: string;
 };
 
+export type DecorateImageType = {
+  name: string;
+  type: string;
+};
+
 export type InvitationFormType = {
   gallery: GalleryType;
   type: 'scroll' | 'slide';
   mood: string;
-  mainView: string;
+  mainView: DecorateImageType;
   bgColor: ColorType;
   stickers: StickerType[];
   imgRatio: ImageRatioType;

@@ -5,14 +5,14 @@ import Link from 'next/link';
 const Header = async () => {
   const isAuthenticated = await getIsLogin();
 
-  console.log(isAuthenticated);
-
-  // if (data?.session?.user.id) {
-  //   await saveSessionDataToSupabase(client, data?.session?.user.id);
-  // }
   return (
-    <header className='w-full h-[64px] bg-gray-400 flex justify-around items-center'>
-      <Link href='/'>BI</Link>
+    <header className='w-full h-[64px] flex justify-between items-center px-[16px]'>
+      <Link href='/'>
+        <img
+          src='/assets/images/branding/logoWithName.svg'
+          alt='드림카드 홈으로 이동'
+        />
+      </Link>
       <Navigation initialAuthState={isAuthenticated} />
     </header>
   );
