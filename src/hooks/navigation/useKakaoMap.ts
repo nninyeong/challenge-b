@@ -1,13 +1,7 @@
 import { isAndroid, isIOS } from 'react-device-detect';
 
 const useKakaoMap = () => {
-  const openKakaoMap = ({
-    endCoords,
-    name
-  }: {
-    endCoords: { epLat: number; epLng: number };
-    name: string
-  }) => {
+  const openKakaoMap = ({ endCoords, name }: { endCoords: { epLat: number; epLng: number }; name: string }) => {
     const { epLat, epLng } = endCoords;
 
     const androidScheme = `kakaomap://route?sp=&ep=${epLat},${epLng}&by=CAR`;
@@ -18,13 +12,16 @@ const useKakaoMap = () => {
 
     let scheme;
     let fallbackLink;
+    let timeoutDuration = 1500;
 
-    if (isAndroid) { 
+    if (isAndroid) {
       scheme = androidScheme;
       fallbackLink = playStoreLink;
+      timeoutDuration = 1500;
     } else if (isIOS) {
       scheme = iosScheme;
       fallbackLink = appStoreLink;
+      timeoutDuration = 10000;
     } else {
       window.location.href = webLink;
       return;
@@ -33,14 +30,13 @@ const useKakaoMap = () => {
     window.location.href = scheme;
 
     setTimeout(() => {
-      window.location.href = fallbackLink;
-    }, 1500);
-    // setTimeout(() => {
-    //   window.location.href = webLink;
-    // }, 1500);
+      if (document.visibilityState === 'visible') {
+        window.location.href = fallbackLink;
+      }
+    }, timeoutDuration);
   };
 
   return openKakaoMap;
-}
+};
 
 export default useKakaoMap;
