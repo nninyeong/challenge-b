@@ -48,27 +48,27 @@ const CreateCardPage = () => {
     },
     {
       order: 1,
-      component: <PersonalInfoPreview control={methods.control} />,
+      component: <GreetingPreview control={methods.control} />,
     },
     {
       order: 2,
-      component: <AccountPreView control={methods.control} />,
+      component: <PersonalInfoPreview control={methods.control} />,
     },
     {
       order: 3,
-      component: <WeddingInfoPreView control={methods.control} />,
+      component: <AccountPreView control={methods.control} />,
     },
     {
       order: 4,
-      component: <NavigationDetailsPreview control={methods.control} />,
+      component: <WeddingInfoPreView control={methods.control} />,
     },
     {
       order: 5,
-      component: <GuestInfoPreview control={methods.control} />,
+      component: <NavigationDetailsPreview control={methods.control} />,
     },
     {
       order: 6,
-      component: <GreetingPreview control={methods.control} />,
+      component: <GuestInfoPreview control={methods.control} />,
     },
     {
       order: 7,
@@ -77,7 +77,7 @@ const CreateCardPage = () => {
   ];
   const refs = useRef<null[] | HTMLDivElement[]>([]);
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(refs, setCurrentStep);
-
+  const isLastInput = refs.current.length !== 0 && currentStep === refs.current.length;
   const { data: existingInvitation } = useGetInvitationQuery();
   const { mutate: updateInvitation } = useUpdateInvitation();
   const { mutate: insertInvitation } = useInsertInvitation();
@@ -160,7 +160,7 @@ const CreateCardPage = () => {
   };
 
   const scrollEvent = () => {
-    if (currentStep > 1 && refs.current[currentStep]) {
+    if (currentStep >= 2 && refs.current[currentStep]) {
       refs.current[currentStep].scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -235,7 +235,7 @@ const CreateCardPage = () => {
                     className='bg-blue-300'
                     type='button'
                     onClick={handleDebouncedNext}
-                    disabled={refs.current.length !== 0 && currentStep === refs.current.length}
+                    disabled={isLastInput}
                   >
                     <MdNavigateNext />
                   </button>
@@ -243,12 +243,12 @@ const CreateCardPage = () => {
 
                 {currentStep === 0 && <MainPhotoInput />}
                 {currentStep === 1 && <MainViewInput />}
-                {currentStep === 2 && <PersonalInfoInput />}
-                {currentStep === 3 && <AccountInput />}
-                {currentStep === 4 && <WeddingInfoInput />}
-                {currentStep === 5 && <NavigationDetailInput />}
-                {currentStep === 6 && <GuestInfoInput />}
-                {currentStep === 8 && <GreetingInput />}
+                {currentStep === 2 && <GreetingInput />}
+                {currentStep === 3 && <PersonalInfoInput />}
+                {currentStep === 4 && <AccountInput />}
+                {currentStep === 5 && <WeddingInfoInput />}
+                {currentStep === 6 && <NavigationDetailInput />}
+                {currentStep === 7 && <GuestInfoInput />}
                 {currentStep === refs.current.length && (
                   <button
                     className='w-full'
