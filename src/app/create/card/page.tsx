@@ -135,6 +135,7 @@ const CreateCardPage = () => {
         name: '기본',
         type: 'default',
       },
+      isPriviate: false,
     },
   });
 
@@ -363,7 +364,7 @@ const CreateCardPage = () => {
                 {currentStep === 8 && <GreetingInput />}
                 {currentStep === refs.length && (
                   <button
-                    className='w-full'
+                    className='w-full bg-black'
                     type='submit'
                   >
                     제출
