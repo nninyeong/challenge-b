@@ -105,7 +105,6 @@ const Sticker = ({
   };
 
   const handleDeleteSticker = () => {
-    alert('d');
     const filteredStickers = stickersWatch.filter((previousSticker) => previousSticker.id !== sticker.id);
     setValue('stickers', filteredStickers);
   };
