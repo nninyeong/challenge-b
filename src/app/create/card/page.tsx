@@ -23,39 +23,11 @@ import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitat
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
 import { converToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
 import OnBoarding from '@/components/create/OnBoarding';
-
-const browserClient = createClient();
-
-const OBSERVER_OPTIONS = {
-  root: null,
-  rootMargin: '0px',
-  threshold: 0.9,
-};
+import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
 
 const DELAY_TIME: number = 300;
 
 const CreateCardPage = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
-  const [selectedFont, setSelectedFont] = useState<string>('main');
-  const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
-  const refs = [
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-  ];
-
-  const observers = useRef<IntersectionObserver[]>([]);
-  const isNavigating = useRef<boolean>(false);
-
-  const { data: existingInvitation } = useGetInvitationQuery();
-  const { mutate: updateInvitation } = useUpdateInvitation();
-  const { mutate: insertInvitation } = useInsertInvitation();
-
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: {
@@ -129,6 +101,48 @@ const CreateCardPage = () => {
       dDay: false,
     },
   });
+  const browserClient = createClient();
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
+  const [selectedFont, setSelectedFont] = useState<string>('main');
+  const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
+
+  const INITIAL_ORDER = [
+    {
+      order: 0,
+      component: <MainPhotoPreView control={methods.control} />,
+    },
+    {
+      order: 1,
+      component: <PersonalInfoPreview control={methods.control} />,
+    },
+    {
+      order: 2,
+      component: <AccountPreView control={methods.control} />,
+    },
+    {
+      order: 3,
+      component: <WeddingInfoPreView control={methods.control} />,
+    },
+    {
+      order: 4,
+      component: <NavigationDetailsPreview control={methods.control} />,
+    },
+    {
+      order: 5,
+      component: <GuestInfoPreview control={methods.control} />,
+    },
+    {
+      order: 6,
+      component: <div>test</div>,
+    },
+  ];
+  const refs = useRef<null[] | HTMLDivElement[]>([]);
+  const { isNavigating } = useIntersectionObserver(refs, setCurrentStep);
+
+  const { data: existingInvitation } = useGetInvitationQuery();
+  const { mutate: updateInvitation } = useUpdateInvitation();
+  const { mutate: insertInvitation } = useInsertInvitation();
 
   const { reset } = methods;
 
@@ -177,7 +191,7 @@ const CreateCardPage = () => {
   };
 
   const handleDebouncedNext = debounce(() => {
-    if (currentStep < refs.length) {
+    if (currentStep < refs.current.length) {
       isNavigating.current = true;
       setCurrentStep((prev) => prev + 1);
     }
@@ -190,33 +204,6 @@ const CreateCardPage = () => {
     }
   }, DELAY_TIME);
 
-  const observerCallback = (entries: IntersectionObserverEntry[]) => {
-    if (isNavigating.current) return; // 수동 전환 중에는 옵저버 무시
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const currentStepIndex = refs.findIndex((ref) => ref.current === entry.target);
-        if (currentStepIndex + 1 !== currentStep) {
-          setCurrentStep(currentStepIndex + 1);
-        }
-      }
-    });
-  };
-
-  const unsubscribeObservers = () => {
-    observers.current.forEach((observer, index) => {
-      if (refs[index]?.current) observer.unobserve(refs[index].current!);
-    });
-  };
-
-  const observeObserver = () => {
-    refs.forEach((ref, index) => {
-      if (ref.current) {
-        const observer = new IntersectionObserver(observerCallback, OBSERVER_OPTIONS);
-        observer.observe(ref.current);
-        observers.current[index] = observer;
-      }
-    });
-  };
   const subscribeFont = () => {
     const subscriptionFont = methods.watch((value) => {
       const font = value?.mainPhotoInfo?.fontName;
@@ -238,8 +225,8 @@ const CreateCardPage = () => {
   };
 
   const scrollEvent = () => {
-    if (currentStep > 2 && refs[currentStep - 1].current) {
-      refs[currentStep - 1].current?.scrollIntoView({
+    if (currentStep > 2 && refs.current[currentStep - 1]) {
+      refs.current[currentStep - 1]!.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
@@ -257,12 +244,6 @@ const CreateCardPage = () => {
   useEffect(() => {
     scrollEvent();
   }, [currentStep]);
-
-  useEffect(() => {
-    unsubscribeObservers();
-    observeObserver();
-    return () => unsubscribeObservers();
-  }, [currentStep, refs]);
 
   return (
     <div
@@ -282,49 +263,19 @@ const CreateCardPage = () => {
               fontFamily: selectedFont,
             }}
           >
-            {/*대표사진 프리뷰*/}
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[0]}
-            >
-              <MainPhotoPreView control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[1]}
-            >
-              <PersonalInfoPreview control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[2]}
-            >
-              <AccountPreView control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[3]}
-            >
-              <WeddingInfoPreView control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[4]}
-            >
-              <NavigationDetailsPreview control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[5]}
-            >
-              <GuestInfoPreview control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[6]}
-            >
-              colorpalette
-            </div>
+            {INITIAL_ORDER.map((e, index) => {
+              return (
+                <div
+                  className='min-h-[calc(100vh-114px)]'
+                  key={e.order}
+                  ref={(el) => {
+                    refs.current[index] = el;
+                  }}
+                >
+                  {e.component}
+                </div>
+              );
+            })}
           </div>
           <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
             <FormProvider {...methods}>
@@ -345,7 +296,7 @@ const CreateCardPage = () => {
                     className='bg-blue-300'
                     type='button'
                     onClick={handleDebouncedNext}
-                    disabled={currentStep === refs.length}
+                    disabled={currentStep === refs.current.length}
                   >
                     <MdNavigateNext />
                   </button>
@@ -358,7 +309,7 @@ const CreateCardPage = () => {
                 {currentStep === 5 && <WeddingInfoInput />}
                 {currentStep === 6 && <NavigationDetailInput />}
                 {currentStep === 7 && <GuestInfoInput />}
-                {currentStep === refs.length && (
+                {currentStep === refs.current.length && (
                   <button
                     className='w-full'
                     type='submit'
