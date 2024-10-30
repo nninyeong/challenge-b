@@ -5,6 +5,7 @@ import ReviewsCarousel from '@/components/main/ReviewsCarousel';
 import { handleAuthCallback } from '@/utils/auth/authCallbackHandler';
 import LinkToCreateCard from '@/components/ui/LinkToCreateCard';
 import FixedQuickLink from '@/components/ui/FixedQuickLink';
+import Gallery from '@/components/main/Gallery';
 
 export default function Home() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function Home() {
         소개화면 영역
         <LinkToCreateCard buttonStyle='absolute right-[8px] bottom-[8px]' />
       </div>
+      <Gallery />
       <ReviewsCarousel />
     </div>
   );
