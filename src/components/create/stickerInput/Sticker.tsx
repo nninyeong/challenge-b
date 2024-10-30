@@ -40,15 +40,19 @@ const calculateRelativePosition = (
 const Sticker = ({
   sticker,
   previewRef,
+  activeStickerId,
+  onActivate,
 }: {
   sticker: StickerType;
   previewRef: MutableRefObject<HTMLDivElement | null>;
+  activeStickerId: string | null;
+  onActivate: (id?: string) => void;
 }) => {
   const { setValue, control } = useFormContext();
   const stickersWatch = useWatch({
     control,
     name: 'stickers',
-  });
+  }) as StickerType[];
 
   const stickerRef = useRef<HTMLImageElement | null>(null);
   const touchOffset = useRef({ x: 0, y: 0 });
@@ -64,6 +68,8 @@ const Sticker = ({
       x: touch.clientX - currentSticker.left,
       y: touch.clientY - currentSticker.top,
     };
+
+    onActivate();
   };
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
@@ -82,6 +88,7 @@ const Sticker = ({
     });
 
     setValue('stickers', [...updatedSticker]);
+    onActivate(sticker.id);
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLImageElement>) => {
@@ -97,22 +104,47 @@ const Sticker = ({
     });
   };
 
+  const handleDeleteSticker = () => {
+    alert('d');
+    const filteredStickers = stickersWatch.filter((previousSticker) => previousSticker.id !== sticker.id);
+    setValue('stickers', filteredStickers);
+  };
+
+  const isActive = activeStickerId === sticker.id;
+
   return (
-    <Image
-      src={sticker.url}
-      alt={sticker.stickerImageId}
-      width={100}
-      height={100}
-      ref={stickerRef}
-      style={{
-        position: 'absolute',
-        top: `${sticker.posY}%`,
-        left: `${sticker.posX}%`,
-      }}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onTouchMove={handleTouchMove}
-    />
+    <>
+      {isActive && (
+        <button
+          className={`bg-x-03 w-[24px] h-[24px]`}
+          style={{
+            position: 'absolute',
+            top: `${+sticker.posY - 5}%`,
+            left: `${+sticker.posX + 10}%`,
+          }}
+          onClick={handleDeleteSticker}
+        />
+      )}
+      <div
+        ref={stickerRef}
+        style={{
+          position: 'absolute',
+          top: `${sticker.posY}%`,
+          left: `${sticker.posX}%`,
+        }}
+        className={`${isActive && 'border-[1px] border-primary-300'}`}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchMove={handleTouchMove}
+      >
+        <Image
+          src={sticker.url}
+          alt={sticker.stickerImageId}
+          width={100}
+          height={100}
+        />
+      </div>
+    </>
   );
 };
 

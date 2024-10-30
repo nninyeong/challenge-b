@@ -1,7 +1,12 @@
 import { Control, useWatch } from 'react-hook-form';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import Sticker from '@/components/create/stickerInput/Sticker';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+
+const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
 
 const StickerPreview = ({ control }: { control: Control<InvitationFormType> }) => {
   const stickersWatch = useWatch({
@@ -10,9 +15,10 @@ const StickerPreview = ({ control }: { control: Control<InvitationFormType> }) =
   });
 
   const previewRef = useRef<HTMLDivElement | null>(null);
-  const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+
+  const [activeStickerId, setActiveStickerId] = useState<string | null>(null);
+  const handleActiveSticker = (id?: string) => {
+    setActiveStickerId(id || null);
   };
 
   return (
@@ -27,6 +33,8 @@ const StickerPreview = ({ control }: { control: Control<InvitationFormType> }) =
           key={sticker.id}
           sticker={sticker}
           previewRef={previewRef}
+          activeStickerId={activeStickerId}
+          onActivate={handleActiveSticker}
         />
       ))}
     </div>
