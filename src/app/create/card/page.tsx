@@ -339,7 +339,6 @@ const CreateCardPage = () => {
                 id='main-photo'
                 className='w-full h-[400px] bg-amber-100 relative'
               >
-                임시 메인사진 영역
                 <FormProvider {...methods}>
                   <StickerPreview control={methods.control} />
                 </FormProvider>

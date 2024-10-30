@@ -17,7 +17,7 @@ export const getInvitationCard = async () => {
 export const patchPrivateInvitation = async (isPrivate: boolean) => {
   const user = await getUserInfo();
   const userId = user?.user.id;
-  const { data, error } = await browserClient.from('invitation').update({ private: isPrivate }).eq('user_id', userId);
+  const { data, error } = await browserClient.from('invitation').update({ isPrivate: isPrivate }).eq('user_id', userId);
   if (error) {
     console.error('초대장 상태 업데이트 실패:', error);
     return null;
