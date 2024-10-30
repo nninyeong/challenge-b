@@ -1,8 +1,8 @@
-export const INVITATION_MOODS: Record<string, { label: string }> = {
-  classic: { label: '클래식' },
-  romantic: { label: '로맨틱' },
-  modern: { label: '모던' },
-  floral: { label: '플로럴' },
-  rustic: { label: '러스틱' },
-  simple: { label: '심플' },
-};
+export const MOOD_LIST: { category: string; label: string }[] = [
+  { category: 'classic', label: '클래식' },
+  { category: 'romantic', label: '로맨틱' },
+  { category: 'modern', label: '모던' },
+  { category: 'floral', label: '플로럴' },
+  { category: 'rustic', label: '러스틱' },
+  { category: 'simple', label: '심플' },
+];

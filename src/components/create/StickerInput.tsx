@@ -2,9 +2,10 @@ import { useGetAllStickers } from '@/hooks/queries/useGetStickers';
 import { useState } from 'react';
 import StickerCategoryButton from '@/components/create/stickerInput/StickerCategoryButton';
 import StickerSlot from '@/components/create/stickerInput/StickerSlot';
+import { MOOD_LIST } from '@/constants/invitationMoods';
 
 const StickerInput = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('classic');
 
   const { data: stickerByCategory, isLoading, error } = useGetAllStickers();
   if (isLoading) {
@@ -16,20 +17,15 @@ const StickerInput = () => {
     throw new Error(error.message);
   }
 
-  const categories: string[] = isLoading ? [] : Object.keys(stickerByCategory ?? {});
   const handleSelectCategory = (category: string) => {
-    if (selectedCategory === category) {
-      setSelectedCategory(null);
-    } else {
-      setSelectedCategory(category);
-    }
+    setSelectedCategory(category);
   };
 
   const renderSticker = () => {
     if (!stickerByCategory) return null;
 
     if (selectedCategory === null) {
-      return Object.keys(stickerByCategory).flatMap((category) =>
+      return Object.keys(stickerByCategory).map((category) =>
         stickerByCategory[category].map((sticker) => (
           <StickerSlot
             key={sticker.id}
@@ -49,19 +45,23 @@ const StickerInput = () => {
 
   return (
     <div>
-      <div>
-        {categories.map((category) => (
+      <div className='flex mb-[40px]'>
+        {MOOD_LIST.map((mood) => (
           <StickerCategoryButton
-            key={`${category}-button`}
-            category={category}
+            key={`${mood.category}-button`}
+            category={mood}
             onClick={() => {
-              handleSelectCategory(category);
+              handleSelectCategory(mood.category);
             }}
-            isSelected={selectedCategory === category}
+            isSelected={selectedCategory === mood.category}
           />
         ))}
       </div>
-      <div className='grid grid-cols-4'>{renderSticker()}</div>
+      {stickerByCategory && stickerByCategory[selectedCategory as string] ? (
+        <div className='grid grid-cols-4 grid-cols-row-2 gap-[8px]'>{renderSticker()}</div>
+      ) : (
+        <div className='w-full text-center'>준비중인 무드입니다.</div>
+      )}
     </div>
   );
 };

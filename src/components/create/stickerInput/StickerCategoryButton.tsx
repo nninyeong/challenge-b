@@ -1,16 +1,11 @@
 type PropsType = {
-  category: string;
+  category: { category: string; label: string };
   onClick: () => void;
   isSelected: boolean;
 };
 
-const INVITATION_MOODS: Record<string, { label: string }> = {
-  classic: { label: '클래식' },
-  modern: { label: '모던' },
-};
-
 const StickerCategoryButton = ({ category, onClick, isSelected }: PropsType) => {
-  const label = INVITATION_MOODS[category].label || 'mood 설정 필요';
+  const label = category.label || 'mood 설정 필요';
 
   return (
     <button
