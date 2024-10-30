@@ -2,7 +2,7 @@ import LinkToCreateCard from '@/components/ui/LinkToCreateCard';
 
 const FixedQuickLink = () => {
   return (
-    <div className='fixed bottom-[16px] w-[343px] h-[64px] bg-white z-50 rounded-[12px] flex justify-between items-center gap-[8px] p-[8px]'>
+    <div className='border fixed left-0 right-0 bottom-[16px] mx-[16px] h-[64px] bg-white z-50 rounded-[12px] flex justify-between items-center gap-[8px] p-[8px]'>
       <img
         src='/assets/images/branding/logoIcon.svg'
         className='w-[48px] h-[48px]'
