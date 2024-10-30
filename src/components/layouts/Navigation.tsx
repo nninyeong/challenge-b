@@ -22,14 +22,20 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
   }, [client]);
 
   return (
-    <nav className='flex gap-3'>
-      <Link href='/review'>후기</Link>
+    <nav className='flex gap-3 justify-center items-center'>
+      <Link href='/review'>
+        <button className='bg-edit-contained w-[24px] h-[24px]' />
+      </Link>
       {isAuthenticated ? (
         <>
-          <Link href='/mypage'>마이페이지</Link>
+          <Link href='/mypage'>
+            <button className='bg-user-profile-02' />
+          </Link>
         </>
       ) : (
-        <Link href='/signin'>로그인</Link>
+        <Link href='/signin'>
+          <button className='bg-user-profile-02 w-[24px] h-[24px]' />
+        </Link>
       )}
     </nav>
   );

@@ -12,7 +12,7 @@ const SignInPage = () => {
     <div className='flex flex-col items-center px-[16px] mb-[24px]'>
       <div className='flex flex-col gap-[8px] items-center mt-[24px]'>
         <img
-          src='/assets/images/branding/mainLogo.svg'
+          src='/assets/images/branding/logoIcon.svg'
           alt='드림카드'
           className='w-[88px] h-[88px]'
         />

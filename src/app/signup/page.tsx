@@ -5,7 +5,7 @@ const SignUpPage = () => {
     <div className='px-[16px]'>
       <div className='flex flex-col gap-[8px] items-center mt-[24px]'>
         <img
-          src='/assets/images/branding/mainLogo.svg'
+          src='/assets/images/branding/logoIcon.svg'
           alt='드림카드'
           className='w-[88px] h-[88px]'
         />
