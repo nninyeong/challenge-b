@@ -2,10 +2,11 @@
 
 import { StickerType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
-import { LegacyRef, MutableRefObject, useRef } from 'react';
+import { MutableRefObject, useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { clampValue } from '@/utils/clampValue';
-import { Resizable } from 're-resizable';
+import { NumberSize, Resizable } from 're-resizable';
+import { Direction } from 're-resizable/lib/resizer';
 
 const preventTouchScroll = (e: TouchEvent) => {
   e.preventDefault();
@@ -53,10 +54,8 @@ const Sticker = ({
     control,
     name: 'stickers',
   }) as StickerType[];
-
-  const stickerRef = useRef<HTMLDivElement | null>(null);
   const touchOffset = useRef({ x: 0, y: 0 });
-  const wrapperRef = useRef<HTMLDivElement | null>(null); // 상위 div의 ref
+  const stickerRef = useRef<HTMLDivElement | null>(null); // 상위 div의 ref
 
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
     document.addEventListener('touchmove', preventTouchScroll, { passive: false });
@@ -75,7 +74,7 @@ const Sticker = ({
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
     document.removeEventListener('touchmove', preventTouchScroll);
-    if (!previewRef.current || !wrapperRef.current) return;
+    if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.changedTouches[0];
     const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef);
@@ -93,21 +92,36 @@ const Sticker = ({
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLImageElement>) => {
-    if (!previewRef.current || !wrapperRef.current) return;
+    if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.touches[0];
     const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef);
 
     requestAnimationFrame(() => {
-      if (!wrapperRef.current) return;
-      wrapperRef.current.style.left = `${relativeX}%`;
-      wrapperRef.current.style.top = `${relativeY}%`;
+      if (!stickerRef.current) return;
+      stickerRef.current.style.left = `${relativeX}%`;
+      stickerRef.current.style.top = `${relativeY}%`;
     });
   };
 
   const handleDeleteSticker = () => {
     const filteredStickers = stickersWatch.filter((previousSticker) => previousSticker.id !== sticker.id);
     setValue('stickers', filteredStickers);
+  };
+
+  const handleResizeStop = (e: TouchEvent | MouseEvent, direction: Direction, ref: HTMLElement, d: NumberSize) => {
+    const newWidth = sticker.width + d.width;
+    const newHeight = sticker.height + d.height;
+
+    const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
+      if (stickerItem.id === sticker.id) {
+        return { ...sticker, width: newWidth, height: newHeight };
+      } else {
+        return stickerItem;
+      }
+    });
+
+    setValue('stickers', [...updatedSticker]);
   };
 
   const isActive = activeStickerId === sticker.id;
@@ -126,23 +140,31 @@ const Sticker = ({
         />
       )}
       <div
-        ref={wrapperRef}
+        ref={stickerRef}
         style={{
           position: 'absolute',
           top: `${sticker.posY}%`,
           left: `${sticker.posX}%`,
+          width: `${sticker.width}px`,
+          height: `${sticker.height}px`,
         }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onTouchMove={handleTouchMove}
         className={`${isActive && 'border-[1px] border-primary-300'}`}
       >
-        <Resizable defaultSize={{ width: 100, height: 100 }}>
+        <Resizable
+          defaultSize={{ width: sticker.width, height: sticker.height }}
+          onResizeStop={handleResizeStop}
+          enable={{ bottomRight: true }}
+          lockAspectRatio={true}
+        >
           <Image
             src={sticker.url}
             alt={sticker.stickerImageId}
             width={100}
             height={100}
+            className='w-full h-full'
           />
         </Resizable>
       </div>
