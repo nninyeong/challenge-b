@@ -2,7 +2,7 @@
 
 import { StickerType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
-import { MutableRefObject, useRef } from 'react';
+import { MutableRefObject, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { clampValue } from '@/utils/clampValue';
 import { NumberSize, Resizable } from 're-resizable';
@@ -56,8 +56,10 @@ const Sticker = ({
   }) as StickerType[];
   const touchOffset = useRef({ x: 0, y: 0 });
   const stickerRef = useRef<HTMLDivElement | null>(null); // 상위 div의 ref
+  const [isResizing, setIsResizing] = useState(false);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
+    if (isResizing) return;
     document.addEventListener('touchmove', preventTouchScroll, { passive: false });
     if (!previewRef.current) return;
 
@@ -73,6 +75,7 @@ const Sticker = ({
   };
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
+    if (isResizing) return;
     document.removeEventListener('touchmove', preventTouchScroll);
     if (!previewRef.current || !stickerRef.current) return;
 
@@ -92,6 +95,7 @@ const Sticker = ({
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLImageElement>) => {
+    if (isResizing) return;
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.touches[0];
@@ -109,7 +113,13 @@ const Sticker = ({
     setValue('stickers', filteredStickers);
   };
 
+  const handleResizeStart = () => {
+    setIsResizing(true);
+  };
+
   const handleResizeStop = (e: TouchEvent | MouseEvent, direction: Direction, ref: HTMLElement, d: NumberSize) => {
+    setIsResizing(false);
+
     const newWidth = sticker.width + d.width;
     const newHeight = sticker.height + d.height;
 
@@ -155,6 +165,7 @@ const Sticker = ({
       >
         <Resizable
           defaultSize={{ width: sticker.width, height: sticker.height }}
+          onResizeStart={handleResizeStart}
           onResizeStop={handleResizeStop}
           enable={{ bottomRight: true }}
           lockAspectRatio={true}
