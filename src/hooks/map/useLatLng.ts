@@ -21,9 +21,7 @@ const useLatLng = (address: string) => {
   };
 
   useEffect(() => {
-    if (window.kakao) {
-      fetchCoordinates(address);
-    }
+    if (window.kakao) fetchCoordinates(address);
   }, [address]);
 
   return coords;

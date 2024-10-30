@@ -21,7 +21,7 @@ const useKakaoMap = () => {
     } else if (isIOS) {
       scheme = iosScheme;
       fallbackLink = appStoreLink;
-      timeoutDuration = 10000;
+      timeoutDuration = 5000;
     } else {
       window.location.href = webLink;
       return;
@@ -30,9 +30,7 @@ const useKakaoMap = () => {
     window.location.href = scheme;
 
     setTimeout(() => {
-      if (document.visibilityState === 'visible') {
-        window.location.href = fallbackLink;
-      }
+      if (document.visibilityState === 'visible') window.location.href = fallbackLink;
     }, timeoutDuration);
   };
 
