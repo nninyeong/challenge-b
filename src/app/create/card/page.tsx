@@ -25,6 +25,7 @@ import browserClient from '@/utils/supabase/client';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
+import colorConverter from '@/utils/colorConverter';
 
 const DELAY_TIME: number = 300;
 
@@ -33,7 +34,7 @@ const CreateCardPage = () => {
     mode: 'onChange',
     defaultValues: INVITATION_DEFAULT_VALUE,
   });
-  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
@@ -69,7 +70,7 @@ const CreateCardPage = () => {
     },
   ];
   const refs = useRef<null[] | HTMLDivElement[]>([]);
-  const { isNavigating } = useIntersectionObserver(refs, setCurrentStep);
+  const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(refs, setCurrentStep);
 
   const { data: existingInvitation } = useGetInvitationQuery();
   const { mutate: updateInvitation } = useUpdateInvitation();
@@ -118,7 +119,7 @@ const CreateCardPage = () => {
   }, DELAY_TIME);
 
   const handleDebouncedPrevious = debounce(() => {
-    if (currentStep > 1) {
+    if (currentStep > 0) {
       isNavigating.current = true;
       setCurrentStep((prev) => prev - 1);
     }
@@ -138,15 +139,23 @@ const CreateCardPage = () => {
       const color = value.bgColor;
 
       if (color) {
-        setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
+        setBackgroundColor(
+          colorConverter({
+            r: color.r as number,
+            g: color.g as number,
+            b: color.b as number,
+            a: color.a as number,
+            name: color.name as string,
+          }),
+        );
       }
       return () => subscription.unsubscribe();
     });
   };
 
   const scrollEvent = () => {
-    if (currentStep > 2 && currentStep > 2 && refs.current[currentStep - 1]) {
-      refs.current[currentStep - 1]!.scrollIntoView({
+    if (currentStep >= 0 && refs.current[currentStep]) {
+      refs.current[currentStep].scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
@@ -163,6 +172,11 @@ const CreateCardPage = () => {
   useEffect(() => {
     scrollEvent();
   }, [currentStep]);
+
+  useEffect(() => {
+    initializeObserver();
+    return () => unsubscribeObservers();
+  }, [refs, isOnboardingComplete]);
 
   return (
     <div
@@ -207,7 +221,7 @@ const CreateCardPage = () => {
                     type='button'
                     onClick={handleDebouncedPrevious}
                     className='bg-red-300'
-                    disabled={currentStep === 1}
+                    disabled={currentStep === 0}
                   >
                     <MdNavigateBefore />
                   </button>
@@ -215,19 +229,19 @@ const CreateCardPage = () => {
                     className='bg-blue-300'
                     type='button'
                     onClick={handleDebouncedNext}
-                    disabled={currentStep === refs.current.length}
+                    disabled={refs.current.length !== 0 && currentStep === refs.current.length}
                   >
                     <MdNavigateNext />
                   </button>
                 </div>
 
+                {currentStep === 0 && <MainPhotoInput />}
                 {currentStep === 1 && <MainViewInput />}
-                {currentStep === 2 && <MainPhotoInput />}
-                {currentStep === 3 && <PersonalInfoInput />}
-                {currentStep === 4 && <AccountInput />}
-                {currentStep === 5 && <WeddingInfoInput />}
-                {currentStep === 6 && <NavigationDetailInput />}
-                {currentStep === 7 && <GuestInfoInput />}
+                {currentStep === 2 && <PersonalInfoInput />}
+                {currentStep === 3 && <AccountInput />}
+                {currentStep === 4 && <WeddingInfoInput />}
+                {currentStep === 5 && <NavigationDetailInput />}
+                {currentStep === 6 && <GuestInfoInput />}
                 {currentStep === refs.current.length && (
                   <button
                     className='w-full'

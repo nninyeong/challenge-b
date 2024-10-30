@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { MutableRefObject, useRef } from 'react';
 
 type ObserverOptions = {
   root?: HTMLElement | null;
@@ -19,39 +19,29 @@ export const useIntersectionObserver = (
 ) => {
   const observers = useRef<IntersectionObserver[]>([]);
   const isNavigating = useRef<boolean>(false);
-
   const observerCallback = (entries: IntersectionObserverEntry[]) => {
     if (isNavigating.current) return;
-
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const currentStepIndex = refs.current.findIndex((ref) => ref === entry.target);
-        setCurrentStep(currentStepIndex + 1);
+        setCurrentStep(currentStepIndex);
       }
     });
   };
-
-  const unsubscribeObservers = () => {
-    observers.current.forEach((observer, index) => {
-      if (refs.current[index]) observer.unobserve(refs.current[index]!);
-    });
-  };
-
   const initializeObserver = () => {
-    unsubscribeObservers();
     refs.current.forEach((ref, index) => {
       if (ref) {
-        const observer = new IntersectionObserver(observerCallback, options);
+        const observer = new IntersectionObserver(observerCallback, DEFAULT_OPTIONS);
         observer.observe(ref);
         observers.current[index] = observer;
       }
     });
   };
+  const unsubscribeObservers = () => {
+    observers.current.forEach((observer, index) => {
+      if (refs.current[index]) observer.unobserve(refs.current[index]);
+    });
+  };
 
-  useEffect(() => {
-    initializeObserver();
-    return () => unsubscribeObservers();
-  }, [refs.current]);
-
-  return { isNavigating };
+  return { isNavigating, initializeObserver, unsubscribeObservers };
 };
