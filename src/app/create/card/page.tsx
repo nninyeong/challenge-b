@@ -21,6 +21,8 @@ import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitati
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
 import OnBoarding from '@/components/create/OnBoarding';
+import GreetingInput from '@/components/create/GreetingInput';
+import GreetingPreview from '@/components/create/preview/GreetingPreview';
 import browserClient from '@/utils/supabase/client';
 import { loadFormData } from '@/utils/form/loadFormData';
 
@@ -38,6 +40,7 @@ const CreateCardPage = () => {
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -123,7 +126,10 @@ const CreateCardPage = () => {
       stickers: [],
       imgRatio: {},
       mainText: '',
-      greetingMessage: {},
+      greetingMessage: {
+        title: '',
+        content: '',
+      },
       dDay: false,
       mainView: {
         name: '기본',
@@ -273,7 +279,6 @@ const CreateCardPage = () => {
               fontFamily: selectedFont,
             }}
           >
-            {/*대표사진 프리뷰*/}
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[0]}
@@ -316,6 +321,12 @@ const CreateCardPage = () => {
             >
               colorpalette
             </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[7]}
+            >
+              <GreetingPreview control={methods.control} />
+            </div>
           </div>
           <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
             <FormProvider {...methods}>
@@ -349,6 +360,7 @@ const CreateCardPage = () => {
                 {currentStep === 5 && <WeddingInfoInput />}
                 {currentStep === 6 && <NavigationDetailInput />}
                 {currentStep === 7 && <GuestInfoInput />}
+                {currentStep === 8 && <GreetingInput />}
                 {currentStep === refs.length && (
                   <button
                     className='w-full'
