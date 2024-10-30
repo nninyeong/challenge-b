@@ -65,6 +65,10 @@ const config: Config = {
         main: ['Main'],
         JejuGothic: ['JejuGothic'],
       },
+      backgroundImage: {
+        'edit-contained': "url('/assets/images/icons/edit-contained.svg')",
+        'user-profile-02': "url('/assets/images/icons/user-profile-02.svg')",
+      },
     },
   },
   plugins: [],
