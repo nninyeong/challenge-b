@@ -35,9 +35,6 @@ importers:
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
-      proj4:
-        specifier: ^2.14.0
-        version: 2.14.0
       quill:
         specifier: ^2.0.2
         version: 2.0.2
@@ -78,9 +75,6 @@ importers:
       '@types/node':
         specifier: ^20
         version: 20.16.12
-      '@types/proj4':
-        specifier: ^2.5.5
-        version: 2.5.5
       '@types/react':
         specifier: ^18
         version: 18.3.11
@@ -319,9 +313,6 @@ packages:
 
   '@types/phoenix@1.6.5':
     resolution: {integrity: sha512-xegpDuR+z0UqG9fwHqNoy3rI7JDlvaPh2TY47Fl80oq6g+hXT+c/LEuE43X48clZ6lOfANl5WrPur9fYO1RJ/w==}
-
-  '@types/proj4@2.5.5':
-    resolution: {integrity: sha512-y4tHUVVoMEOm2nxRLQ2/ET8upj/pBmoutGxFw2LZJTQWPgWXI+cbxVEUFFmIzr/bpFR83hGDOTSXX6HBeObvZA==}
 
   '@types/prop-types@15.7.13':
     resolution: {integrity: sha512-hCZTSvwbzWGvhqxp/RqVqwU999pBf2vp7hzIjiYOsl8wqOmUxkQ6ddw1cV3l8811+kdUFus/q4d1Y3E3SyEifA==}
@@ -1233,9 +1224,6 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
-  mgrs@1.0.0:
-    resolution: {integrity: sha512-awNbTOqCxK1DBGjalK3xqWIstBZgN6fxsMSiXLs9/spqWkF2pAhb2rrYCFSsr1/tT7PhcDGjZndG8SWYn0byYA==}
-
   micromatch@4.0.8:
     resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==}
     engines: {node: '>=8.6'}
@@ -1477,9 +1465,6 @@ packages:
   proc-log@5.0.0:
     resolution: {integrity: sha512-Azwzvl90HaF0aCz1JrDdXQykFakSSNPaPoiZ9fm5qJIMHioDZEi7OAdRwSm6rSoPtY3Qutnm3L7ogmg3dc+wbQ==}
     engines: {node: ^18.17.0 || >=20.5.0}
-
-  proj4@2.14.0:
-    resolution: {integrity: sha512-fumDL50ThQ3issOLxaLYwv1j4LePEzYleY6vqsX+2uWOcvKzqpzHhtTTH18CvIDg+nf8MYl0/XF6yYyESKDi4w==}
 
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -1864,9 +1849,6 @@ packages:
     engines: {node: '>= 8'}
     hasBin: true
 
-  wkt-parser@1.4.0:
-    resolution: {integrity: sha512-qpwO7Ihds/YYDTi1aADFTI1Sm9YC/tTe3SHD24EeIlZxy7Ik6a1b4HOz7jAi0xdUAw487duqpo8OGu+Tf4nwlQ==}
-
   word-wrap@1.2.5:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
@@ -2135,8 +2117,6 @@ snapshots:
       '@types/node': 20.16.12
 
   '@types/phoenix@1.6.5': {}
-
-  '@types/proj4@2.5.5': {}
 
   '@types/prop-types@15.7.13': {}
 
@@ -3262,8 +3242,6 @@ snapshots:
 
   merge2@1.4.1: {}
 
-  mgrs@1.0.0: {}
-
   micromatch@4.0.8:
     dependencies:
       braces: 3.0.3
@@ -3486,11 +3464,6 @@ snapshots:
   prettier@3.3.3: {}
 
   proc-log@5.0.0: {}
-
-  proj4@2.14.0:
-    dependencies:
-      mgrs: 1.0.0
-      wkt-parser: 1.4.0
 
   prop-types@15.8.1:
     dependencies:
@@ -3973,8 +3946,6 @@ snapshots:
   which@2.0.2:
     dependencies:
       isexe: 2.0.0
-
-  wkt-parser@1.4.0: {}
 
   word-wrap@1.2.5: {}
 
