@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import phoneImg from '@/assets/images/phone.png';
-import mailImg from '@/assets/images/mail.png';
 
 type PersonInfoCardProps = {
   label: string | null;
@@ -22,7 +20,7 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
           className='relative w-[30px] h-[30px] rounded-t-lg overflow-hidden'
         >
           <Image
-            src={phoneImg}
+            src='/images/phone.png'
             alt='전화 이미지'
             layout='fill'
             objectFit='cover'
@@ -33,7 +31,7 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
           className='relative w-[30px] h-[30px] rounded-t-lg overflow-hidden'
         >
           <Image
-            src={mailImg}
+            src='/images/mail.png'
             alt='문자 이미지'
             layout='fill'
             objectFit='cover'

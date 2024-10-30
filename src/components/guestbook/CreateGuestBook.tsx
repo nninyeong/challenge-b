@@ -1,63 +1,46 @@
 'use client';
 
-import { useState } from 'react';
-import useAddGuestBookEntry from '@/hooks/modals/useAddGuestBookEntry';
+import useCreateGuestBookInput from '@/hooks/guestbook/useCreateGuestBookInput';
 
 const CreateGuestBook: React.FC<{ invitationId: string }> = ({ invitationId }) => {
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-
-  const resetInput = () => {
-    setName('');
-    setPassword('');
-    setMessage('');
-  };
-
-  const { mutate: addGuestBookEntry } = useAddGuestBookEntry({ invitationId, resetInput });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!name || !password || !message) {
-      alert('모든 정보를 입력해주세요.');
-      return;
-    }
-
-    addGuestBookEntry({ name, password, content: message });
-  };
+  const { register, onSubmit, errors } = useCreateGuestBookInput(invitationId);
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <div className='w-full px-4 mb-2'>
           <input
             type='text'
             className='border-gray-500 border outline-none col-span-2 p-1 w-full'
-            value={name}
             placeholder='이름'
-            onChange={(e) => setName(e.target.value)}
+            {...register('name')}
           />
+          {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
         </div>
         <div className='w-full px-4 mb-2'>
           <input
             type='password'
             className='border-gray-500 border outline-none col-span-2 p-1 w-full'
-            value={password}
             placeholder='비밀번호'
-            onChange={(e) => setPassword(e.target.value)}
+            {...register('password')}
           />
+          {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
         </div>
         <div className='w-full px-4 mb-2'>
           <input
             type='text'
             className='border-gray-500 border outline-none col-span-2 p-1 w-full'
-            value={message}
             placeholder='축하메세지'
-            onChange={(e) => setMessage(e.target.value)}
+            {...register('content')}
           />
+          {errors.content && <p className='text-red-500'>{errors.content.message}</p>}
         </div>
-        <button className='w-full px-4' type='submit'>작성하기</button>
+        <button
+          className='w-full px-4'
+          type='submit'
+        >
+          작성하기
+        </button>
       </form>
     </div>
   );

@@ -1,6 +1,5 @@
 'use client';
 import Image from 'next/image';
-import defaultImage from '@/assets/images/defaultImg.jpg';
 import { useState } from 'react';
 type PropsType = {
   writer: string;
@@ -16,7 +15,6 @@ const ReviewContentsBox = ({ writer, content, created }: PropsType) => {
   const toggleContent = () => {
     setIsExpanded((prev) => !prev);
   };
-  content = content.repeat(30);
 
   const sliceContent = (review: string) => {
     const isContentLengthOverMaxLength = review.length > MAX_CONTENT_LENGTH;
@@ -29,7 +27,7 @@ const ReviewContentsBox = ({ writer, content, created }: PropsType) => {
     <div className='w-full absolute bottom-0 left-0 p-6 text-white flex flex-col justify-center'>
       <div className='flex justify-start items-center gap-3 text-sm'>
         <Image
-          src={defaultImage}
+          src='/images/defaultImg.jpg'
           width={30}
           height={30}
           alt='default'
