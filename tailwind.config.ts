@@ -68,6 +68,7 @@ const config: Config = {
       backgroundImage: {
         'edit-contained': "url('/assets/images/icons/edit-contained.svg')",
         'user-profile-02': "url('/assets/images/icons/user-profile-02.svg')",
+        'user-profile-selected': "url('/assets/images/icons/user-profile-selected.svg')",
       },
     },
   },

@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
+import LinkToMypage from '@/components/ui/LinkToMypage';
 
 const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(initialAuthState);
@@ -28,9 +29,7 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
       </Link>
       {isAuthenticated ? (
         <>
-          <Link href='/mypage'>
-            <button className='bg-user-profile-02' />
-          </Link>
+          <LinkToMypage />
         </>
       ) : (
         <Link href='/signin'>
