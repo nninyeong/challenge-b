@@ -6,7 +6,7 @@ const LinkToCreateCard = ({ buttonStyle }: { buttonStyle?: string }) => {
     <Link href='/create/card'>
       <Button
         type='button'
-        className={`${buttonStyle} rounded-[12px]`}
+        className={`${buttonStyle} w-[151px] h-[48px] text-[16px] rounded-[12px]`}
       >
         청첩장 제작하기
       </Button>
