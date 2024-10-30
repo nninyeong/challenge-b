@@ -127,6 +127,10 @@ const CreateCardPage = () => {
       mainText: '',
       greetingMessage: {},
       dDay: false,
+      mainView: {
+        name: '기본',
+        type: 'default',
+      },
     },
   });
 
@@ -238,7 +242,7 @@ const CreateCardPage = () => {
   };
 
   const scrollEvent = () => {
-    if (refs[currentStep - 1].current) {
+    if (currentStep > 2 && refs[currentStep - 1].current) {
       refs[currentStep - 1].current?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -329,7 +333,7 @@ const CreateCardPage = () => {
           <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
             <FormProvider {...methods}>
               <form
-                className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
+                className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
                 onSubmit={methods.handleSubmit(onSubmit)}
               >
                 <div className='w-full flex items-center justify-end'>
@@ -351,8 +355,8 @@ const CreateCardPage = () => {
                   </button>
                 </div>
 
-                {currentStep === 1 && <MainPhotoInput />}
-                {currentStep === 2 && <MainViewInput />}
+                {currentStep === 1 && <MainViewInput />}
+                {currentStep === 2 && <MainPhotoInput />}
                 {currentStep === 3 && <PersonalInfoInput />}
                 {currentStep === 4 && <AccountInput />}
                 {currentStep === 5 && <WeddingInfoInput />}
