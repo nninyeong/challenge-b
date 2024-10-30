@@ -12,28 +12,24 @@ const preventTouchScroll = (e: TouchEvent) => {
   e.preventDefault();
 };
 
+const DELETE_BUTTON_SIZE = 24;
 const calculateRelativePosition = (
   touch: React.Touch,
   touchOffset: MutableRefObject<{ x: number; y: number }>,
   previewRef: MutableRefObject<HTMLDivElement | null>,
+  stickerRef: MutableRefObject<HTMLDivElement | null>,
 ) => {
-  if (!previewRef.current) return { relativeX: 0, relativeY: 0 };
+  if (!previewRef.current || !stickerRef.current) return { relativeX: 0, relativeY: 0 };
 
-  const relativeX = clampValue(
-    ((touch.clientX - previewRef.current.getBoundingClientRect().left - touchOffset.current.x) /
-      previewRef.current.clientWidth) *
-      100,
-    0,
-    100,
-  );
+  const previewBounds = previewRef.current.getBoundingClientRect();
+  const stickerBounds = stickerRef.current.getBoundingClientRect();
+  const offsetY = (DELETE_BUTTON_SIZE / previewBounds.height) * 100;
 
-  const relativeY = clampValue(
-    ((touch.clientY - previewRef.current.getBoundingClientRect().top - touchOffset.current.y) /
-      previewRef.current.clientHeight) *
-      100,
-    0,
-    100,
-  );
+  let relativeX = ((touch.clientX - previewBounds.left - touchOffset.current.x) / previewBounds.width) * 100;
+  let relativeY = ((touch.clientY - previewBounds.top - touchOffset.current.y) / previewBounds.height) * 100;
+
+  relativeX = clampValue(relativeX, 0, 100 - (stickerBounds.width / previewBounds.width) * 100);
+  relativeY = clampValue(relativeY - offsetY, 0, 100 - (stickerBounds.height / previewBounds.height) * 100);
 
   return { relativeX, relativeY };
 };
@@ -80,7 +76,7 @@ const Sticker = ({
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.changedTouches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef);
+    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
 
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) {
@@ -99,7 +95,7 @@ const Sticker = ({
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.touches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef);
+    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
 
     requestAnimationFrame(() => {
       if (!stickerRef.current) return;
@@ -158,17 +154,6 @@ const Sticker = ({
 
   return (
     <>
-      {isActive && (
-        <button
-          className={`bg-x-03 w-[24px] h-[24px]`}
-          style={{
-            position: 'absolute',
-            top: `${+sticker.posY - 5}%`,
-            left: `${+sticker.posX + 10}%`,
-          }}
-          onClick={handleDeleteSticker}
-        />
-      )}
       <div
         ref={stickerRef}
         style={{
@@ -178,11 +163,15 @@ const Sticker = ({
           width: `${sticker.width}px`,
           height: `${sticker.height}px`,
         }}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onTouchMove={handleTouchMove}
-        className={`${isActive && 'border-[1px] border-primary-300'}`}
       >
+        <div className={`w-full text-right h-[${DELETE_BUTTON_SIZE}px]`}>
+          {isActive && (
+            <button
+              className={`bg-x-03 w-[${DELETE_BUTTON_SIZE}px] h-full`}
+              onClick={handleDeleteSticker}
+            />
+          )}
+        </div>
         <Resizable
           defaultSize={{ width: sticker.width, height: sticker.height }}
           onResizeStart={handleResizeStart}
@@ -196,7 +185,10 @@ const Sticker = ({
             alt={sticker.stickerImageId}
             width={100}
             height={100}
-            className='w-full h-full'
+            className={`${isActive && 'border-[1px] border-primary-300'} w-full h-full`}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onTouchMove={handleTouchMove}
           />
         </Resizable>
       </div>
