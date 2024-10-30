@@ -1,7 +1,6 @@
 import { InvitationFormType } from '@/types/invitationFormType.type';
 
 export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
-  mainView: '',
   bgColor: { r: 255, g: 255, b: 255, a: 1, name: '흰색' },
   personalInfo: {
     bride: {
@@ -76,4 +75,8 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
     content: '',
   },
   dDay: false,
+  mainView: {
+    name: '기본',
+    type: 'default',
+  },
 };
