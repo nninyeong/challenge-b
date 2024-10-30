@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import LinkToMypage from '@/components/ui/LinkToMypage';
+import LinkToReviewPage from '@/components/ui/LinkToReviewPage';
 
 const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(initialAuthState);
@@ -24,9 +25,7 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
 
   return (
     <nav className='flex gap-3 justify-center items-center'>
-      <Link href='/review'>
-        <button className='bg-edit-contained w-[24px] h-[24px]' />
-      </Link>
+      <LinkToReviewPage />
       {isAuthenticated ? (
         <>
           <LinkToMypage />
