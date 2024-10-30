@@ -37,25 +37,25 @@ const MainViewInput = () => {
     setPortalElement(document.getElementById('modal'));
   }, []);
 
+  const handleDecorateImage = (item: DecorateImageType) => {
+    setSelectedType(item);
+    setValue('mainView', item);
+  };
+
   return (
     <div>
       <div className='w-full h-[150px] flex justify-between items-center'>
         {DECORATE_IMAGE_TYPE.map((item) => (
           <div
             key={item.type}
-            onClick={() => {
-              setSelectedType(item);
-              setValue('mainView', item);
-            }}
+            onClick={() => handleDecorateImage(item)}
             className={`p-2 cursor-pointer flex flex-col justify-center items-center `}
           >
             <DecorateImageTypeComponent
               type={item.type}
               isSelected={selectedType.type === item.type}
             />
-            <p
-              className={`${selectedType.type === item.type ? 'text-primary-300' : ''} font-semibold text-gray-600 mt-2`}
-            >
+            <p className={`${selectedType.type === item.type && 'text-primary-300'} font-semibold text-gray-600 mt-2`}>
               {item.name}
             </p>
           </div>
