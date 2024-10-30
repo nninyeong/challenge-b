@@ -16,6 +16,8 @@ import MainPhotoInput from '@/components/create/MainPhotoInput';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
+import StickerInput from '@/components/create/StickerInput';
+import StickerPreview from '@/components/create/preview/StickerPreview';
 import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
@@ -40,6 +42,7 @@ const CreateCardPage = () => {
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -328,6 +331,20 @@ const CreateCardPage = () => {
             >
               <GreetingPreview control={methods.control} />
             </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[8]}
+            >
+              <div
+                id='main-photo'
+                className='w-full h-[400px] bg-amber-100 relative'
+              >
+                임시 메인사진 영역
+                <FormProvider {...methods}>
+                  <StickerPreview control={methods.control} />
+                </FormProvider>
+              </div>
+            </div>
           </div>
           <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
             <FormProvider {...methods}>
@@ -362,6 +379,7 @@ const CreateCardPage = () => {
                 {currentStep === 6 && <NavigationDetailInput />}
                 {currentStep === 7 && <GuestInfoInput />}
                 {currentStep === 8 && <GreetingInput />}
+                {currentStep === 9 && <StickerInput />}
                 {currentStep === refs.length && (
                   <button
                     className='w-full bg-black text-white mt-8'
