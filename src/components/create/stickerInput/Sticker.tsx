@@ -10,6 +10,33 @@ const preventTouchScroll = (e: TouchEvent) => {
   e.preventDefault();
 };
 
+const calculateRelativePosition = (
+  touch: React.Touch,
+  touchOffset: MutableRefObject<{ x: number; y: number }>,
+  stickerRef: MutableRefObject<HTMLImageElement | null>,
+  previewRef: MutableRefObject<HTMLDivElement | null>,
+) => {
+  if (!stickerRef.current || !previewRef.current) return { relativeX: 0, relativeY: 0 };
+
+  const relativeX = clampValue(
+    ((touch.clientX - previewRef.current.getBoundingClientRect().left - touchOffset.current.x) /
+      previewRef.current.clientWidth) *
+      100,
+    0,
+    previewRef.current.clientWidth - stickerRef.current.offsetWidth,
+  );
+
+  const relativeY = clampValue(
+    ((touch.clientY - previewRef.current.getBoundingClientRect().top - touchOffset.current.y) /
+      previewRef.current.clientHeight) *
+      100,
+    0,
+    previewRef.current.clientHeight - stickerRef.current.offsetHeight,
+  );
+
+  return { relativeX, relativeY };
+};
+
 const Sticker = ({
   sticker,
   previewRef,
@@ -44,21 +71,7 @@ const Sticker = ({
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.changedTouches[0];
-    const relativeX = clampValue(
-      ((touch.clientX - previewRef.current.getBoundingClientRect().left - touchOffset.current.x) /
-        previewRef.current.clientWidth) *
-        100,
-      0,
-      previewRef.current.clientWidth - stickerRef.current.offsetWidth,
-    );
-
-    const relativeY = clampValue(
-      ((touch.clientY - previewRef.current.getBoundingClientRect().top - touchOffset.current.y) /
-        previewRef.current.clientHeight) *
-        100,
-      0,
-      previewRef.current.clientHeight - stickerRef.current.offsetHeight,
-    );
+    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, stickerRef, previewRef);
 
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) {
@@ -75,21 +88,7 @@ const Sticker = ({
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.touches[0];
-    const relativeX = clampValue(
-      ((touch.clientX - previewRef.current.getBoundingClientRect().left - touchOffset.current.x) /
-        previewRef.current.clientWidth) *
-        100,
-      0,
-      previewRef.current.clientWidth - stickerRef.current.offsetWidth,
-    );
-
-    const relativeY = clampValue(
-      ((touch.clientY - previewRef.current.getBoundingClientRect().top - touchOffset.current.y) /
-        previewRef.current.clientHeight) *
-        100,
-      0,
-      previewRef.current.clientHeight - stickerRef.current.offsetHeight,
-    );
+    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, stickerRef, previewRef);
 
     requestAnimationFrame(() => {
       if (!stickerRef.current) return;
