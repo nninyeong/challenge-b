@@ -8,7 +8,7 @@ export const handleGoogleSignIn: () => Promise<void> = async () => {
     await client.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.origin + '/auth/callback?from=google',
+        redirectTo: window.origin + '/auth/callback',
       },
     });
   } catch (error) {
@@ -22,7 +22,7 @@ export const handleKakaoSignIn: () => Promise<void> = async () => {
     await client.auth.signInWithOAuth({
       provider: 'kakao',
       options: {
-        redirectTo: window.origin + '/auth/callback?from=kakao',
+        redirectTo: window.origin + '/auth/callback',
       },
     });
   } catch (error) {
