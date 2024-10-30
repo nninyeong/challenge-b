@@ -364,7 +364,7 @@ const CreateCardPage = () => {
                 {currentStep === 8 && <GreetingInput />}
                 {currentStep === refs.length && (
                   <button
-                    className='w-full bg-black'
+                    className='w-full bg-black text-white mt-8'
                     type='submit'
                   >
                     제출
