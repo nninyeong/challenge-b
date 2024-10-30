@@ -15,8 +15,6 @@ const AccountPreView = ({ control }: { control: Control<InvitationFormType> }) =
     control,
     name: 'account',
   });
-  console.log(accountWatch);
-
   useEffect(() => {
     setPortalElement(document.getElementById('modal'));
   }, []);
