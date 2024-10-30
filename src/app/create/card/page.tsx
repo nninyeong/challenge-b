@@ -10,7 +10,6 @@ import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
-import { createClient } from '@/utils/supabase/client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
 import MainPhotoInput from '@/components/create/MainPhotoInput';
@@ -21,10 +20,11 @@ import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
-import { converToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
 import OnBoarding from '@/components/create/OnBoarding';
-
-const browserClient = createClient();
+import GreetingInput from '@/components/create/GreetingInput';
+import GreetingPreview from '@/components/create/preview/GreetingPreview';
+import browserClient from '@/utils/supabase/client';
+import { loadFormData } from '@/utils/form/loadFormData';
 
 const OBSERVER_OPTIONS = {
   root: null,
@@ -40,6 +40,7 @@ const CreateCardPage = () => {
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -125,60 +126,56 @@ const CreateCardPage = () => {
       stickers: [],
       imgRatio: {},
       mainText: '',
-      greetingMessage: {},
+      greetingMessage: {
+        title: '',
+        content: '',
+      },
       dDay: false,
+      mainView: {
+        name: '기본',
+        type: 'default',
+      },
     },
   });
 
   const { reset } = methods;
 
   useEffect(() => {
-    const loadFormData = async () => {
-      const { data: user } = await browserClient.auth.getUser();
-      const localData = localStorage.getItem('invitationFormData');
-
-      if (!user.user) {
-        if (localData) {
-          reset(JSON.parse(localData));
-        } else {
-          reset();
-        }
-      } else {
-        if (existingInvitation) {
-          const convertedInvitation = converToCamelCase(existingInvitation);
-          reset(convertedInvitation);
-        } else {
-          if (localData) {
-            reset(JSON.parse(localData));
-          } else {
-            reset();
-          }
-        }
-      }
-    };
-
-    loadFormData();
+    loadFormData({ existingInvitation, reset });
   }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
     const { data: user } = await browserClient.auth.getUser();
 
     if (!user.user) {
-      localStorage.setItem('invitationFormData', JSON.stringify(invitationData));
+      sessionStorage.setItem('invitationFormData', JSON.stringify(invitationData));
       alert('생성을 원하시면 로그인 해주세요!');
       return;
     }
 
     if (existingInvitation) {
       updateInvitation(invitationData);
-    } else {
-      insertInvitation(invitationData);
+      alert('청첩장이 생성되었습니다.');
     }
   };
 
-  const handleDebouncedNext = debounce(() => {
+  const handleDebouncedNext = debounce(async () => {
     if (currentStep < refs.length) {
       isNavigating.current = true;
+
+      const { data: user } = await browserClient.auth.getUser();
+      const formData = methods.getValues();
+
+      if (!user.user) {
+        sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
+      } else {
+        if (existingInvitation) {
+          updateInvitation(formData);
+        } else {
+          insertInvitation(formData);
+        }
+      }
+
       setCurrentStep((prev) => prev + 1);
     }
   }, DELAY_TIME);
@@ -238,7 +235,7 @@ const CreateCardPage = () => {
   };
 
   const scrollEvent = () => {
-    if (refs[currentStep - 1].current) {
+    if (currentStep > 2 && refs[currentStep - 1].current) {
       refs[currentStep - 1].current?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -282,7 +279,6 @@ const CreateCardPage = () => {
               fontFamily: selectedFont,
             }}
           >
-            {/*대표사진 프리뷰*/}
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[0]}
@@ -325,11 +321,17 @@ const CreateCardPage = () => {
             >
               colorpalette
             </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[7]}
+            >
+              <GreetingPreview control={methods.control} />
+            </div>
           </div>
           <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
             <FormProvider {...methods}>
               <form
-                className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
+                className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
                 onSubmit={methods.handleSubmit(onSubmit)}
               >
                 <div className='w-full flex items-center justify-end'>
@@ -351,13 +353,14 @@ const CreateCardPage = () => {
                   </button>
                 </div>
 
-                {currentStep === 1 && <MainPhotoInput />}
-                {currentStep === 2 && <MainViewInput />}
+                {currentStep === 1 && <MainViewInput />}
+                {currentStep === 2 && <MainPhotoInput />}
                 {currentStep === 3 && <PersonalInfoInput />}
                 {currentStep === 4 && <AccountInput />}
                 {currentStep === 5 && <WeddingInfoInput />}
                 {currentStep === 6 && <NavigationDetailInput />}
                 {currentStep === 7 && <GuestInfoInput />}
+                {currentStep === 8 && <GreetingInput />}
                 {currentStep === refs.length && (
                   <button
                     className='w-full'

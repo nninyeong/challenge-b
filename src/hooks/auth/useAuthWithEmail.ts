@@ -1,14 +1,14 @@
 import { SignInFormValues, SignUpFormValues } from '@/types/auth.types';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/utils/supabase/client';
+import { saveSessionDataToSupabase } from '@/utils/sessionStorage/saveSessionDataToSupabase';
+import browserClient from '@/utils/supabase/client';
 
 const useAuthWithEmail = () => {
   const router = useRouter();
-  const client = createClient();
 
   const emailSignUp = async (formValues: SignUpFormValues) => {
     const { email, password, username } = formValues;
-    const { error } = await client.auth.signUp({
+    const { data, error } = await browserClient.auth.signUp({
       email,
       password,
       options: {
@@ -24,6 +24,10 @@ const useAuthWithEmail = () => {
       console.error('회원가입 오류: ', error);
       alert(`회원가입에 문제가 생겼습니다. 다시 한 번 시도해주세요. (${error.message})`);
     } else {
+      const userId = data?.user?.id;
+      if (userId) {
+        await saveSessionDataToSupabase(browserClient, userId);
+      }
       alert('회원가입 성공');
       router.push('/mypage');
     }
@@ -31,7 +35,7 @@ const useAuthWithEmail = () => {
 
   const emailSignIn = async (formValues: SignInFormValues) => {
     const { email, password } = formValues;
-    const { error } = await client.auth.signInWithPassword({
+    const { error } = await browserClient.auth.signInWithPassword({
       email,
       password,
     });
@@ -42,7 +46,11 @@ const useAuthWithEmail = () => {
       return { isSuccess: false, error };
     }
 
-    const { data } = await client.auth.getUser();
+    const { data } = await browserClient.auth.getUser();
+    const userId = data?.user?.id;
+    if (userId) {
+      await saveSessionDataToSupabase(browserClient, userId);
+    }
     console.log('here is emailSinIn Fn, user: ', data.user);
 
     router.refresh();
