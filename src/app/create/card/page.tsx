@@ -21,6 +21,8 @@ import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitati
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
 import OnBoarding from '@/components/create/OnBoarding';
+import GreetingInput from '@/components/create/GreetingInput';
+import GreetingPreview from '@/components/create/preview/GreetingPreview';
 import browserClient from '@/utils/supabase/client';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
@@ -66,6 +68,10 @@ const CreateCardPage = () => {
     },
     {
       order: 6,
+      component: <GreetingPreview control={methods.control} />,
+    },
+    {
+      order: 7,
       component: <div>test</div>,
     },
   ];
@@ -242,6 +248,7 @@ const CreateCardPage = () => {
                 {currentStep === 4 && <WeddingInfoInput />}
                 {currentStep === 5 && <NavigationDetailInput />}
                 {currentStep === 6 && <GuestInfoInput />}
+                {currentStep === 8 && <GreetingInput />}
                 {currentStep === refs.current.length && (
                   <button
                     className='w-full'
