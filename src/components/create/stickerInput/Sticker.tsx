@@ -2,9 +2,10 @@
 
 import { StickerType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
-import { MutableRefObject, useRef } from 'react';
+import { LegacyRef, MutableRefObject, useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { clampValue } from '@/utils/clampValue';
+import { Resizable } from 're-resizable';
 
 const preventTouchScroll = (e: TouchEvent) => {
   e.preventDefault();
@@ -13,17 +14,16 @@ const preventTouchScroll = (e: TouchEvent) => {
 const calculateRelativePosition = (
   touch: React.Touch,
   touchOffset: MutableRefObject<{ x: number; y: number }>,
-  stickerRef: MutableRefObject<HTMLImageElement | null>,
   previewRef: MutableRefObject<HTMLDivElement | null>,
 ) => {
-  if (!stickerRef.current || !previewRef.current) return { relativeX: 0, relativeY: 0 };
+  if (!previewRef.current) return { relativeX: 0, relativeY: 0 };
 
   const relativeX = clampValue(
     ((touch.clientX - previewRef.current.getBoundingClientRect().left - touchOffset.current.x) /
       previewRef.current.clientWidth) *
       100,
     0,
-    previewRef.current.clientWidth - stickerRef.current.offsetWidth,
+    100,
   );
 
   const relativeY = clampValue(
@@ -31,7 +31,7 @@ const calculateRelativePosition = (
       previewRef.current.clientHeight) *
       100,
     0,
-    previewRef.current.clientHeight - stickerRef.current.offsetHeight,
+    100,
   );
 
   return { relativeX, relativeY };
@@ -54,8 +54,9 @@ const Sticker = ({
     name: 'stickers',
   }) as StickerType[];
 
-  const stickerRef = useRef<HTMLImageElement | null>(null);
+  const stickerRef = useRef<HTMLDivElement | null>(null);
   const touchOffset = useRef({ x: 0, y: 0 });
+  const wrapperRef = useRef<HTMLDivElement | null>(null); // 상위 div의 ref
 
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
     document.addEventListener('touchmove', preventTouchScroll, { passive: false });
@@ -74,10 +75,10 @@ const Sticker = ({
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
     document.removeEventListener('touchmove', preventTouchScroll);
-    if (!previewRef.current || !stickerRef.current) return;
+    if (!previewRef.current || !wrapperRef.current) return;
 
     const touch = e.changedTouches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, stickerRef, previewRef);
+    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef);
 
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) {
@@ -92,15 +93,15 @@ const Sticker = ({
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLImageElement>) => {
-    if (!previewRef.current || !stickerRef.current) return;
+    if (!previewRef.current || !wrapperRef.current) return;
 
     const touch = e.touches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, stickerRef, previewRef);
+    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef);
 
     requestAnimationFrame(() => {
-      if (!stickerRef.current) return;
-      stickerRef.current.style.left = `${relativeX}%`;
-      stickerRef.current.style.top = `${relativeY}%`;
+      if (!wrapperRef.current) return;
+      wrapperRef.current.style.left = `${relativeX}%`;
+      wrapperRef.current.style.top = `${relativeY}%`;
     });
   };
 
@@ -125,23 +126,25 @@ const Sticker = ({
         />
       )}
       <div
-        ref={stickerRef}
+        ref={wrapperRef}
         style={{
           position: 'absolute',
           top: `${sticker.posY}%`,
           left: `${sticker.posX}%`,
         }}
-        className={`${isActive && 'border-[1px] border-primary-300'}`}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onTouchMove={handleTouchMove}
+        className={`${isActive && 'border-[1px] border-primary-300'}`}
       >
-        <Image
-          src={sticker.url}
-          alt={sticker.stickerImageId}
-          width={100}
-          height={100}
-        />
+        <Resizable defaultSize={{ width: 100, height: 100 }}>
+          <Image
+            src={sticker.url}
+            alt={sticker.stickerImageId}
+            width={100}
+            height={100}
+          />
+        </Resizable>
       </div>
     </>
   );
