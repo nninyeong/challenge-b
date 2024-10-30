@@ -65,9 +65,6 @@ const config: Config = {
         main: ['Main'],
         JejuGothic: ['JejuGothic'],
       },
-      backgroundImage: {
-        buttonBG: "url('/assets/images/button/buttonBg.svg')",
-      },
     },
   },
   plugins: [],

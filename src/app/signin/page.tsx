@@ -9,7 +9,7 @@ const SignInPage = () => {
   };
 
   return (
-    <div className='flex flex-col items-center px-[16px] font-suit'>
+    <div className='flex flex-col items-center px-[16px] mb-[24px]'>
       <div className='flex flex-col gap-[8px] items-center mt-[24px]'>
         <img
           src='/assets/images/branding/mainLogo.svg'
@@ -29,18 +29,38 @@ const SignInPage = () => {
           <Link href='/signup'>회원가입</Link>
         </div>
         <h5 className='text-[20px] text-gray-600 mt-[40px]'>간편 로그인</h5>
-        <button
-          className='w-full h-[56px] border rounded'
-          onClick={handleKakaoSignIn}
-        >
-          카카오로 시작하기
-        </button>
-        <button
-          className='w-full h-[56px] border rounded'
-          onClick={handleGoogleSignIn}
-        >
-          구글로 시작하기
-        </button>
+        <div className='flex gap-[16px] text-[12px] text-center whitespace-pre leading-[12px]'>
+          <button
+            className='w-[88px] h-[88px] border rounded-full bg-[#FAE100] flex flex-col justify-center items-center gap-[10px]'
+            onClick={handleKakaoSignIn}
+          >
+            <img
+              src='/assets/images/button/kakaoIcon.svg'
+              alt='카카오 로그인'
+            />
+            <p>카카오{'\n'}로그인</p>
+          </button>
+          <button
+            className='w-[88px] h-[88px] border rounded-full bg-white flex flex-col justify-center items-center gap-[10px]'
+            onClick={handleGoogleSignIn}
+          >
+            <img
+              src='/assets/images/button/googleIcon.svg'
+              alt='구글 로그인'
+            />
+            <p>구글{'\n'}로그인</p>
+          </button>
+          <button
+            className='w-[88px] h-[88px] border rounded-full bg-[#03CF5C] flex flex-col justify-center items-center gap-[10px]'
+            onClick={alertComingSoon}
+          >
+            <img
+              src='/assets/images/button/naverIcon.svg'
+              alt='네이버 로그인'
+            />
+            <p>네이버{'\n'}로그인</p>
+          </button>
+        </div>
       </section>
     </div>
   );

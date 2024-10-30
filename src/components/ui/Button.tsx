@@ -13,7 +13,7 @@ const Button = ({
 }) => {
   return (
     <button
-      className={`bg-buttonBG bg-no-repeat bg-cover bg-center text-white font-bold ${className}`}
+      className={`bg-primary-300 text-white font-bold ${className}`}
       onClick={onClick}
       type={type}
     >
