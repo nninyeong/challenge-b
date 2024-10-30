@@ -1,12 +1,11 @@
 'use client';
 
-import { createClient } from '@/utils/supabase/client';
+import browserClient from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 const Carousel = () => {
-  const browserClient = createClient();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const getReviews = async () => {

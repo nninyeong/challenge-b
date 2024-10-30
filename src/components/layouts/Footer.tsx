@@ -1,5 +1,5 @@
 const Footer = () => {
-  return <footer className='bg-amber-200 h-[50px]'>임시 footer 영역</footer>;
+  return <footer></footer>;
 };
 
 export default Footer;

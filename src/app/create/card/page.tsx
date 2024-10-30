@@ -10,7 +10,6 @@ import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
-import { createClient } from '@/utils/supabase/client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
 import MainPhotoInput from '@/components/create/MainPhotoInput';
@@ -21,8 +20,9 @@ import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
-import { converToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
 import OnBoarding from '@/components/create/OnBoarding';
+import browserClient from '@/utils/supabase/client';
+import { loadFormData } from '@/utils/form/loadFormData';
 import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
 
 const DELAY_TIME: number = 300;
@@ -99,9 +99,12 @@ const CreateCardPage = () => {
       mainText: '',
       greetingMessage: {},
       dDay: false,
+      mainView: {
+        name: '기본',
+        type: 'default',
+      },
     },
   });
-  const browserClient = createClient();
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
@@ -147,52 +150,41 @@ const CreateCardPage = () => {
   const { reset } = methods;
 
   useEffect(() => {
-    const loadFormData = async () => {
-      const { data: user } = await browserClient.auth.getUser();
-      const localData = localStorage.getItem('invitationFormData');
-
-      if (!user.user) {
-        if (localData) {
-          reset(JSON.parse(localData));
-        } else {
-          reset();
-        }
-      } else {
-        if (existingInvitation) {
-          const convertedInvitation = converToCamelCase(existingInvitation);
-          reset(convertedInvitation);
-        } else {
-          if (localData) {
-            reset(JSON.parse(localData));
-          } else {
-            reset();
-          }
-        }
-      }
-    };
-
-    loadFormData();
+    loadFormData({ existingInvitation, reset });
   }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
     const { data: user } = await browserClient.auth.getUser();
 
     if (!user.user) {
-      localStorage.setItem('invitationFormData', JSON.stringify(invitationData));
+      sessionStorage.setItem('invitationFormData', JSON.stringify(invitationData));
       alert('생성을 원하시면 로그인 해주세요!');
       return;
     }
 
     if (existingInvitation) {
       updateInvitation(invitationData);
-    } else {
-      insertInvitation(invitationData);
+      alert('청첩장이 생성되었습니다.');
     }
   };
 
-  const handleDebouncedNext = debounce(() => {
+  const handleDebouncedNext = debounce(async () => {
     if (currentStep < refs.current.length) {
       isNavigating.current = true;
+
+      const { data: user } = await browserClient.auth.getUser();
+      const formData = methods.getValues();
+
+      if (!user.user) {
+        sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
+      } else {
+        if (existingInvitation) {
+          updateInvitation(formData);
+        } else {
+          insertInvitation(formData);
+        }
+      }
+
       setCurrentStep((prev) => prev + 1);
     }
   }, DELAY_TIME);
@@ -225,7 +217,7 @@ const CreateCardPage = () => {
   };
 
   const scrollEvent = () => {
-    if (currentStep > 2 && refs.current[currentStep - 1]) {
+    if (currentStep > 2 && currentStep > 2 && refs.current[currentStep - 1]) {
       refs.current[currentStep - 1]!.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
