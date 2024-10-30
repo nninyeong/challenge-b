@@ -21,6 +21,8 @@ import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitati
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
 import OnBoarding from '@/components/create/OnBoarding';
+import GreetingInput from '@/components/create/GreetingInput';
+import GreetingPreview from '@/components/create/preview/GreetingPreview';
 import browserClient from '@/utils/supabase/client';
 import { loadFormData } from '@/utils/form/loadFormData';
 
@@ -38,6 +40,7 @@ const CreateCardPage = () => {
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -123,8 +126,15 @@ const CreateCardPage = () => {
       stickers: [],
       imgRatio: {},
       mainText: '',
-      greetingMessage: {},
+      greetingMessage: {
+        title: '',
+        content: '',
+      },
       dDay: false,
+      mainView: {
+        name: '기본',
+        type: 'default',
+      },
     },
   });
 
@@ -225,7 +235,7 @@ const CreateCardPage = () => {
   };
 
   const scrollEvent = () => {
-    if (refs[currentStep - 1].current) {
+    if (currentStep > 2 && refs[currentStep - 1].current) {
       refs[currentStep - 1].current?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -269,7 +279,6 @@ const CreateCardPage = () => {
               fontFamily: selectedFont,
             }}
           >
-            {/*대표사진 프리뷰*/}
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[0]}
@@ -312,11 +321,17 @@ const CreateCardPage = () => {
             >
               colorpalette
             </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[7]}
+            >
+              <GreetingPreview control={methods.control} />
+            </div>
           </div>
           <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
             <FormProvider {...methods}>
               <form
-                className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
+                className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
                 onSubmit={methods.handleSubmit(onSubmit)}
               >
                 <div className='w-full flex items-center justify-end'>
@@ -338,13 +353,14 @@ const CreateCardPage = () => {
                   </button>
                 </div>
 
-                {currentStep === 1 && <MainPhotoInput />}
-                {currentStep === 2 && <MainViewInput />}
+                {currentStep === 1 && <MainViewInput />}
+                {currentStep === 2 && <MainPhotoInput />}
                 {currentStep === 3 && <PersonalInfoInput />}
                 {currentStep === 4 && <AccountInput />}
                 {currentStep === 5 && <WeddingInfoInput />}
                 {currentStep === 6 && <NavigationDetailInput />}
                 {currentStep === 7 && <GuestInfoInput />}
+                {currentStep === 8 && <GreetingInput />}
                 {currentStep === refs.length && (
                   <button
                     className='w-full'
