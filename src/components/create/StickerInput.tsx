@@ -45,7 +45,7 @@ const StickerInput = () => {
 
   return (
     <div>
-      <div className='flex mb-[40px]'>
+      <div className='flex mb-[40px] gap-[8px] flex-wrap'>
         {MOOD_LIST.map((mood) => (
           <StickerCategoryButton
             key={`${mood.category}-button`}
