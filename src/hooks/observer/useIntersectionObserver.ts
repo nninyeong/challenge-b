@@ -51,7 +51,7 @@ export const useIntersectionObserver = (
   useEffect(() => {
     initializeObserver();
     return () => unsubscribeObservers();
-  }, [refs]);
+  }, [refs.current]);
 
   return { isNavigating };
 };
