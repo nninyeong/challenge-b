@@ -16,7 +16,11 @@ const useMap = () => {
     const { scheme, webLink, fallbackLink } = getMapSettings(app, epLat, epLng, name, isAndroid, isIOS);
 
     if (!isAndroid && !isIOS) {
-      window.location.href = webLink;
+      if (webLink) {
+        window.location.href = webLink;
+      } else if (app === 'tmap') {
+        alert('모바일에서 확인할 수 있습니다.');
+      }
       return;
     }
 

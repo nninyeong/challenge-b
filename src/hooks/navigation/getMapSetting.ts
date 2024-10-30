@@ -32,9 +32,9 @@ export const getMapSettings = (
       return {
         ...baseSettings,
         scheme: isAndroid
-          ? `nmap://route/public?dlat=${epLat}&dlng=${epLng}&by=CAR`
-          : `nmap://route/public?dlat=${epLat}&dlng=${epLng}&by=CAR`,
-        webLink: `https://map.naver.com/v5/directions/-/${name},${epLat},${epLng}`,
+          ? `nmap://route/car?dlat=${epLat}&dlng=${epLng}&dname=${encodeURIComponent(name)}`
+          : `nmap://route/car?dlat=${epLat}&dlng=${epLng}&dname=${encodeURIComponent(name)}`,
+        webLink: `http://map.naver.com/index.nhn?slng=&slat=&stext=&elng=${epLng}&elat=${epLat}&etext=${name}&menu=route&pathType=1`,
         fallbackLink: isAndroid
           ? 'market://details?id=com.nhn.android.nmap'
           : isIOS
@@ -47,7 +47,7 @@ export const getMapSettings = (
         scheme: isAndroid
           ? `tmap://route?goalx=${epLng}&goaly=${epLat}&by=CAR`
           : `tmap://route?goalx=${epLng}&goaly=${epLat}&by=CAR`,
-        webLink: `https://www.tmap.co.kr/tmap2/mobile/route?name=${name}&lat=${epLat}&lng=${epLng}`,
+        webLink: null,
         fallbackLink: isAndroid
           ? 'market://details?id=com.skt.tmap.ku'
           : isIOS
