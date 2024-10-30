@@ -134,6 +134,26 @@ const Sticker = ({
     setValue('stickers', [...updatedSticker]);
   };
 
+  const handleResize = (e: MouseEvent | TouchEvent, direction: Direction, ref: HTMLElement) => {
+    if (!previewRef.current || !stickerRef.current) return;
+
+    const aspectRatio = sticker.width / sticker.height;
+
+    const previewBounds = previewRef.current.getBoundingClientRect();
+    const stickerBounds = stickerRef.current.getBoundingClientRect();
+
+    let maxWidth = previewBounds.right - stickerBounds.left;
+    let maxHeight = maxWidth / aspectRatio;
+
+    if (stickerBounds.top + maxHeight > previewBounds.bottom) {
+      maxHeight = previewBounds.bottom - stickerBounds.top;
+      maxWidth = maxHeight * aspectRatio;
+    }
+
+    ref.style.maxWidth = `${maxWidth}px`;
+    ref.style.maxHeight = `${maxHeight}px`;
+  };
+
   const isActive = activeStickerId === sticker.id;
 
   return (
@@ -166,6 +186,7 @@ const Sticker = ({
         <Resizable
           defaultSize={{ width: sticker.width, height: sticker.height }}
           onResizeStart={handleResizeStart}
+          onResize={handleResize}
           onResizeStop={handleResizeStop}
           enable={{ bottomRight: true }}
           lockAspectRatio={true}
