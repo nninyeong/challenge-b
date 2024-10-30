@@ -7,7 +7,7 @@ import LogoutButton from '@/components/mypage/LogoutButton';
 
 import MyInvitationCard from '@/components/mypage/MyInvitationCard';
 import Link from 'next/link';
-import ToggleSwitch from '@/components/ui/ToggleSwitch';
+import TogglePrivate from '@/components/mypage/TogglePrivate';
 
 const MyPage = async (): Promise<JSX.Element | null> => {
   const isLogin = await getIsLogin();
@@ -47,7 +47,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
 
         <div className='flex justify-cebter items-center gap-8 mt-4 p-4 bg-gray-100 rounded text-black font-bold '>
           <p>내 청첩장 공개하기 ON/OFF</p>
-          <ToggleSwitch />
+          <TogglePrivate />
         </div>
         <nav className='mt-4'>
           <ul className='flex flex-col gap-4 items-center'>
