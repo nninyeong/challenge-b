@@ -1,5 +1,5 @@
 import browserClient from '../supabase/client';
-import { saveSessionDataToSupabase } from '../sessionStorage/sessionStorage';
+import { saveSessionDataToSupabase } from '../sessionStorage/saveSessionDataToSupabase';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 export const handleAuthCallback = async (router: AppRouterInstance) => {

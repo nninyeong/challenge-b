@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     handleAuthCallback(router);
-  }, [router]);
+  }, []);
 
   return <ReviewsCarousel />;
 }

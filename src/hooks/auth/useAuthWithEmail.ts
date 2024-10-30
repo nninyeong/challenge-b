@@ -1,6 +1,6 @@
 import { SignInFormValues, SignUpFormValues } from '@/types/auth.types';
 import { useRouter } from 'next/navigation';
-import { saveSessionDataToSupabase } from '@/utils/sessionStorage/sessionStorage';
+import { saveSessionDataToSupabase } from '@/utils/sessionStorage/saveSessionDataToSupabase';
 import browserClient from '@/utils/supabase/client';
 
 const useAuthWithEmail = () => {
