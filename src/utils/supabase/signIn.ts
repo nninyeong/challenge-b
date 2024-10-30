@@ -8,7 +8,7 @@ export const handleGoogleSignIn: () => Promise<void> = async () => {
     await client.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.origin + '/auth/callback?from=google',
+        redirectTo: window.origin + '/auth/callback/?from=google',
       },
     });
   } catch (error) {

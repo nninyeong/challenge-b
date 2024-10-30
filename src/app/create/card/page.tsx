@@ -10,7 +10,6 @@ import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
-import { createClient } from '@/utils/supabase/client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
 import MainPhotoInput from '@/components/create/MainPhotoInput';
@@ -21,10 +20,9 @@ import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
-import { convertToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
 import OnBoarding from '@/components/create/OnBoarding';
-
-const browserClient = createClient();
+import browserClient from '@/utils/supabase/client';
+import { loadFormData } from '@/utils/form/loadFormData';
 
 const OBSERVER_OPTIONS = {
   root: null,
@@ -133,19 +131,7 @@ const CreateCardPage = () => {
   const { reset } = methods;
 
   useEffect(() => {
-    const loadFormData = async () => {
-      if (existingInvitation) {
-        const convertedInvitation = convertToCamelCase(existingInvitation);
-        return reset(convertedInvitation);
-      }
-      const sessionData = sessionStorage.getItem('invitationFormData');
-      if (sessionData) {
-        return reset(JSON.parse(sessionData));
-      }
-      reset();
-    };
-
-    loadFormData();
+    loadFormData({ existingInvitation, reset });
   }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {

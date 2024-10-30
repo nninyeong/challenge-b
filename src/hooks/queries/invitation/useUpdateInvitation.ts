@@ -1,10 +1,8 @@
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { convertToSnakeCase } from '@/utils/convert/invitaitonTypeConvert';
-import { createClient } from '@/utils/supabase/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '../queryKeys';
-
-const browserClient = createClient();
+import browserClient from '@/utils/supabase/client';
 
 const updateInvitation = async (invitationData: InvitationFormType) => {
   const { data: user, error } = await browserClient.auth.getUser();
