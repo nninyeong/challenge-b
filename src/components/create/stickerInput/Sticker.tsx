@@ -3,7 +3,7 @@
 import { StickerType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
 import { MutableRefObject, useRef } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { clampValue } from '@/utils/clampValue';
 
 const preventTouchScroll = (e: TouchEvent) => {
@@ -17,8 +17,11 @@ const Sticker = ({
   sticker: StickerType;
   previewRef: MutableRefObject<HTMLDivElement | null>;
 }) => {
-  const { setValue, watch } = useFormContext();
-  const stickersWatch = watch('stickers');
+  const { setValue, control } = useFormContext();
+  const stickersWatch = useWatch({
+    control,
+    name: 'stickers',
+  });
 
   const stickerRef = useRef<HTMLImageElement | null>(null);
   const touchOffset = useRef({ x: 0, y: 0 });
@@ -68,6 +71,33 @@ const Sticker = ({
     setValue('stickers', [...updatedSticker]);
   };
 
+  const handleTouchMove = (e: React.TouchEvent<HTMLImageElement>) => {
+    if (!previewRef.current || !stickerRef.current) return;
+
+    const touch = e.touches[0];
+    const relativeX = clampValue(
+      ((touch.clientX - previewRef.current.getBoundingClientRect().left - touchOffset.current.x) /
+        previewRef.current.clientWidth) *
+        100,
+      0,
+      previewRef.current.clientWidth - stickerRef.current.offsetWidth,
+    );
+
+    const relativeY = clampValue(
+      ((touch.clientY - previewRef.current.getBoundingClientRect().top - touchOffset.current.y) /
+        previewRef.current.clientHeight) *
+        100,
+      0,
+      previewRef.current.clientHeight - stickerRef.current.offsetHeight,
+    );
+
+    requestAnimationFrame(() => {
+      if (!stickerRef.current) return;
+      stickerRef.current.style.left = `${relativeX}%`;
+      stickerRef.current.style.top = `${relativeY}%`;
+    });
+  };
+
   return (
     <Image
       src={sticker.url}
@@ -82,6 +112,7 @@ const Sticker = ({
       }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
+      onTouchMove={handleTouchMove}
     />
   );
 };
