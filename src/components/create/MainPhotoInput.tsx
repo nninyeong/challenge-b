@@ -3,6 +3,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import TextEditor from './TextEditor';
 import { FaPlus } from 'react-icons/fa6';
 import { Font } from '@/types/mainFont.type';
+import { uploadImageToSupabaseStorage } from '@/utils/uploadImg';
 
 const FONTMENU = [
   { name: '나눔손글씨', font: 'NanumPen' },
@@ -20,11 +21,10 @@ const MainPhotoInput = () => {
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setValue('mainPhotoInfo.imageUrl', reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      const getPublicUrl = await uploadImageToSupabaseStorage(file);
+      if (getPublicUrl) {
+        setValue('mainPhotoInfo.imageUrl', getPublicUrl);
+      }
     }
   };
 
