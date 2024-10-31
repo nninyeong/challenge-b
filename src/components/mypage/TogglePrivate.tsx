@@ -3,6 +3,7 @@ import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
 import { getInvitationCard, patchPrivateInvitation } from '@/utils/myPage';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { revalidateInvitation } from '@/utils/revalidateInvitation';
 
 const TogglePrivate = () => {
   const [isPrivate, setIsPrivate] = useState(false);
@@ -33,10 +34,12 @@ const TogglePrivate = () => {
     },
   });
 
-  const toggleSwitch = () => {
+  const toggleSwitch = async () => {
+    if (!invitationCard || invitationCard.length < 1) return;
     const newIsPrivate = !isPrivate;
     setIsPrivate(newIsPrivate);
     mutation.mutate(newIsPrivate);
+    await revalidateInvitation(invitationCard[0].id);
   };
 
   if (isLoading) return <div>Loading...</div>;

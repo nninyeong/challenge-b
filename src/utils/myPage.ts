@@ -1,8 +1,8 @@
-import { InvitationFormType } from '@/types/invitationFormType.type';
+import { InvitationCard } from '@/types/invitationFormType.type';
 import { getUserInfo } from './server-action';
 import { supabase } from './supabase/createClient';
 
-export const getInvitationCard = async (): Promise<InvitationFormType[] | null> => {
+export const getInvitationCard = async (): Promise<InvitationCard[] | null> => {
   const user = await getUserInfo();
   const userId = user?.user.id;
   const { data, error } = await supabase.from('invitation').select('*').eq('user_id', userId);
@@ -12,7 +12,7 @@ export const getInvitationCard = async (): Promise<InvitationFormType[] | null> 
     return null;
   }
 
-  return data as InvitationFormType[];
+  return data as unknown as InvitationCard[];
 };
 
 export const patchPrivateInvitation = async (isPrivate: boolean) => {
@@ -23,5 +23,5 @@ export const patchPrivateInvitation = async (isPrivate: boolean) => {
     console.error('초대장 상태 업데이트 실패:', error);
     return null;
   }
-  return data;
+  return data as unknown as InvitationCard[];
 };
