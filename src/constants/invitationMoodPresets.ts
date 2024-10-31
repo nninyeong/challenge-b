@@ -23,5 +23,6 @@ export const MOOD_PRESETS = {
   modern: null,
   floral: null,
   rustic: null,
+  simple: null,
   none: null,
 };
