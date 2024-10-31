@@ -134,6 +134,7 @@ const CreateCardPage = () => {
         name: '기본',
         type: 'default',
       },
+      isPrivate: false,
     },
   });
 

@@ -98,4 +98,5 @@ export type InvitationFormType = {
   attendance: boolean;
   dDay: boolean;
   mainPhotoInfo: MainPhotoType;
+  isPrivate: boolean;
 };
