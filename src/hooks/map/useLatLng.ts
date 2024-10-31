@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 
 const useLatLng = (address: string) => {
   const [coords, setCoords] = useState<{ lat: number; lng: number }>({ lat: 33.450701, lng: 126.570667 });
-
-  const fetchCoordinates = () => {
+  
+  const fetchCoordinates = (address: string) => {
     if (!address) return;
-
+  
     kakao.maps.load(() => {
       const geocoder = new kakao.maps.services.Geocoder();
       geocoder.addressSearch(address, (res, status) => {
@@ -21,7 +21,7 @@ const useLatLng = (address: string) => {
   };
 
   useEffect(() => {
-    fetchCoordinates();
+    if (window.kakao) fetchCoordinates(address);
   }, [address]);
 
   return coords;

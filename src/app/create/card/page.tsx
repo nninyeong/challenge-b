@@ -25,7 +25,9 @@ import GreetingInput from '@/components/create/GreetingInput';
 import GreetingPreview from '@/components/create/preview/GreetingPreview';
 import browserClient from '@/utils/supabase/client';
 import { loadFormData } from '@/utils/form/loadFormData';
-
+import { FaSortDown, FaSortUp } from 'react-icons/fa';
+import useToggle from '@/utils/useToggle';
+import StickerInput from '@/components/create/StickerInput';
 const OBSERVER_OPTIONS = {
   root: null,
   rootMargin: '0px',
@@ -39,7 +41,10 @@ const CreateCardPage = () => {
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
+  const [toggleInput, setToggleInput] = useToggle();
+
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -277,94 +282,106 @@ const CreateCardPage = () => {
               className='min-h-[calc(100vh-114px)]'
               ref={refs[0]}
             >
-              <MainPhotoPreView control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[1]}
-            >
-              <PersonalInfoPreview control={methods.control} />
+              <FormProvider {...methods}>
+                <MainPhotoPreView control={methods.control} />
+              </FormProvider>
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[2]}
             >
-              <AccountPreView control={methods.control} />
+              <PersonalInfoPreview control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[3]}
             >
-              <WeddingInfoPreView control={methods.control} />
+              <AccountPreView control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[4]}
             >
-              <NavigationDetailsPreview control={methods.control} />
+              <WeddingInfoPreView control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[5]}
             >
-              <GuestInfoPreview control={methods.control} />
+              <NavigationDetailsPreview control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[6]}
             >
-              colorpalette
+              <GuestInfoPreview control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[7]}
             >
+              colorpalette
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[8]}
+            >
               <GreetingPreview control={methods.control} />
             </div>
           </div>
-          <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-            <FormProvider {...methods}>
-              <form
-                className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
-                onSubmit={methods.handleSubmit(onSubmit)}
-              >
-                <div className='w-full flex items-center justify-end'>
-                  <button
-                    type='button'
-                    onClick={handleDebouncedPrevious}
-                    className='bg-red-300'
-                    disabled={currentStep === 1}
-                  >
-                    <MdNavigateBefore />
-                  </button>
-                  <button
-                    className='bg-blue-300'
-                    type='button'
-                    onClick={handleDebouncedNext}
-                    disabled={currentStep === refs.length}
-                  >
-                    <MdNavigateNext />
-                  </button>
-                </div>
+          <div className='fixed bottom-0 left-0 right-0 px-4 z-10 '>
+            <button
+              type='button'
+              onClick={setToggleInput}
+              className='text-black '
+            >
+              {toggleInput ? <FaSortDown size={40} /> : <FaSortUp size={40} />}
+            </button>
+            {toggleInput && (
+              <FormProvider {...methods}>
+                <form
+                  className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
+                  onSubmit={methods.handleSubmit(onSubmit)}
+                >
+                  <div className='w-full flex items-center justify-end'>
+                    <button
+                      type='button'
+                      onClick={handleDebouncedPrevious}
+                      className='bg-red-300'
+                      disabled={currentStep === 1}
+                    >
+                      <MdNavigateBefore />
+                    </button>
+                    <button
+                      className='bg-blue-300'
+                      type='button'
+                      onClick={handleDebouncedNext}
+                      disabled={currentStep === refs.length}
+                    >
+                      <MdNavigateNext />
+                    </button>
+                  </div>
 
-                {currentStep === 1 && <MainViewInput />}
-                {currentStep === 2 && <MainPhotoInput />}
-                {currentStep === 3 && <PersonalInfoInput />}
-                {currentStep === 4 && <AccountInput />}
-                {currentStep === 5 && <WeddingInfoInput />}
-                {currentStep === 6 && <NavigationDetailInput />}
-                {currentStep === 7 && <GuestInfoInput />}
-                {currentStep === 8 && <GreetingInput />}
-                {currentStep === refs.length && (
-                  <button
-                    className='w-full'
-                    type='submit'
-                  >
-                    제출
-                  </button>
-                )}
-              </form>
-            </FormProvider>
+                  {currentStep === 1 && <MainViewInput />}
+                  {currentStep === 2 && <MainPhotoInput />}
+                  {currentStep === 3 && <StickerInput />}
+                  {currentStep === 4 && <AccountInput />}
+                  {currentStep === 5 && <PersonalInfoInput />}
+                  {currentStep === 6 && <WeddingInfoInput />}
+                  {currentStep === 7 && <NavigationDetailInput />}
+                  {currentStep === 8 && <GuestInfoInput />}
+                  {currentStep === 9 && <GreetingInput />}
+                  {currentStep === refs.length && (
+                    <button
+                      className='w-full'
+                      type='submit'
+                    >
+                      제출
+                    </button>
+                  )}
+                </form>
+              </FormProvider>
+            )}
           </div>
         </>
       ) : null}
