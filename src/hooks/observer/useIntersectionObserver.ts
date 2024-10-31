@@ -15,6 +15,7 @@ const DEFAULT_OPTIONS: ObserverOptions = {
 export const useIntersectionObserver = (
   refs: MutableRefObject<(HTMLDivElement | null)[]>,
   setCurrentStep: (step: number) => void,
+  setInputIndex: (step: number) => void,
 ) => {
   const observers = useRef<IntersectionObserver[]>([]);
   const isNavigating = useRef<boolean>(false);
@@ -23,6 +24,7 @@ export const useIntersectionObserver = (
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const currentStepIndex = refs.current.findIndex((ref) => ref === entry.target);
+        setInputIndex(0);
         setCurrentStep(currentStepIndex);
       }
     });

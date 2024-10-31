@@ -1,33 +1,20 @@
 'use client';
-import AccountInput from '@/components/create/AccountInput';
-import GuestInfoInput from '@/components/create/GuestInfoInput';
-import GuestInfoPreview from '@/components/create/preview/GuestInfoPreview';
-import AccountPreView from '@/components/create/preview/AccountPreView';
+
 import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
-import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
-import WeddingInfoInput from '@/components/create/WeddingInfoInput';
-import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
-import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
-import MainPhotoInput from '@/components/create/MainPhotoInput';
-import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
-import NavigationDetailInput from '@/components/create/NavigationDetailInput';
-import MainViewInput from '@/components/create/MainViewInput';
 import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
 import OnBoarding from '@/components/create/OnBoarding';
-import GreetingInput from '@/components/create/GreetingInput';
-import GreetingPreview from '@/components/create/preview/GreetingPreview';
 import browserClient from '@/utils/supabase/client';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 import colorConverter from '@/utils/colorConverter';
+import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 
 const DELAY_TIME: number = 300;
 
@@ -41,43 +28,17 @@ const CreateCardPage = () => {
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
 
-  const INITIAL_ORDER = [
-    {
-      order: 0,
-      component: <MainPhotoPreView control={methods.control} />,
-    },
-    {
-      order: 1,
-      component: <GreetingPreview control={methods.control} />,
-    },
-    {
-      order: 2,
-      component: <PersonalInfoPreview control={methods.control} />,
-    },
-    {
-      order: 3,
-      component: <AccountPreView control={methods.control} />,
-    },
-    {
-      order: 4,
-      component: <WeddingInfoPreView control={methods.control} />,
-    },
-    {
-      order: 5,
-      component: <NavigationDetailsPreview control={methods.control} />,
-    },
-    {
-      order: 6,
-      component: <GuestInfoPreview control={methods.control} />,
-    },
-    {
-      order: 7,
-      component: <div>test</div>,
-    },
-  ];
+  const [inputIndex, setInputIndex] = useState<number>(0);
+  const orderList = INITIAL_ORDER(methods.control);
+
   const refs = useRef<null[] | HTMLDivElement[]>([]);
-  const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(refs, setCurrentStep);
-  const isLastInput = refs.current.length !== 0 && currentStep === refs.current.length;
+  const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
+    refs,
+    setCurrentStep,
+    setInputIndex,
+  );
+  const isLastInput = refs.current.length !== 0 && currentStep === refs.current.length - 1;
+
   const { data: existingInvitation } = useGetInvitationQuery();
   const { mutate: updateInvitation } = useUpdateInvitation();
   const { mutate: insertInvitation } = useInsertInvitation();
@@ -104,29 +65,31 @@ const CreateCardPage = () => {
   };
 
   const handleDebouncedNext = debounce(async () => {
-    if (currentStep < refs.current.length) {
-      isNavigating.current = true;
+    const { data: user } = await browserClient.auth.getUser();
+    const formData = methods.getValues();
 
-      const { data: user } = await browserClient.auth.getUser();
-      const formData = methods.getValues();
-
-      if (!user.user) {
-        sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
+    if (!user.user) {
+      sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
+    } else {
+      if (existingInvitation) {
+        updateInvitation(formData);
       } else {
-        if (existingInvitation) {
-          updateInvitation(formData);
-        } else {
-          insertInvitation(formData);
-        }
+        insertInvitation(formData);
       }
-
+    }
+    if (inputIndex < orderList[currentStep].input.length - 1) {
+      setInputIndex((prev) => prev + 1);
+    } else {
+      setInputIndex(0);
       setCurrentStep((prev) => prev + 1);
     }
   }, DELAY_TIME);
 
   const handleDebouncedPrevious = debounce(() => {
-    if (currentStep > 0) {
-      isNavigating.current = true;
+    isNavigating.current = true;
+    if (inputIndex > 0) {
+      setInputIndex((prev) => prev - 1);
+    } else if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
     }
   }, DELAY_TIME);
@@ -160,7 +123,7 @@ const CreateCardPage = () => {
   };
 
   const scrollEvent = () => {
-    if (currentStep >= 2 && refs.current[currentStep]) {
+    if (refs.current[currentStep]) {
       refs.current[currentStep].scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -202,7 +165,7 @@ const CreateCardPage = () => {
               fontFamily: selectedFont,
             }}
           >
-            {INITIAL_ORDER.map((e, index) => {
+            {orderList.map((e, index) => {
               return (
                 <div
                   className='min-h-[calc(100vh-114px)]'
@@ -227,7 +190,7 @@ const CreateCardPage = () => {
                     type='button'
                     onClick={handleDebouncedPrevious}
                     className='bg-red-300'
-                    disabled={currentStep === 0}
+                    disabled={currentStep === 0 && inputIndex === 0}
                   >
                     <MdNavigateBefore />
                   </button>
@@ -240,16 +203,8 @@ const CreateCardPage = () => {
                     <MdNavigateNext />
                   </button>
                 </div>
-
-                {currentStep === 0 && <MainPhotoInput />}
-                {currentStep === 1 && <MainViewInput />}
-                {currentStep === 2 && <GreetingInput />}
-                {currentStep === 3 && <PersonalInfoInput />}
-                {currentStep === 4 && <AccountInput />}
-                {currentStep === 5 && <WeddingInfoInput />}
-                {currentStep === 6 && <NavigationDetailInput />}
-                {currentStep === 7 && <GuestInfoInput />}
-                {currentStep === refs.current.length && (
+                {orderList[currentStep].input[inputIndex]}
+                {currentStep === refs.current.length - 1 && (
                   <button
                     className='w-full'
                     type='submit'
