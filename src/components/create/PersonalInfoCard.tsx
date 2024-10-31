@@ -1,6 +1,3 @@
-import { CiMail } from 'react-icons/ci';
-import { IoIosCall } from 'react-icons/io';
-
 type PersonInfoCardProps = {
   label: string | null;
   name: string | null;
@@ -32,14 +29,22 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
           className='flex justify-center items-center relative rounded-t-lg overflow-hidden'
           onClick={handlePhoneClick}
         >
-          <IoIosCall className='text-2xl' />
+          <img
+            src='/assets/images/icons/phone.svg'
+            alt='전화'
+            className='w-[24px] h-[24px]'
+          />
         </a>
         <a
           href={`sms:${phoneNumber}`}
           className='flex justify-center items-center relative rounded-t-lg overflow-hidden'
           onClick={handlePhoneClick}
         >
-          <CiMail className='text-2xl' />
+          <img
+            src='/assets/images/icons/mail-03.svg'
+            alt='문자'
+            className='w-[24px] h-[24px]'
+          />
         </a>
       </div>
     </div>
