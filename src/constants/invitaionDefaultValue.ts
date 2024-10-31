@@ -5,23 +5,17 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
   personalInfo: {
     bride: {
       name: '',
+      relation: '',
       phoneNumber: '',
-      fatherName: '',
-      fatherPhoneNumber: '',
-      isFatherDeceased: false,
-      motherName: '',
-      motherPhoneNumber: '',
-      isMotherDeceased: false,
+      father: { name: '', relation: '', phoneNumber: '', isDeceased: false },
+      mother: { name: '', relation: '', phoneNumber: '', isDeceased: false },
     },
     groom: {
       name: '',
+      relation: '',
       phoneNumber: '',
-      fatherName: '',
-      fatherPhoneNumber: '',
-      isFatherDeceased: false,
-      motherName: '',
-      motherPhoneNumber: '',
-      isMotherDeceased: false,
+      father: { name: '', relation: '', phoneNumber: '', isDeceased: false },
+      mother: { name: '', relation: '', phoneNumber: '', isDeceased: false },
     },
   },
   account: {
@@ -79,4 +73,5 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
     name: '기본',
     type: 'default',
   },
+  isPrivate: false,
 };

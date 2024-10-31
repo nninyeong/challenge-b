@@ -12,45 +12,54 @@ import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
 import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
 import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
 import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
+import StickerInput from '@/components/create/StickerInput';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import { Control } from 'react-hook-form';
+import { FormProvider, UseFormReturn } from 'react-hook-form';
 
-export const INITIAL_ORDER = (control: Control<InvitationFormType>) => {
+export const INITIAL_ORDER = (methods: UseFormReturn<InvitationFormType>) => {
   return [
     {
       order: 0,
-      component: <MainPhotoPreView control={control} />,
-      input: [<MainPhotoInput key={'photoview'} />, <MainViewInput key={'mainview'} />],
+      component: (
+        <FormProvider {...methods}>
+          <MainPhotoPreView control={methods.control} />
+        </FormProvider>
+      ),
+      input: [
+        <MainPhotoInput key={'photoview'} />,
+        <StickerInput key={'sticker'} />,
+        <MainViewInput key={'mainview'} />,
+      ],
     },
     {
       order: 1,
-      component: <GreetingPreview control={control} />,
+      component: <GreetingPreview control={methods.control} />,
       input: [<GreetingInput key={'greeting'} />],
     },
     {
       order: 2,
-      component: <PersonalInfoPreview control={control} />,
+      component: <PersonalInfoPreview control={methods.control} />,
       input: [<PersonalInfoInput key={'personal'} />],
     },
     {
       order: 3,
-      component: <AccountPreView control={control} />,
+      component: <AccountPreView control={methods.control} />,
       input: [<AccountInput key={'account'} />],
     },
     {
       order: 4,
-      component: <WeddingInfoPreView control={control} />,
+      component: <WeddingInfoPreView control={methods.control} />,
       input: [<WeddingInfoInput key={'wedding'} />],
     },
     {
       order: 5,
-      component: <NavigationDetailsPreview control={control} />,
+      component: <NavigationDetailsPreview control={methods.control} />,
       input: [<NavigationDetailInput key={'navi'} />],
     },
     {
       order: 6,
-      component: <GuestInfoPreview control={control} />,
+      component: <GuestInfoPreview control={methods.control} />,
       input: [<GuestInfoInput key={'guest'} />],
     },
   ];

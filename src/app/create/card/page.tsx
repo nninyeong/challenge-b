@@ -11,6 +11,8 @@ import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitat
 import OnBoarding from '@/components/create/OnBoarding';
 import browserClient from '@/utils/supabase/client';
 import { loadFormData } from '@/utils/form/loadFormData';
+import { FaSortDown, FaSortUp } from 'react-icons/fa';
+import useToggle from '@/utils/useToggle';
 import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 import colorConverter from '@/utils/colorConverter';
@@ -27,9 +29,10 @@ const CreateCardPage = () => {
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
+  const [toggleInput, setToggleInput] = useToggle();
 
   const [inputIndex, setInputIndex] = useState<number>(0);
-  const orderList = INITIAL_ORDER(methods.control);
+  const orderList = INITIAL_ORDER(methods);
 
   const refs = useRef<null[] | HTMLDivElement[]>([]);
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
@@ -180,40 +183,49 @@ const CreateCardPage = () => {
             })}
           </div>
           <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-            <FormProvider {...methods}>
-              <form
-                className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
-                onSubmit={methods.handleSubmit(onSubmit)}
-              >
-                <div className='w-full flex items-center justify-end'>
-                  <button
-                    type='button'
-                    onClick={handleDebouncedPrevious}
-                    className='bg-red-300'
-                    disabled={currentStep === 0 && inputIndex === 0}
-                  >
-                    <MdNavigateBefore />
-                  </button>
-                  <button
-                    className='bg-blue-300'
-                    type='button'
-                    onClick={handleDebouncedNext}
-                    disabled={isLastInput}
-                  >
-                    <MdNavigateNext />
-                  </button>
-                </div>
-                {orderList[currentStep].input[inputIndex]}
-                {currentStep === refs.current.length - 1 && (
-                  <button
-                    className='w-full'
-                    type='submit'
-                  >
-                    제출
-                  </button>
-                )}
-              </form>
-            </FormProvider>
+            <button
+              type='button'
+              onClick={setToggleInput}
+              className='text-black '
+            >
+              {toggleInput ? <FaSortDown size={40} /> : <FaSortUp size={40} />}
+            </button>
+            {toggleInput && (
+              <FormProvider {...methods}>
+                <form
+                  className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
+                  onSubmit={methods.handleSubmit(onSubmit)}
+                >
+                  <div className='w-full flex items-center justify-end'>
+                    <button
+                      type='button'
+                      onClick={handleDebouncedPrevious}
+                      className='bg-red-300'
+                      disabled={currentStep === 0 && inputIndex === 0}
+                    >
+                      <MdNavigateBefore />
+                    </button>
+                    <button
+                      className='bg-blue-300'
+                      type='button'
+                      onClick={handleDebouncedNext}
+                      disabled={isLastInput}
+                    >
+                      <MdNavigateNext />
+                    </button>
+                  </div>
+                  {orderList[currentStep].input[inputIndex]}
+                  {currentStep === refs.current.length - 1 && (
+                    <button
+                      className='w-full'
+                      type='submit'
+                    >
+                      제출
+                    </button>
+                  )}
+                </form>
+              </FormProvider>
+            )}
           </div>
         </>
       ) : null}

@@ -43,7 +43,7 @@ const ReviewPage = () => {
   const reviews = reviewsData?.pages.flatMap((page) => page) || [];
 
   return (
-    <div className='flex flex-col w-full'>
+    <div className='flex flex-col w-full p-4'>
       <h1>후기</h1>
       <ReviewImage />
 
