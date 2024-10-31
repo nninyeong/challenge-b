@@ -32,7 +32,7 @@ const Sticker = ({
   }) as StickerType[];
   const touchOffset = useRef({ x: 0, y: 0 });
   const stickerRef = useRef<HTMLDivElement | null>(null); // 상위 div의 ref
-  const [isResizing, setIsResizing] = useState(false);
+  const [isResizing, setIsResizing] = useState<boolean>(false);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
     if (isResizing) return;
@@ -101,6 +101,7 @@ const Sticker = ({
     setValue('stickers', filteredStickers);
   };
 
+  const isActive = activeStickerId === sticker.id;
   const handleResizeStart = () => {
     if (!isActive) return;
     setIsResizing(true);
@@ -144,8 +145,6 @@ const Sticker = ({
     ref.style.maxWidth = `${maxWidth}px`;
     ref.style.maxHeight = `${maxHeight}px`;
   };
-
-  const isActive = activeStickerId === sticker.id;
 
   return (
     <>
