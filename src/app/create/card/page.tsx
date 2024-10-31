@@ -26,6 +26,7 @@ import GreetingPreview from '@/components/create/preview/GreetingPreview';
 import browserClient from '@/utils/supabase/client';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { FaSortDown, FaSortUp } from 'react-icons/fa';
+import useToggle from '@/utils/useToggle';
 const OBSERVER_OPTIONS = {
   root: null,
   rootMargin: '0px',
@@ -39,7 +40,9 @@ const CreateCardPage = () => {
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
-  const [toggleInput, setToggleInput] = useState<boolean>(true);
+
+  const [toggleInput, setToggleInput] = useToggle();
+
   const refs = [
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -246,9 +249,7 @@ const CreateCardPage = () => {
       isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
     }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
   };
-  const handleToggleInput = () => {
-    setToggleInput((prev) => !prev);
-  };
+
   useEffect(() => {
     subscribeBackgroundColor();
     subscribeFont();
@@ -334,7 +335,7 @@ const CreateCardPage = () => {
           <div className='fixed bottom-0 left-0 right-0 px-4 z-10 '>
             <button
               type='button'
-              onClick={handleToggleInput}
+              onClick={setToggleInput}
               className='text-black '
             >
               {toggleInput ? <FaSortDown size={40} /> : <FaSortUp size={40} />}
