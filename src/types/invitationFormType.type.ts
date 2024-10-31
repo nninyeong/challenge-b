@@ -45,7 +45,9 @@ export type NavigationDetailType = {
 };
 
 export type GalleryType = {
-  images: File[];
+  images: string[];
+  grid: number;
+  ratio: string;
 };
 
 export type ImageRatioType = {

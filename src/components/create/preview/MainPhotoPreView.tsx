@@ -61,8 +61,8 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
             <Image
               src={mainPhotoInfo.imageUrl}
               alt='mainImg'
-              objectFit='cover'
               fill
+              style={{ objectFit: 'cover' }}
               className='z-0'
             />
             <div className='absolute inset-0 flex justify-center items-center'>

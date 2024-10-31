@@ -17,6 +17,7 @@ const MyInvitationCard = () => {
     queryKey: QUERY_KEYS.invitationCard(),
     queryFn: getInvitationCard,
   });
+
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: deleteInvitationCard,
@@ -40,6 +41,19 @@ const MyInvitationCard = () => {
 
   const invitationCard = invitationCards?.[0];
 
+  const shareLink = `http://localhost:3000/invitations/${invitationCard?.id}`;
+
+  const handleCopyLink = async () => {
+    navigator.clipboard
+      .writeText(shareLink)
+      .then(() => {
+        alert('링크가 클립보드에 복사되었습니다!');
+      })
+      .catch((err) => {
+        console.error('링크 복사 실패:', err);
+        alert('링크 복사에 실패했습니다.');
+      });
+  };
   return (
     <div className='w-full h-[152px] flex mx-auto rounded-xl mt-8 shadow-sm shadow-gray-400 p-4'>
       {invitationCard ? (
@@ -48,10 +62,13 @@ const MyInvitationCard = () => {
             <div className='flex gap-4 mb-2'>
               <div className='w-[64px] h-[64px] overflow-hidden flex rounded-xl '>
                 <Image
-                  src={invitationCard.main_photo_info.imageUrl}
+                  src={invitationCard.main_photo_info?.imageUrl || '/assets/images/defaultImg.png'}
                   alt='invitationImg'
                   width={64}
                   height={64}
+                  onError={(e) => {
+                    e.currentTarget.src = '/assets/images/defaultImg.png';
+                  }}
                 />
               </div>
               <div className='flex flex-col justify-between'>
@@ -61,7 +78,12 @@ const MyInvitationCard = () => {
                     color='gray'
                     size='20'
                   />
-                  <p className='text-[14px] text-gray-700'>공유하기</p>
+                  <button
+                    onClick={handleCopyLink}
+                    className='text-[14px] text-gray-700'
+                  >
+                    공유하기
+                  </button>
                 </div>
               </div>
             </div>

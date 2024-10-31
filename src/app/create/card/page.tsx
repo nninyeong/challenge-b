@@ -28,6 +28,8 @@ import { loadFormData } from '@/utils/form/loadFormData';
 import { FaSortDown, FaSortUp } from 'react-icons/fa';
 import useToggle from '@/utils/useToggle';
 import StickerInput from '@/components/create/StickerInput';
+import GalleryInput from '@/components/create/GalleryInput';
+import GalleryPreview from '@/components/create/preview/GalleryPreview';
 const OBSERVER_OPTIONS = {
   root: null,
   rootMargin: '0px',
@@ -44,6 +46,7 @@ const CreateCardPage = () => {
   const [toggleInput, setToggleInput] = useToggle();
 
   const refs = [
+    useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
@@ -119,7 +122,7 @@ const CreateCardPage = () => {
         subway: '',
         bus: '',
       },
-      gallery: { images: [] },
+      gallery: { images: [], grid: 3, ratio: 'square' },
       type: 'scroll',
       mood: '',
       stickers: [],
@@ -329,6 +332,12 @@ const CreateCardPage = () => {
             >
               <GreetingPreview control={methods.control} />
             </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[9]}
+            >
+              <GalleryPreview control={methods.control} />
+            </div>
           </div>
           <div className='fixed bottom-0 left-0 right-0 px-4 z-10 '>
             <button
@@ -372,6 +381,7 @@ const CreateCardPage = () => {
                   {currentStep === 7 && <NavigationDetailInput />}
                   {currentStep === 8 && <GuestInfoInput />}
                   {currentStep === 9 && <GreetingInput />}
+                  {currentStep === 10 && <GalleryInput />}
                   {currentStep === refs.length && (
                     <button
                       className='w-full'
