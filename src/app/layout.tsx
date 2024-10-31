@@ -2,15 +2,14 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import Providers from '@/app/provider';
+import Header from '@/components/layouts/Header';
+import Footer from '@/components/layouts/Footer';
+import Script from 'next/script';
+import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-  weight: '100 900',
-});
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
+const SuitMedium = localFont({
+  src: '../../public/assets/fonts/SUIT-Medium.otf',
+  variable: '--font-suit',
   weight: '100 900',
 });
 
@@ -26,8 +25,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Providers>{children}</Providers>
+      <body className={`${SuitMedium.variable} antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] w-full`}>
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAOAPP_KEY}&libraries=services&autoload=false`}
+          strategy='beforeInteractive'
+        />
+        <SetScreenHeight />
+        <Providers>
+          <Header />
+          <main className='h-full w-full flex-1'>{children}</main>
+          <div id='modal'></div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

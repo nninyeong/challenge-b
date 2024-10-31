@@ -25,3 +25,94 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Font-face 설정 */
+@font-face {
+  font-family: 'BMDOHYEON';
+  src: url('../../public/assets/fonts/BMDOHYEON_ttf.ttf');
+}
+
+@font-face {
+  font-family: 'NanumPen';
+  src: url('../../public/assets/fonts/NanumPen.ttf');
+}
+
+@font-face {
+  font-family: 'Cafe24';
+  src: url('../../public/assets/fonts/Cafe24Ohsquare-v2.0.ttf');
+}
+
+@font-face {
+  font-family: 'SCDream1';
+  src: url('../../public/assets/fonts/SCDream1.otf');
+}
+
+@font-face {
+  font-family: 'Main';
+  src: url('../../public/assets/fonts/SUIT-Medium.otf');
+}
+
+@font-face {
+  font-family: 'JejuGothic';
+  src: url('../../public/assets/fonts/JejuGothic.ttf');
+}
+
+.custom-quill-editor .ql-toolbar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  background: white;
+  height: 30px;
+  align-items: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.custom-quill-editor .ql-toolbar button,
+.custom-quill-editor .ql-toolbar .ql-picker {
+  height: 24px;
+  width: 24px;
+  font-size: 10px;
+}
+
+.custom-quill-editor .ql-container {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.custom-quill-editor .ql-editor {
+  background: white;
+  font-style: normal;
+  font-size: 10px;
+  color: black;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.custom-checkbox:checked {
+  background-color: #ff6666;
+  border-color: #ff6666;
+  position: relative;
+}
+
+.custom-checkbox:checked::after {
+  content: '✔';
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
