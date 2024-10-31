@@ -15,22 +15,37 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
 
   const stickersByCategory: Record<string, StickerImage[]> = {};
 
-  data?.forEach((file) => {
-    const [category] = file.name.split('-');
-    const { data: publicUrlData } = client.storage.from('stickers').getPublicUrl(file.name);
+  const getImageDimensions = (url: string): Promise<{ width: number; height: number }> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => resolve({ width: img.width, height: img.height });
+      img.onerror = reject;
+    });
+  };
 
-    const stickerImage: StickerImage = {
-      id: file.name,
-      url: publicUrlData.publicUrl,
-      category,
-    };
+  await Promise.all(
+    data?.map(async (file) => {
+      const [category] = file.name.split('-');
+      const { data: publicUrlData } = client.storage.from('stickers').getPublicUrl(file.name);
 
-    if (!stickersByCategory[category]) {
-      stickersByCategory[category] = [];
-    }
+      const dimensions = await getImageDimensions(publicUrlData.publicUrl);
 
-    stickersByCategory[category].push(stickerImage);
-  });
+      const stickerImage: StickerImage = {
+        id: file.name,
+        url: publicUrlData.publicUrl,
+        category,
+        width: dimensions.width,
+        height: dimensions.height,
+      };
+
+      if (!stickersByCategory[category]) {
+        stickersByCategory[category] = [];
+      }
+
+      stickersByCategory[category].push(stickerImage);
+    }) || [],
+  );
 
   return stickersByCategory;
 };
