@@ -29,4 +29,5 @@ export type InvitationCard = {
     imageUrl: string;
   };
   isPrivate: boolean;
+  id: string;
 };

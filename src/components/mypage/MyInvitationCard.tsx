@@ -1,7 +1,7 @@
 'use client';
 import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
-import { getInvitationCard } from '@/utils/myPage';
-import { useQuery } from '@tanstack/react-query';
+import { deleteInvitationCard, getInvitationCard } from '@/utils/myPage';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoClose } from 'react-icons/io5';
@@ -17,6 +17,23 @@ const MyInvitationCard = () => {
     queryKey: QUERY_KEYS.invitationCard(),
     queryFn: getInvitationCard,
   });
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: deleteInvitationCard,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitationCard() });
+      alert('청첩장이 삭제완료되었습니다.');
+    },
+    onError: (error) => {
+      console.error('Delete Invitation Card Error', error);
+      alert('청첩장 삭제에 실패했습니다.');
+    },
+  });
+
+  const handleDeleteCards = (invitationId: string) => {
+    const confirmed = confirm('청첩장을 삭제하시겠습니까?');
+    if (confirmed) mutation.mutate(invitationId);
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>error</div>;
@@ -51,6 +68,8 @@ const MyInvitationCard = () => {
             <IoClose
               color='white'
               size='24'
+              className='cursor-pointer'
+              onClick={() => handleDeleteCards(invitationCard.id)}
             />
           </div>
           <div className='w-full flex gap-4 '>
@@ -69,7 +88,7 @@ const MyInvitationCard = () => {
           </div>
         </div>
       ) : (
-        <div className='flex flex-col justify-center items-center'>
+        <div className='w-full flex flex-col justify-center items-center'>
           <Image
             src='/assets/images/card/noCard.png'
             alt='noCardImg'
