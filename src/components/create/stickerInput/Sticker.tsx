@@ -160,8 +160,6 @@ const Sticker = ({
           position: 'absolute',
           top: `${sticker.posY}%`,
           left: `${sticker.posX}%`,
-          width: `${sticker.width}px`,
-          height: `${sticker.height}px`,
         }}
       >
         <div className={`w-full text-right h-[${DELETE_BUTTON_SIZE}px]`}>
@@ -183,8 +181,8 @@ const Sticker = ({
           <Image
             src={sticker.url}
             alt={sticker.stickerImageId}
-            width={100}
-            height={100}
+            width={sticker.width}
+            height={sticker.height}
             className={`${isActive && 'border-[1px] border-primary-300'} w-full h-full`}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
