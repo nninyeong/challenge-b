@@ -67,6 +67,8 @@ export type StickerType = {
   url: string;
   posX: string;
   posY: string;
+  width: number;
+  height: number;
 };
 
 export type DecorateImageType = {
