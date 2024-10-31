@@ -102,10 +102,12 @@ const Sticker = ({
   };
 
   const handleResizeStart = () => {
+    if (!isActive) return;
     setIsResizing(true);
   };
 
   const handleResizeStop = (e: TouchEvent | MouseEvent, direction: Direction, ref: HTMLElement, d: NumberSize) => {
+    if (!isActive) return;
     setIsResizing(false);
 
     const newWidth = sticker.width + d.width;
@@ -123,6 +125,7 @@ const Sticker = ({
   };
 
   const handleResize = (e: MouseEvent | TouchEvent, direction: Direction, ref: HTMLElement) => {
+    if (!isActive) return;
     if (!previewRef.current || !stickerRef.current) return;
 
     const aspectRatio = sticker.width / sticker.height;
