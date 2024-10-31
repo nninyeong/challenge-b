@@ -88,3 +88,31 @@ body {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.custom-checkbox:checked {
+  background-color: #ff6666;
+  border-color: #ff6666;
+  position: relative;
+}
+
+.custom-checkbox:checked::after {
+  content: '✔';
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

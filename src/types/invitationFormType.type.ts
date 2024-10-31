@@ -1,14 +1,18 @@
 import { AccountInfoType } from './accountType.type';
 
-type PersonalType = {
+export type ParentType = {
   name: string;
+  relation: string;
   phoneNumber: string;
-  fatherName: string;
-  fatherPhoneNumber: string;
-  isFatherDeceased: boolean;
-  motherName: string;
-  motherPhoneNumber: string;
-  isMotherDeceased: boolean;
+  isDeceased: boolean;
+};
+
+export type PersonalType = {
+  name: string;
+  relation: string;
+  phoneNumber: string;
+  father: ParentType;
+  mother: ParentType;
 };
 
 export type PersonalInfoType = {
