@@ -22,4 +22,5 @@ export type Invitation = {
 
   d_day: Json;
   main_photo_info: Json;
+  isPrivate: boolean;
 };

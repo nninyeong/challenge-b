@@ -32,6 +32,7 @@ export const convertToCamelCase = (invitation: Invitation): InvitationFormType =
     navigationDetail: invitation.navigation_detail as NavigationDetailType,
     dDay: invitation.d_day as boolean,
     mainPhotoInfo: invitation.main_photo_info as MainPhotoType,
+    isPrivate: invitation.isPrivate as boolean,
   };
 };
 
@@ -54,5 +55,6 @@ export const convertToSnakeCase = (invitation: InvitationFormType) => {
     navigation_detail: invitation.navigationDetail as NavigationDetailType,
     d_day: invitation.dDay as boolean,
     main_photo_info: invitation.mainPhotoInfo as MainPhotoType,
+    isPrivate: invitation.isPrivate as boolean,
   };
 };

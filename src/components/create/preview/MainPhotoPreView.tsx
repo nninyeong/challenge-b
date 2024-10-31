@@ -2,6 +2,13 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
 import { Control, useWatch } from 'react-hook-form';
 import { ArchSvg, EllipseSvg } from '../CustomSVG';
+import { useRef, useState } from 'react';
+import Sticker from '@/components/create/stickerInput/Sticker';
+
+const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
 
 const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> }) => {
   const mainPhotoInfo = useWatch({
@@ -19,6 +26,18 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
     name: 'mainView',
   });
 
+  const stickersWatch = useWatch({
+    control,
+    name: 'stickers',
+  });
+
+  const previewRef = useRef<HTMLDivElement | null>(null);
+
+  const [activeStickerId, setActiveStickerId] = useState<string | null>(null);
+  const handleActiveSticker = (id?: string) => {
+    setActiveStickerId(id || null);
+  };
+
   return (
     <div className='w-full flex flex-col justify-center item-center mx-auto text-center text-black'>
       <div
@@ -33,7 +52,12 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
         {!mainPhotoInfo?.imageUrl ? (
           <p className='text-gray-500 w-[375px] h-[728px] bg-gray text-center'>이미지가 업로드되지 않았습니다.</p>
         ) : (
-          <div className='flex justify-center items-center relative w-full h-[600px]'>
+          <div
+            className='flex justify-center items-center relative w-full h-[600px]'
+            ref={previewRef}
+            onDrop={preventDefaultBehaviour}
+            onDragOver={preventDefaultBehaviour}
+          >
             <Image
               src={mainPhotoInfo.imageUrl}
               alt='mainImg'
@@ -45,6 +69,15 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
               {mainViewType.type === 'arch' && <ArchSvg color={svgBgColor} />}
               {mainViewType.type === 'ellipse' && <EllipseSvg color={svgBgColor} />}
             </div>
+            {stickersWatch?.map((sticker) => (
+              <Sticker
+                key={sticker.id}
+                sticker={sticker}
+                previewRef={previewRef}
+                activeStickerId={activeStickerId}
+                onActivate={handleActiveSticker}
+              />
+            ))}
           </div>
         )}
       </div>

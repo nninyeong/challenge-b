@@ -70,7 +70,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
             <div className='w-[130px] h-[130px] rounded flex flex-shrink-0 relative'>
               <Image
                 key={review.id}
-                src={firstImage || '/assets/images/defaultImg.jpg'}
+                src={firstImage || '/assets/images/defaultImg.png'}
                 alt={'후기 이미지'}
                 width={100}
                 height={100}
@@ -89,9 +89,9 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
             <div
               className={`w-[80%] flex flex-col whitespace-pre-wrap break-words ${isExpanded ? 'h-auto' : 'h-[80%] overflow-hidden'}`}
             >
-              <div className='flex ml-4 items-center flex-shrink-0'>
+              <div className='w-[16px] y-[16px] overflow-hidden flex ml-4 items-center flex-shrink-0 rounded-full'>
                 <Image
-                  src={user.user_metadata.avatar_url || '/images/defaultImg.jpg'}
+                  src={user.user_metadata.avatar_url || '/images/defaultImg.png'}
                   alt='profile'
                   width={30}
                   height={30}

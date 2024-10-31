@@ -27,6 +27,7 @@ import browserClient from '@/utils/supabase/client';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { FaSortDown, FaSortUp } from 'react-icons/fa';
 import useToggle from '@/utils/useToggle';
+import StickerInput from '@/components/create/StickerInput';
 const OBSERVER_OPTIONS = {
   root: null,
   rootMargin: '0px',
@@ -51,6 +52,7 @@ const CreateCardPage = () => {
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
     useRef<HTMLDivElement | null>(null),
+    useRef<HTMLDivElement | null>(null),
   ];
 
   const observers = useRef<IntersectionObserver[]>([]);
@@ -67,23 +69,17 @@ const CreateCardPage = () => {
       personalInfo: {
         bride: {
           name: '',
+          relation: '',
           phoneNumber: '',
-          fatherName: '',
-          fatherPhoneNumber: '',
-          isFatherDeceased: false,
-          motherName: '',
-          motherPhoneNumber: '',
-          isMotherDeceased: false,
+          father: { name: '', relation: '', phoneNumber: '', isDeceased: false },
+          mother: { name: '', relation: '', phoneNumber: '', isDeceased: false },
         },
         groom: {
           name: '',
+          relation: '',
           phoneNumber: '',
-          fatherName: '',
-          fatherPhoneNumber: '',
-          isFatherDeceased: false,
-          motherName: '',
-          motherPhoneNumber: '',
-          isMotherDeceased: false,
+          father: { name: '', relation: '', phoneNumber: '', isDeceased: false },
+          mother: { name: '', relation: '', phoneNumber: '', isDeceased: false },
         },
       },
       account: {
@@ -138,6 +134,7 @@ const CreateCardPage = () => {
         name: '기본',
         type: 'default',
       },
+      isPrivate: false,
     },
   });
 
@@ -286,47 +283,49 @@ const CreateCardPage = () => {
               className='min-h-[calc(100vh-114px)]'
               ref={refs[0]}
             >
-              <MainPhotoPreView control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[1]}
-            >
-              <PersonalInfoPreview control={methods.control} />
+              <FormProvider {...methods}>
+                <MainPhotoPreView control={methods.control} />
+              </FormProvider>
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[2]}
             >
-              <AccountPreView control={methods.control} />
+              <PersonalInfoPreview control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[3]}
             >
-              <WeddingInfoPreView control={methods.control} />
+              <AccountPreView control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[4]}
             >
-              <NavigationDetailsPreview control={methods.control} />
+              <WeddingInfoPreView control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[5]}
             >
-              <GuestInfoPreview control={methods.control} />
+              <NavigationDetailsPreview control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[6]}
             >
-              colorpalette
+              <GuestInfoPreview control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
               ref={refs[7]}
+            >
+              colorpalette
+            </div>
+            <div
+              className='min-h-[calc(100vh-114px)]'
+              ref={refs[8]}
             >
               <GreetingPreview control={methods.control} />
             </div>
@@ -366,12 +365,13 @@ const CreateCardPage = () => {
 
                   {currentStep === 1 && <MainViewInput />}
                   {currentStep === 2 && <MainPhotoInput />}
-                  {currentStep === 3 && <PersonalInfoInput />}
+                  {currentStep === 3 && <StickerInput />}
                   {currentStep === 4 && <AccountInput />}
-                  {currentStep === 5 && <WeddingInfoInput />}
-                  {currentStep === 6 && <NavigationDetailInput />}
-                  {currentStep === 7 && <GuestInfoInput />}
-                  {currentStep === 8 && <GreetingInput />}
+                  {currentStep === 5 && <PersonalInfoInput />}
+                  {currentStep === 6 && <WeddingInfoInput />}
+                  {currentStep === 7 && <NavigationDetailInput />}
+                  {currentStep === 8 && <GuestInfoInput />}
+                  {currentStep === 9 && <GreetingInput />}
                   {currentStep === refs.length && (
                     <button
                       className='w-full'
