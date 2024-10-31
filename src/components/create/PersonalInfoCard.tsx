@@ -7,23 +7,23 @@ type PersonInfoCardProps = {
   phoneNumber: string | null;
 };
 
-const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => {
-  const defaultName = '이름';
-  const defaultLabel = '관계';
-  const defaultPhoneNumber = '번호를 입력하세요';
+const DEFAULT_NAME = '이름';
+const DEFAULT_LABEL = '관계';
+const DEFAULT_PHONE_NUMBER = '전화번호를 입력하세요';
 
+const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => {
   const handlePhoneClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!phoneNumber) {
       e.preventDefault();
-      alert(defaultPhoneNumber);
+      alert(DEFAULT_PHONE_NUMBER);
     }
   };
 
   return (
     <div className='flex flex-col justify-center items-center gap-2'>
       <div className='flex items-center gap-2'>
-        <p className='text-center'>{label || defaultLabel}</p>
-        <p className='text-xl font-semibold'>{name || defaultName}</p>
+        <p className='text-center'>{label || DEFAULT_LABEL}</p>
+        <p className='text-xl font-semibold'>{name || DEFAULT_NAME}</p>
       </div>
 
       <div className='flex gap-5'>
