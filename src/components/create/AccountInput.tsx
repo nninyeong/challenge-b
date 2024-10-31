@@ -74,7 +74,7 @@ const AccountInput = () => {
             />
             <input
               className='px-1 w-[60px] h-[30px] rounded-md'
-              {...register(`account.${accountType}[${index}].depositer`)}
+              {...register(`account.${accountType}[${index}].depositor`)}
               placeholder='예금주'
             />
           </div>
