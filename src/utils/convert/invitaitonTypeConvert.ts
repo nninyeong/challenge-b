@@ -11,11 +11,12 @@ import {
   PersonalInfoType,
   StickerType,
   WeddingInfoType,
+  GalleryType,
 } from '@/types/invitationFormType.type';
 
 export const convertToCamelCase = (invitation: Invitation): InvitationFormType => {
   return {
-    gallery: invitation.gallery as { images: [] },
+    gallery: invitation.gallery as GalleryType,
     type: invitation.type as 'scroll' | 'slide',
     mood: invitation.mood as string,
     mainView: invitation.main_view as DecorateImageType,

@@ -122,7 +122,11 @@ const CreateCardPage = () => {
         subway: '',
         bus: '',
       },
-      gallery: { images: [], grid: 3, ratio: 'square' },
+      gallery: {
+        images: [],
+        grid: 3,
+        ratio: 'square',
+      },
       type: 'scroll',
       mood: '',
       stickers: [],
