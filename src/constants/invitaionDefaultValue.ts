@@ -57,7 +57,10 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
   },
   gallery: { images: [] },
   type: 'scroll',
-  mood: '',
+  moodPreset: {
+    mood: '직접제작',
+    preset: '',
+  },
   stickers: [],
   imgRatio: {
     ratio: '',

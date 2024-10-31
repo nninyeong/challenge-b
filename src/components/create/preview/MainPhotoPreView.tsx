@@ -31,6 +31,11 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
     name: 'stickers',
   });
 
+  // const moodPresetWatch = useWatch({
+  //   control,
+  //   name: 'moodPreset',
+  // });
+
   const previewRef = useRef<HTMLDivElement | null>(null);
 
   const [activeStickerId, setActiveStickerId] = useState<string | null>(null);
