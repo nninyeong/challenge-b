@@ -23,7 +23,7 @@ const MoodKeyword = () => {
           ))}
         </div>
 
-        <div className='relative h-[296px] w-[343px] mt-[16px] rounded-lg'>
+        <div className='relative h-[296px] w-[343px] mt-[16px] rounded-lg overflow-hidden'>
           <Image
             src={placeholderImg}
             alt='무드에 맞는 청첩장 이미지'
