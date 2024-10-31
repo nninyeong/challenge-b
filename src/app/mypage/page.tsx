@@ -51,7 +51,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
         </div>
         <nav className='mt-4'>
           <ul className='flex flex-col gap-4 items-center'>
-            {MENULISTS.map((menu) => (
+            {MENU_LISTS.map((menu) => (
               <Link
                 href={menu.href}
                 key={menu.name}
@@ -74,7 +74,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
 
 export default MyPage;
 
-const MENULISTS = [
+const MENU_LISTS = [
   { name: '결제내역', href: '/' },
   { name: '1:1문의', href: '/' },
   { name: '방문객 명단 다운로드', href: '/' },

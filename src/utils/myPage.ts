@@ -4,7 +4,6 @@ import { supabase } from './supabase/createClient';
 
 export const getInvitationCard = async (): Promise<InvitationFormType[] | null> => {
   const user = await getUserInfo();
-  console.log(user);
   const userId = user?.user.id;
   const { data, error } = await supabase.from('invitation').select('*').eq('user_id', userId);
 

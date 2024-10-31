@@ -1,29 +1,47 @@
 'use client';
+import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
 import { getInvitationCard, patchPrivateInvitation } from '@/utils/myPage';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 const TogglePrivate = () => {
   const [isPrivate, setIsPrivate] = useState(false);
+  const queryClient = useQueryClient();
 
-  const toggleSwitch = async ({}) => {
+  const {
+    data: invitationCard,
+    isLoading,
+    error,
+    isSuccess,
+  } = useQuery({
+    queryKey: QUERY_KEYS.invitationCard(),
+    queryFn: getInvitationCard,
+  });
+
+  useEffect(() => {
+    if (invitationCard && invitationCard.length > 0 && isSuccess) {
+      setIsPrivate(invitationCard[0].isPrivate);
+    }
+  }, [isSuccess]);
+  const mutation = useMutation({
+    mutationFn: patchPrivateInvitation,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitationCard() });
+    },
+    onError: (error) => {
+      console.error('Private Error', error);
+    },
+  });
+
+  const toggleSwitch = () => {
     const newIsPrivate = !isPrivate;
     setIsPrivate(newIsPrivate);
-    await patchPrivateInvitation(newIsPrivate);
+    mutation.mutate(newIsPrivate);
   };
 
-  const checkPrivate = async () => {
-    const data = await getInvitationCard();
-    if (!data || data.length === 0) {
-      setIsPrivate(false);
-      return;
-    }
-    console.log(data);
-    const userPrivate = data[0].isPrivate;
-    setIsPrivate(userPrivate);
-  };
-  useEffect(() => {
-    checkPrivate();
-  }, []);
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error</div>;
+
   return (
     <div
       onClick={toggleSwitch}
