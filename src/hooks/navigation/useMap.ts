@@ -1,6 +1,8 @@
 import { MapApp } from '@/types/navigationButtonType.type';
-import { getMapSettings } from './getMapSetting';
+import { getMapSettings } from './useMapSetting';
 import { isAndroid, isIOS } from 'react-device-detect';
+
+const TIMEOUT_DURATION = isIOS ? 5000 : 1500;
 
 const useMap = () => {
   const openMap = ({
@@ -26,10 +28,9 @@ const useMap = () => {
 
     window.location.href = scheme;
 
-    const timeoutDuration = isIOS ? 5000 : 1500;
     setTimeout(() => {
       if (fallbackLink && document.visibilityState === 'visible') window.location.href = fallbackLink;
-    }, timeoutDuration);
+    }, TIMEOUT_DURATION);
   };
 
   return openMap;

@@ -1,5 +1,11 @@
 import { MapApp } from '@/types/navigationButtonType.type';
 
+const BASE_SETTINGS = {
+  scheme: '',
+  webLink: '',
+  fallbackLink: null as string | null,
+};
+
 export const getMapSettings = (
   app: MapApp,
   epLat: number,
@@ -8,16 +14,10 @@ export const getMapSettings = (
   isAndroid: boolean,
   isIOS: boolean,
 ) => {
-  const baseSettings = {
-    scheme: '',
-    webLink: '',
-    fallbackLink: null as string | null,
-  };
-
   switch (app) {
     case 'kakao':
       return {
-        ...baseSettings,
+        ...BASE_SETTINGS,
         scheme: isAndroid
           ? `kakaomap://route?sp=&ep=${epLat},${epLng}&by=CAR`
           : `kakaomap://route?sp=&ep=${epLat},${epLng}&by=CAR`,
@@ -30,7 +30,7 @@ export const getMapSettings = (
       };
     case 'naver':
       return {
-        ...baseSettings,
+        ...BASE_SETTINGS,
         scheme: isAndroid
           ? `nmap://route/car?dlat=${epLat}&dlng=${epLng}&dname=${encodeURIComponent(name)}`
           : `nmap://route/car?dlat=${epLat}&dlng=${epLng}&dname=${encodeURIComponent(name)}`,
@@ -43,7 +43,7 @@ export const getMapSettings = (
       };
     case 'tmap':
       return {
-        ...baseSettings,
+        ...BASE_SETTINGS,
         scheme: isAndroid
           ? `tmap://route?goalx=${epLng}&goaly=${epLat}&by=CAR`
           : `tmap://route?goalx=${epLng}&goaly=${epLat}&by=CAR`,
