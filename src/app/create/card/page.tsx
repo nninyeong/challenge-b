@@ -40,7 +40,6 @@ const CreateCardPage = () => {
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
-
   const [toggleInput, setToggleInput] = useToggle();
 
   const refs = [
