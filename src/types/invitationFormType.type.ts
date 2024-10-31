@@ -80,16 +80,13 @@ export type DecorateImageType = {
   type: string;
 };
 
-export type PresetType = {
-  bgColor: ColorType;
-  imgType: DecorateImageType;
-  stickers: StickerType[];
+export type MoodPresetType = {
+  mood: Mood;
+  preset: Preset;
 };
 
-export type MoodPresetType = {
-  mood: string;
-  preset: string;
-};
+export type Mood = 'classic' | 'romantic' | 'modern' | 'floral' | 'rustic' | 'simple' | 'none';
+export type Preset = 'preset1' | 'preset2' | 'preset3';
 
 export type InvitationFormType = {
   gallery: GalleryType;
