@@ -2,11 +2,12 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import ReviewsCarousel from '@/components/main/ReviewsCarousel';
-import { handleAuthCallback } from '@/utils/auth/authCallbackHandler';
+
 import LinkToCreateCard from '@/components/ui/LinkToCreateCard';
 import FixedQuickLink from '@/components/ui/FixedQuickLink';
 import Gallery from '@/components/main/Gallery';
 import MoodKeyword from '@/components/main/MoodKeyword';
+import { handleAuthCallback } from '@/utils/auth/authCallbackHandler';
 
 export default function Home() {
   const router = useRouter();
