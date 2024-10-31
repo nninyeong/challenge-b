@@ -1,4 +1,4 @@
-type AccountType = {
+export type AccountType = {
   bank: string;
   accountNumber: string;
   depositor: string;

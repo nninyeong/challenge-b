@@ -6,7 +6,7 @@ type Props = {
   type: 'groom' | 'bride';
 };
 
-export const RenderPersonalInfo = ({ type }: Props) => {
+export const PersonalInfo = ({ type }: Props) => {
   const { register } = useFormContext();
 
   return (
@@ -98,4 +98,4 @@ export const RenderPersonalInfo = ({ type }: Props) => {
   );
 };
 
-export default RenderPersonalInfo;
+export default PersonalInfo;

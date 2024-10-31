@@ -9,8 +9,7 @@ const PersonalInfoPreview = ({ control }: { control: Control<InvitationFormType>
     name: 'personalInfo',
   });
 
-  const groom = personaInfoWatch.groom;
-  const bride = personaInfoWatch.bride;
+  const { bride, groom } = personaInfoWatch;
 
   return (
     <div className='flex flex-col justify-center items-center gap-[30px]'>

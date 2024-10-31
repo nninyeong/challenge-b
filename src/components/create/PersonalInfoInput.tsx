@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import RenderPersonalInfo from './preview/RenderPersonalInfo';
+import { PersonalInfo } from './preview/PersonalInfo';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 const PersonalInfoInput = () => {
@@ -37,7 +37,7 @@ const PersonalInfoInput = () => {
           신부측 정보
         </button>
       </div>
-      <RenderPersonalInfo type={personalInfoType} />
+      <PersonalInfo type={personalInfoType} />
     </div>
   );
 };
