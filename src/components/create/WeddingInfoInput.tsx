@@ -4,6 +4,23 @@ import { Address } from 'react-daum-postcode';
 import { useState } from 'react';
 import AddressModal from '@/components/create/modal/AddressModal';
 
+const HOURS_FOR_WEDDING_INFO = [
+  '오전 07시',
+  '오전 08시',
+  '오전 09시',
+  '오전 10시',
+  '오전 11시',
+  '낮 12시',
+  '오후 1시',
+  '오후 2시',
+  '오후 3시',
+  '오후 4시',
+  '오후 6시',
+  '오후 7시',
+];
+
+const MINUTES_FOR_WEDDING_INFO = ['00분', '30분'];
+
 const WeddingInfoInput = () => {
   const { register, setValue } = useFormContext();
 
@@ -38,24 +55,28 @@ const WeddingInfoInput = () => {
             className='h-[32px] rounded flex-1'
             defaultValue='00'
           >
-            {Array(24)
-              .fill(null)
-              .map((_, hour) => (
-                <option
-                  key={`hour${hour}`}
-                  value={String(hour).padStart(2, '0')}
-                >
-                  {String(hour).padStart(2, '0')}시
-                </option>
-              ))}
+            {HOURS_FOR_WEDDING_INFO.map((hour) => (
+              <option
+                key={`hour${hour}`}
+                value={hour}
+              >
+                {hour}
+              </option>
+            ))}
           </select>
           <select
             {...register('weddingInfo.time.minute')}
             className='h-[32px] rounded flex-1'
             defaultValue='00'
           >
-            <option value='00'>00분</option>
-            <option value='30'>30분</option>
+            {MINUTES_FOR_WEDDING_INFO.map((minute) => (
+              <option
+                key={minute}
+                value={minute}
+              >
+                {minute}
+              </option>
+            ))}
           </select>
         </div>
       </div>
@@ -90,6 +111,7 @@ const WeddingInfoInput = () => {
         <label className='leading-[32px]'>연락처</label>
         <input
           className='h-[32px] rounded pl-3'
+          placeholder='연락처를 입력해주세요.'
           {...register('weddingInfo.weddingHallContact')}
         />
       </div>
