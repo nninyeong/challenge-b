@@ -15,7 +15,6 @@ const DEFAULT_OPTIONS: ObserverOptions = {
 export const useIntersectionObserver = (
   refs: MutableRefObject<(HTMLDivElement | null)[]>,
   setCurrentStep: (step: number) => void,
-  options: ObserverOptions = DEFAULT_OPTIONS,
 ) => {
   const observers = useRef<IntersectionObserver[]>([]);
   const isNavigating = useRef<boolean>(false);
