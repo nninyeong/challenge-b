@@ -4,35 +4,15 @@ import { StickerType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
 import { MutableRefObject, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { clampValue } from '@/utils/clampValue';
 import { NumberSize, Resizable } from 're-resizable';
 import { Direction } from 're-resizable/lib/resizer';
+import { calculateRelativePosition } from '@/utils/calculate/calculateRelativePosition';
 
 const preventTouchScroll = (e: TouchEvent) => {
   e.preventDefault();
 };
 
 const DELETE_BUTTON_SIZE = 24;
-const calculateRelativePosition = (
-  touch: React.Touch,
-  touchOffset: MutableRefObject<{ x: number; y: number }>,
-  previewRef: MutableRefObject<HTMLDivElement | null>,
-  stickerRef: MutableRefObject<HTMLDivElement | null>,
-) => {
-  if (!previewRef.current || !stickerRef.current) return { relativeX: 0, relativeY: 0 };
-
-  const previewBounds = previewRef.current.getBoundingClientRect();
-  const stickerBounds = stickerRef.current.getBoundingClientRect();
-  const offsetY = (DELETE_BUTTON_SIZE / previewBounds.height) * 100;
-
-  let relativeX = ((touch.clientX - previewBounds.left - touchOffset.current.x) / previewBounds.width) * 100;
-  let relativeY = ((touch.clientY - previewBounds.top - touchOffset.current.y) / previewBounds.height) * 100;
-
-  relativeX = clampValue(relativeX, 0, 100 - (stickerBounds.width / previewBounds.width) * 100);
-  relativeY = clampValue(relativeY - offsetY, 0, 100 - (stickerBounds.height / previewBounds.height) * 100);
-
-  return { relativeX, relativeY };
-};
 
 const Sticker = ({
   sticker,
@@ -76,7 +56,13 @@ const Sticker = ({
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.changedTouches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
+    const { relativeX, relativeY } = calculateRelativePosition(
+      touch,
+      touchOffset,
+      previewRef,
+      stickerRef,
+      DELETE_BUTTON_SIZE,
+    );
 
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) {
@@ -95,7 +81,13 @@ const Sticker = ({
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.touches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
+    const { relativeX, relativeY } = calculateRelativePosition(
+      touch,
+      touchOffset,
+      previewRef,
+      stickerRef,
+      DELETE_BUTTON_SIZE,
+    );
 
     requestAnimationFrame(() => {
       if (!stickerRef.current) return;
