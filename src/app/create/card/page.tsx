@@ -355,8 +355,8 @@ const CreateCardPage = () => {
 
                 {currentStep === 1 && <MainViewInput />}
                 {currentStep === 2 && <MainPhotoInput />}
-                {currentStep === 3 && <PersonalInfoInput />}
-                {currentStep === 4 && <AccountInput />}
+                {currentStep === 3 && <AccountInput />}
+                {currentStep === 4 && <PersonalInfoInput />}
                 {currentStep === 5 && <WeddingInfoInput />}
                 {currentStep === 6 && <NavigationDetailInput />}
                 {currentStep === 7 && <GuestInfoInput />}
