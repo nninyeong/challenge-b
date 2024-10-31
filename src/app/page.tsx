@@ -6,6 +6,7 @@ import { handleAuthCallback } from '@/utils/auth/authCallbackHandler';
 import LinkToCreateCard from '@/components/ui/LinkToCreateCard';
 import FixedQuickLink from '@/components/ui/FixedQuickLink';
 import Gallery from '@/components/main/Gallery';
+import MoodKeyword from '@/components/main/MoodKeyword';
 
 export default function Home() {
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function Home() {
         <LinkToCreateCard buttonStyle='absolute right-[8px] bottom-[8px]' />
       </div>
       <Gallery />
+      <MoodKeyword />
       <ReviewsCarousel />
     </div>
   );
