@@ -1,6 +1,6 @@
 import { Control, useWatch } from 'react-hook-form';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import Image from 'next/Image';
+import Image from 'next/image';
 
 const DEFAULT_VALUES = {
   name: '예식장 이름을 입력해주세요.',
@@ -30,7 +30,7 @@ const WeddingInfoPreView = ({ control }: { control: Control<InvitationFormType> 
             width={24}
             height={24}
           />
-          <span>전화</span>
+          <span className='text-gray-600 text-[16px]'>전화</span>
         </button>
       </a>
     </div>
