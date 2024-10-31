@@ -65,7 +65,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
         return (
           <div
             key={review.id}
-            className='w-full h-auto flex border border-solid border-l-0 border-r-0 border-t-0 mb-4 pb-4 cursor-pointer relative'
+            className='w-full h-[152px] flex border border-solid border-l-0 border-r-0 border-t-0 mb-4 p cursor-pointer relative'
           >
             <div className='w-[130px] h-[130px] rounded flex flex-shrink-0 relative'>
               <Image

@@ -19,8 +19,14 @@ export type Invitation = {
   user_id: string;
   wedding_info: Json;
   navigation_detail?: Json | null;
-
   d_day: Json;
   main_photo_info: Json;
+  isPrivate: boolean;
+};
+
+export type InvitationCard = {
+  main_photo_info: {
+    imageUrl: string;
+  };
   isPrivate: boolean;
 };

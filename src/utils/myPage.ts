@@ -1,18 +1,18 @@
-import { InvitationFormType } from '@/types/invitationFormType.type';
+import { InvitationCard } from '@/types/database.type';
 import { getUserInfo } from './server-action';
 import { supabase } from './supabase/createClient';
 
-export const getInvitationCard = async (): Promise<InvitationFormType[] | null> => {
+export const getInvitationCard = async () => {
   const user = await getUserInfo();
   const userId = user?.user.id;
   const { data, error } = await supabase.from('invitation').select('*').eq('user_id', userId);
-
+  console.log(data);
   if (error) {
     console.error('청첩장데이터를 불러오지못했습니다.', error);
     return null;
   }
 
-  return data as InvitationFormType[];
+  return data as unknown as InvitationCard[];
 };
 
 export const patchPrivateInvitation = async (isPrivate: boolean) => {
