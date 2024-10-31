@@ -9,7 +9,7 @@ type Props = {
 
 const EventStatus = (props: Props) => {
   return (
-    <div className='bg-gray-300'>
+    <div className='bg-gray-300 mb-20'>
       {props.dDayCount && <DdayCounter weddingInfoDate={props.weddingInfoDate} />}
       {props.attendanceButton && <AttendanceButton />}
     </div>

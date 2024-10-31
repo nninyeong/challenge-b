@@ -5,7 +5,7 @@ import CreateGuestBook from './CreateGuestBook';
 import GuestBookCard from './GuestBookCard';
 
 const GuestBook = () => {
-  const invitationId = '6ae529a2-725d-4e2d-ac26-07bd9e86aa34'; // @TODO 추후 청첩장 id를 넣는 방식으로 변경
+  const invitationId = 'ce7fe66a-0734-4314-9bd3-6fd8662621db'; // @TODO 추후 청첩장 id를 넣는 방식으로 변경
 
   const { data: guestBooks = [], isLoading, error } = useGuestBookEntries(invitationId);
 
@@ -14,9 +14,9 @@ const GuestBook = () => {
 
   return (
     <div>
-      <div className='text-center'>GUEST BOOK</div>
+      <div className='text-center tracking-[4px] mb-6'>GUEST BOOK</div>
       <CreateGuestBook invitationId={invitationId}/>
-      <div>
+      <div className='mt-14'>
         {guestBooks.map((guestBook) => (
           <GuestBookCard
             key={guestBook.guestbook_id}

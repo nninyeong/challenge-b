@@ -11,7 +11,7 @@ const CreateGuestBook: React.FC<{ invitationId: string }> = ({ invitationId }) =
         <div className='w-full px-4 mb-2'>
           <input
             type='text'
-            className='border-gray-500 border outline-none col-span-2 p-1 w-full'
+            className='text-black border-gray-500 border outline-none col-span-2 p-4 w-full h-12 rounded-xl'
             placeholder='이름'
             {...register('name')}
           />
@@ -20,26 +20,26 @@ const CreateGuestBook: React.FC<{ invitationId: string }> = ({ invitationId }) =
         <div className='w-full px-4 mb-2'>
           <input
             type='password'
-            className='border-gray-500 border outline-none col-span-2 p-1 w-full'
+            className='text-black border-gray-500 border outline-none col-span-2 p-4 w-full h-12 rounded-xl'
             placeholder='비밀번호'
             {...register('password')}
           />
           {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
         </div>
-        <div className='w-full px-4 mb-2'>
+        <div className='w-full px-4 mb-6'>
           <input
             type='text'
-            className='border-gray-500 border outline-none col-span-2 p-1 w-full'
+            className='text-black border-gray-500 border outline-none col-span-2 p-4 w-full h-12 rounded-xl'
             placeholder='축하메세지'
             {...register('content')}
           />
           {errors.content && <p className='text-red-500'>{errors.content.message}</p>}
         </div>
         <button
-          className='w-full px-4'
+          className='w-[calc(100%-32px)] ml-4 h-12 bg-gray-900 rounded-xl'
           type='submit'
         >
-          작성하기
+          축하메세지 남기기
         </button>
       </form>
     </div>
