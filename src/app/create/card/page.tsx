@@ -291,43 +291,43 @@ const CreateCardPage = () => {
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
-              ref={refs[1]}
+              ref={refs[2]}
             >
               <PersonalInfoPreview control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
-              ref={refs[2]}
+              ref={refs[3]}
             >
               <AccountPreView control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
-              ref={refs[3]}
+              ref={refs[4]}
             >
               <WeddingInfoPreView control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
-              ref={refs[4]}
+              ref={refs[5]}
             >
               <NavigationDetailsPreview control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
-              ref={refs[5]}
+              ref={refs[6]}
             >
               <GuestInfoPreview control={methods.control} />
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
-              ref={refs[6]}
+              ref={refs[7]}
             >
               colorpalette
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
-              ref={refs[7]}
+              ref={refs[8]}
             >
               <GreetingPreview control={methods.control} />
             </div>
@@ -359,13 +359,13 @@ const CreateCardPage = () => {
 
                 {currentStep === 1 && <MainViewInput />}
                 {currentStep === 2 && <MainPhotoInput />}
-                {currentStep === 3 && <AccountInput />}
-                {currentStep === 4 && <PersonalInfoInput />}
-                {currentStep === 5 && <WeddingInfoInput />}
-                {currentStep === 6 && <NavigationDetailInput />}
-                {currentStep === 7 && <GuestInfoInput />}
-                {currentStep === 8 && <GreetingInput />}
-                {currentStep === 9 && <StickerInput />}
+                {currentStep === 3 && <StickerInput />}
+                {currentStep === 4 && <AccountInput />}
+                {currentStep === 5 && <PersonalInfoInput />}
+                {currentStep === 6 && <WeddingInfoInput />}
+                {currentStep === 7 && <NavigationDetailInput />}
+                {currentStep === 8 && <GuestInfoInput />}
+                {currentStep === 9 && <GreetingInput />}
                 {currentStep === refs.length && (
                   <button
                     className='w-full'
