@@ -17,7 +17,6 @@ import NavigationDetailsPreview from '@/components/create/preview/NavigationDeta
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import MainViewInput from '@/components/create/MainViewInput';
 import StickerInput from '@/components/create/StickerInput';
-import StickerPreview from '@/components/create/preview/StickerPreview';
 import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
@@ -286,7 +285,9 @@ const CreateCardPage = () => {
               className='min-h-[calc(100vh-114px)]'
               ref={refs[0]}
             >
-              <MainPhotoPreView control={methods.control} />
+              <FormProvider {...methods}>
+                <MainPhotoPreView control={methods.control} />
+              </FormProvider>
             </div>
             <div
               className='min-h-[calc(100vh-114px)]'
@@ -329,20 +330,6 @@ const CreateCardPage = () => {
               ref={refs[7]}
             >
               <GreetingPreview control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[8]}
-            >
-              <div
-                id='main-photo'
-                className='w-full h-[400px] bg-amber-100 relative'
-              >
-                임시 메인사진 영역
-                <FormProvider {...methods}>
-                  <StickerPreview control={methods.control} />
-                </FormProvider>
-              </div>
             </div>
           </div>
           <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
