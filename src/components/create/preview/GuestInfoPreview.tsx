@@ -22,6 +22,10 @@ const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> })
     control,
     name: 'weddingInfo',
   });
+  const mainPhotoInfo = useWatch({
+    control,
+    name: "mainPhotoInfo"
+  })
   return (
     <>
       {guestBookButton && <GuestBook />}
@@ -29,6 +33,9 @@ const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> })
         attendanceButton={attendanceButton}
         dDayCount={dDayCount}
         weddingInfoDate={weddingInfoDate.date}
+        leftName={mainPhotoInfo.leftName}
+        rightName={mainPhotoInfo.rightName}
+        icon={mainPhotoInfo.icon}
       />
     </>
   );

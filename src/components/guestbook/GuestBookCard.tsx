@@ -10,11 +10,16 @@ const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry;
   return (
     <div className='text-black w-full px-4 mb-4'>
       <div className='bg-gray-50 rounded-xl px-4'>
-        <div>
-          <span onClick={toggleAccordion}>x {/* @TODO 나중에 아이콘으로 변경 필요 */}</span>
+        <div className='flex justify-between pt-4'>
+          <div className='text-gray-900 font-bold'>{guestBook.name}</div>
+          <img
+            src='/assets/images/icons/x-03.svg'
+            alt='x'
+            className='w-[24px] h-[24px]'
+            onClick={toggleAccordion}
+          />
         </div>
-        <div>{guestBook.name}</div>
-        <div className='mb-[14px]'>{guestBook.content}</div>
+        <div className='text-gray-700 mt-[5px] mb-[14px] break-words whitespace-pre-wrap'>{guestBook.content}</div>
         <div
           className={`transition-[max-height] duration-300 overflow-hidden ${isAccordionOpen ? 'max-h-[300px]' : 'max-h-0'}`}
         >

@@ -10,10 +10,10 @@ const AttendanceButton = () => {
   return (
     <>
       <div
-        className='cursor-pointer text-center bg-gray-500 text-black'
+        className='px-4 py-3 cursor-pointer text-center bg-primary300 text-white rounded-xl'
         onClick={handleModalClick}
       >
-        참석 여부 전달
+        참여의사 전달하기
       </div>
       {showModal && (
         <AttendanceModal
