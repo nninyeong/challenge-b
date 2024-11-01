@@ -1,4 +1,5 @@
 import AccountInput from '@/components/create/AccountInput';
+import GalleryInput from '@/components/create/GalleryInput';
 import GreetingInput from '@/components/create/GreetingInput';
 import GuestInfoInput from '@/components/create/GuestInfoInput';
 import MainPhotoInput from '@/components/create/MainPhotoInput';
@@ -7,6 +8,7 @@ import MoodPresetInput from '@/components/create/MoodPresetInput';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import AccountPreView from '@/components/create/preview/AccountPreView';
+import GalleryPreview from '@/components/create/preview/GalleryPreview';
 import GreetingPreview from '@/components/create/preview/GreetingPreview';
 import GuestInfoPreview from '@/components/create/preview/GuestInfoPreview';
 import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
@@ -63,6 +65,11 @@ export const INITIAL_ORDER = (methods: UseFormReturn<InvitationFormType>) => {
       order: 6,
       component: <GuestInfoPreview control={methods.control} />,
       input: [<GuestInfoInput key={'guest'} />],
+    },
+    {
+      order: 7,
+      component: <GalleryPreview control={methods.control} />,
+      input: [<GalleryInput key={'guest'} />],
     },
   ];
 };
