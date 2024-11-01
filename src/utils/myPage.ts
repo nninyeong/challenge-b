@@ -1,8 +1,8 @@
-import { InvitationFormType } from '@/types/invitationFormType.type';
+import { InvitationCard } from '@/types/database.type';
 import { getUserInfo } from './server-action';
 import { supabase } from './supabase/createClient';
 
-export const getInvitationCard = async (): Promise<InvitationFormType[] | null> => {
+export const getInvitationCard = async () => {
   const user = await getUserInfo();
   const userId = user?.user.id;
   const { data, error } = await supabase.from('invitation').select('*').eq('user_id', userId);
@@ -12,7 +12,7 @@ export const getInvitationCard = async (): Promise<InvitationFormType[] | null> 
     return null;
   }
 
-  return data as InvitationFormType[];
+  return data as unknown as InvitationCard[];
 };
 
 export const patchPrivateInvitation = async (isPrivate: boolean) => {
@@ -21,6 +21,19 @@ export const patchPrivateInvitation = async (isPrivate: boolean) => {
   const { data, error } = await supabase.from('invitation').update({ isPrivate: isPrivate }).eq('user_id', userId);
   if (error) {
     console.error('초대장 상태 업데이트 실패:', error);
+    return null;
+  }
+  return data;
+};
+
+export const deleteInvitationCard = async (invitationId: string) => {
+  const user = await getUserInfo();
+  const userId = user?.user.id;
+
+  const { data, error } = await supabase.from('invitation').delete().eq('id', invitationId).eq('user_id', userId);
+
+  if (error) {
+    console.error('초대장을 삭제하지 못했습니다.', error);
     return null;
   }
   return data;

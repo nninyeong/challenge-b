@@ -2,10 +2,10 @@ import { Review } from '@/types/review.types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getAuthUsersProfile } from '@/utils/getReview';
+
 import { User } from '@/types/users.types';
 import { GoPlus } from 'react-icons/go';
+import { useAuthUserQuery } from '@/hooks/queries/review/useGetReview';
 
 type ReviewsCardProp = {
   reviews: Review[];
@@ -28,17 +28,10 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
     return `${year}.${month}.${day}`;
   };
 
-  const {
-    data: users,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['authUsers'],
-    queryFn: getAuthUsersProfile,
-  });
+  const { data: users, isLoading, error } = useAuthUserQuery();
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>오류 발생</div>;
+  if (error) return <div>오류 발생</div>;
 
   return (
     <div>
@@ -65,7 +58,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
         return (
           <div
             key={review.id}
-            className='w-full h-auto flex border border-solid border-l-0 border-r-0 border-t-0 mb-4 pb-4 cursor-pointer relative'
+            className='w-full h-[152px] flex border border-solid border-l-0 border-r-0 border-t-0 mb-4 cursor-pointer relative'
           >
             <div className='w-[130px] h-[130px] rounded flex flex-shrink-0 relative'>
               <Image
