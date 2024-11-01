@@ -21,7 +21,7 @@ const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
   return (
     <div
       className='relative'
-      style={{ minHeight: 'calc(100vh - 114px)' }}
+      style={{ minHeight: 'calc(100vh - 64px)' }}
     >
       <ReviewSlide images={reviewData.image_url!} />
 
