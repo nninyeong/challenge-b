@@ -110,3 +110,11 @@ export type InvitationFormType = {
   mainPhotoInfo: MainPhotoType;
   isPrivate: boolean;
 };
+
+export type InvitationCard = {
+  main_photo_info: {
+    imageUrl: string;
+  };
+  isPrivate: boolean;
+  id: string;
+};
