@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
-import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const ReviewSlide = ({ images }: { images: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -24,15 +24,15 @@ const ReviewSlide = ({ images }: { images: string[] }) => {
       />
       <button
         onClick={() => handlePrevious()}
-        className='absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/50 text-black px-4 py-2 rounded-full z-50'
+        className='absolute flex items-center justify-center left-4 top-1/2 transform -translate-y-1/2 bg-black/60 text-white px-4 py-2 rounded-full z-50 w-[40px] h-[40px]'
       >
-        <MdNavigateBefore />
+        <FaChevronLeft className='w-[28px] h-[28px]' />
       </button>
       <button
         onClick={() => handleNext()}
-        className='absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/50 text-black px-4 py-2 rounded-full z-50 cursor-pointer'
+        className='flex items-center justify-center absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/60 text-white px-4 py-2 rounded-full z-50 w-[40px] h-[40px]'
       >
-        <MdNavigateNext />
+        <FaChevronRight className='w-[28px] h-[28px]' />
       </button>
     </>
   );
