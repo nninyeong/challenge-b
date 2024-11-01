@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { getUserInfo } from '@/utils/server-action';
 import { useQueryClient } from '@tanstack/react-query';
 import { reviewInputSchema } from '@/lib/zod/reviewInputSchema';
+import { Notify } from 'notiflix';
 
 type ReviewType = {
   content: string;
@@ -90,6 +91,7 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
     }
     setOpenBottomSheet(false);
     queryClient.invalidateQueries({ queryKey: ['reviews'] });
+    Notify.success('작성되었습니다.');
   };
 
   const handleFileChange = (file: File | null) => {
