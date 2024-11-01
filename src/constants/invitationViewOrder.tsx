@@ -19,6 +19,7 @@ import StickerInput from '@/components/create/StickerInput';
 import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
+import { COMPONENT_TYPES } from '@/constants/componentTypes';
 
 export const INITIAL_ORDER = (methods: UseFormReturn<InvitationFormType>) => {
   return [
@@ -35,41 +36,49 @@ export const INITIAL_ORDER = (methods: UseFormReturn<InvitationFormType>) => {
         <StickerInput key={'sticker'} />,
         <MainViewInput key={'mainview'} />,
       ],
+      typeOnSharedCard: COMPONENT_TYPES.MAIN_PHOTO,
     },
     {
       order: 1,
       component: <GreetingPreview control={methods.control} />,
       input: [<GreetingInput key={'greeting'} />],
+      typeOnSharedCard: COMPONENT_TYPES.GREETING,
     },
     {
       order: 2,
       component: <PersonalInfoPreview control={methods.control} />,
       input: [<PersonalInfoInput key={'personal'} />],
+      typeOnSharedCard: COMPONENT_TYPES.PERSONAL_INFO,
     },
     {
       order: 3,
       component: <AccountPreView control={methods.control} />,
       input: [<AccountInput key={'account'} />],
+      typeOnSharedCard: COMPONENT_TYPES.ACCOUNT,
     },
     {
       order: 4,
       component: <WeddingInfoPreView control={methods.control} />,
       input: [<WeddingInfoInput key={'wedding'} />],
+      typeOnSharedCard: COMPONENT_TYPES.WEDDING_INFO,
     },
     {
       order: 5,
       component: <NavigationDetailsPreview control={methods.control} />,
       input: [<NavigationDetailInput key={'navi'} />],
+      typeOnSharedCard: COMPONENT_TYPES.NAVIGATION_DETAILS,
     },
     {
       order: 6,
       component: <GuestInfoPreview control={methods.control} />,
       input: [<GuestInfoInput key={'guest'} />],
+      typeOnSharedCard: COMPONENT_TYPES.GUEST_INFO,
     },
     {
       order: 7,
       component: <GalleryPreview control={methods.control} />,
       input: [<GalleryInput key={'guest'} />],
+      typeOnSharedCard: COMPONENT_TYPES.GALLERY,
     },
   ];
 };
