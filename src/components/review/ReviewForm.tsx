@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
@@ -20,7 +20,7 @@ type ReviewUserType = { userId: string; userName: string; avatar_url: string };
 const MAX_CHAR = 200;
 const MAX_PHOTO = 5;
 const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>> }) => {
-  const { register, handleSubmit, control, setValue, getValues, watch } = useForm<ReviewType>({
+  const { register, handleSubmit, control, setValue, getValues } = useForm<ReviewType>({
     mode: 'onChange',
     defaultValues: { content: '', images: [null, null, null, null, null] },
     resolver: zodResolver(reviewInputSchema),
@@ -29,6 +29,11 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
   const browserClient = createClient();
   const [user, setUser] = useState<ReviewUserType>({ userId: '', userName: '', avatar_url: '' });
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+
+  const contentWatch = useWatch({
+    control,
+    name: 'content',
+  });
 
   const getUserData = async () => {
     const data = await getUserInfo();
@@ -119,7 +124,7 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
           {...register('content')}
         />
         <p className='absolute bottom-[16px] right-[16px] text-gray-500 text-[12px] font-medium'>
-          {watch('content').length} / {MAX_CHAR}
+          {contentWatch.length} / {MAX_CHAR}
         </p>
       </div>
       <div className='flex gap-[8px] mt-[16px] h-[22px] items-center'>
