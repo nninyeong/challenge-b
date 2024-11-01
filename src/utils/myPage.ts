@@ -1,4 +1,4 @@
-import { InvitationCard } from '@/types/invitationFormType.type';
+import { InvitationCard } from '@/types/database.type';
 import { getUserInfo } from './server-action';
 import { supabase } from './supabase/createClient';
 
@@ -23,5 +23,18 @@ export const patchPrivateInvitation = async (isPrivate: boolean) => {
     console.error('초대장 상태 업데이트 실패:', error);
     return null;
   }
-  return data as unknown as InvitationCard[];
+  return data;
+};
+
+export const deleteInvitationCard = async (invitationId: string) => {
+  const user = await getUserInfo();
+  const userId = user?.user.id;
+
+  const { data, error } = await supabase.from('invitation').delete().eq('id', invitationId).eq('user_id', userId);
+
+  if (error) {
+    console.error('초대장을 삭제하지 못했습니다.', error);
+    return null;
+  }
+  return data;
 };

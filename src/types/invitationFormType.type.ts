@@ -45,7 +45,9 @@ export type NavigationDetailType = {
 };
 
 export type GalleryType = {
-  images: File[];
+  images: string[];
+  grid: number;
+  ratio: string;
 };
 
 export type ImageRatioType = {
@@ -80,10 +82,18 @@ export type DecorateImageType = {
   type: string;
 };
 
+export type MoodPresetType = {
+  mood: Mood;
+  preset: Preset;
+};
+
+export type Mood = 'classic' | 'romantic' | 'modern' | 'floral' | 'rustic' | 'simple' | 'none';
+export type Preset = 'preset1' | 'preset2' | 'preset3';
+
 export type InvitationFormType = {
   gallery: GalleryType;
   type: 'scroll' | 'slide';
-  mood: string;
+  moodPreset: MoodPresetType;
   mainView: DecorateImageType;
   bgColor: ColorType;
   stickers: StickerType[];
