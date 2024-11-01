@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import ReviewsCarousel from '@/components/main/ReviewsCarousel';
+import ReviewCarousel from '@/components/main/ReviewCarousel';
 import LinkToCreateCard from '@/components/ui/LinkToCreateCard';
 import FixedQuickLink from '@/components/ui/FixedQuickLink';
 import Gallery from '@/components/main/Gallery';
@@ -24,7 +24,7 @@ export default function Home() {
       </div>
       <Gallery />
       <MoodKeyword />
-      <ReviewsCarousel />
+      <ReviewCarousel />
     </div>
   );
 }

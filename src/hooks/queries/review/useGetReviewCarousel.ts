@@ -1,8 +1,8 @@
 import browserClient from '@/utils/supabase/client';
-import { QUERY_KEYS } from '../queries/queryKeys';
+import { QUERY_KEYS } from '../queryKeys';
 import { useQuery } from '@tanstack/react-query';
 
-const getCarouselReviews = async () => {
+const getReviewCarousel = async () => {
   const response = await browserClient.from('reviews').select('*').filter('image_url', 'neq', '[]').limit(8);
 
   if (response.error) {
@@ -16,9 +16,9 @@ const getCarouselReviews = async () => {
   return response.data;
 };
 
-export const useGetCarouselReviewsQuery = () => {
+export const useGetReviewCarouselQuery = () => {
   return useQuery({
     queryKey: QUERY_KEYS.invitationReviews(),
-    queryFn: getCarouselReviews,
+    queryFn: getReviewCarousel,
   });
 };

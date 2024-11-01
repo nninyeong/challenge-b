@@ -1,27 +1,29 @@
 'use client';
 
-import { useGetCarouselReviewsQuery } from '@/hooks/reviews/useGetCarouselReviews';
+import { useGetReviewCarouselQuery } from '@/hooks/queries/review/useGetReviewCarousel';
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { data: reviewsData = [], isLoading } = useGetCarouselReviewsQuery();
+  const { data: reviewsData = [], isLoading } = useGetReviewCarouselQuery();
 
   const extendedReviewArr = useMemo(() => {
     return isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData, reviewsData[0]];
   }, [isLoading, reviewsData]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % extendedReviewArr.length);
-    }, 3000);
+    if (extendedReviewArr.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % extendedReviewArr.length);
+      }, 3000);
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, [extendedReviewArr.length]);
 
   useEffect(() => {
-    if (currentIndex === extendedReviewArr.length - 17) {
+    if (extendedReviewArr.length > 0 && currentIndex === extendedReviewArr.length - 17) {
       const timeout = setTimeout(() => {
         setCurrentIndex(0);
       }, 500);
