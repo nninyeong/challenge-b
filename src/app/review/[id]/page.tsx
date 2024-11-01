@@ -1,5 +1,6 @@
 import ReviewContentsBox from '@/components/review/ReviewContentsBox';
 import ReviewSlide from '@/components/review/ReviewSlide';
+import { VIEW_HEIGHT } from '@/constants/viewHeight';
 import { getReviewDetail } from '@/utils/server-action';
 
 interface ParamsType {
@@ -21,7 +22,7 @@ const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
   return (
     <div
       className='relative'
-      style={{ minHeight: 'calc(100vh - 64px)' }}
+      style={{ minHeight: VIEW_HEIGHT }}
     >
       <ReviewSlide images={reviewData.image_url!} />
 
