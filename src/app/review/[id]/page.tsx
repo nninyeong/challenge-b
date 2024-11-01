@@ -1,5 +1,6 @@
 import ReviewContentsBox from '@/components/review/ReviewContentsBox';
 import ReviewSlide from '@/components/review/ReviewSlide';
+import { VIEW_HEIGHT } from '@/constants/viewHeight';
 import { getReviewDetail } from '@/utils/server-action';
 
 interface ParamsType {
@@ -12,6 +13,7 @@ type ReviewType = {
   content: string;
   image_url: string[] | null;
   user_name: string | null;
+  avatar_url: string | null;
 };
 
 const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
@@ -20,7 +22,7 @@ const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
   return (
     <div
       className='relative'
-      style={{ minHeight: 'calc(100vh - 114px)' }}
+      style={{ minHeight: VIEW_HEIGHT }}
     >
       <ReviewSlide images={reviewData.image_url!} />
 
@@ -29,6 +31,7 @@ const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
         writer={reviewData.user_name!}
         content={reviewData.content}
         created={reviewData.created_at}
+        avatar_url={reviewData.avatar_url}
       />
     </div>
   );
