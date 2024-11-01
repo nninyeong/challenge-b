@@ -22,18 +22,19 @@ const MyInvitationCard = () => {
 
   const invitationCard = invitationCards?.[0];
 
-  const shareLink = `http://localhost:3000/card/${invitationCard?.id}`;
-
   const handleCopyLink = async () => {
-    navigator.clipboard
-      .writeText(shareLink)
-      .then(() => {
-        alert('링크가 클립보드에 복사되었습니다!');
-      })
-      .catch((err) => {
-        console.error('링크 복사 실패:', err);
-        alert('링크 복사에 실패했습니다.');
-      });
+    if (navigator.share) {
+      navigator
+        .share({
+          title: `{${invitationCard?.greeting_message?.title} }` || '우리 결혼합니다.',
+          text: `{${invitationCard?.greeting_message?.content} }`,
+          url: `{http://localhost:3000/card/${invitationCard?.id}}`,
+        })
+        .then(() => console.log('공유성공'))
+        .catch((error) => console.error('공유실패', error));
+    } else {
+      alert('공유하기가 지원되지 않는 환경입니다.');
+    }
   };
   return (
     <div className='w-full h-[152px] flex mx-auto rounded-xl mt-8 shadow-sm shadow-gray-400 p-4'>

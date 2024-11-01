@@ -117,4 +117,8 @@ export type InvitationCard = {
   };
   isPrivate: boolean;
   id: string;
+  greeting_message: {
+    title: string;
+    content: string;
+  };
 };
