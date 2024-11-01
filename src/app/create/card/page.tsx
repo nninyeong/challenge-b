@@ -18,6 +18,7 @@ import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { useRouter } from 'next/navigation';
+import { VIEW_HEIGHT } from '@/constants/viewHeight';
 
 const DELAY_TIME: number = 300;
 
@@ -179,7 +180,7 @@ const CreateCardPage = () => {
             {orderList.map((e, index) => {
               return (
                 <div
-                  className='min-h-[calc(100vh-114px)]'
+                  style={{ minHeight: VIEW_HEIGHT }}
                   key={e.order}
                   ref={(el) => {
                     refs.current[index] = el;

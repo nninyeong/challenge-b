@@ -1,6 +1,6 @@
 'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import PersonalInfoCard from '@/components/create/PersonalInfoCard';
+import PersonalInfoCard from '../create/preview/PersonalInfoCard';
 
 type PersonalInfoOnSharedCardPropsType = Pick<InvitationFormType, 'personalInfo'>;
 const PersonalInfoOnSharedCard = ({ personalInfo }: PersonalInfoOnSharedCardPropsType) => {
