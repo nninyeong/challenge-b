@@ -22,7 +22,7 @@ const MyInvitationCard = () => {
 
   const invitationCard = invitationCards?.[0];
 
-  const shareLink = `http://localhost:3000/invitations/${invitationCard?.id}`;
+  const shareLink = `http://localhost:3000/card/${invitationCard?.id}`;
 
   const handleCopyLink = async () => {
     navigator.clipboard

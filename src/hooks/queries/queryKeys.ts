@@ -5,4 +5,5 @@ export const QUERY_KEYS = {
   invitationCard: () => ['invitationCard'],
   authUsers: () => ['authUsers'],
   allImageReviews: () => ['allImageReviews'],
+  reviews: () => ['reviews'],
 };
