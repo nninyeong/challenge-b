@@ -2,7 +2,7 @@ import { InvitationCard } from '@/types/database.type';
 import { getUserInfo } from './server-action';
 import { supabase } from './supabase/createClient';
 
-export const getInvitationCard = async () => {
+export const getInvitationCard = async (): Promise<InvitationCard[] | null> => {
   const user = await getUserInfo();
   const userId = user?.user.id;
   const { data, error } = await supabase.from('invitation').select('*').eq('user_id', userId);

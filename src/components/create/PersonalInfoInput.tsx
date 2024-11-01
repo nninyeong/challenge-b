@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { PersonalInfo } from './preview/PersonalInfo';
+import { PersonalInfo } from './PersonalInfo';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 const PersonalInfoInput = () => {

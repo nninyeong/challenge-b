@@ -49,20 +49,18 @@ const NavigationDetailInput = () => {
       <div className='flex flex-col gap-3'>
         <div className='flex justify-between w-full gap-4'>
           <label className='flex justify-start items-center text-[14px] w-14 text-gray-700'>지하철</label>
-          <input
-            type='text'
+          <textarea
             placeholder='오시는 길 내용을 입력하세요.'
             {...register('navigationDetail.subway')}
-            className='h-[32px] w-full pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
+            className='h-[64px] w-full pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black resize-none'
           />
         </div>
         <div className='flex justify-between'>
           <label className='flex justify-start items-center text-[14px] w-14 mr-4 text-gray-700'>버스</label>
-          <input
-            type='text'
+          <textarea
             placeholder='오시는 길 내용을 입력하세요.'
             {...register('navigationDetail.bus')}
-            className='h-[32px] w-full pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
+            className='h-[64px] w-full pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black resize-none'
           />
         </div>
       </div>
