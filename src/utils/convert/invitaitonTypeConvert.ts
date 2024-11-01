@@ -18,7 +18,7 @@ export const convertToCamelCase = (invitation: Invitation): InvitationFormType =
   return {
     gallery: invitation.gallery as { images: [] },
     type: invitation.type as 'scroll' | 'slide',
-    moodPreset: invitation.mood as MoodPresetType,
+    moodPreset: invitation.mood_preset as MoodPresetType,
     mainView: invitation.main_view as DecorateImageType,
     bgColor: invitation.bg_color as ColorType,
     stickers: invitation.stickers as StickerType[],
@@ -41,7 +41,7 @@ export const convertToSnakeCase = (invitation: InvitationFormType) => {
   return {
     gallery: invitation.gallery,
     type: invitation.type,
-    mood: invitation.moodPreset,
+    mood_preset: invitation.moodPreset,
     main_view: invitation.mainView,
     bg_color: invitation.bgColor,
     stickers: invitation.stickers,
