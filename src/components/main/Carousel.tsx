@@ -1,49 +1,29 @@
 'use client';
 
-import browserClient from '@/utils/supabase/client';
-import { useQuery } from '@tanstack/react-query';
+import { useGetReviewCarouselQuery } from '@/hooks/queries/review/useGetReviewCarousel';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { data: reviewsData = [], isLoading } = useGetReviewCarouselQuery();
 
-  const getReviews = async () => {
-    const response = await browserClient
-      .from('reviews')
-      .select('*')
-      .filter('image_url', 'neq', '[]')
-      .order('created_at', { ascending: false })
-      .limit(8);
-
-    if (response.error) {
-      console.error(response.error);
-    }
-
-    if (response.data === null) {
-      return [];
-    }
-
-    return response.data;
-  };
-
-  const { data: reviewsData = [], isLoading } = useQuery({
-    queryKey: ['reviews'],
-    queryFn: getReviews,
-  });
-
-  const extendedReviewArr = [...reviewsData, ...reviewsData, ...reviewsData];
+  const extendedReviewArr = useMemo(() => {
+    return isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData, reviewsData[0]];
+  }, [isLoading, reviewsData]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % extendedReviewArr.length);
-    }, 3000);
+    if (extendedReviewArr.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % extendedReviewArr.length);
+      }, 3000);
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, [extendedReviewArr.length]);
 
   useEffect(() => {
-    if (currentIndex === extendedReviewArr.length - 16) {
+    if (extendedReviewArr.length > 0 && currentIndex === extendedReviewArr.length - 17) {
       const timeout = setTimeout(() => {
         setCurrentIndex(0);
       }, 500);
@@ -59,7 +39,9 @@ const Carousel = () => {
     };
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className='overflow-hidden w-full'>
@@ -68,14 +50,14 @@ const Carousel = () => {
         style={getCarouselStyle()}
       >
         {extendedReviewArr.map((review, index) => {
-          const imgUrls = review.image_url as string[] | null;
+          const imgUrls = review.image_url || [];
           return (
             <div
               key={`${review.id}-${index}`}
               className='mx-[8px]'
             >
               <div className='relative w-[216px] h-[222px] rounded-t-lg overflow-hidden'>
-                {imgUrls && imgUrls.length > 0 && (
+                {imgUrls.length > 0 && (
                   <Image
                     src={imgUrls[0]}
                     alt='리뷰 이미지'

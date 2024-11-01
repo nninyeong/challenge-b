@@ -160,5 +160,13 @@ div#NotiflixNotifyWrap div {
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  text-align:center;
+  text-align: center;
+}
+
+.scrollbar-hidden {
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }

@@ -3,6 +3,7 @@ export const QUERY_KEYS = {
   invitation: () => ['invitation'] as const,
   stickerImages: () => ['stickerImages'],
   invitationCard: () => ['invitationCard'],
+  reviewCarousel: () => ['reviewCarousel'],
   authUsers: () => ['authUsers'],
   allImageReviews: () => ['allImageReviews'],
 };

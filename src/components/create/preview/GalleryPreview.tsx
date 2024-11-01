@@ -1,6 +1,6 @@
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { Control, useWatch } from 'react-hook-form';
-import Image from 'next/image';
+import WeddingGallery from '@/components/card/WeddingGallery';
 
 const GalleryPreview = ({ control }: { control: Control<InvitationFormType> }) => {
   const gallery = useWatch({
@@ -8,35 +8,7 @@ const GalleryPreview = ({ control }: { control: Control<InvitationFormType> }) =
     name: 'gallery',
   });
 
-  const gridType = gallery?.grid;
-  const ratio = gallery?.ratio;
-
-  const imgStyleClass = ratio === 'rectangle' ? 'w-full h-[500px]' : 'w-full h-full';
-
-  const gridClass = gridType === 3 ? 'grid grid-cols-3 gap-2' : 'grid grid-cols-2 gap-2';
-
-  return (
-    <div className={`${gridClass} p-2`}>
-      {gallery && gallery.images.length > 0 ? (
-        gallery.images.map((image, i) => (
-          <div
-            key={image}
-            className={`relative ${ratio === 'rectangle' ? 'aspect-[9/14]' : 'aspect-square'}`}
-          >
-            <Image
-              src={image}
-              alt={`galleryImage${i}`}
-              className={imgStyleClass}
-              layout='fill'
-              objectFit='cover'
-            />
-          </div>
-        ))
-      ) : (
-        <div>업로드 된 사진이 없습니다.</div>
-      )}
-    </div>
-  );
+  return <WeddingGallery gallery={gallery} />;
 };
 
 export default GalleryPreview;
