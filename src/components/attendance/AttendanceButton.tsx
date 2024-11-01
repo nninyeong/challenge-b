@@ -2,7 +2,6 @@
 
 import useAttendanceButton from '@/hooks/attendance/useAttendanceButton';
 import AttendanceModal from './AttendanceModal';
-import { usePathname } from 'next/navigation';
 import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathname';
 
 const AttendanceButton = () => {

@@ -8,6 +8,7 @@ import Account from '@/components/card/Account';
 import WeddingInfo from '@/components/card/WeddingInfo';
 import NavigationDetails from '@/components/card/NavigationDetails';
 import GuestInfo from '@/components/card/GuestInfo';
+import WeddingGallery from '@/components/card/WeddingGallery';
 
 export const generateStaticParams = async () => {
   const { data } = await supabase.from('invitation').select('id');
@@ -29,14 +30,10 @@ const fetchInvitationData = async (id: string) => {
 const CardPage = async ({ params }: { params: { id: string } }) => {
   const invitation = await fetchInvitationData(params.id);
   const {
-    // gallery,
-    // type,
-    // mood,
+    gallery,
     mainView,
     bgColor,
     stickers,
-    // imgRatio,
-    // mainText,
     greetingMessage,
     guestbook,
     attendance,
@@ -59,6 +56,7 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
         mainView={mainView}
         stickers={stickers}
       />
+      <WeddingGallery gallery={gallery} />
       <Greeting greetingMessage={greetingMessage} />
       <PersonalInfoOnSharedCard personalInfo={personalInfo} />
       <Account account={account} />
