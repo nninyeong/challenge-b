@@ -1,21 +1,13 @@
 'use client';
 
+import { useReviewImage } from '@/hooks/queries/review/useGetReview';
 import { Review } from '@/types/review.types';
-import { getAllImageReviews } from '@/utils/getReview';
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const ReviewImage = () => {
-  const {
-    data: allReviews,
-    isLoading,
-    error,
-  } = useQuery<Review[]>({
-    queryKey: ['allImageReviews'],
-    queryFn: getAllImageReviews,
-  });
+  const { data: allReviews, isLoading, error } = useReviewImage();
 
   const router = useRouter();
   const [displayedReviews, setDisplayedReviews] = useState<Review[]>([]);
