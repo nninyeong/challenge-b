@@ -47,9 +47,6 @@ const MyInvitationCard = () => {
                   alt='invitationImg'
                   width={64}
                   height={64}
-                  onError={(e) => {
-                    e.currentTarget.src = '/assets/images/defaultImg.png';
-                  }}
                 />
               </div>
               <div className='flex flex-col justify-between'>
@@ -77,7 +74,7 @@ const MyInvitationCard = () => {
           </div>
           <div className='w-full flex gap-4 '>
             <div className='flex-1'>
-              <Link href={`/create/card`}>
+              <Link href={`/card/${invitationCard?.id}`}>
                 <Button className='bg-primary300 rounded-xl w-full pt-2.5 pb-2.5'>미리보기</Button>
               </Link>
             </div>
