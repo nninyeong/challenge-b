@@ -1,63 +1,15 @@
 'use client';
 import { Control, useWatch } from 'react-hook-form';
-import PersonalInfoCard from './PersonalInfoCard';
 import { InvitationFormType } from '@/types/invitationFormType.type';
+import PersonalInfoOnSharedCard from '@/components/card/PersonalInfoOnSharedCard';
 
 const PersonalInfoPreview = ({ control }: { control: Control<InvitationFormType> }) => {
-  const personaInfoWatch = useWatch({
+  const personalInfo = useWatch({
     control,
     name: 'personalInfo',
   });
 
-  const { bride, groom } = personaInfoWatch;
-
-  return (
-    <div className='flex flex-col justify-center items-center gap-[30px]'>
-      <div className='flex gap-[50px]'>
-        <div className='flex flex-col gap-[30px]'>
-          <div className='flex flex-col justify-center items-center'>
-            <PersonalInfoCard
-              label={groom.relation}
-              name={groom.name}
-              phoneNumber={groom.phoneNumber}
-            />
-          </div>
-          <p className='text-center'>신랑 측 혼주</p>
-          <PersonalInfoCard
-            label={groom.father.relation}
-            name={groom.father.isDeceased ? `故 ${groom.father.name}` : groom.father.name}
-            phoneNumber={groom.father.phoneNumber}
-          />
-          <PersonalInfoCard
-            label={groom.mother.relation}
-            name={groom.mother.isDeceased ? `故 ${groom.mother.name}` : groom.mother.name}
-            phoneNumber={groom.mother.phoneNumber}
-          />
-        </div>
-
-        <div className='flex flex-col gap-[30px]'>
-          <div className='flex flex-col justify-center items-center'>
-            <PersonalInfoCard
-              label={bride.relation}
-              name={bride.name}
-              phoneNumber={bride.phoneNumber}
-            />
-          </div>
-          <p className='text-center'>신부 측 혼주</p>
-          <PersonalInfoCard
-            label={bride.father.relation}
-            name={bride.father.isDeceased ? `故 ${bride.father.name}` : bride.father.name}
-            phoneNumber={bride.father.phoneNumber}
-          />
-          <PersonalInfoCard
-            label={bride.mother.relation}
-            name={bride.mother.isDeceased ? `故 ${bride.mother.name}` : bride.mother.name}
-            phoneNumber={bride.mother.phoneNumber}
-          />
-        </div>
-      </div>
-    </div>
-  );
+  return <PersonalInfoOnSharedCard personalInfo={personalInfo} />;
 };
 
 export default PersonalInfoPreview;

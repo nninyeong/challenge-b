@@ -12,7 +12,7 @@ const MoodKeyword = () => {
       </div>
 
       <div className='flex flex-col justify-center items-center gap-[16px]'>
-        <div className='flex justify-around space-x-[8px] w-full overflow-x-auto'>
+        <div className='flex justify-around space-x-[8px] w-full overflow-x-auto scrollbar-hidden'>
           {MOOD_LIST.map((mood) => (
             <p
               key={mood.category}
