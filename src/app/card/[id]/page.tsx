@@ -4,6 +4,10 @@ import { convertToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
 import MainPhoto from '@/components/card/MainPhoto';
 import Greeting from '@/components/card/Greeting';
 import PersonalInfoOnSharedCard from '@/components/card/PersonalInfoOnSharedCard';
+import Account from '@/components/card/Account';
+import WeddingInfo from '@/components/card/WeddingInfo';
+import NavigationDetails from '@/components/card/NavigationDetails';
+import GuestInfo from '@/components/card/GuestInfo';
 
 export const generateStaticParams = async () => {
   const { data } = await supabase.from('invitation').select('id');
@@ -34,13 +38,13 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
     // imgRatio,
     // mainText,
     greetingMessage,
-    // guestbook,
-    // attendance,
+    guestbook,
+    attendance,
     personalInfo,
-    // weddingInfo,
-    // account,
-    // navigationDetail,
-    // dDay,
+    weddingInfo,
+    account,
+    navigationDetail,
+    dDay,
     mainPhotoInfo,
     isPrivate,
   } = convertToCamelCase(invitation);
@@ -57,6 +61,18 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
       />
       <Greeting greetingMessage={greetingMessage} />
       <PersonalInfoOnSharedCard personalInfo={personalInfo} />
+      <Account account={account} />
+      <WeddingInfo weddingInfo={weddingInfo} />
+      <NavigationDetails
+        navigationDetail={navigationDetail}
+        weddingInfo={weddingInfo}
+      />
+      <GuestInfo
+        attendance={attendance}
+        guestbook={guestbook}
+        dDay={dDay}
+        weddingInfo={weddingInfo}
+      />
     </div>
   );
 };
