@@ -1,38 +1,14 @@
 'use client';
 
-import browserClient from '@/utils/supabase/client';
-import { useQuery } from '@tanstack/react-query';
+import { useGetCarouselReviewsQuery } from '@/hooks/reviews/useGetCarouselReviews';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { data: reviewsData = [], isLoading } = useGetCarouselReviewsQuery();
 
-  const getReviews = async () => {
-    const response = await browserClient
-      .from('reviews')
-      .select('*')
-      .filter('image_url', 'neq', '[]')
-      .order('created_at', { ascending: false })
-      .limit(8);
-
-    if (response.error) {
-      console.error(response.error);
-    }
-
-    if (response.data === null) {
-      return [];
-    }
-
-    return response.data;
-  };
-
-  const { data: reviewsData = [], isLoading } = useQuery({
-    queryKey: ['reviews'],
-    queryFn: getReviews,
-  });
-
-  const extendedReviewArr = [...reviewsData, ...reviewsData, ...reviewsData];
+  const extendedReviewArr = isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,7 +35,9 @@ const Carousel = () => {
     };
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className='overflow-hidden w-full'>
@@ -68,14 +46,14 @@ const Carousel = () => {
         style={getCarouselStyle()}
       >
         {extendedReviewArr.map((review, index) => {
-          const imgUrls = review.image_url as string[] | null;
+          const imgUrls = review.image_url || [];
           return (
             <div
               key={`${review.id}-${index}`}
               className='mx-[8px]'
             >
               <div className='relative w-[216px] h-[222px] rounded-t-lg overflow-hidden'>
-                {imgUrls && imgUrls.length > 0 && (
+                {imgUrls.length > 0 && (
                   <Image
                     src={imgUrls[0]}
                     alt='리뷰 이미지'
