@@ -2,10 +2,12 @@
 
 import useAttendanceButton from '@/hooks/attendance/useAttendanceButton';
 import AttendanceModal from './AttendanceModal';
+import { usePathname } from 'next/navigation';
+import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathname';
 
 const AttendanceButton = () => {
+  const { invitationId } = useInvitationIdByPathname();
   const { showModal, handleModalClick } = useAttendanceButton();
-  const invitationId = '6ae529a2-725d-4e2d-ac26-07bd9e86aa34'; // @TODO 추후 청첩장 id를 넣는 방식으로 변경
 
   return (
     <>
