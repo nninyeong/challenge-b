@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    await revalidatePath(`/card/${id}`);
+    revalidatePath(`/card/${id}`);
     return NextResponse.json({ revalidated: true });
   } catch (error) {
     console.error('Error revalidating:', error);
