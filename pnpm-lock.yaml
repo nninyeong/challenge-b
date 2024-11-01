@@ -29,6 +29,9 @@ importers:
       next:
         specifier: 14.2.15
         version: 14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      notiflix:
+        specifier: ^3.2.7
+        version: 3.2.7
       papaparse:
         specifier: ^5.4.1
         version: 5.4.1
@@ -1297,6 +1300,9 @@ packages:
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
+
+  notiflix@3.2.7:
+    resolution: {integrity: sha512-NRu6KSeyfphgPKBxh4IUoOYXbROrpuDa9/q9/VPb6UNEP4uII9RKwclTZWUyl1A0tSh9+lEhdz9F/EkskH3A6w==}
 
   npm-normalize-package-bin@4.0.0:
     resolution: {integrity: sha512-TZKxPvItzai9kN9H/TkmCtx/ZN/hvr3vUycjlfmH0ootY9yFBzNOpiXAdIn1Iteqsvk4lQn6B5PTrt+n6h8k/w==}
@@ -3321,6 +3327,8 @@ snapshots:
       formdata-polyfill: 4.0.10
 
   normalize-path@3.0.0: {}
+
+  notiflix@3.2.7: {}
 
   npm-normalize-package-bin@4.0.0: {}
 

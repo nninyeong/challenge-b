@@ -117,6 +117,52 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.custom-radio {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+
+.custom-radio:checked {
+  background-color: white;
+  border: 2px solid #ff6666;
+}
+
+.custom-radio:checked::after {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: #ff6666;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+div#NotiflixNotifyWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+div#NotiflixNotifyWrap div {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 12px;
+  padding-left: 12px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
 .scrollbar-hidden {
   scrollbar-width: none;
 }

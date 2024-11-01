@@ -32,8 +32,8 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
   });
 
   const previewRef = useRef<HTMLDivElement | null>(null);
-
   const [activeStickerId, setActiveStickerId] = useState<string | null>(null);
+
   const handleActiveSticker = (id?: string) => {
     setActiveStickerId(id || null);
   };
@@ -61,9 +61,8 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
             <Image
               src={mainPhotoInfo.imageUrl}
               alt='mainImg'
-              objectFit='cover'
               fill
-              className='z-0'
+              className='z-0 object-cover'
             />
             <div className='absolute inset-0 flex justify-center items-center'>
               {mainViewType.type === 'arch' && <ArchSvg color={svgBgColor} />}
