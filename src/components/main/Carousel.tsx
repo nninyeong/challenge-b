@@ -8,7 +8,7 @@ const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { data: reviewsData = [], isLoading } = useGetCarouselReviewsQuery();
 
-  const extendedReviewArr = isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData];
+  const extendedReviewArr = isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData, reviewsData.length - 1];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -19,7 +19,7 @@ const Carousel = () => {
   }, [extendedReviewArr.length]);
 
   useEffect(() => {
-    if (currentIndex === extendedReviewArr.length - 16) {
+    if (currentIndex === extendedReviewArr.length - 17) {
       const timeout = setTimeout(() => {
         setCurrentIndex(0);
       }, 500);
