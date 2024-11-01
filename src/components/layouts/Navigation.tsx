@@ -32,7 +32,6 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
   return (
     <nav className='flex gap-3 justify-center items-center'>
       <LinkToReviewPage />
-      <button onClick={() => Notify.success('check')}>click</button>
       {isAuthenticated ? (
         <>
           <LinkToMypage />
