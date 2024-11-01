@@ -7,7 +7,7 @@ export const uploadImageToSupabaseStorage = async (file: File) => {
   if (error) return console.error('대표사진 업로드를 실패하였습니다.', error);
 
   const { data: urlData } = supabase.storage.from('invitation').getPublicUrl(data.path);
-  console.log(urlData.publicUrl);
+
   return urlData.publicUrl;
 };
 
@@ -19,6 +19,6 @@ export const uploadGalleryImageToSupabaseStorage = async (file: File) => {
   if (error) return console.error('대표사진 업로드를 실패하였습니다.', error);
 
   const { data: urlData } = supabase.storage.from('invitation').getPublicUrl(data.path);
-  console.log(urlData.publicUrl);
-  return urlData.publicUrl as unknown as string; 
+
+  return urlData.publicUrl as unknown as string;
 };

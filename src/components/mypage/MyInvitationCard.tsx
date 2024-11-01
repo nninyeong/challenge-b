@@ -1,35 +1,16 @@
 'use client';
-import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
-import { deleteInvitationCard, getInvitationCard } from '@/utils/myPage';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { IoClose } from 'react-icons/io5';
 import { PiLinkSimpleBold } from 'react-icons/pi';
 import Button from '../ui/Button';
+import { useDeleteInvitationCard, useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 
 const MyInvitationCard = () => {
-  const {
-    data: invitationCards,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: QUERY_KEYS.invitationCard(),
-    queryFn: getInvitationCard,
-  });
+  const { data: invitationCards, isLoading, error } = useGetAllinvitationCard();
 
-  const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: deleteInvitationCard,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitationCard() });
-      alert('청첩장이 삭제완료되었습니다.');
-    },
-    onError: (error) => {
-      console.error('Delete Invitation Card Error', error);
-      alert('청첩장 삭제에 실패했습니다.');
-    },
-  });
+  const mutation = useDeleteInvitationCard();
 
   const handleDeleteCards = (invitationId: string) => {
     const confirmed = confirm('청첩장을 삭제하시겠습니까?');

@@ -62,8 +62,7 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
               src={mainPhotoInfo.imageUrl}
               alt='mainImg'
               fill
-              style={{ objectFit: 'cover' }}
-              className='z-0'
+              className='z-0 object-cover'
             />
             <div className='absolute inset-0 flex justify-center items-center'>
               {mainViewType.type === 'arch' && <ArchSvg color={svgBgColor} />}

@@ -21,9 +21,9 @@ const MainPhotoInput = () => {
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const getPublicUrl = await uploadImageToSupabaseStorage(file);
-      if (getPublicUrl) {
-        setValue('mainPhotoInfo.imageUrl', getPublicUrl);
+      const publicUrl = await uploadImageToSupabaseStorage(file);
+      if (publicUrl) {
+        setValue('mainPhotoInfo.imageUrl', publicUrl);
       }
     }
   };
