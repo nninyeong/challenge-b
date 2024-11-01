@@ -7,6 +7,21 @@ import FixedQuickLink from '@/components/ui/FixedQuickLink';
 import Gallery from '@/components/main/Gallery';
 import MoodKeyword from '@/components/main/MoodKeyword';
 import { handleAuthCallback } from '@/utils/auth/authCallbackHandler';
+import { Notify } from 'notiflix';
+
+Notify.init({
+  backOverlay: false,
+  useIcon: false,
+  borderRadius: '20px',
+  position: 'center-bottom',
+  distance: '50px',
+  cssAnimationDuration: 200,
+  fontFamily: 'Main',
+  fontSize: '16px',
+  success: {
+    background: 'rgba(64, 64, 64, 0.8)',
+  },
+});
 
 export default function Home() {
   const router = useRouter();
