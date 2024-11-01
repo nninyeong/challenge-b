@@ -4,4 +4,6 @@ export const QUERY_KEYS = {
   stickerImages: () => ['stickerImages'],
   invitationCard: () => ['invitationCard'],
   invitationReviews: () => ['reviews'],
+  authUsers: () => ['authUsers'],
+  allImageReviews: () => ['allImageReviews'],
 };
