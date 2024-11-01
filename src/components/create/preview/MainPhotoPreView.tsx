@@ -32,8 +32,8 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
   });
 
   const previewRef = useRef<HTMLDivElement | null>(null);
-
   const [activeStickerId, setActiveStickerId] = useState<string | null>(null);
+
   const handleActiveSticker = (id?: string) => {
     setActiveStickerId(id || null);
   };

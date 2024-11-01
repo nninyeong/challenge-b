@@ -61,7 +61,10 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
     ratio: 'square',
   },
   type: 'scroll',
-  mood: '',
+  moodPreset: {
+    mood: 'classic',
+    preset: 'preset1',
+  },
   stickers: [],
   imgRatio: {
     ratio: '',
