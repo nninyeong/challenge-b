@@ -9,7 +9,7 @@ import { createPortal } from 'react-dom';
 import ColorPaletteModal from './ColorPaletteModal';
 import { ColorType, DecorateImageType } from '@/types/invitationFormType.type';
 import DecorateImageTypeComponent from './DecorateImageTypeComponent';
-const COLOR_DEFAULT_PALETTE: ColorType[] = [
+export const COLOR_DEFAULT_PALETTE: ColorType[] = [
   { r: 0, g: 0, b: 0, a: 1, name: '블랙' }, // #000000
   { r: 90, g: 90, b: 90, a: 1, name: '그레이' }, // #5A5A5A
   { r: 202, g: 126, b: 121, a: 1, name: '핑크' }, // #Ca7E79
@@ -20,7 +20,7 @@ const COLOR_DEFAULT_PALETTE: ColorType[] = [
   { r: 226, g: 205, b: 175, a: 1, name: '베이지' }, // #E2CDAF
 ] as const;
 
-const DECORATE_IMAGE_TYPE: DecorateImageType[] = [
+export const DECORATE_IMAGE_TYPE: DecorateImageType[] = [
   { name: '기본', type: 'default' },
   { name: '채우기', type: 'fill' },
   { name: '아치', type: 'arch' },

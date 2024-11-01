@@ -3,6 +3,7 @@ import GreetingInput from '@/components/create/GreetingInput';
 import GuestInfoInput from '@/components/create/GuestInfoInput';
 import MainPhotoInput from '@/components/create/MainPhotoInput';
 import MainViewInput from '@/components/create/MainViewInput';
+import MoodPresetInput from '@/components/create/MoodPresetInput';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import AccountPreView from '@/components/create/preview/AccountPreView';
@@ -28,6 +29,7 @@ export const INITIAL_ORDER = (methods: UseFormReturn<InvitationFormType>) => {
       ),
       input: [
         <MainPhotoInput key={'photoview'} />,
+        <MoodPresetInput key={'mood'} />,
         <StickerInput key={'sticker'} />,
         <MainViewInput key={'mainview'} />,
       ],

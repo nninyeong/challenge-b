@@ -63,6 +63,9 @@ const CreateCardPage = () => {
 
     if (existingInvitation) {
       updateInvitation(invitationData);
+      alert('청첩장이 업데이트되었습니다.');
+    } else {
+      insertInvitation(invitationData);
       alert('청첩장이 생성되었습니다.');
     }
   };
