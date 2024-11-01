@@ -18,7 +18,7 @@ const getReviewCarousel = async () => {
 
 export const useGetReviewCarouselQuery = () => {
   return useQuery({
-    queryKey: QUERY_KEYS.invitationReviews(),
+    queryKey: QUERY_KEYS.reviewCarousel(),
     queryFn: getReviewCarousel,
   });
 };
