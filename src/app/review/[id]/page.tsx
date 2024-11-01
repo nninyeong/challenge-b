@@ -12,6 +12,7 @@ type ReviewType = {
   content: string;
   image_url: string[] | null;
   user_name: string | null;
+  avatar_url: string | null;
 };
 
 const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
@@ -29,6 +30,7 @@ const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
         writer={reviewData.user_name!}
         content={reviewData.content}
         created={reviewData.created_at}
+        avatar_url={reviewData.avatar_url}
       />
     </div>
   );
