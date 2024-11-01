@@ -2,13 +2,15 @@
 
 import { useGetCarouselReviewsQuery } from '@/hooks/reviews/useGetCarouselReviews';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { data: reviewsData = [], isLoading } = useGetCarouselReviewsQuery();
 
-  const extendedReviewArr = isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData, reviewsData.length - 1];
+  const extendedReviewArr = useMemo(() => {
+    return isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData, reviewsData[0]];
+  }, [isLoading, reviewsData]);
 
   useEffect(() => {
     const interval = setInterval(() => {
