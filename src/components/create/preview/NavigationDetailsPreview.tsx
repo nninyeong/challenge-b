@@ -15,7 +15,6 @@ const NavigationDetailsPreview = ({ control }: { control: Control<InvitationForm
   });
   return (
     <>
-      <div>NavigationDetailsPreview</div>
       {navigationDetail.map && <MapView address={weddingInfoWatch.weddingHallAddress} />}
       {navigationDetail.navigationButton && (
         <NavigationButtons
