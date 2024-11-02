@@ -25,7 +25,7 @@ const DeleteGuestBookAccordion = ({
       <form onSubmit={handleGuestBookDelete}>
         <input
           type='password'
-          className='border-gray-500 border outline-none p-1 w-full mb-2 rounded-lg'
+          className='border-gray-500 border outline-none p-2 w-full mb-2 rounded-lg text-[14px] font-main'
           value={password}
           placeholder='비밀번호를 입력하세요.'
           onChange={handlePasswordChange}

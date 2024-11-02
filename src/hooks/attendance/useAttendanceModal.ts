@@ -12,8 +12,8 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
   } = useForm<AttendanceFormData>({
     resolver: zodResolver(attendanceSchema),
     defaultValues: {
-      personType: '',
-      mealOption: '',
+      personType: '신랑',
+      mealOption: false,
       name: '',
       attendanceCount: undefined,
     },
@@ -28,7 +28,7 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
         division: personType,
         name,
         person_count: attendanceCount,
-        whether_food: mealOption === '예정',
+        whether_food: mealOption,
       },
     ]);
 
