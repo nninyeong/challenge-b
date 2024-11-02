@@ -8,7 +8,8 @@ const RenderOrderCustomPreview = () => {
     currentOffset: monitor.getSourceClientOffset(),
   }));
 
-  if (!isDragging || !currentOffset) return null;
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (!isDragging || !currentOffset || !isTouchDevice) return null;
 
   return (
     <div
