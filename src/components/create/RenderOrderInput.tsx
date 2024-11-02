@@ -2,12 +2,10 @@ import { DndProvider } from 'react-dnd-multi-backend';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { HTML5toTouch } from '@/lib/reactDnd/dndBackends';
 import { memo, useCallback } from 'react';
-import { OrderItem } from '@/types/invitationFormType.type';
-import { useDrag, useDrop } from 'react-dnd';
+import DraggableRenderOrder from '@/components/create/DraggableRenderOrder';
 
 const RenderOrderInput = () => {
   const { setValue } = useFormContext();
-
   const renderOrder = useWatch({ name: 'renderOrder' });
   console.log('renderOrder', renderOrder);
   const sortedRenderOrder = [...renderOrder].sort((a, b) => a.order - b.order);
@@ -40,17 +38,20 @@ const RenderOrderInput = () => {
   );
 
   return (
-    <div>
+    <div className='mb-[20px]'>
       <DndProvider options={HTML5toTouch}>
         <div>
-          {sortedRenderOrder.map((option) => (
-            <DraggableOptions
-              key={option.labelForInput}
-              option={option}
-              moveOption={moveOption}
-              findOption={findOption}
-            />
-          ))}
+          {sortedRenderOrder.map((option) => {
+            if (option.labelForInput === 'ONLY_FOR_CREATE') return;
+            return (
+              <DraggableRenderOrder
+                key={option.labelForInput}
+                option={option}
+                moveOption={moveOption}
+                findOption={findOption}
+              />
+            );
+          })}
         </div>
       </DndProvider>
     </div>
@@ -58,58 +59,3 @@ const RenderOrderInput = () => {
 };
 
 export default memo(RenderOrderInput);
-
-const DraggableOptions = ({
-  option,
-  moveOption,
-  findOption,
-}: {
-  option: OrderItem;
-  moveOption: (order: number, atOrder: number, state: 'hover' | 'drop') => void;
-  findOption: (order: number) => { option: OrderItem; index: number };
-}) => {
-  const originalOrder = findOption(option.order).index;
-  const { order, labelForInput } = option;
-  const [{ isDragging }, dragRef, preview] = useDrag(
-    () => ({
-      type: 'INVITATION_RENDER_OPTION',
-      item: { order, originalOrder },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    }),
-    [originalOrder],
-  );
-
-  const [, dropRef] = useDrop(
-    {
-      accept: 'INVITATION_RENDER_OPTION',
-      hover: ({ order: draggedOrder }: { order: number }) => {
-        if (draggedOrder !== order) {
-          const { index: overIndex } = findOption(order);
-          moveOption(draggedOrder, overIndex, 'hover');
-        }
-      },
-      drop: ({ order: draggedOrder }: { order: number }) => {
-        const { index: overIndex } = findOption(order);
-        moveOption(draggedOrder, overIndex, 'drop');
-      },
-    },
-    [findOption, moveOption],
-  );
-
-  const combinedRef = (node: HTMLDivElement | null) => {
-    dragRef(node);
-    dropRef(node);
-    preview(node);
-  };
-
-  return (
-    <div
-      ref={combinedRef}
-      className={`${isDragging && 'opacity-50'}`}
-    >
-      {labelForInput}
-    </div>
-  );
-};
