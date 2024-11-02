@@ -20,6 +20,8 @@ import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { useRouter } from 'next/navigation';
 import { VIEW_HEIGHT } from '@/constants/viewHeight';
 import Button from '@/components/ui/Button';
+import { revalidateInvitation } from '@/utils/revalidateInvitation';
+import { Notify } from 'notiflix';
 
 const DELAY_TIME: number = 300;
 
@@ -68,11 +70,14 @@ const CreateCardPage = () => {
     }
 
     if (existingInvitation) {
-      updateInvitation(invitationData);
-      alert('청첩장이 업데이트되었습니다.');
+      const { isSuccess } = await revalidateInvitation(existingInvitation.id);
+      if (isSuccess) {
+        updateInvitation(invitationData);
+        Notify.success('청첩장이 업데이트 되었습니다.');
+      }
     } else {
       insertInvitation(invitationData);
-      alert('청첩장이 생성되었습니다.');
+      Notify.success('청첩장이 생성되었습니다.');
     }
     router.push('/mypage');
   };

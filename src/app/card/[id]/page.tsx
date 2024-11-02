@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import { supabase } from '@/utils/supabase/createClient';
 import { convertToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
-import { COMPONENT_TYPES } from '@/constants/componentTypes';
 import { convertOrderToComponent } from '@/utils/convert/convertOrderToComponent';
 import { Fragment } from 'react';
 

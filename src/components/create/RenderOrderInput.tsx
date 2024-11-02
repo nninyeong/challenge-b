@@ -7,7 +7,7 @@ import DraggableRenderOrder from '@/components/create/DraggableRenderOrder';
 const RenderOrderInput = () => {
   const { setValue } = useFormContext();
   const renderOrder = useWatch({ name: 'renderOrder' });
-  console.log('renderOrder', renderOrder);
+
   const sortedRenderOrder = [...renderOrder].sort((a, b) => a.order - b.order);
   const findOption = useCallback(
     (order: number) => {
