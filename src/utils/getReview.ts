@@ -40,3 +40,10 @@ export const getAuthUsersProfile = async () => {
   }
   return data as unknown as UsersResponse;
 };
+
+export const getMyReview = async (id: string) => {
+  const { data, error } = await browserClient.from('reviews').select('*').eq('user_id', id).single();
+  if (error) return console.error(error);
+
+  return data;
+};
