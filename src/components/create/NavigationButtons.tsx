@@ -18,13 +18,17 @@ const NavigationButtons = ({ address, name }: { address: string; name: string })
         />
         티맵
       </button>
-      <button onClick={openKakaoMap} className='flex gap-[6px] items-center'>
-      <img
+      <button
+        onClick={openKakaoMap}
+        className='flex gap-[6px] items-center'
+      >
+        <img
           src='/assets/images/icons/kakaomap.svg'
           alt='카카오맵'
           className='w-[24px] h-[24px]'
-        />카카오맵
-        </button>
+        />
+        카카오맵
+      </button>
       <button
         onClick={openNaverMap}
         className='flex gap-[6px] items-center'
