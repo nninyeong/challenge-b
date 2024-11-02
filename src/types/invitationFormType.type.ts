@@ -89,7 +89,16 @@ export type MoodPresetType = {
 
 export type OrderItem = {
   order: number;
-  typeOnSharedCard: string;
+  typeOnSharedCard:
+    | 'MAIN_PHOTO'
+    | 'GREETING'
+    | 'PERSONAL_INFO'
+    | 'ACCOUNT'
+    | 'WEDDING_INFO'
+    | 'NAVIGATION_DETAILS'
+    | 'GUEST_INFO'
+    | 'GALLERY'
+    | 'ONLY_FOR_CREATE';
   labelForInput: string;
 };
 

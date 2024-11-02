@@ -24,24 +24,13 @@ const fetchInvitationData = async (id: string) => {
 
 const CardPage = async ({ params }: { params: { id: string } }) => {
   const invitation = await fetchInvitationData(params.id);
-  const { isPrivate, ...invitationData } = convertToCamelCase(invitation);
-
-  const testOrderData = [
-    { order: 1, typeOnSharedCard: COMPONENT_TYPES.MAIN_PHOTO },
-    { order: 0, typeOnSharedCard: COMPONENT_TYPES.GREETING },
-    { order: 2, typeOnSharedCard: COMPONENT_TYPES.PERSONAL_INFO },
-    { order: 5, typeOnSharedCard: COMPONENT_TYPES.ACCOUNT },
-    { order: 4, typeOnSharedCard: COMPONENT_TYPES.WEDDING_INFO },
-    { order: 3, typeOnSharedCard: COMPONENT_TYPES.NAVIGATION_DETAILS },
-    { order: 6, typeOnSharedCard: COMPONENT_TYPES.GUEST_INFO },
-    { order: 7, typeOnSharedCard: COMPONENT_TYPES.GALLERY },
-  ];
+  const { isPrivate, renderOrder, ...invitationData } = convertToCamelCase(invitation);
 
   return isPrivate ? (
     <div>아직 공개되지 않은 청첩장입니다.</div>
   ) : (
     <div>
-      {testOrderData
+      {renderOrder
         .sort((a, b) => a.order - b.order)
         .map(({ typeOnSharedCard }, index) => (
           <Fragment key={index}>{convertOrderToComponent(typeOnSharedCard, invitationData)}</Fragment>

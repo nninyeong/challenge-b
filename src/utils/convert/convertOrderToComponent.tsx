@@ -11,7 +11,7 @@ import WeddingGallery from '@/components/card/WeddingGallery';
 
 export const convertOrderToComponent = (
   typeOnSharedCard: (typeof COMPONENT_TYPES)[keyof typeof COMPONENT_TYPES],
-  invitationData: Omit<InvitationFormType, 'isPrivate'>,
+  invitationData: Omit<InvitationFormType, 'isPrivate' | 'renderOrder'>,
 ) => {
   const {
     gallery,
