@@ -19,6 +19,7 @@ import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { useRouter } from 'next/navigation';
 import { VIEW_HEIGHT } from '@/constants/viewHeight';
+import Button from '@/components/ui/Button';
 
 const DELAY_TIME: number = 300;
 
@@ -225,12 +226,12 @@ const CreateCardPage = () => {
                   </div>
                   {orderList[currentStep].input[inputIndex]}
                   {currentStep === refs.current.length - 1 && (
-                    <button
-                      className='w-full'
+                    <Button
+                      className='rounded-[12px] w-[311px] h-[48px]'
                       type='submit'
                     >
-                      제출
-                    </button>
+                      청첩장 제작 완료
+                    </Button>
                   )}
                 </form>
               </FormProvider>
