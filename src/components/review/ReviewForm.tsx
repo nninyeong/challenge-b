@@ -9,10 +9,11 @@ import { getUserInfo } from '@/utils/server-action';
 import { useQueryClient } from '@tanstack/react-query';
 import { reviewInputSchema } from '@/lib/zod/reviewInputSchema';
 import { Notify } from 'notiflix';
+import { getMyReview } from '@/utils/getReview';
 
 type ReviewType = {
   content: string;
-  images: (File | null)[];
+  images: (string | null)[];
 };
 
 type ReviewUserType = { userId: string; userName: string; avatar_url: string };
@@ -20,7 +21,7 @@ type ReviewUserType = { userId: string; userName: string; avatar_url: string };
 const MAX_CHAR = 200;
 const MAX_PHOTO = 5;
 const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>> }) => {
-  const { register, handleSubmit, control, setValue, getValues } = useForm<ReviewType>({
+  const { register, handleSubmit, control, setValue, getValues, reset } = useForm<ReviewType>({
     mode: 'onChange',
     defaultValues: { content: '', images: [null, null, null, null, null] },
     resolver: zodResolver(reviewInputSchema),
@@ -29,7 +30,8 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
   const browserClient = createClient();
   const [user, setUser] = useState<ReviewUserType>({ userId: '', userName: '', avatar_url: '' });
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
-
+  const [type, setType] = useState<'insert' | 'update'>('insert');
+  const [myReviewId, setMyReviewId] = useState<string | null>(null);
   const contentWatch = useWatch({
     control,
     name: 'content',
@@ -37,16 +39,24 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
 
   const getUserData = async () => {
     const data = await getUserInfo();
+    const myReview = await getMyReview(data.user.id);
     setUser({
       userId: data.user.id,
       userName: data.user.user_metadata.name,
       avatar_url: data.user.user_metadata.avatar_url,
     });
+    console.log(myReview);
+    if (myReview) {
+      setMyReviewId(myReview.id);
+      setType('update');
+    }
+    reset({ content: myReview.content, images: [...myReview.image_url] });
+    setPreviewUrls([...myReview.image_url]);
   };
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [reset]);
 
   const uploadFile = async (file: File) => {
     const newFileName = `${user.userId}_${file.name}`;
@@ -62,51 +72,56 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
     return url;
   };
 
-  const pushImagesToArray = async (imageFiles: (File | null)[]) => {
-    const imageUrls: string[] = [];
-    for (const file of imageFiles) {
-      if (file) {
-        const url = await uploadFile(file);
-        if (url) {
-          imageUrls.push(url);
-        }
+  const handleReviewFormSubmit = async (formData: ReviewType) => {
+    if (type === 'update') {
+      const { error } = await browserClient
+        .from('reviews')
+        .update([
+          {
+            user_id: user.userId!,
+            content: formData.content,
+            image_url: formData.images,
+            user_name: user.userName!,
+            avatar_url: user.avatar_url,
+          },
+        ])
+        .eq('id', myReviewId);
+      if (error) {
+        console.error(error);
       }
     }
-    return imageUrls;
-  };
-
-  const handleReviewFormSubmit = async (formData: ReviewType) => {
-    const images = await pushImagesToArray(formData.images);
-
-    const { error } = await browserClient
-      .from('reviews')
-      .insert([
+    if (type === 'insert') {
+      const { error } = await browserClient.from('reviews').insert([
         {
           user_id: user.userId!,
           content: formData.content,
-          image_url: images,
+          image_url: formData.images,
           user_name: user.userName!,
           avatar_url: user.avatar_url,
         },
-      ])
-      .select();
-
-    if (error) {
-      console.error(error);
+      ]);
+      if (error) {
+        console.error(error);
+      }
     }
     setOpenBottomSheet(false);
     queryClient.invalidateQueries({ queryKey: ['reviews'] });
     Notify.success('작성되었습니다.');
   };
 
-  const handleFileChange = (file: File | null) => {
+  const handleFileChange = async (file: File | null) => {
     if (file && previewUrls.length < MAX_PHOTO) {
-      setPreviewUrls((prev) => [...prev, URL.createObjectURL(file)]);
-      const currentFiles = getValues('images') || [];
-      const updatedFiles = [...currentFiles.filter(Boolean), file].slice(0, MAX_PHOTO);
-      setValue('images', updatedFiles);
+      const uploadedUrl = await uploadFile(file);
+      if (uploadedUrl) {
+        setPreviewUrls((prev) => [...prev, uploadedUrl]);
+
+        const currentImages = getValues('images') || [];
+        const updatedImages = [...currentImages.filter(Boolean), uploadedUrl].slice(0, MAX_PHOTO);
+        setValue('images', updatedImages);
+      }
     }
   };
+
   return (
     <form
       onSubmit={handleSubmit(handleReviewFormSubmit)}
