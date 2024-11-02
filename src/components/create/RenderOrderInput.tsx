@@ -3,6 +3,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { HTML5toTouch } from '@/lib/reactDnd/dndBackends';
 import { memo, useCallback } from 'react';
 import DraggableRenderOrder from '@/components/create/DraggableRenderOrder';
+import RenderOrderCustomPreview from '@/components/create/RenderOrderCustomPreview';
 
 const RenderOrderInput = () => {
   const { setValue } = useFormContext();
@@ -40,6 +41,7 @@ const RenderOrderInput = () => {
   return (
     <div className='mb-[20px]'>
       <DndProvider options={HTML5toTouch}>
+        <RenderOrderCustomPreview />
         <div>
           {sortedRenderOrder.map((option) => {
             if (option.labelForInput === 'ONLY_FOR_CREATE') return;

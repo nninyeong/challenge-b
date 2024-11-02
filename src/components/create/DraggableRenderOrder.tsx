@@ -14,16 +14,22 @@ const DraggableRenderOrder = ({
 }) => {
   const originalOrder = findOption(option.order).index;
   const { order, labelForInput } = option;
-  const [{ isDragging }, dragRef] = useDrag(
+  const [{ isDragging }, dragRef, preview] = useDrag(
     () => ({
       type: 'INVITATION_RENDER_OPTION',
-      item: { order, originalOrder },
+      item: { order, originalOrder, labelForInput },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
+      previewOptions: {
+        captureDraggingState: true,
+      },
     }),
     [originalOrder],
   );
+
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (!isTouchDevice) preview(null);
 
   const [, dropRef] = useDrop(
     {

@@ -13,9 +13,16 @@ export const HTML5toTouch = {
     {
       id: 'touch',
       backend: TouchBackend,
-      options: { enableMouseEvents: true },
+      options: {
+        enableMouseEvents: true,
+        preview: true,
+        captureDraggingState: true,
+      },
       preview: true,
       transition: TouchTransition,
+      previewOptions: {
+        captureDraggingState: true,
+      },
     },
   ],
 };
