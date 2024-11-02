@@ -8,7 +8,6 @@ type NavigationDetailsPropType = Pick<InvitationFormType, 'navigationDetail' | '
 const NavigationDetails = ({ navigationDetail, weddingInfo }: NavigationDetailsPropType) => {
   return (
     <>
-      <div>NavigationDetailsPreview</div>
       {navigationDetail.map && <MapView address={weddingInfo.weddingHallAddress} />}
       {navigationDetail.navigationButton && (
         <NavigationButtons
