@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Carousel from './Carousel';
 
-const ReviewsCarousel = () => {
+const ReviewCarousel = () => {
   return (
     <div className='flex flex-col gap-[40px]'>
       <div className='flex  justify-between items-center'>
@@ -21,4 +21,4 @@ const ReviewsCarousel = () => {
   );
 };
 
-export default ReviewsCarousel;
+export default ReviewCarousel;

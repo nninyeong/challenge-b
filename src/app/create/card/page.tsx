@@ -17,14 +17,19 @@ import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserve
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
+import { useRouter } from 'next/navigation';
+import { VIEW_HEIGHT } from '@/constants/viewHeight';
 
 const DELAY_TIME: number = 300;
 
 const CreateCardPage = () => {
+  const router = useRouter();
+
   const methods = useForm<InvitationFormType>({
     mode: 'onChange',
     defaultValues: INVITATION_DEFAULT_VALUE,
   });
+
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
@@ -63,8 +68,12 @@ const CreateCardPage = () => {
 
     if (existingInvitation) {
       updateInvitation(invitationData);
+      alert('청첩장이 업데이트되었습니다.');
+    } else {
+      insertInvitation(invitationData);
       alert('청첩장이 생성되었습니다.');
     }
+    router.push('/mypage');
   };
 
   const handleDebouncedNext = debounce(async () => {
@@ -171,7 +180,7 @@ const CreateCardPage = () => {
             {orderList.map((e, index) => {
               return (
                 <div
-                  className='min-h-[calc(100vh-114px)]'
+                  style={{ minHeight: VIEW_HEIGHT }}
                   key={e.order}
                   ref={(el) => {
                     refs.current[index] = el;

@@ -4,10 +4,16 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import LinkToMypage from '@/components/ui/LinkToMypage';
 import LinkToReviewPage from '@/components/ui/LinkToReviewPage';
+import { Notify } from 'notiflix';
+import { NOTIFLIX_INIT_VALUES } from '@/constants/notiflixInitValues';
 
 const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(initialAuthState);
   const client = createClient();
+
+  useEffect(() => {
+    Notify.init(NOTIFLIX_INIT_VALUES);
+  }, []);
 
   useEffect(() => {
     const { data: authListener } = client.auth.onAuthStateChange((event) => {
