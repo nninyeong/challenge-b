@@ -17,10 +17,12 @@ const WeddingInfo = ({ weddingInfo }: WeddingInfoPropType) => {
         <p className='text-gray-800 text-[20px] leading-[120%] mb-[8px]'>
           {weddingInfo.weddingHallName || DEFAULT_VALUES.name}
         </p>
-        <p className='text-gray-700 text-[16px] leading-[140%]'>
-          {weddingInfo.weddingHallAddress || DEFAULT_VALUES.address}
-        </p>
-        <p className=''>{weddingInfo.weddingHallContact || DEFAULT_VALUES.contact}</p>
+        <p>{weddingInfo.weddingHallAddress || DEFAULT_VALUES.address}</p>
+        <p>{weddingInfo.weddingHallContact || DEFAULT_VALUES.contact}</p>
+      </div>
+      <div className='text-gray-700 text-[16px] leading-[140%]'>
+        {/*TODO: 날짜 형식 변환, 요일*/}
+        <p>{`${weddingInfo.date} ${weddingInfo.time.hour} ${weddingInfo.time.minute}`}</p>
       </div>
       <div className='flex gap-[16px] text-gray-700 font-semibold leading-[140%]'>
         <a href={`https://map.kakao.com/link/search/${weddingInfo.weddingHallAddress}`}>
