@@ -20,12 +20,13 @@ import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
 import { COMPONENT_TYPES } from '@/constants/componentTypes';
+import RenderOrderInput from '@/components/create/RenderOrderInput';
 
-export const INITIAL_ORDER = (methods: UseFormReturn<InvitationFormType>) => {
+export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
   return [
     {
       order: 0,
-      component: (
+      component: methods && (
         <FormProvider {...methods}>
           <MainPhotoPreView control={methods.control} />
         </FormProvider>
@@ -37,48 +38,63 @@ export const INITIAL_ORDER = (methods: UseFormReturn<InvitationFormType>) => {
         <MainViewInput key={'mainview'} />,
       ],
       typeOnSharedCard: COMPONENT_TYPES.MAIN_PHOTO,
+      labelForInput: '청첩장 대표이미지',
     },
     {
       order: 1,
-      component: <GreetingPreview control={methods.control} />,
+      component: methods && <GreetingPreview control={methods.control} />,
       input: [<GreetingInput key={'greeting'} />],
       typeOnSharedCard: COMPONENT_TYPES.GREETING,
+      labelForInput: '인사말',
     },
     {
       order: 2,
-      component: <PersonalInfoPreview control={methods.control} />,
+      component: methods && <PersonalInfoPreview control={methods.control} />,
       input: [<PersonalInfoInput key={'personal'} />],
       typeOnSharedCard: COMPONENT_TYPES.PERSONAL_INFO,
+      labelForInput: '기본 정보',
     },
     {
       order: 3,
-      component: <AccountPreView control={methods.control} />,
+      component: methods && <AccountPreView control={methods.control} />,
       input: [<AccountInput key={'account'} />],
       typeOnSharedCard: COMPONENT_TYPES.ACCOUNT,
+      labelForInput: '계좌 정보',
     },
     {
       order: 4,
-      component: <WeddingInfoPreView control={methods.control} />,
+      component: methods && <WeddingInfoPreView control={methods.control} />,
       input: [<WeddingInfoInput key={'wedding'} />],
       typeOnSharedCard: COMPONENT_TYPES.WEDDING_INFO,
+      labelForInput: '예식 일시/장소',
     },
     {
       order: 5,
-      component: <NavigationDetailsPreview control={methods.control} />,
+      component: methods && <NavigationDetailsPreview control={methods.control} />,
       input: [<NavigationDetailInput key={'navi'} />],
       typeOnSharedCard: COMPONENT_TYPES.NAVIGATION_DETAILS,
+      labelForInput: '오시는 길',
     },
     {
       order: 6,
-      component: <GuestInfoPreview control={methods.control} />,
+      component: methods && <GuestInfoPreview control={methods.control} />,
       input: [<GuestInfoInput key={'guest'} />],
       typeOnSharedCard: COMPONENT_TYPES.GUEST_INFO,
+      labelForInput: '방명록/참석여부',
     },
     {
       order: 7,
-      component: <GalleryPreview control={methods.control} />,
+      component: methods && <GalleryPreview control={methods.control} />,
       input: [<GalleryInput key={'guest'} />],
       typeOnSharedCard: COMPONENT_TYPES.GALLERY,
+      labelForInput: '갤러리',
+    },
+    {
+      order: 8,
+      component: null,
+      input: [<RenderOrderInput key='renderOrder' />],
+      typeOnSharedCard: COMPONENT_TYPES.ONLY_FOR_CREATE,
+      labelForInput: COMPONENT_TYPES.ONLY_FOR_CREATE,
     },
   ];
 };

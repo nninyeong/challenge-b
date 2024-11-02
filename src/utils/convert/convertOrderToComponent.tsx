@@ -59,5 +59,6 @@ export const convertOrderToComponent = (
     [COMPONENT_TYPES.GALLERY]: <WeddingGallery gallery={gallery} />,
   };
 
+  if (typeOnSharedCard === 'ONLY_FOR_CREATE') return;
   return componentMap[typeOnSharedCard] || null;
 };

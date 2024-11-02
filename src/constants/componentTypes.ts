@@ -7,6 +7,7 @@ export const COMPONENT_TYPES = {
   NAVIGATION_DETAILS: 'NAVIGATION_DETAILS',
   GUEST_INFO: 'GUEST_INFO',
   GALLERY: 'GALLERY',
+  ONLY_FOR_CREATE: 'ONLY_FOR_CREATE',
 } as const;
 
 export type ComponentType = (typeof COMPONENT_TYPES)[keyof typeof COMPONENT_TYPES];

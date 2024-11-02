@@ -87,6 +87,12 @@ export type MoodPresetType = {
   preset: Preset;
 };
 
+export type OrderItem = {
+  order: number;
+  typeOnSharedCard: string;
+  labelForInput: string;
+};
+
 export type Mood = 'classic' | 'romantic' | 'modern' | 'floral' | 'rustic' | 'simple' | 'none';
 export type Preset = 'preset1' | 'preset2' | 'preset3';
 
@@ -109,6 +115,7 @@ export type InvitationFormType = {
   dDay: boolean;
   mainPhotoInfo: MainPhotoType;
   isPrivate: boolean;
+  renderOrder: OrderItem[];
 };
 
 export type InvitationCard = {
