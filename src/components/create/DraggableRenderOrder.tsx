@@ -14,7 +14,7 @@ const DraggableRenderOrder = ({
 }) => {
   const originalOrder = findOption(option.order).index;
   const { order, labelForInput } = option;
-  const [{ isDragging }, dragRef, preview] = useDrag(
+  const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: 'INVITATION_RENDER_OPTION',
       item: { order, originalOrder, labelForInput },
@@ -27,9 +27,6 @@ const DraggableRenderOrder = ({
     }),
     [originalOrder],
   );
-
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  if (!isTouchDevice) preview(null);
 
   const [, dropRef] = useDrop(
     {
