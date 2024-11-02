@@ -70,6 +70,7 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
         guestbook={guestbook}
         dDay={dDay}
         weddingInfo={weddingInfo}
+        mainPhotoInfo={mainPhotoInfo}
       />
     </div>
   );
