@@ -6,11 +6,11 @@ import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getUserInfo } from '@/utils/server-action';
-import { useQueryClient } from '@tanstack/react-query';
 import { reviewInputSchema } from '@/lib/zod/reviewInputSchema';
-import { Notify } from 'notiflix';
+
 import { getMyReview } from '@/utils/getReview';
-import { useReviewBottomSheetContext } from '@/provider/reviewBottomSheetProvider';
+
+import { useReviewMutation } from '@/hooks/queries/review/useReviewMutation';
 
 type ReviewType = {
   content: string;
@@ -19,6 +19,13 @@ type ReviewType = {
 
 type ReviewUserType = { userId: string; userName: string; avatar_url: string };
 
+export type MutationReviewFormDataType = {
+  user_id: string;
+  content: string;
+  image_url: (string | null)[];
+  user_name: string;
+  avatar_url: string;
+};
 const MAX_CHAR = 200;
 const MAX_PHOTO = 5;
 const ReviewForm = () => {
@@ -27,17 +34,16 @@ const ReviewForm = () => {
     defaultValues: { content: '', images: [null, null, null, null, null] },
     resolver: zodResolver(reviewInputSchema),
   });
-  const queryClient = useQueryClient();
   const browserClient = createClient();
   const [user, setUser] = useState<ReviewUserType>({ userId: '', userName: '', avatar_url: '' });
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [type, setType] = useState<'insert' | 'update'>('insert');
-  const { setIsReviewBottomSheetOpen } = useReviewBottomSheetContext((state) => state);
   const [myReviewId, setMyReviewId] = useState<string | null>(null);
   const contentWatch = useWatch({
     control,
     name: 'content',
   });
+  const { mutate: mutateMyReview } = useReviewMutation();
 
   const getUserData = async () => {
     const userInfo = await getUserInfo();
@@ -50,9 +56,12 @@ const ReviewForm = () => {
     if (myReview) {
       setMyReviewId(myReview.id);
       setType('update');
+      reset({ content: myReview.content, images: [...myReview.image_url] });
+
+      if (myReview.image_url.some((url: string) => url !== null)) {
+        setPreviewUrls(myReview.image_url.filter((url: string) => url !== null));
+      }
     }
-    reset({ content: myReview.content, images: [...myReview.image_url] });
-    setPreviewUrls([...myReview.image_url]);
   };
 
   useEffect(() => {
@@ -74,40 +83,14 @@ const ReviewForm = () => {
   };
 
   const handleReviewFormSubmit = async (formData: ReviewType) => {
-    if (type === 'update') {
-      const { error } = await browserClient
-        .from('reviews')
-        .update([
-          {
-            user_id: user.userId!,
-            content: formData.content,
-            image_url: formData.images,
-            user_name: user.userName!,
-            avatar_url: user.avatar_url,
-          },
-        ])
-        .eq('id', myReviewId);
-      if (error) {
-        console.error(error);
-      }
-    }
-    if (type === 'insert') {
-      const { error } = await browserClient.from('reviews').insert([
-        {
-          user_id: user.userId!,
-          content: formData.content,
-          image_url: formData.images,
-          user_name: user.userName!,
-          avatar_url: user.avatar_url,
-        },
-      ]);
-      if (error) {
-        console.error(error);
-      }
-    }
-    setIsReviewBottomSheetOpen(false);
-    queryClient.invalidateQueries({ queryKey: ['reviews'] }); //TODO 소현님 브랜치 merge후 queryKey 분리 예정
-    Notify.success('작성되었습니다.');
+    const data: MutationReviewFormDataType = {
+      user_id: user.userId!,
+      content: formData.content,
+      image_url: formData.images,
+      user_name: user.userName!,
+      avatar_url: user.avatar_url,
+    };
+    mutateMyReview({ mutationData: data, type: type, myReviewId: myReviewId });
   };
 
   const handleFileChange = async (file: File | null) => {
