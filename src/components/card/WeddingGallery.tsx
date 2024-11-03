@@ -1,11 +1,11 @@
 import { useDeleteGalleryImage } from '@/hooks/queries/invitation/useUpdateImages';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
-import { Control, useWatch } from 'react-hook-form';
+
 import { IoClose } from 'react-icons/io5';
 
-const WeddingGallery = ({ control }: { control: Control<InvitationFormType> }) => {
-  const gallery = useWatch({ control, name: 'gallery' });
+type GalleryPropType = Pick<InvitationFormType, 'gallery'>;
+const WeddingGallery = ({ gallery }: GalleryPropType) => {
   const gridType = gallery?.grid;
   const ratio = gallery?.ratio;
 
