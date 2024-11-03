@@ -52,11 +52,12 @@ const SelectBox = ({
       )}
       <div
         ref={selectBoxRef}
-        className={`relative border-[.5px] border-gray-300 w-[${width}] ${isOpen ? 'rounded-t-[8px] bg-white z-50' : 'rounded-[8px]'} text-[12px] text-gray-400`}
+        style={{ width: `${width}` }}
+        className={`relative border-[.5px] border-gray-300 ${isOpen ? 'rounded-t-[8px] bg-white z-50' : 'rounded-[8px]'} text-[12px] text-gray-400`}
       >
         <div
           onClick={handleToggleSelect}
-          className='flex items-center justify-between h-[32px] px-[8px]'
+          className='flex items-center justify-between w-full h-[32px] px-[8px]'
         >
           <span>{value}</span>
           <Image
@@ -67,7 +68,7 @@ const SelectBox = ({
           />
         </div>
         <ul
-          className={`${isOpen ? 'block' : 'hidden'} absolute w-[${width}] ${limitOptionHeight && `h-[${limitOptionHeight}]`} overflow-y-auto rounded-b-[8px] border-x-[.5px] border-b-[.5px]`}
+          className={`${isOpen ? 'block' : 'hidden'} absolute w-full ${limitOptionHeight && `h-[${limitOptionHeight}]`} overflow-y-auto rounded-b-[8px] border-x-[.5px] border-b-[.5px]`}
         >
           {optionList.map((option) => (
             <li
