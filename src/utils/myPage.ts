@@ -11,7 +11,7 @@ export const getInvitationCard = async (): Promise<InvitationCard[] | null> => {
     console.error('청첩장데이터를 불러오지못했습니다.', error);
     return null;
   }
-console.log(data)
+
   return data as unknown as InvitationCard[];
 };
 
