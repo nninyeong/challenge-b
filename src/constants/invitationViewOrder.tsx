@@ -29,6 +29,7 @@ export const INITIAL_ORDER = (methods: UseFormReturn<InvitationFormType>) => {
           <MainPhotoPreView control={methods.control} />
         </FormProvider>
       ),
+      name: ['청첩장 대표 사진', '청첩장 무드 프리셋', '청첩장 메인 화면', '청첩장 스티커'],
       input: [
         <MainPhotoInput key={'photoview'} />,
         <MoodPresetInput key={'mood'} />,
@@ -39,36 +40,43 @@ export const INITIAL_ORDER = (methods: UseFormReturn<InvitationFormType>) => {
     {
       order: 1,
       component: <GreetingPreview control={methods.control} />,
+      name: ['인사말'],
       input: [<GreetingInput key={'greeting'} />],
     },
     {
       order: 2,
       component: <PersonalInfoPreview control={methods.control} />,
+      name: ['개인 정보'],
       input: [<PersonalInfoInput key={'personal'} />],
     },
     {
       order: 3,
       component: <AccountPreView control={methods.control} />,
+      name: ['계좌 정보'],
       input: [<AccountInput key={'account'} />],
     },
     {
       order: 4,
       component: <WeddingInfoPreView control={methods.control} />,
+      name: ['예식 일시'],
       input: [<WeddingInfoInput key={'wedding'} />],
     },
     {
       order: 5,
       component: <NavigationDetailsPreview control={methods.control} />,
+      name: ['교통수단 표시'],
       input: [<NavigationDetailInput key={'navi'} />],
     },
     {
       order: 6,
       component: <GuestInfoPreview control={methods.control} />,
+      name: ['방명록'],
       input: [<GuestInfoInput key={'guest'} />],
     },
     {
       order: 7,
       component: <GalleryPreview control={methods.control} />,
+      name: ['청첩장 갤러리'],
       input: [<GalleryInput key={'guest'} />],
     },
   ];
