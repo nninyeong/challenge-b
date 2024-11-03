@@ -10,6 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { reviewInputSchema } from '@/lib/zod/reviewInputSchema';
 import { Notify } from 'notiflix';
 import { getMyReview } from '@/utils/getReview';
+import { useReviewBottomSheetContext } from '@/provider/reviewBottomSheetProvider';
 
 type ReviewType = {
   content: string;
@@ -20,7 +21,7 @@ type ReviewUserType = { userId: string; userName: string; avatar_url: string };
 
 const MAX_CHAR = 200;
 const MAX_PHOTO = 5;
-const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const ReviewForm = () => {
   const { register, handleSubmit, control, setValue, getValues, reset } = useForm<ReviewType>({
     mode: 'onChange',
     defaultValues: { content: '', images: [null, null, null, null, null] },
@@ -31,6 +32,7 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
   const [user, setUser] = useState<ReviewUserType>({ userId: '', userName: '', avatar_url: '' });
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [type, setType] = useState<'insert' | 'update'>('insert');
+  const { setIsReviewBottomSheetOpen } = useReviewBottomSheetContext((state) => state);
   const [myReviewId, setMyReviewId] = useState<string | null>(null);
   const contentWatch = useWatch({
     control,
@@ -103,7 +105,7 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
         console.error(error);
       }
     }
-    setOpenBottomSheet(false);
+    setIsReviewBottomSheetOpen(false);
     queryClient.invalidateQueries({ queryKey: ['reviews'] }); //TODO 소현님 브랜치 merge후 queryKey 분리 예정
     Notify.success('작성되었습니다.');
   };

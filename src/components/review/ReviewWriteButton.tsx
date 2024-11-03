@@ -1,17 +1,14 @@
 'use client';
 
+import { useReviewBottomSheetContext } from '@/provider/reviewBottomSheetProvider';
 import { checkMadeInvitations } from '@/utils/checkMadeInvitations';
 import browserClient from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Notify } from 'notiflix';
 
-const ReviewWriteButton = ({
-  setOpenBottomSheet,
-}: {
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const ReviewWriteButton = () => {
   const router = useRouter();
-
+  const { setIsReviewBottomSheetOpen } = useReviewBottomSheetContext((state) => state);
   const getUserId = async () => {
     const { data } = await browserClient.auth.getUser();
     return data.user?.id;
@@ -38,7 +35,8 @@ const ReviewWriteButton = ({
   const handleOpenBottomSheetButton = async () => {
     const hasPermissions = await checkAccessPermissions();
     if (hasPermissions) {
-      setOpenBottomSheet(true);
+      setIsReviewBottomSheetOpen(true);
+      // setOpenBottomSheet(true);
     }
   };
 
