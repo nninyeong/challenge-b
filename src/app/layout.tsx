@@ -7,8 +7,8 @@ import Footer from '@/components/layouts/Footer';
 import Script from 'next/script';
 import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 
-const SuitMedium = localFont({
-  src: '../../public/assets/fonts/SUIT-Medium.otf',
+const SUIT = localFont({
+  src: '../../public/assets/fonts/SUIT-Variable.ttf',
   variable: '--font-suit',
   weight: '100 900',
 });
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${SuitMedium.variable} antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] w-full`}>
+      <body className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] w-full`}>
         <Script
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAOAPP_KEY}&libraries=services&autoload=false`}
           strategy='beforeInteractive'
