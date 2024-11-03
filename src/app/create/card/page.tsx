@@ -54,7 +54,11 @@ const CreateCardPage = () => {
   const { reset } = methods;
 
   useEffect(() => {
-    loadFormData({ existingInvitation, reset });
+    if (existingInvitation === null) {
+      reset(INVITATION_DEFAULT_VALUE);
+    } else {
+      loadFormData({ existingInvitation, reset });
+    }
   }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
@@ -66,13 +70,13 @@ const CreateCardPage = () => {
       return;
     }
 
-    if (existingInvitation) {
-      updateInvitation(invitationData);
-      alert('청첩장이 업데이트되었습니다.');
-    } else {
+    if (existingInvitation === null) {
       insertInvitation(invitationData);
-      alert('청첩장이 생성되었습니다.');
+    } else {
+      updateInvitation(invitationData);
     }
+
+    alert('청첩장이 성공적으로 제출되었습니다.');
     router.push('/mypage');
   };
 
@@ -83,10 +87,10 @@ const CreateCardPage = () => {
     if (!user.user) {
       sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
     } else {
-      if (existingInvitation) {
-        updateInvitation(formData);
-      } else {
+      if (existingInvitation === null) {
         insertInvitation(formData);
+      } else {
+        updateInvitation(formData);
       }
     }
     if (inputIndex < orderList[currentStep].input.length - 1) {
