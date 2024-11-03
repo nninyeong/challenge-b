@@ -40,12 +40,12 @@ const ReviewForm = () => {
   });
 
   const getUserData = async () => {
-    const data = await getUserInfo();
-    const myReview = await getMyReview(data.user.id);
+    const userInfo = await getUserInfo();
+    const myReview = await getMyReview(userInfo.user.id);
     setUser({
-      userId: data.user.id,
-      userName: data.user.user_metadata.name,
-      avatar_url: data.user.user_metadata.avatar_url,
+      userId: userInfo.user.id,
+      userName: userInfo.user.user_metadata.name,
+      avatar_url: userInfo.user.user_metadata.avatar_url,
     });
     if (myReview) {
       setMyReviewId(myReview.id);
