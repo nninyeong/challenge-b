@@ -77,6 +77,6 @@ export default MyPage;
 const MENU_LISTS = [
   { name: '결제내역', href: '/' },
   { name: '1:1문의', href: '/' },
-  { name: '방문객 명단 다운로드', href: '/' },
+  { name: '방문객 명단 다운로드', href: '/test' },
   { name: '나의 후기관리', href: '/review' },
 ];
