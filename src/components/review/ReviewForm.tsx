@@ -58,7 +58,7 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
   }, [reset]);
 
   const uploadFile = async (file: File) => {
-    const newFileName = `${user.userId}_${file.name}`;
+    const newFileName = `${crypto.randomUUID()}-${user.userId}`;
     const { data, error } = await browserClient.storage
       .from('review')
       .upload(`/images/${user.userId}/${newFileName}/${Date.now()}`, file);
@@ -104,7 +104,7 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
       }
     }
     setOpenBottomSheet(false);
-    queryClient.invalidateQueries({ queryKey: ['reviews'] });
+    queryClient.invalidateQueries({ queryKey: ['reviews'] }); //TODO 소현님 브랜치 merge후 queryKey 분리 예정
     Notify.success('작성되었습니다.');
   };
 
