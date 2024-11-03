@@ -12,20 +12,20 @@ type Props = {
 
 const EventStatus = (props: Props) => {
   return (
-    <div className='pb-20 px-4 w-full'>
-      <div className={`py-3 px-4 ${props.dDayCount ? 'flex justify-between' : 'text-center'} border border-gray-200 bg-white rounded-xl text-primary300`}>
-        {props.dDayCount ? (
-          <div className='flex flex-col gap-2'>
-            <div className='flex gap-2 font-bold'>
-              <span>{props.leftName}</span>
-              <span>{props.icon}</span>
-              <span>{props.rightName}</span>
-            </div>
-            <DdayCounter weddingInfoDate={props.weddingInfoDate} />
+    <div
+      className={`py-3 px-4 ${props.dDayCount ? 'flex justify-between' : 'text-center'} border border-gray-200 bg-white rounded-xl text-primary300`}
+    >
+      {props.dDayCount ? (
+        <div className='flex flex-col gap-2'>
+          <div className='flex gap-2 font-bold'>
+            <span>{props.leftName}</span>
+            <span>{props.icon}</span>
+            <span>{props.rightName}</span>
           </div>
-        ) : null}
-        {props.attendanceButton && <AttendanceButton />}
-      </div>
+          <DdayCounter weddingInfoDate={props.weddingInfoDate} />
+        </div>
+      ) : null}
+      {props.attendanceButton && <AttendanceButton />}
     </div>
   );
 };

@@ -13,7 +13,7 @@ const GuestBook = () => {
 
   return (
     <div>
-      <div className='text-center tracking-[4px] mb-6'>GUEST BOOK</div>
+      <div className='text-gray-600 text-center tracking-[4px] mb-6'>GUEST BOOK</div>
       <CreateGuestBook invitationId={invitationId}/>
       <div className='mt-14'>
         {guestBooks.map((guestBook) => (
