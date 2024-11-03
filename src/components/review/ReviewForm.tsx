@@ -45,7 +45,6 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
       userName: data.user.user_metadata.name,
       avatar_url: data.user.user_metadata.avatar_url,
     });
-    console.log(myReview);
     if (myReview) {
       setMyReviewId(myReview.id);
       setType('update');
