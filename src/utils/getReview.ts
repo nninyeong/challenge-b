@@ -42,7 +42,7 @@ export const getAuthUsersProfile = async () => {
 };
 
 export const getMyReview = async (id: string) => {
-  const { data, error } = await browserClient.from('reviews').select('*').eq('user_id', id).single();
+  const { data, error } = await browserClient.from('reviews').select('*').eq('user_id', id).maybeSingle();
   if (error) {
     console.error(error);
   }
