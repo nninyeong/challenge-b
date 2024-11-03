@@ -32,16 +32,12 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
   useEffect(() => {
     const captureAndSendImage = async () => {
       const client = createClient();
-      const { data, error } = await client.auth.getUser();
+      const { data } = await client.auth.getUser();
 
       if (!mainPhotoRef.current) {
-        console.log('mainPhotoRef 없음');
+        console.error('메인 사진이 존재하지 않습니다.');
         return;
       }
-
-      const originalZindex = mainPhotoRef.current.style.zIndex;
-      mainPhotoRef.current.style.zIndex = '9999';
-      mainPhotoRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
 
       try {
         const dataUrl = await toPng(mainPhotoRef.current, {
@@ -51,15 +47,17 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
           height: mainPhotoRef.current.offsetHeight,
           pixelRatio: 1,
         });
-        const { error } = await supabase.from('thumbnails').upsert({ url: dataUrl }).eq('user_id', data.user?.id);
+
+        const { error } = await client
+          .from('thumbnails')
+          .upsert({ url: dataUrl, user_id: data.user?.id })
+          .eq('user_id', data.user?.id);
 
         if (error) {
           console.error(error);
         }
       } catch (error) {
         console.error(error);
-      } finally {
-        mainPhotoRef.current.style.zIndex = originalZindex;
       }
     };
 

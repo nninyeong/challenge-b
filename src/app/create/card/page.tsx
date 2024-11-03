@@ -20,6 +20,7 @@ import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { useRouter } from 'next/navigation';
 import { VIEW_HEIGHT } from '@/constants/viewHeight';
 import EventBus from '@/utils/EventBus';
+import { Notify } from 'notiflix';
 
 const DELAY_TIME: number = 300;
 
@@ -67,6 +68,9 @@ const CreateCardPage = () => {
       return;
     }
 
+    Notify.success('청첩장 생성을 시작합니다.');
+    await EventBus.publish('invitationSaved', null);
+
     if (existingInvitation) {
       updateInvitation(invitationData);
       alert('청첩장이 업데이트되었습니다.');
@@ -75,7 +79,6 @@ const CreateCardPage = () => {
       alert('청첩장이 생성되었습니다.');
     }
 
-    await EventBus.publish('invitationSaved', null);
     router.push('/mypage');
   };
 
