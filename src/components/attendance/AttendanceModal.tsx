@@ -5,7 +5,7 @@ import useAttendanceModal from '@/hooks/attendance/useAttendanceModal';
 
 const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> = ({ invitationId, onClick }) => {
   const { register, handleSubmit, handleAttendanceModalSubmit, errors } = useAttendanceModal(invitationId, onClick);
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState('신랑');
 
   const handleSelection = (value: string) => {
     setSelected(value);
@@ -19,14 +19,20 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
   }, []);
 
   return (
-    <div className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/80 z-20'>
-      <div className='bg-white text-black w-[343px] h-auto p-4 rounded-md'>
+    <div
+      className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/60 z-20'
+      onClick={onClick}
+    >
+      <div
+        className='bg-white text-black w-[343px] h-auto p-4 rounded-md'
+        onClick={(e) => e.stopPropagation()}
+      >
         <div
           className='cursor-pointer flex justify-end'
           onClick={onClick}
         >
           <img
-            src='/assets/images/icons/x-03.svg'
+            src='/assets/images/icons/x-03-gray.svg'
             alt='x'
             className='w-[24px] h-[24px]'
           />
@@ -104,7 +110,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                     <img
                       src='/assets/images/icons/attendance-groom.svg'
                       alt='신랑'
-                      className='peer-checked:hidden inline'
+                      className='peer-checked:hidden inline w-[24px] h-[24px] p-0'
                     />
                     <span className='pt-1'>신랑측</span>
                   </div>
@@ -127,7 +133,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                     <img
                       src='/assets/images/icons/attendance-bride.svg'
                       alt='신부'
-                      className='peer-checked:hidden inline p-0'
+                      className='peer-checked:hidden inline p-0 w-[24px] h-[24px]'
                     />
                     <span className='pt-1'>신부측</span>
                   </div>

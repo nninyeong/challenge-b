@@ -18,7 +18,7 @@ const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry;
           <div className='flex items-center gap-1'>
             <div className='text-[12px] text-gray-300'>{utcPlus8}</div>
             <img
-              src='/assets/images/icons/x-03.svg'
+              src='/assets/images/icons/x-03-gray.svg'
               alt='x'
               className='w-[24px] h-[24px]'
               onClick={toggleAccordion}
