@@ -85,4 +85,5 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
   },
 );
 
+MainPhoto.displayName = 'MainPhoto';
 export default MainPhoto;

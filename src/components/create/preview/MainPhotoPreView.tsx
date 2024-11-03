@@ -2,10 +2,8 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import { Control, useWatch } from 'react-hook-form';
 import MainPhoto from '@/components/card/MainPhoto';
 import { useEffect, useRef } from 'react';
-import { supabase } from '@/utils/supabase/createClient';
 import EventBus from '@/utils/EventBus';
-import { createClient } from '@/utils/supabase/client';
-import { toPng } from 'html-to-image';
+import captureMainPhotoToPng from '@/utils/captureMainPhotoToPng';
 
 const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> }) => {
   const mainPhotoInfo = useWatch({
@@ -31,34 +29,7 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
   const mainPhotoRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const captureAndSendImage = async () => {
-      const client = createClient();
-      const { data } = await client.auth.getUser();
-
-      if (!mainPhotoRef.current) {
-        console.error('메인 사진이 존재하지 않습니다.');
-        return;
-      }
-
-      try {
-        const dataUrl = await toPng(mainPhotoRef.current, {
-          cacheBust: true,
-          backgroundColor: 'rgba(0, 0, 0, 0)',
-          width: mainPhotoRef.current.offsetWidth,
-          height: mainPhotoRef.current.offsetHeight,
-          pixelRatio: 1,
-        });
-
-        const { error } = await client
-          .from('thumbnails')
-          .upsert({ url: dataUrl, user_id: data.user?.id })
-          .eq('user_id', data.user?.id);
-
-        if (error) {
-          console.error(error);
-        }
-      } catch (error) {
-        console.error(error);
-      }
+      await captureMainPhotoToPng(mainPhotoRef);
     };
 
     EventBus.subscribe('invitationSaved', captureAndSendImage);
