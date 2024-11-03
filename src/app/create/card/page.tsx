@@ -67,6 +67,7 @@ const CreateCardPage = () => {
     if (!user.user) {
       sessionStorage.setItem('invitationFormData', JSON.stringify(invitationData));
       alert('생성을 원하시면 로그인 해주세요!');
+      router.push('/signin');
       return;
     }
 
