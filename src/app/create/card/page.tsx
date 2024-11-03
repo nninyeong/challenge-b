@@ -19,6 +19,7 @@ import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { useRouter } from 'next/navigation';
 import { VIEW_HEIGHT } from '@/constants/viewHeight';
+import EventBus from '@/utils/EventBus';
 
 const DELAY_TIME: number = 300;
 
@@ -73,6 +74,8 @@ const CreateCardPage = () => {
       insertInvitation(invitationData);
       alert('청첩장이 생성되었습니다.');
     }
+
+    await EventBus.publish('invitationSaved', null);
     router.push('/mypage');
   };
 
