@@ -4,7 +4,6 @@ const NavigationDetailInput = () => {
   const { register } = useFormContext();
   return (
     <>
-      <div className='mb-[14px] text-[18px] font-bold text-gray-900'>교통수단 표시</div>
       <div className='mb-[14px]'>
         <label className='text-[14px] text-gray-600 flex items-center cursor-pointer'>
           <input
