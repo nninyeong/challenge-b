@@ -34,11 +34,13 @@ const Sticker = ({
   const [isRotating, setIsRotating] = useState<boolean>(false);
   const originRef = useRef({ x: 0, y: 0 });
   const rotationStartPosition = useRef({ x: 0, y: 0 });
+  const rotationStartDeg = useRef<number>(sticker.rotation);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent | TouchEvent) => {
       if (activeStickerId === sticker.id && stickerRef.current && !stickerRef.current.contains(e.target as Node)) {
         onActivate(null);
+        document.removeEventListener('touchmove', preventTouchScroll);
       }
     };
 
@@ -159,6 +161,11 @@ const Sticker = ({
     const originY = stickerBound.top - window.scrollY + stickerBound.height / 2;
     originRef.current = { x: originX, y: originY };
 
+    const transform = stickerRef.current.style.transform;
+    const match = transform.match(/rotate\(([-\d.]+)deg\)/); // `rotate(...)` 패턴 찾기
+    const rotation = match ? parseFloat(match[1]) : 0;
+    rotationStartDeg.current = rotation;
+
     const touch = e.touches[0];
     rotationStartPosition.current = { x: touch.clientX, y: touch.clientY };
     console.log('rotation 시작');
@@ -170,9 +177,9 @@ const Sticker = ({
 
     const touch = e.touches[0];
     // 회전할 각도 구해서 아래에서 회전시키기 애니메이션프레임으로=
-    const angleAtRotationStart = getAngle(originRef.current, rotationStartPosition.current);
+    // const angleAtRotationStart = getAngle(originRef.current, rotationStartPosition.current);
     const angleAtCurrent = getAngle(originRef.current, { x: touch.clientX, y: touch.clientY });
-    let delta = angleAtCurrent - angleAtRotationStart;
+    let delta = angleAtCurrent - rotationStartDeg.current;
     if (delta < 0) delta += 360;
 
     requestAnimationFrame(() => {
