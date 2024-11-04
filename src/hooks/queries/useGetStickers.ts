@@ -1,12 +1,12 @@
 'use client';
-import { createClient } from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
 import { StickerImage } from '@/types/stickerData.types';
+import { supabase } from '@/utils/supabase/createClient';
 
 const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
   try {
-    const { data, error } = await client.storage.from('stickers').list('', { limit: 1000 });
+    const { data, error } = await supabase.storage.from('stickers').list('', { limit: 1000 });
     if (error) {
       console.error(error);
     }
@@ -26,7 +26,7 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
     await Promise.all(
       validFiles?.map(async (file) => {
         const [category] = file.name.split('-');
-        const { data: publicUrlData } = client.storage.from('stickers').getPublicUrl(file.name);
+        const { data: publicUrlData } = supabase.storage.from('stickers').getPublicUrl(file.name);
 
         const dimensions = await getImageDimensions(publicUrlData.publicUrl);
 
@@ -52,8 +52,6 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
     throw error;
   }
 };
-
-const client = createClient();
 
 export const useGetAllStickers = () => {
   return useQuery({
