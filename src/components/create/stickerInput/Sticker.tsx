@@ -12,8 +12,6 @@ const preventTouchScroll = (e: TouchEvent) => {
   e.preventDefault();
 };
 
-const DELETE_BUTTON_SIZE = 24;
-
 const Sticker = ({
   sticker,
   previewRef,
@@ -70,13 +68,7 @@ const Sticker = ({
     document.removeEventListener('touchmove', preventTouchScroll);
 
     const touch = e.changedTouches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(
-      touch,
-      touchOffset,
-      previewRef,
-      stickerRef,
-      DELETE_BUTTON_SIZE,
-    );
+    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
 
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) {
@@ -94,13 +86,7 @@ const Sticker = ({
     if (isResizing || !previewRef.current || !stickerRef.current) return;
 
     const touch = e.touches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(
-      touch,
-      touchOffset,
-      previewRef,
-      stickerRef,
-      DELETE_BUTTON_SIZE,
-    );
+    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
 
     requestAnimationFrame(() => {
       if (!stickerRef.current) return;
@@ -168,33 +154,39 @@ const Sticker = ({
           left: `${sticker.posX}%`,
         }}
       >
-        <div className={`w-full text-right h-[${DELETE_BUTTON_SIZE}px]`}>
+        <div className='relative w-full h-full'>
           {isActive && (
-            <button
-              className={`bg-x-03 w-[${DELETE_BUTTON_SIZE}px] h-full`}
-              onClick={handleDeleteSticker}
-            />
+            <>
+              <button
+                className={`absolute bg-x-circle-contained top-[-12px] right-[-12px] w-[24px] h-[24px] z-10`}
+                onClick={handleDeleteSticker}
+              ></button>
+              <div className='absolute top-[-3px] left-[-3px] bg-primary-300 w-[6px] h-[6px] rounded-[8px]'></div>
+              <div className='absolute bottom-[-3px] left-[-3px] bg-primary-300 w-[6px] h-[6px] rounded-[8px]'></div>
+              <div className='absolute bottom-[-3px] right-[-3px] bg-primary-300 w-[6px] h-[6px] rounded-[8px]'></div>
+            </>
           )}
+
+          <Resizable
+            defaultSize={{ width: sticker.width, height: sticker.height }}
+            onResizeStart={handleResizeStart}
+            onResize={handleResize}
+            onResizeStop={handleResizeStop}
+            enable={{ bottomRight: true, topLeft: false, bottomLeft: false, topRight: false }}
+            lockAspectRatio={true}
+          >
+            <Image
+              src={sticker.url}
+              alt={sticker.stickerImageId}
+              width={sticker.width}
+              height={sticker.height}
+              className={`${isActive && 'border-[1px] border-primary-300'} w-full h-full`}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              onTouchMove={handleTouchMove}
+            />
+          </Resizable>
         </div>
-        <Resizable
-          defaultSize={{ width: sticker.width, height: sticker.height }}
-          onResizeStart={handleResizeStart}
-          onResize={handleResize}
-          onResizeStop={handleResizeStop}
-          enable={{ bottomRight: true }}
-          lockAspectRatio={true}
-        >
-          <Image
-            src={sticker.url}
-            alt={sticker.stickerImageId}
-            width={sticker.width}
-            height={sticker.height}
-            className={`${isActive && 'border-[1px] border-primary-300'} w-full h-full`}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            onTouchMove={handleTouchMove}
-          />
-        </Resizable>
       </div>
     </>
   );
