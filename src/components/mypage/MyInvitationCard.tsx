@@ -22,18 +22,19 @@ const MyInvitationCard = () => {
 
   const invitationCard = invitationCards?.[0];
 
-  const shareLink = `http://localhost:3000/invitations/${invitationCard?.id}`;
-
   const handleCopyLink = async () => {
-    navigator.clipboard
-      .writeText(shareLink)
-      .then(() => {
-        alert('링크가 클립보드에 복사되었습니다!');
-      })
-      .catch((err) => {
-        console.error('링크 복사 실패:', err);
-        alert('링크 복사에 실패했습니다.');
-      });
+    if (navigator.share) {
+      navigator
+        .share({
+          title: `{${invitationCard?.greeting_message?.title} }` || '우리 결혼합니다.',
+          text: `{${invitationCard?.greeting_message?.content} }`,
+          url: `{http://localhost:3000/card/${invitationCard?.id}}`,
+        })
+        .then(() => console.log('공유성공'))
+        .catch((error) => console.error('공유실패', error));
+    } else {
+      alert('공유하기가 지원되지 않는 환경입니다.');
+    }
   };
   return (
     <div className='w-full h-[152px] flex mx-auto rounded-xl mt-8 shadow-sm shadow-gray-400 p-4'>
@@ -47,9 +48,6 @@ const MyInvitationCard = () => {
                   alt='invitationImg'
                   width={64}
                   height={64}
-                  onError={(e) => {
-                    e.currentTarget.src = '/assets/images/defaultImg.png';
-                  }}
                 />
               </div>
               <div className='flex flex-col justify-between'>
@@ -77,7 +75,7 @@ const MyInvitationCard = () => {
           </div>
           <div className='w-full flex gap-4 '>
             <div className='flex-1'>
-              <Link href={`/create/card`}>
+              <Link href={`/card/${invitationCard?.id}`}>
                 <Button className='bg-primary300 rounded-xl w-full pt-2.5 pb-2.5'>미리보기</Button>
               </Link>
             </div>

@@ -6,4 +6,5 @@ export const QUERY_KEYS = {
   reviewCarousel: () => ['reviewCarousel'],
   authUsers: () => ['authUsers'],
   allImageReviews: () => ['allImageReviews'],
+  reviews: () => ['reviews'],
 };

@@ -19,6 +19,10 @@ import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { useRouter } from 'next/navigation';
 import { VIEW_HEIGHT } from '@/constants/viewHeight';
+import Button from '@/components/ui/Button';
+import { revalidateInvitation } from '@/utils/revalidateInvitation';
+import { Notify } from 'notiflix';
+import EventBus from '@/utils/EventBus';
 
 const DELAY_TIME: number = 300;
 
@@ -36,6 +40,7 @@ const CreateCardPage = () => {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const [toggleInput, setToggleInput] = useToggle();
 
+  const [nameIndex, setNameIndex] = useState<number>(0);
   const [inputIndex, setInputIndex] = useState<number>(0);
   const orderList = INITIAL_ORDER(methods);
 
@@ -43,6 +48,7 @@ const CreateCardPage = () => {
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
     refs,
     setCurrentStep,
+    setNameIndex,
     setInputIndex,
   );
   const isLastInput = refs.current.length !== 0 && currentStep === refs.current.length - 1;
@@ -54,7 +60,11 @@ const CreateCardPage = () => {
   const { reset } = methods;
 
   useEffect(() => {
-    loadFormData({ existingInvitation, reset });
+    if (existingInvitation === null) {
+      reset(INVITATION_DEFAULT_VALUE);
+    } else {
+      loadFormData({ existingInvitation, reset });
+    }
   }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
@@ -62,17 +72,24 @@ const CreateCardPage = () => {
 
     if (!user.user) {
       sessionStorage.setItem('invitationFormData', JSON.stringify(invitationData));
-      alert('생성을 원하시면 로그인 해주세요!');
+      Notify.success('생성을 원하시면 로그인 해주세요!');
+      router.push('/signin');
       return;
     }
 
-    if (existingInvitation) {
-      updateInvitation(invitationData);
-      alert('청첩장이 업데이트되었습니다.');
-    } else {
+    Notify.success('청첩장 생성을 시작합니다.');
+    await EventBus.publish('invitationSaved', null);
+
+    if (existingInvitation === null) {
       insertInvitation(invitationData);
-      alert('청첩장이 생성되었습니다.');
+    } else {
+      const { isSuccess } = await revalidateInvitation(existingInvitation.id);
+      if (isSuccess) {
+        updateInvitation(invitationData);
+      }
     }
+
+    Notify.success('청첩장이 성공적으로 제출되었습니다.');
     router.push('/mypage');
   };
 
@@ -83,15 +100,18 @@ const CreateCardPage = () => {
     if (!user.user) {
       sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
     } else {
-      if (existingInvitation) {
-        updateInvitation(formData);
-      } else {
+      if (existingInvitation === null) {
         insertInvitation(formData);
+      } else {
+        updateInvitation(formData);
       }
     }
+
     if (inputIndex < orderList[currentStep].input.length - 1) {
+      setNameIndex((prev) => prev + 1);
       setInputIndex((prev) => prev + 1);
     } else {
+      setNameIndex(0);
       setInputIndex(0);
       setCurrentStep((prev) => prev + 1);
     }
@@ -100,6 +120,7 @@ const CreateCardPage = () => {
   const handleDebouncedPrevious = debounce(() => {
     isNavigating.current = true;
     if (inputIndex > 0) {
+      setNameIndex((prev) => prev - 1);
       setInputIndex((prev) => prev - 1);
     } else if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
@@ -160,52 +181,64 @@ const CreateCardPage = () => {
   }, [refs, isOnboardingComplete]);
 
   return (
-    <div
-      className={`relative w-full h-full font-${selectedFont}`}
-      style={{
-        backgroundColor: backgroundColor,
-      }}
-    >
-      <OnBoarding
-        setIsOnboardingComplete={setIsOnboardingComplete}
-        isOnboardingComplete={isOnboardingComplete}
-      />
-      {isOnboardingComplete ? (
-        <>
-          <div
-            style={{
-              fontFamily: selectedFont,
-            }}
-          >
-            {orderList.map((e, index) => {
-              return (
-                <div
-                  style={{ minHeight: VIEW_HEIGHT }}
-                  key={e.order}
-                  ref={(el) => {
-                    refs.current[index] = el;
-                  }}
-                >
-                  {e.component}
-                </div>
-              );
-            })}
-          </div>
-          <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-            <button
-              type='button'
-              onClick={setToggleInput}
-              className='text-black '
+    <FormProvider {...methods}>
+      <div
+        className={`relative w-full h-full font-${selectedFont}`}
+        style={{
+          backgroundColor: backgroundColor,
+        }}
+      >
+        <OnBoarding
+          setIsOnboardingComplete={setIsOnboardingComplete}
+          isOnboardingComplete={isOnboardingComplete}
+        />
+        {isOnboardingComplete ? (
+          <>
+            <div
+              style={{
+                fontFamily: selectedFont,
+              }}
             >
-              {toggleInput ? <FaSortDown size={40} /> : <FaSortUp size={40} />}
-            </button>
-            {toggleInput && (
-              <FormProvider {...methods}>
-                <form
-                  className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
-                  onSubmit={methods.handleSubmit(onSubmit)}
-                >
-                  <div className='w-full flex items-center justify-end'>
+              {orderList.map((e, index) => {
+                return (
+                  <div
+                    style={{ minHeight: VIEW_HEIGHT }}
+                    key={e.order}
+                    ref={(el) => {
+                      refs.current[index] = el;
+                    }}
+                  >
+                    {e.component}
+                  </div>
+                );
+              })}
+            </div>
+            <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
+              <form
+                className={`flex flex-col bg-white shadow-xl px-4 py-4 object-cover rounded-lg ${toggleInput ? 'h-[320px]' : 'h-[54px]'} mb-[8px] z-10`}
+                onSubmit={methods.handleSubmit(onSubmit)}
+              >
+                <div className='flex justify-between items-center'>
+                  <button
+                    type='button'
+                    onClick={setToggleInput}
+                    className='flex justify-center items-center text-black '
+                  >
+                    {toggleInput ? (
+                      <FaSortDown
+                        size={28}
+                        viewBox='0 110 320 512'
+                      />
+                    ) : (
+                      <FaSortUp
+                        size={28}
+                        viewBox='0 -100 320 512'
+                      />
+                    )}
+                    {orderList[currentStep].name[nameIndex]}
+                  </button>
+
+                  <div className='flex items-center'>
                     <button
                       type='button'
                       onClick={handleDebouncedPrevious}
@@ -223,22 +256,27 @@ const CreateCardPage = () => {
                       <MdNavigateNext />
                     </button>
                   </div>
-                  {orderList[currentStep].input[inputIndex]}
-                  {currentStep === refs.current.length - 1 && (
-                    <button
-                      className='w-full'
-                      type='submit'
-                    >
-                      제출
-                    </button>
-                  )}
-                </form>
-              </FormProvider>
-            )}
-          </div>
-        </>
-      ) : null}
-    </div>
+                </div>
+
+                {toggleInput && (
+                  <div className={`${toggleInput ? 'display-none' : ''}`}>
+                    {orderList[currentStep].input[inputIndex]}
+                    {currentStep === refs.current.length - 1 && (
+                      <Button
+                        className='rounded-[12px] w-[311px] h-[48px]'
+                        type='submit'
+                      >
+                        청첩장 제작 완료
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </form>
+            </div>
+          </>
+        ) : null}
+      </div>
+    </FormProvider>
   );
 };
 

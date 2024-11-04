@@ -3,15 +3,12 @@ import { getIsLogin } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { getUserInfo } from '@/utils/server-action';
 import LogoutButton from '@/components/mypage/LogoutButton';
-
 import MyInvitationCard from '@/components/mypage/MyInvitationCard';
-import Link from 'next/link';
 import TogglePrivate from '@/components/mypage/TogglePrivate';
-import MyPageMenuItem from '@/components/mypage/MyPageMenuItem';
+import MyPageNavigatorList from '@/components/mypage/MyPageNavigatorList';
 
 const MyPage = async (): Promise<JSX.Element | null> => {
   const isLogin = await getIsLogin();
-
   if (!isLogin) {
     redirect('/signin');
   }
@@ -49,30 +46,24 @@ const MyPage = async (): Promise<JSX.Element | null> => {
           <p>내 청첩장 공개하기 ON/OFF</p>
           <TogglePrivate />
         </div>
-        <nav className='mt-4'>
-          <ul>
-            {MENU_LISTS.map((menu) => {
-              if (menu.name === '방문객 명단 다운로드') {
-                return (
-                  <MyPageMenuItem
-                    key={menu.name}
-                    name={menu.name}
-                  />
-                );
-              }
-
-              return (
-                <Link
-                  href={menu.href!}
-                  key={menu.name}
-                  className='w-full border border-solid border-l-0 border-r-0 border-t-0 border-gray-100 cursor-pointer'
-                >
-                  <MyPageMenuItem name={menu.name} />
-                </Link>
-              );
-            })}
+        {/* <nav className='mt-4'>
+          <ul className='flex flex-col gap-4 items-center'>
+            {MENU_LISTS.map((menu) => (
+              <Link
+                href={menu.href}
+                key={menu.name}
+                className='w-full  border border-solid border-l-0 border-r-0 border-t-0 border-gray-100  cursor-pointer'
+              >
+                <li className='flex justify-between items-center p-2'>
+                  {menu.name}
+                  <FaChevronRight className='text-gray-700' />
+                </li>
+              </Link>
+            ))}
           </ul>
-        </nav>
+        </nav> */}
+        {/* TODO 위 주석 나의 후기관리가 accordion으로 바뀔 시에 아래에 펼쳐진 리뷰 내용 클릭시 리뷰로 이동하면서 bottomsheet가 열리게 할 예정이라 우선 분리해두었음*/}
+        <MyPageNavigatorList />
 
         <LogoutButton />
       </div>
@@ -82,9 +73,9 @@ const MyPage = async (): Promise<JSX.Element | null> => {
 
 export default MyPage;
 
-const MENU_LISTS = [
-  { name: '결제내역', href: '/' },
-  { name: '1:1문의', href: '/' },
-  { name: '방문객 명단 다운로드', onClick: 'downloadCsv' },
-  { name: '나의 후기관리', href: '/review' },
-];
+// const MENU_LISTS = [
+//   { name: '결제내역', href: '/' },
+//   { name: '1:1문의', href: '/' },
+//   { name: '방문객 명단 다운로드', href: '/' },
+//   { name: '나의 후기관리', href: '/review' },
+// ];

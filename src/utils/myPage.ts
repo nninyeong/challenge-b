@@ -1,4 +1,4 @@
-import { InvitationCard } from '@/types/database.type';
+import { InvitationCard } from '@/types/invitationFormType.type';
 import { getUserInfo } from './server-action';
 import { supabase } from './supabase/createClient';
 
