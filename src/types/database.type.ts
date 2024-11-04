@@ -24,11 +24,3 @@ export type Invitation = {
   isPrivate: boolean;
   render_order: Json | null;
 };
-
-export type InvitationCard = {
-  main_photo_info: {
-    imageUrl: string;
-  };
-  isPrivate: boolean;
-  id: string;
-};

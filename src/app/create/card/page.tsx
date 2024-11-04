@@ -171,47 +171,47 @@ const CreateCardPage = () => {
   }, [refs, isOnboardingComplete]);
 
   return (
-    <div
-      className={`relative w-full h-full font-${selectedFont}`}
-      style={{
-        backgroundColor: backgroundColor,
-      }}
-    >
-      <OnBoarding
-        setIsOnboardingComplete={setIsOnboardingComplete}
-        isOnboardingComplete={isOnboardingComplete}
-      />
-      {isOnboardingComplete ? (
-        <>
-          <div
-            style={{
-              fontFamily: selectedFont,
-            }}
-          >
-            {orderList.map((e, index) => {
-              return (
-                <div
-                  style={{ minHeight: VIEW_HEIGHT }}
-                  key={e.order}
-                  ref={(el) => {
-                    refs.current[index] = el;
-                  }}
-                >
-                  {e.component}
-                </div>
-              );
-            })}
-          </div>
-          <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-            <button
-              type='button'
-              onClick={setToggleInput}
-              className='text-black '
+    <FormProvider {...methods}>
+      <div
+        className={`relative w-full h-full font-${selectedFont}`}
+        style={{
+          backgroundColor: backgroundColor,
+        }}
+      >
+        <OnBoarding
+          setIsOnboardingComplete={setIsOnboardingComplete}
+          isOnboardingComplete={isOnboardingComplete}
+        />
+        {isOnboardingComplete ? (
+          <>
+            <div
+              style={{
+                fontFamily: selectedFont,
+              }}
             >
-              {toggleInput ? <FaSortDown size={40} /> : <FaSortUp size={40} />}
-            </button>
-            {toggleInput && (
-              <FormProvider {...methods}>
+              {orderList.map((e, index) => {
+                return (
+                  <div
+                    style={{ minHeight: VIEW_HEIGHT }}
+                    key={e.order}
+                    ref={(el) => {
+                      refs.current[index] = el;
+                    }}
+                  >
+                    {e.component}
+                  </div>
+                );
+              })}
+            </div>
+            <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
+              <button
+                type='button'
+                onClick={setToggleInput}
+                className='text-black '
+              >
+                {toggleInput ? <FaSortDown size={40} /> : <FaSortUp size={40} />}
+              </button>
+              {toggleInput && (
                 <form
                   className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
                   onSubmit={methods.handleSubmit(onSubmit)}
@@ -244,12 +244,12 @@ const CreateCardPage = () => {
                     </Button>
                   )}
                 </form>
-              </FormProvider>
-            )}
-          </div>
-        </>
-      ) : null}
-    </div>
+              )}
+            </div>
+          </>
+        ) : null}
+      </div>
+    </FormProvider>
   );
 };
 

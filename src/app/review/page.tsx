@@ -1,49 +1,39 @@
 'use client';
-import { getReview } from '@/utils/getReview';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+
+import { useCallback, useRef, useState, useEffect } from 'react';
 import ReviewImage from '@/components/review/ReviewImage';
-import { Review } from '@/types/review.types';
 import ReviewCard from '@/components/review/ReviewCard';
 import ReviewWriteButton from '@/components/review/ReviewWriteButton';
 import ReviewWriteBottomSheet from '@/components/review/ReviewWriteBottomSheet';
 import { createPortal } from 'react-dom';
+import { useReviewInfinite } from '@/hooks/queries/review/useGetReview';
 import { useReviewBottomSheetContext } from '@/provider/reviewBottomSheetProvider';
 
 const ReviewPage = () => {
-  const row = 10;
   const [portalElement, setPortalElement] = useState<Element | null>(null);
   const { isReviewBottomSheetOpen } = useReviewBottomSheetContext((state) => state);
   useEffect(() => {
     setPortalElement(document.getElementById('modal'));
   }, []);
-  const {
-    data: reviewsData,
-    isLoading,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery<Review[]>({
-    queryKey: ['reviews'],
-    queryFn: async ({ pageParam }) => await getReview({ pageParam: pageParam as number, row }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === row ? allPages.length * row : undefined;
+
+  const { data: reviewsData, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useReviewInfinite();
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const lastReviewRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isFetchingNextPage) return;
+
+      if (observerRef.current) observerRef.current.disconnect();
+
+      observerRef.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+
+      if (node) observerRef.current.observe(node);
     },
-  });
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-      if (scrollTop + clientHeight >= scrollHeight - 10 && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+    [isFetchingNextPage, fetchNextPage, hasNextPage],
+  );
 
   useEffect(() => {
     if (isReviewBottomSheetOpen) {
@@ -68,6 +58,12 @@ const ReviewPage = () => {
 
       <div>
         <ReviewCard reviews={reviews} />
+        {reviews.length > 0 && (
+          <div
+            ref={lastReviewRef}
+            className='h-1'
+          />
+        )}
       </div>
       <ReviewWriteButton />
       {isFetchingNextPage && <div>더 불러오는 중...</div>}
