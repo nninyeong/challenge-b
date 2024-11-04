@@ -166,7 +166,6 @@ const Sticker = ({
 
     const touch = e.touches[0];
     rotationStartPosition.current = { x: touch.clientX, y: touch.clientY };
-    console.log('rotation 시작');
   };
 
   const handleRotationMove = (e: React.TouchEvent<HTMLDivElement>) => {
