@@ -26,7 +26,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] w-full`}>
+      <head>
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1.0, maximun-scale=1.0, user-scalable=no'
+        />
+      </head>
+      <body
+        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] max-w-full overflow-x-hidden`}
+      >
         <Script
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAOAPP_KEY}&libraries=services&autoload=false`}
           strategy='beforeInteractive'
@@ -35,7 +43,7 @@ export default function RootLayout({
         <Providers>
           <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
             <Header />
-            <main className='h-full w-full flex-1'>{children}</main>
+            <main className='h-full max-w-full flex-1'>{children}</main>
             <div id='modal'></div>
             <Footer />
           </ReviewBottomSheetProvider>
