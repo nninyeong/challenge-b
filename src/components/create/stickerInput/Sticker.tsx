@@ -51,9 +51,8 @@ const Sticker = ({
   }, [activeStickerId]);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
-    if (isResizing) return;
+    if (isResizing || !previewRef.current) return;
     document.addEventListener('touchmove', preventTouchScroll, { passive: false });
-    if (!previewRef.current) return;
 
     const touch = e.touches[0];
     const currentSticker = e.currentTarget.getBoundingClientRect();
@@ -67,9 +66,8 @@ const Sticker = ({
   };
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
-    if (isResizing) return;
+    if (isResizing || !previewRef.current || !stickerRef.current) return;
     document.removeEventListener('touchmove', preventTouchScroll);
-    if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.changedTouches[0];
     const { relativeX, relativeY } = calculateRelativePosition(
@@ -93,8 +91,7 @@ const Sticker = ({
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLImageElement>) => {
-    if (isResizing) return;
-    if (!previewRef.current || !stickerRef.current) return;
+    if (isResizing || !previewRef.current || !stickerRef.current) return;
 
     const touch = e.touches[0];
     const { relativeX, relativeY } = calculateRelativePosition(
@@ -142,8 +139,7 @@ const Sticker = ({
   };
 
   const handleResize = (e: MouseEvent | TouchEvent, direction: Direction, ref: HTMLElement) => {
-    if (!isActive) return;
-    if (!previewRef.current || !stickerRef.current) return;
+    if (!isActive || !previewRef.current || !stickerRef.current) return;
 
     const aspectRatio = sticker.width / sticker.height;
 
