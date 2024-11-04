@@ -42,8 +42,8 @@ const MyInvitationCard = () => {
           text: `{${invitationCard?.greeting_message?.content} }`,
           url: `{http://localhost:3000/card/${invitationCard?.id}}`,
         })
-        .then(() => console.log('공유성공'))
-        .catch((error) => console.error('공유실패', error));
+        .then(() => Notify.success('링크복사가 완료되었습니다.'))
+        .catch(() => Notify.failure('취소되었습니다.'));
     } else {
       Notify.success('공유하기가 지원되지 않는 환경입니다.');
     }
