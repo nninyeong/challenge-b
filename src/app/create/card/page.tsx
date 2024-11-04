@@ -258,11 +258,11 @@ const CreateCardPage = () => {
                     {orderList[currentStep].input[inputIndex]}
                     {currentStep === refs.current.length - 1 && (
                       <Button
-                      className='rounded-[12px] w-[311px] h-[48px]'
-                      type='submit'
-                    >
-                      청첩장 제작 완료
-                    </Button>
+                        className='rounded-[12px] w-[311px] h-[48px]'
+                        type='submit'
+                      >
+                        청첩장 제작 완료
+                      </Button>
                     )}
                   </div>
                 )}

@@ -99,6 +99,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
     },
     {
       order: 8,
+      name: ['순서변경'],
       component: null,
       input: [<RenderOrderInput key='renderOrder' />],
       typeOnSharedCard: COMPONENT_TYPES.ONLY_FOR_CREATE,
