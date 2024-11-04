@@ -38,8 +38,8 @@ const CreateCardPage = () => {
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const [toggleInput, setToggleInput] = useToggle();
-
   const [inputIndex, setInputIndex] = useState<number>(0);
+  const [isRendered, setIsRendered] = useState<boolean>(false);
   const orderList = INITIAL_ORDER(methods);
 
   const refs = useRef<null[] | HTMLDivElement[]>([]);
@@ -55,14 +55,6 @@ const CreateCardPage = () => {
   const { mutate: insertInvitation } = useInsertInvitation();
 
   const { reset } = methods;
-
-  useEffect(() => {
-    if (existingInvitation === null) {
-      reset(INVITATION_DEFAULT_VALUE);
-    } else {
-      loadFormData({ existingInvitation, reset });
-    }
-  }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
     const { data: user } = await browserClient.auth.getUser();
@@ -156,6 +148,30 @@ const CreateCardPage = () => {
       isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
     }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
   };
+
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOnboardingComplete && isRendered) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOnboardingComplete, isRendered]);
+
+  useEffect(() => {
+    if (existingInvitation === null) {
+      reset(INVITATION_DEFAULT_VALUE);
+    } else {
+      loadFormData({ existingInvitation, reset });
+    }
+  }, [existingInvitation, reset]);
+
   useEffect(() => {
     subscribeBackgroundColor();
     subscribeFont();
@@ -181,14 +197,15 @@ const CreateCardPage = () => {
         setIsOnboardingComplete={setIsOnboardingComplete}
         isOnboardingComplete={isOnboardingComplete}
       />
-      {isOnboardingComplete ? (
-        <>
-          <div
-            style={{
-              fontFamily: selectedFont,
-            }}
-          >
-            {orderList.map((e, index) => {
+
+      <>
+        <div
+          style={{
+            fontFamily: selectedFont,
+          }}
+        >
+          {isRendered &&
+            orderList.map((e, index) => {
               return (
                 <div
                   style={{ minHeight: VIEW_HEIGHT }}
@@ -201,54 +218,53 @@ const CreateCardPage = () => {
                 </div>
               );
             })}
-          </div>
-          <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-            <button
-              type='button'
-              onClick={setToggleInput}
-              className='text-black '
-            >
-              {toggleInput ? <FaSortDown size={40} /> : <FaSortUp size={40} />}
-            </button>
-            {toggleInput && (
-              <FormProvider {...methods}>
-                <form
-                  className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
-                  onSubmit={methods.handleSubmit(onSubmit)}
-                >
-                  <div className='w-full flex items-center justify-end'>
-                    <button
-                      type='button'
-                      onClick={handleDebouncedPrevious}
-                      className='bg-red-300'
-                      disabled={currentStep === 0 && inputIndex === 0}
-                    >
-                      <MdNavigateBefore />
-                    </button>
-                    <button
-                      className='bg-blue-300'
-                      type='button'
-                      onClick={handleDebouncedNext}
-                      disabled={isLastInput}
-                    >
-                      <MdNavigateNext />
-                    </button>
-                  </div>
-                  {orderList[currentStep].input[inputIndex]}
-                  {currentStep === refs.current.length - 1 && (
-                    <Button
-                      className='rounded-[12px] w-[311px] h-[48px]'
-                      type='submit'
-                    >
-                      청첩장 제작 완료
-                    </Button>
-                  )}
-                </form>
-              </FormProvider>
-            )}
-          </div>
-        </>
-      ) : null}
+        </div>
+        <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
+          <button
+            type='button'
+            onClick={setToggleInput}
+            className='text-black '
+          >
+            {toggleInput ? <FaSortDown size={40} /> : <FaSortUp size={40} />}
+          </button>
+          {toggleInput && (
+            <FormProvider {...methods}>
+              <form
+                className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
+                onSubmit={methods.handleSubmit(onSubmit)}
+              >
+                <div className='w-full flex items-center justify-end'>
+                  <button
+                    type='button'
+                    onClick={handleDebouncedPrevious}
+                    className='bg-red-300'
+                    disabled={currentStep === 0 && inputIndex === 0}
+                  >
+                    <MdNavigateBefore />
+                  </button>
+                  <button
+                    className='bg-blue-300'
+                    type='button'
+                    onClick={handleDebouncedNext}
+                    disabled={isLastInput}
+                  >
+                    <MdNavigateNext />
+                  </button>
+                </div>
+                {orderList[currentStep].input[inputIndex]}
+                {currentStep === refs.current.length - 1 && (
+                  <Button
+                    className='rounded-[12px] w-[311px] h-[48px]'
+                    type='submit'
+                  >
+                    청첩장 제작 완료
+                  </Button>
+                )}
+              </form>
+            </FormProvider>
+          )}
+        </div>
+      </>
     </div>
   );
 };
