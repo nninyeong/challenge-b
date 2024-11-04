@@ -24,6 +24,7 @@ const StickerSlot = ({ stickerImage }: PropsType) => {
       posY: '0',
       width: stickerImage.width ?? 100,
       height: stickerImage.height ?? 100,
+      rotation: 0,
     });
 
     setValue('stickers', stickers);
