@@ -5,6 +5,7 @@ import { Mood, Preset } from '@/types/invitationFormType.type';
 import { PRESETS } from '@/constants/invitationPresets';
 import { MOOD_PRESETS } from '@/constants/invitationMoodPresets';
 import { MOOD_LIST } from '@/constants/invitationMoods';
+import { Notify } from 'notiflix';
 
 const MoodPresetInput = () => {
   const { setValue } = useFormContext();
@@ -16,15 +17,26 @@ const MoodPresetInput = () => {
     setSelectedCategory(category);
     if (category === 'none') {
       setSelectedPreset('');
+      setValue('bgColor', { r: 255, g: 255, b: 255, a: 1, name: '흰색' });
+      setValue('mainView', '');
+      setValue('stickers', []);
     }
   };
 
   const handleSelectPreset = (preset: Preset) => {
-    setSelectedPreset(preset);
-    if (MOOD_PRESETS[selectedCategory] !== null) {
-      setValue('bgColor', MOOD_PRESETS[selectedCategory][preset].bgColor);
-      setValue('mainView', MOOD_PRESETS[selectedCategory][preset].mainView);
-      setValue('stickers', MOOD_PRESETS[selectedCategory][preset].stickers);
+    setSelectedPreset(preset.name);
+
+    const selectedPresetDetails = MOOD_PRESETS[selectedCategory]?.[preset.name];
+
+    if (selectedPresetDetails) {
+      setValue('bgColor', selectedPresetDetails.bgColor);
+      setValue('mainView', selectedPresetDetails.mainView);
+      setValue('stickers', selectedPresetDetails.stickers);
+    } else {
+      Notify.success('해당 프리셋은 준비 중입니다.');
+      setValue('bgColor', { r: 255, g: 255, b: 255, a: 1, name: '흰색' });
+      setValue('mainView', '');
+      setValue('stickers', []);
     }
   };
 
@@ -42,7 +54,7 @@ const MoodPresetInput = () => {
       </div>
 
       <div className='flex justify-center items-center gap-[35px]'>
-        {PRESETS.map((preset) => (
+        {PRESETS[selectedCategory].map((preset) => (
           <div
             key={preset.name}
             className='flex flex-col justify-center items-center cursor-pointer'
@@ -52,19 +64,29 @@ const MoodPresetInput = () => {
                 type='radio'
                 className='custom-radio mr-[4px]'
                 checked={selectedPreset === preset.name}
-                onChange={() => handleSelectPreset(preset.name as Preset)}
+                onChange={() => handleSelectPreset(preset)}
                 disabled={selectedCategory === 'none'}
               />
               {preset.label}
             </label>
             <div
               onClick={() => {
-                if (selectedCategory !== 'none') handleSelectPreset(preset.name as Preset);
+                if (selectedCategory !== 'none') handleSelectPreset(preset);
               }}
-              className={`w-[80px] h-[152px] bg-gray-200 rounded-lg ${
+              className={`w-[80px] h-[152px] rounded-lg ${
                 selectedPreset === preset.name ? 'border border-primary-300' : 'border border-gray-300'
               }`}
-            />
+            >
+              {preset.image ? (
+                <img
+                  src={preset.image}
+                  alt={preset.label}
+                  className='w-full h-full object-cover rounded-lg'
+                />
+              ) : (
+                <div className='w-full h-full bg-gray-200 rounded-lg' />
+              )}
+            </div>
           </div>
         ))}
       </div>
