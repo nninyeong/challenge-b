@@ -40,6 +40,7 @@ const CreateCardPage = () => {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const [toggleInput, setToggleInput] = useToggle();
 
+  const [nameIndex, setNameIndex] = useState<number>(0);
   const [inputIndex, setInputIndex] = useState<number>(0);
   const orderList = INITIAL_ORDER(methods);
 
@@ -47,6 +48,7 @@ const CreateCardPage = () => {
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
     refs,
     setCurrentStep,
+    setNameIndex,
     setInputIndex,
   );
   const isLastInput = refs.current.length !== 0 && currentStep === refs.current.length - 1;
@@ -106,8 +108,10 @@ const CreateCardPage = () => {
     }
 
     if (inputIndex < orderList[currentStep].input.length - 1) {
+      setNameIndex((prev) => prev + 1);
       setInputIndex((prev) => prev + 1);
     } else {
+      setNameIndex(0);
       setInputIndex(0);
       setCurrentStep((prev) => prev + 1);
     }
@@ -116,6 +120,7 @@ const CreateCardPage = () => {
   const handleDebouncedPrevious = debounce(() => {
     isNavigating.current = true;
     if (inputIndex > 0) {
+      setNameIndex((prev) => prev - 1);
       setInputIndex((prev) => prev - 1);
     } else if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
@@ -176,52 +181,64 @@ const CreateCardPage = () => {
   }, [refs, isOnboardingComplete]);
 
   return (
-    <FormProvider {...methods}>
-      <div
-        className={`relative w-full h-full font-${selectedFont}`}
-        style={{
-          backgroundColor: backgroundColor,
-        }}
-      >
-        <OnBoarding
-          setIsOnboardingComplete={setIsOnboardingComplete}
-          isOnboardingComplete={isOnboardingComplete}
-        />
-        {isOnboardingComplete ? (
-          <>
-            <div
-              style={{
-                fontFamily: selectedFont,
-              }}
-            >
-              {orderList.map((e, index) => {
-                return (
-                  <div
-                    style={{ minHeight: VIEW_HEIGHT }}
-                    key={e.order}
-                    ref={(el) => {
-                      refs.current[index] = el;
-                    }}
-                  >
-                    {e.component}
-                  </div>
-                );
-              })}
-            </div>
-            <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-              <button
-                type='button'
-                onClick={setToggleInput}
-                className='text-black '
-              >
-                {toggleInput ? <FaSortDown size={40} /> : <FaSortUp size={40} />}
-              </button>
-              {toggleInput && (
-                <form
-                  className='bg-white shadow-xl px-4 rounded-lg h-[320px] z-10'
-                  onSubmit={methods.handleSubmit(onSubmit)}
+    <div
+      className={`relative w-full h-full font-${selectedFont}`}
+      style={{
+        backgroundColor: backgroundColor,
+      }}
+    >
+      <OnBoarding
+        setIsOnboardingComplete={setIsOnboardingComplete}
+        isOnboardingComplete={isOnboardingComplete}
+      />
+      {isOnboardingComplete ? (
+        <>
+          <div
+            style={{
+              fontFamily: selectedFont,
+            }}
+          >
+            {orderList.map((e, index) => {
+              return (
+                <div
+                  style={{ minHeight: VIEW_HEIGHT }}
+                  key={e.order}
+                  ref={(el) => {
+                    refs.current[index] = el;
+                  }}
                 >
-                  <div className='w-full flex items-center justify-end'>
+                  {e.component}
+                </div>
+              );
+            })}
+          </div>
+          <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
+            <FormProvider {...methods}>
+              <form
+                className={`flex flex-col bg-white shadow-xl px-4 py-4 object-cover rounded-lg ${toggleInput ? 'h-[320px]' : 'h-[54px]'} mb-[8px] z-10`}
+                onSubmit={methods.handleSubmit(onSubmit)}
+              >
+                <div className='flex justify-between items-center'>
+                  <button
+                    type='button'
+                    onClick={setToggleInput}
+                    className='flex justify-center items-center text-black '
+                  >
+                    {toggleInput ? (
+                      <FaSortDown
+                        size={28}
+                        viewBox='0 110 320 512'
+                      />
+                    ) : (
+                      <FaSortUp
+                        size={28}
+                        viewBox='0 -100 320 512'
+                      />
+                    )}
+                    {orderList[currentStep].name[nameIndex]}
+                  </button>
+
+                  <div className='flex items-center'>
                     <button
                       type='button'
                       onClick={handleDebouncedPrevious}
@@ -239,22 +256,27 @@ const CreateCardPage = () => {
                       <MdNavigateNext />
                     </button>
                   </div>
-                  {orderList[currentStep].input[inputIndex]}
-                  {currentStep === refs.current.length - 1 && (
-                    <Button
-                      className='rounded-[12px] w-[311px] h-[48px]'
-                      type='submit'
-                    >
-                      청첩장 제작 완료
-                    </Button>
-                  )}
-                </form>
-              )}
-            </div>
-          </>
-        ) : null}
-      </div>
-    </FormProvider>
+                </div>
+
+                {toggleInput && (
+                  <div className={`${toggleInput ? 'display-none' : ''}`}>
+                    {orderList[currentStep].input[inputIndex]}
+                    {currentStep === refs.current.length - 1 && (
+                      <Button
+                        className='rounded-[12px] w-[311px] h-[48px]'
+                        type='submit'
+                      >
+                        청첩장 제작 완료
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </form>
+            </FormProvider>
+          </div>
+        </>
+      ) : null}
+    </div>
   );
 };
 
