@@ -1,9 +1,8 @@
 import Papa from 'papaparse';
 import { useGetAllinvitationCard } from "./useMypage";
-import { createClient } from '@/utils/supabase/client';
+import browserClient from '@/utils/supabase/client';
 
 export const useDownloadCsv = () => {
-  const supabase = createClient();
   const { data: invitationCards } = useGetAllinvitationCard();
 
   const downloadCsv = async () => {
@@ -15,7 +14,7 @@ export const useDownloadCsv = () => {
       return;
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await browserClient
       .from('attendance')
       .select('name, division, person_count, whether_food')
       .eq('invitation_id', `${invitationCardId}`);
