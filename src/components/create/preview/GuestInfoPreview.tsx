@@ -21,12 +21,17 @@ const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> })
     control,
     name: 'weddingInfo',
   });
+  const mainPhotoInfo = useWatch({
+    control,
+    name: "mainPhotoInfo"
+  })
   return (
     <GuestInfo
       attendance={attendance}
       guestbook={guestbook}
       dDay={dDay}
       weddingInfo={weddingInfo}
+      mainPhotoInfo={mainPhotoInfo}
     />
   );
 };
