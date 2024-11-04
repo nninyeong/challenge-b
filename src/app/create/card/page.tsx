@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
@@ -23,6 +22,7 @@ import Button from '@/components/ui/Button';
 import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
 import EventBus from '@/utils/EventBus';
+import { motion } from 'framer-motion';
 
 const DELAY_TIME: number = 300;
 
@@ -183,6 +183,29 @@ const CreateCardPage = () => {
   }, [existingInvitation, reset]);
 
   useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOnboardingComplete && isRendered) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOnboardingComplete, isRendered]);
+
+  useEffect(() => {
+    if (existingInvitation === null) {
+      reset(INVITATION_DEFAULT_VALUE);
+    } else {
+      loadFormData({ existingInvitation, reset });
+    }
+  }, [existingInvitation, reset]);
+
+  useEffect(() => {
     subscribeBackgroundColor();
     subscribeFont();
   }, [methods]);
@@ -208,7 +231,6 @@ const CreateCardPage = () => {
           setIsOnboardingComplete={setIsOnboardingComplete}
           isOnboardingComplete={isOnboardingComplete}
         />
-
         <div
           style={{
             fontFamily: selectedFont,
@@ -229,16 +251,19 @@ const CreateCardPage = () => {
               );
             })}
         </div>
-        <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-          <form
-            className={`flex flex-col bg-white shadow-xl px-4 py-4 object-cover rounded-lg ${toggleInput ? 'h-[320px]' : 'h-[54px]'} mb-[8px] z-10`}
+        <div className='fixed bottom-0 left-0 right-0 px-[16px] z-10'>
+          <motion.form
+            initial={{ height: 54 }}
+            animate={{ height: toggleInput ? 320 : 54 }}
+            transition={{ duration: 0.3 }}
+            className={`flex flex-col bg-white shadow-xl p-[16px] object-cover rounded-lg ${toggleInput ? 'h-[320px]' : 'h-[54px]'} mb-[8px] z-10 gap-[8px]`}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <div className='flex justify-between items-center'>
               <button
                 type='button'
                 onClick={setToggleInput}
-                className='flex justify-center items-center text-black '
+                className='flex justify-center items-center text-gray-900 text-[18px] font-bold'
               >
                 {toggleInput ? (
                   <FaSortDown
@@ -258,18 +283,26 @@ const CreateCardPage = () => {
                 <button
                   type='button'
                   onClick={handleDebouncedPrevious}
-                  className='bg-red-300'
                   disabled={currentStep === 0 && inputIndex === 0}
+                  className='w-[28px] h-[28px]'
                 >
-                  <MdNavigateBefore />
+                  <img
+                    src='/assets/images/icons/chevron-left.svg'
+                    width={28}
+                    height={28}
+                  />
                 </button>
                 <button
-                  className='bg-blue-300'
                   type='button'
                   onClick={handleDebouncedNext}
                   disabled={isLastInput}
+                  className='w-[28px] h-[28px]'
                 >
-                  <MdNavigateNext />
+                  <img
+                    src='/assets/images/icons/chevron-right.svg'
+                    width={28}
+                    height={28}
+                  />
                 </button>
               </div>
             </div>
@@ -287,7 +320,7 @@ const CreateCardPage = () => {
                 )}
               </div>
             )}
-          </form>
+          </motion.form>
         </div>
       </div>
     </FormProvider>
