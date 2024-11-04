@@ -6,50 +6,70 @@ import { createClient } from '@/utils/supabase/client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { getUserInfo } from '@/utils/server-action';
-import { useQueryClient } from '@tanstack/react-query';
 import { reviewInputSchema } from '@/lib/zod/reviewInputSchema';
-import { Notify } from 'notiflix';
+
+import { getMyReview } from '@/utils/getReview';
+
+import { useReviewMutation } from '@/hooks/queries/review/useReviewMutation';
 
 type ReviewType = {
   content: string;
-  images: (File | null)[];
+  images: (string | null)[];
 };
 
 type ReviewUserType = { userId: string; userName: string; avatar_url: string };
 
+export type MutationReviewFormDataType = {
+  user_id: string;
+  content: string;
+  image_url: (string | null)[];
+  user_name: string;
+  avatar_url: string;
+};
 const MAX_CHAR = 200;
 const MAX_PHOTO = 5;
-const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>> }) => {
-  const { register, handleSubmit, control, setValue, getValues } = useForm<ReviewType>({
+const ReviewForm = () => {
+  const { register, handleSubmit, control, setValue, getValues, reset } = useForm<ReviewType>({
     mode: 'onChange',
     defaultValues: { content: '', images: [null, null, null, null, null] },
     resolver: zodResolver(reviewInputSchema),
   });
-  const queryClient = useQueryClient();
   const browserClient = createClient();
   const [user, setUser] = useState<ReviewUserType>({ userId: '', userName: '', avatar_url: '' });
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
-
+  const [type, setType] = useState<'insert' | 'update'>('insert');
+  const [myReviewId, setMyReviewId] = useState<string | null>(null);
   const contentWatch = useWatch({
     control,
     name: 'content',
   });
+  const { mutate: mutateMyReview } = useReviewMutation();
 
   const getUserData = async () => {
-    const data = await getUserInfo();
+    const userInfo = await getUserInfo();
+    const myReview = await getMyReview(userInfo.user.id);
     setUser({
-      userId: data.user.id,
-      userName: data.user.user_metadata.name,
-      avatar_url: data.user.user_metadata.avatar_url,
+      userId: userInfo.user.id,
+      userName: userInfo.user.user_metadata.name,
+      avatar_url: userInfo.user.user_metadata.avatar_url,
     });
+    if (myReview) {
+      setMyReviewId(myReview.id);
+      setType('update');
+      reset({ content: myReview.content, images: [...myReview.image_url] });
+
+      if (myReview.image_url.some((url: string) => url !== null)) {
+        setPreviewUrls(myReview.image_url.filter((url: string) => url !== null));
+      }
+    }
   };
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [reset]);
 
   const uploadFile = async (file: File) => {
-    const newFileName = `${user.userId}_${file.name}`;
+    const newFileName = `${crypto.randomUUID()}-${user.userId}`;
     const { data, error } = await browserClient.storage
       .from('review')
       .upload(`/images/${user.userId}/${newFileName}/${Date.now()}`, file);
@@ -62,51 +82,30 @@ const ReviewForm = ({ setOpenBottomSheet }: { setOpenBottomSheet: React.Dispatch
     return url;
   };
 
-  const pushImagesToArray = async (imageFiles: (File | null)[]) => {
-    const imageUrls: string[] = [];
-    for (const file of imageFiles) {
-      if (file) {
-        const url = await uploadFile(file);
-        if (url) {
-          imageUrls.push(url);
-        }
+  const handleReviewFormSubmit = async (formData: ReviewType) => {
+    const data: MutationReviewFormDataType = {
+      user_id: user.userId!,
+      content: formData.content,
+      image_url: formData.images,
+      user_name: user.userName!,
+      avatar_url: user.avatar_url,
+    };
+    mutateMyReview({ mutationData: data, type: type, myReviewId: myReviewId });
+  };
+
+  const handleFileChange = async (file: File | null) => {
+    if (file && previewUrls.length < MAX_PHOTO) {
+      const uploadedUrl = await uploadFile(file);
+      if (uploadedUrl) {
+        setPreviewUrls((prev) => [...prev, uploadedUrl]);
+
+        const currentImages = getValues('images') || [];
+        const updatedImages = [...currentImages.filter(Boolean), uploadedUrl].slice(0, MAX_PHOTO);
+        setValue('images', updatedImages);
       }
     }
-    return imageUrls;
   };
 
-  const handleReviewFormSubmit = async (formData: ReviewType) => {
-    const images = await pushImagesToArray(formData.images);
-
-    const { error } = await browserClient
-      .from('reviews')
-      .insert([
-        {
-          user_id: user.userId!,
-          content: formData.content,
-          image_url: images,
-          user_name: user.userName!,
-          avatar_url: user.avatar_url,
-        },
-      ])
-      .select();
-
-    if (error) {
-      console.error(error);
-    }
-    setOpenBottomSheet(false);
-    queryClient.invalidateQueries({ queryKey: ['reviews'] });
-    Notify.success('작성되었습니다.');
-  };
-
-  const handleFileChange = (file: File | null) => {
-    if (file && previewUrls.length < MAX_PHOTO) {
-      setPreviewUrls((prev) => [...prev, URL.createObjectURL(file)]);
-      const currentFiles = getValues('images') || [];
-      const updatedFiles = [...currentFiles.filter(Boolean), file].slice(0, MAX_PHOTO);
-      setValue('images', updatedFiles);
-    }
-  };
   return (
     <form
       onSubmit={handleSubmit(handleReviewFormSubmit)}
