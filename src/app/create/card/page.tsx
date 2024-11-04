@@ -19,6 +19,7 @@ import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { useRouter } from 'next/navigation';
 import { VIEW_HEIGHT } from '@/constants/viewHeight';
+import { Notify } from 'notiflix';
 
 const DELAY_TIME: number = 300;
 
@@ -66,7 +67,7 @@ const CreateCardPage = () => {
 
     if (!user.user) {
       sessionStorage.setItem('invitationFormData', JSON.stringify(invitationData));
-      alert('생성을 원하시면 로그인 해주세요!');
+      Notify.success('생성을 원하시면 로그인 해주세요!');
       router.push('/signin');
       return;
     }
@@ -77,7 +78,7 @@ const CreateCardPage = () => {
       updateInvitation(invitationData);
     }
 
-    alert('청첩장이 성공적으로 제출되었습니다.');
+    Notify.success('청첩장이 성공적으로 제출되었습니다.');
     router.push('/mypage');
   };
 
