@@ -1,5 +1,6 @@
-import { COLOR_DEFAULT_PALETTE, DECORATE_IMAGE_TYPE } from '@/components/create/MainViewInput';
+import { DECORATE_IMAGE_TYPE } from '@/components/create/MainViewInput';
 import { DECORATE_STICKERS } from './invitationStickers';
+import { COLOR_DEFAULT_PALETTE } from '@/components/create/BackgroundColorInput';
 
 export const MOOD_PRESETS = {
   classic: {
