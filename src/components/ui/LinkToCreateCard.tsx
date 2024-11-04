@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Button from '@/components/ui/Button';
 
 const LinkToCreateCard = ({ buttonStyle }: { buttonStyle?: string }) => {
   return (
