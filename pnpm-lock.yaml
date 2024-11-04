@@ -44,6 +44,9 @@ importers:
       quill:
         specifier: ^2.0.2
         version: 2.0.2
+      rdndmb-html5-to-touch:
+        specifier: ^8.0.3
+        version: 8.0.3(dnd-core@16.0.1)
       re-resizable:
         specifier: ^6.10.0
         version: 6.10.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -59,6 +62,18 @@ importers:
       react-device-detect:
         specifier: ^2.2.3
         version: 2.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-dnd:
+        specifier: ^16.0.1
+        version: 16.0.1(@types/node@20.16.12)(@types/react@18.3.11)(react@18.3.1)
+      react-dnd-html5-backend:
+        specifier: ^16.0.1
+        version: 16.0.1
+      react-dnd-multi-backend:
+        specifier: ^8.0.3
+        version: 8.0.3(dnd-core@16.0.1)(react-dnd@16.0.1(@types/node@20.16.12)(@types/react@18.3.11)(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-dnd-touch-backend:
+        specifier: ^16.0.1
+        version: 16.0.1
       react-dom:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
@@ -87,6 +102,9 @@ importers:
       '@types/react':
         specifier: ^18
         version: 18.3.11
+      '@types/react-dnd':
+        specifier: ^3.0.2
+        version: 3.0.2(@types/node@20.16.12)(@types/react@18.3.11)(react@18.3.1)
       '@types/react-dom':
         specifier: ^18
         version: 18.3.1
@@ -986,6 +1004,9 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  hoist-non-react-statics@3.3.2:
+    resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
   html-to-image@1.11.11:
     resolution: {integrity: sha512-9gux8QhvjRO/erSnDPv28noDZcPZmYE7e1vFsBLKLlRlKDSqNJYebj6Qz1TGd5lsRV+X+xYyjCKjuZdABinWjA==}
@@ -3034,6 +3055,10 @@ snapshots:
       function-bind: 1.1.2
 
   html-to-image@1.11.11: {}
+
+  hoist-non-react-statics@3.3.2:
+    dependencies:
+      react-is: 16.13.1
 
   https-proxy-agent@7.0.5:
     dependencies:

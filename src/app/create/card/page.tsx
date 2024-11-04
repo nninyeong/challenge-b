@@ -19,8 +19,10 @@ import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { useRouter } from 'next/navigation';
 import { VIEW_HEIGHT } from '@/constants/viewHeight';
-import EventBus from '@/utils/EventBus';
+import Button from '@/components/ui/Button';
+import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
+import EventBus from '@/utils/EventBus';
 
 const DELAY_TIME: number = 300;
 
@@ -72,11 +74,14 @@ const CreateCardPage = () => {
     await EventBus.publish('invitationSaved', null);
 
     if (existingInvitation) {
-      updateInvitation(invitationData);
-      alert('청첩장이 업데이트되었습니다.');
+      const { isSuccess } = await revalidateInvitation(existingInvitation.id);
+      if (isSuccess) {
+        updateInvitation(invitationData);
+        Notify.success('청첩장이 업데이트 되었습니다.');
+      }
     } else {
       insertInvitation(invitationData);
-      alert('청첩장이 생성되었습니다.');
+      Notify.success('청첩장이 생성되었습니다.');
     }
 
     router.push('/mypage');
@@ -231,12 +236,12 @@ const CreateCardPage = () => {
                   </div>
                   {orderList[currentStep].input[inputIndex]}
                   {currentStep === refs.current.length - 1 && (
-                    <button
-                      className='w-full'
+                    <Button
+                      className='rounded-[12px] w-[311px] h-[48px]'
                       type='submit'
                     >
-                      제출
-                    </button>
+                      청첩장 제작 완료
+                    </Button>
                   )}
                 </form>
               </FormProvider>
