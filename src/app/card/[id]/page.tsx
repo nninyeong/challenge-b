@@ -1,14 +1,8 @@
 import { notFound } from 'next/navigation';
 import { supabase } from '@/utils/supabase/createClient';
 import { convertToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
-import MainPhoto from '@/components/card/MainPhoto';
-import Greeting from '@/components/card/Greeting';
-import PersonalInfoOnSharedCard from '@/components/card/PersonalInfoOnSharedCard';
-import Account from '@/components/card/Account';
-import WeddingInfo from '@/components/card/WeddingInfo';
-import NavigationDetails from '@/components/card/NavigationDetails';
-import GuestInfo from '@/components/card/GuestInfo';
-import WeddingGallery from '@/components/card/WeddingGallery';
+import { convertOrderToComponent } from '@/utils/convert/convertOrderToComponent';
+import { Fragment } from 'react';
 
 export const generateStaticParams = async () => {
   const { data } = await supabase.from('invitation').select('id');
@@ -29,49 +23,17 @@ const fetchInvitationData = async (id: string) => {
 
 const CardPage = async ({ params }: { params: { id: string } }) => {
   const invitation = await fetchInvitationData(params.id);
-  const {
-    gallery,
-    mainView,
-    bgColor,
-    stickers,
-    greetingMessage,
-    guestbook,
-    attendance,
-    personalInfo,
-    weddingInfo,
-    account,
-    navigationDetail,
-    dDay,
-    mainPhotoInfo,
-    isPrivate,
-  } = convertToCamelCase(invitation);
+  const { isPrivate, renderOrder, ...invitationData } = convertToCamelCase(invitation);
 
   return isPrivate ? (
     <div>아직 공개되지 않은 청첩장입니다.</div>
   ) : (
     <div>
-      <MainPhoto
-        mainPhotoInfo={mainPhotoInfo}
-        bgColor={bgColor}
-        mainView={mainView}
-        stickers={stickers}
-      />
-      <WeddingGallery gallery={gallery} />
-      <Greeting greetingMessage={greetingMessage} />
-      <PersonalInfoOnSharedCard personalInfo={personalInfo} />
-      <Account account={account} />
-      <WeddingInfo weddingInfo={weddingInfo} />
-      <NavigationDetails
-        navigationDetail={navigationDetail}
-        weddingInfo={weddingInfo}
-      />
-      <GuestInfo
-        attendance={attendance}
-        guestbook={guestbook}
-        dDay={dDay}
-        weddingInfo={weddingInfo}
-        mainPhotoInfo={mainPhotoInfo}
-      />
+      {renderOrder
+        .sort((a, b) => a.order - b.order)
+        .map(({ typeOnSharedCard }, index) => (
+          <Fragment key={index}>{convertOrderToComponent(typeOnSharedCard, invitationData)}</Fragment>
+        ))}
     </div>
   );
 };
