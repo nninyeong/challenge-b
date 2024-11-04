@@ -25,15 +25,19 @@ const BackgroundColorInput = () => {
     setPortalElement(document.getElementById('modal'));
   }, []);
   return (
-    <div>
-      <div className='grid grid-cols-5 place-content-center place-items-center text-sm'>
+    <div className='mt-[21px]'>
+      <div className='grid grid-cols-5 place-content-center place-items-center text-sm gap-y-[27px]'>
         <div className='flex-col-center'>
           <button
             type='button'
-            className='w-[30px] h-[30px] border-2 border-solid rounded-full flex justify-center items-center bg-white'
+            className='w-[35px] h-[35px] border-2 border-solid rounded-full flex justify-center items-center bg-white'
             onClick={() => setValue('bgColor', { r: 255, g: 255, b: 255, a: 1 })}
           >
-            <ImSpinner11 className='rotate-90' />
+            <img
+              src='/assets/images/icons/replay.svg'
+              alt='replay'
+              className='w-[27px] h-[27px] rounded-full bg-gray-200'
+            />
           </button>
           <p>원본</p>
         </div>
@@ -47,11 +51,15 @@ const BackgroundColorInput = () => {
               <button
                 type='button'
                 onClick={() => setValue('bgColor', colorElement)}
-                className={`w-[30px] h-[30px] border-2 border-solid border-white rounded-full`}
-                style={{
-                  backgroundColor: `rgba(${colorElement.r},${colorElement.g},${colorElement.b},${colorElement.a})`,
-                }} //NOTE - Tailwind는 동적으로 background color 지정이 안됨
-              />
+                className={`w-[35px] h-[35px] border-[1px] border-solid border-gray-200 rounded-full flex-col-center`}
+              >
+                <p
+                  className='w-[27px] h-[27px] rounded-full'
+                  style={{
+                    backgroundColor: `rgba(${colorElement.r},${colorElement.g},${colorElement.b},${colorElement.a})`,
+                  }}
+                ></p>
+              </button>
               <p>{colorElement.name}</p>
             </div>
           );
@@ -59,10 +67,15 @@ const BackgroundColorInput = () => {
         <div className='flex-col-center'>
           <button
             type='button'
-            className='w-[30px] h-[30px] border-2 border-solid rounded-full flex justify-center items-center bg-white'
+            className='w-[35px] h-[35px] border-[1px] border-solid border-gray-200 rounded-full flex justify-center items-center bg-white'
             style={{ backgroundColor: `rgba(${myColor.r}, ${myColor.g}, ${myColor.b}, ${myColor.a})` }}
             onClick={() => setOpenModal(!openModal)}
-          />
+          >
+            <img
+              src='/assets/images/icons/ellipse-346.svg'
+              alt='직접선택'
+            />
+          </button>
           <p>직접 선택</p>
         </div>
         {openModal && portalElement
