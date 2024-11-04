@@ -1,10 +1,21 @@
 'use client';
 import { AccountType } from '@/types/accountType.type';
+import { Notify } from 'notiflix';
 
-const AccountModalPersonalBox = ({ accountData }: { accountData: AccountType }) => {
+const AccountModalPersonalBox = ({
+  accountData,
+  setOpenAccountModal,
+}: {
+  accountData: AccountType;
+  setOpenAccountModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const handleCopyAccountNumber = async () => {
     try {
       await navigator.clipboard.writeText(`${accountData.bank} ${accountData.accountNumber}`);
+      setOpenAccountModal(false);
+      if (accountData.bank === '') return Notify.failure('은행을 입력해주세요.');
+      if (accountData.accountNumber === '') return Notify.failure('계좌번호를 입력해주세요.');
+      Notify.success('복사되었습니다.');
     } catch (error) {
       console.error(error);
     }

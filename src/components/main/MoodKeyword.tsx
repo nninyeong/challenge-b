@@ -1,9 +1,14 @@
 import { MOOD_LIST } from '@/constants/invitationMoods';
 import Image from 'next/image';
+import { useState } from 'react';
 
 const MoodKeyword = () => {
-  const placeholderImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6c3aYUkJ6HhXVkwqnenl9C4xGHtrvCSrZQQ&s';
+  const initialMood = MOOD_LIST.find((mood) => mood.category === 'classic')!.image;
+  const [selectedMood, setSelectedMood] = useState<string>(initialMood);
 
+  const handleClickMood = (image: string) => {
+    setSelectedMood(image);
+  };
   return (
     <div className='mb-[56px]'>
       <div className='mb-[24px]'>
@@ -14,18 +19,19 @@ const MoodKeyword = () => {
       <div className='flex flex-col justify-center items-center gap-[16px]'>
         <div className='flex justify-around space-x-[8px] w-full overflow-x-auto scrollbar-hidden'>
           {MOOD_LIST.map((mood) => (
-            <p
+            <button
               key={mood.category}
-              className='flex-shrink-0 px-[12px] py-[4px] bg-primary300 text-white rounded-full min-w-[100px] text-center'
+              onClick={() => handleClickMood(mood.image)}
+              className={`flex-shrink-0 px-[12px] py-[4px] ${selectedMood === mood.image ? 'bg-primary300 text-white' : 'bg-white text-primary300 border border-primary300'} rounded-full min-w-[100px] text-center`}
             >
               {mood.label}
-            </p>
+            </button>
           ))}
         </div>
 
         <div className='relative h-[296px] w-[343px] mt-[16px] rounded-lg overflow-hidden'>
           <Image
-            src={placeholderImg}
+            src={selectedMood}
             alt='무드에 맞는 청첩장 이미지'
             layout='fill'
             objectFit='cover'

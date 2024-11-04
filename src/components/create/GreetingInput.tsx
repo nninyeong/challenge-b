@@ -11,7 +11,6 @@ const GreetingInput = () => {
   };
   return (
     <div className='flex flex-col justify-center items-center gap-2'>
-      <p className='font-bold text-black text-[14px] text-left'>인사말</p>
       <div className='flex gap-2'>
         <label className='font-bold text-black text-[14px] w-[48px] text-center'>제목</label>
         <input
