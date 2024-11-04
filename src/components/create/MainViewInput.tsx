@@ -24,7 +24,7 @@ const MainViewInput = () => {
 
   return (
     <div>
-      <div className='w-full h-[150px] flex justify-between items-center'>
+      <div className='w-full h-[122px] flex justify-between items-center'>
         {DECORATE_IMAGE_TYPE.map((item) => (
           <div
             key={item.type}
