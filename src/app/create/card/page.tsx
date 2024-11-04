@@ -58,7 +58,11 @@ const CreateCardPage = () => {
   const { reset } = methods;
 
   useEffect(() => {
-    loadFormData({ existingInvitation, reset });
+    if (existingInvitation === null) {
+      reset(INVITATION_DEFAULT_VALUE);
+    } else {
+      loadFormData({ existingInvitation, reset });
+    }
   }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
@@ -66,24 +70,24 @@ const CreateCardPage = () => {
 
     if (!user.user) {
       sessionStorage.setItem('invitationFormData', JSON.stringify(invitationData));
-      alert('생성을 원하시면 로그인 해주세요!');
+      Notify.success('생성을 원하시면 로그인 해주세요!');
+      router.push('/signin');
       return;
     }
 
     Notify.success('청첩장 생성을 시작합니다.');
     await EventBus.publish('invitationSaved', null);
 
-    if (existingInvitation) {
+    if (existingInvitation === null) {
+      insertInvitation(invitationData);
+    } else {
       const { isSuccess } = await revalidateInvitation(existingInvitation.id);
       if (isSuccess) {
         updateInvitation(invitationData);
-        Notify.success('청첩장이 업데이트 되었습니다.');
       }
-    } else {
-      insertInvitation(invitationData);
-      Notify.success('청첩장이 생성되었습니다.');
     }
 
+    Notify.success('청첩장이 성공적으로 제출되었습니다.');
     router.push('/mypage');
   };
 
@@ -94,12 +98,13 @@ const CreateCardPage = () => {
     if (!user.user) {
       sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
     } else {
-      if (existingInvitation) {
-        updateInvitation(formData);
-      } else {
+      if (existingInvitation === null) {
         insertInvitation(formData);
+      } else {
+        updateInvitation(formData);
       }
     }
+
     if (inputIndex < orderList[currentStep].input.length - 1) {
       setInputIndex((prev) => prev + 1);
     } else {
