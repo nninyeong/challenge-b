@@ -183,6 +183,29 @@ const CreateCardPage = () => {
   }, [existingInvitation, reset]);
 
   useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOnboardingComplete && isRendered) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOnboardingComplete, isRendered]);
+
+  useEffect(() => {
+    if (existingInvitation === null) {
+      reset(INVITATION_DEFAULT_VALUE);
+    } else {
+      loadFormData({ existingInvitation, reset });
+    }
+  }, [existingInvitation, reset]);
+
+  useEffect(() => {
     subscribeBackgroundColor();
     subscribeFont();
   }, [methods]);
