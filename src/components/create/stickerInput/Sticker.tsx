@@ -185,7 +185,7 @@ const Sticker = ({
     });
   };
 
-  const handleRotationStop = (e: React.TouchEvent<HTMLDivElement>) => {
+  const handleRotationStop = () => {
     if (!stickerRef.current || !isRotating || isResizing) return;
     const rotation = calculateComponentRotation(stickerRef);
     accumulatedRotation.current = rotation;

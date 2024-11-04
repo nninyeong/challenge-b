@@ -9,6 +9,7 @@ export const DECORATE_STICKERS: StickerType[] = [
     width: 70,
     height: 70,
     stickerImageId: 'classic-001.png',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-simple-003.svg`,
@@ -18,6 +19,7 @@ export const DECORATE_STICKERS: StickerType[] = [
     width: 313,
     height: 65,
     stickerImageId: 'simple-003.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-modern-001`,
@@ -27,6 +29,7 @@ export const DECORATE_STICKERS: StickerType[] = [
     width: 162,
     height: 162,
     stickerImageId: 'modern-001.png',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-floral-002.svg`,
@@ -36,5 +39,6 @@ export const DECORATE_STICKERS: StickerType[] = [
     width: 93,
     height: 87,
     stickerImageId: 'floral-002.svg',
+    rotation: 0,
   },
 ];
