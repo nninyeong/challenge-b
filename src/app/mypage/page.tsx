@@ -63,7 +63,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
           </ul>
         </nav> */}
         {/* TODO 위 주석 나의 후기관리가 accordion으로 바뀔 시에 아래에 펼쳐진 리뷰 내용 클릭시 리뷰로 이동하면서 bottomsheet가 열리게 할 예정이라 우선 분리해두었음*/}
-        <MyPageNavigatorList />
+        <MyPageNavigatorList user={user} />
 
         <LogoutButton />
       </div>

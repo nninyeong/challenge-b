@@ -2,7 +2,7 @@
 
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '../queryKeys';
-import { getAllImageReviews, getAuthUsersProfile, getReview } from '@/utils/getReview';
+import { getAllImageReviews, getAuthUsersProfile, getMyReview, getReview } from '@/utils/getReview';
 import { Review } from '@/types/review.types';
 const ROW = 10;
 export const useAuthUserQuery = () => {
@@ -27,5 +27,13 @@ export const useReviewInfinite = () => {
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.length === ROW ? allPages.length * ROW : undefined;
     },
+  });
+};
+
+export const useGetReviewOnlyUser = (userId: string) => {
+  return useQuery({
+    queryKey: QUERY_KEYS.userReview(),
+    queryFn: () => getMyReview(userId),
+    enabled: !!userId,
   });
 };
