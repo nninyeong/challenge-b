@@ -1,22 +1,17 @@
 'use client';
+import { useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
-import { getInvitationCard, patchPrivateInvitation } from '@/utils/myPage';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { patchPrivateInvitation } from '@/utils/myPage';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { revalidateInvitation } from '@/utils/revalidateInvitation';
+import { Notify } from 'notiflix';
 
 const TogglePrivate = () => {
   const [isPrivate, setIsPrivate] = useState(false);
   const queryClient = useQueryClient();
 
-  const {
-    data: invitationCard,
-    isLoading,
-    error,
-    isSuccess,
-  } = useQuery({
-    queryKey: QUERY_KEYS.invitationCard(),
-    queryFn: getInvitationCard,
-  });
+  const { data: invitationCard, isLoading, error, isSuccess } = useGetAllinvitationCard();
 
   useEffect(() => {
     if (invitationCard && invitationCard.length > 0 && isSuccess) {
@@ -33,10 +28,15 @@ const TogglePrivate = () => {
     },
   });
 
-  const toggleSwitch = () => {
+  const toggleSwitch = async () => {
+    if (!invitationCard || invitationCard.length < 1) return;
     const newIsPrivate = !isPrivate;
     setIsPrivate(newIsPrivate);
-    mutation.mutate(newIsPrivate);
+    const { isSuccess } = await revalidateInvitation(invitationCard[0].id);
+    if (isSuccess) {
+      mutation.mutate(newIsPrivate);
+      Notify.success('공개여부가 변경되었습니다.');
+    }
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -45,10 +45,10 @@ const TogglePrivate = () => {
   return (
     <div
       onClick={toggleSwitch}
-      className={`w-14 h-8 flex items-center rounded-full p-1 cursor-pointer ${isPrivate ? 'bg-primary-300' : 'bg-gray-400'}`}
+      className={`w-14 h-8 flex items-center rounded-full p-1 cursor-pointer ${isPrivate ? 'bg-gray-400' : 'bg-primary-300'}`}
     >
       <div
-        className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ${isPrivate ? 'translate-x-6' : ''}`}
+        className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ${isPrivate ? '' : 'translate-x-6'}`}
       ></div>
     </div>
   );

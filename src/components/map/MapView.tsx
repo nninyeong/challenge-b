@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import useLatLng from '@/hooks/map/useLatLng';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';

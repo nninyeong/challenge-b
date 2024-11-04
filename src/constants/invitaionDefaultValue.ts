@@ -1,4 +1,13 @@
 import { InvitationFormType } from '@/types/invitationFormType.type';
+import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
+
+const extractOrderAndType = () => {
+  return INITIAL_ORDER().map(({ order, typeOnSharedCard, labelForInput }) => ({
+    order,
+    typeOnSharedCard,
+    labelForInput,
+  }));
+};
 
 export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
   bgColor: { r: 255, g: 255, b: 255, a: 1, name: '흰색' },
@@ -55,9 +64,16 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
     subway: '',
     bus: '',
   },
-  gallery: { images: [] },
+  gallery: {
+    images: [],
+    grid: 3,
+    ratio: 'square',
+  },
   type: 'scroll',
-  mood: '',
+  moodPreset: {
+    mood: 'classic',
+    preset: 'preset1',
+  },
   stickers: [],
   imgRatio: {
     ratio: '',
@@ -74,4 +90,5 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
     type: 'default',
   },
   isPrivate: false,
+  renderOrder: extractOrderAndType(),
 };

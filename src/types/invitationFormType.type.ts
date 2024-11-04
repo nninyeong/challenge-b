@@ -45,7 +45,9 @@ export type NavigationDetailType = {
 };
 
 export type GalleryType = {
-  images: File[];
+  images: string[];
+  grid: number;
+  ratio: string;
 };
 
 export type ImageRatioType = {
@@ -80,10 +82,33 @@ export type DecorateImageType = {
   type: string;
 };
 
+export type MoodPresetType = {
+  mood: Mood;
+  preset: Preset;
+};
+
+export type OrderItem = {
+  order: number;
+  typeOnSharedCard:
+    | 'MAIN_PHOTO'
+    | 'GREETING'
+    | 'PERSONAL_INFO'
+    | 'ACCOUNT'
+    | 'WEDDING_INFO'
+    | 'NAVIGATION_DETAILS'
+    | 'GUEST_INFO'
+    | 'GALLERY'
+    | 'ONLY_FOR_CREATE';
+  labelForInput: string;
+};
+
+export type Mood = 'classic' | 'romantic' | 'modern' | 'floral' | 'rustic' | 'simple' | 'none';
+export type Preset = 'preset1' | 'preset2' | 'preset3';
+
 export type InvitationFormType = {
   gallery: GalleryType;
   type: 'scroll' | 'slide';
-  mood: string;
+  moodPreset: MoodPresetType;
   mainView: DecorateImageType;
   bgColor: ColorType;
   stickers: StickerType[];
@@ -99,4 +124,17 @@ export type InvitationFormType = {
   dDay: boolean;
   mainPhotoInfo: MainPhotoType;
   isPrivate: boolean;
+  renderOrder: OrderItem[];
+};
+
+export type InvitationCard = {
+  main_photo_info: {
+    imageUrl: string;
+  };
+  isPrivate: boolean;
+  id: string;
+  greeting_message: {
+    title: string;
+    content: string;
+  };
 };
