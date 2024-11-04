@@ -14,7 +14,7 @@ const GuestInfoInput = () => {
   return (
     <>
       <div>
-        <label>
+        <label className='flex items-center gap-2 mt-5 mb-10'>
           <input
             type='checkbox'
             {...register('guestbook')}
@@ -34,8 +34,8 @@ const GuestInfoInput = () => {
         </label>
       </div>
       <div>
-        <div className='text-[18px] font-bold text-gray-900 mb-4'>디데이 · 참석의사 · RSVP</div>
-        <label className='flex items-center gap-2 mb-[14px]'>
+        <div className='text-[18px] font-bold text-gray-900 mb-6'>디데이 · 참석의사 · RSVP</div>
+        <label className='flex items-center gap-2 mb-10'>
           <input
             type='checkbox'
             {...register('dDay')}
