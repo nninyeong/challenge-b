@@ -181,39 +181,39 @@ const CreateCardPage = () => {
   }, [refs, isOnboardingComplete]);
 
   return (
-    <div
-      className={`relative w-full h-full font-${selectedFont}`}
-      style={{
-        backgroundColor: backgroundColor,
-      }}
-    >
-      <OnBoarding
-        setIsOnboardingComplete={setIsOnboardingComplete}
-        isOnboardingComplete={isOnboardingComplete}
-      />
-      {isOnboardingComplete ? (
-        <>
-          <div
-            style={{
-              fontFamily: selectedFont,
-            }}
-          >
-            {orderList.map((e, index) => {
-              return (
-                <div
-                  style={{ minHeight: VIEW_HEIGHT }}
-                  key={e.order}
-                  ref={(el) => {
-                    refs.current[index] = el;
-                  }}
-                >
-                  {e.component}
-                </div>
-              );
-            })}
-          </div>
-          <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-            <FormProvider {...methods}>
+    <FormProvider {...methods}>
+      <div
+        className={`relative w-full h-full font-${selectedFont}`}
+        style={{
+          backgroundColor: backgroundColor,
+        }}
+      >
+        <OnBoarding
+          setIsOnboardingComplete={setIsOnboardingComplete}
+          isOnboardingComplete={isOnboardingComplete}
+        />
+        {isOnboardingComplete ? (
+          <>
+            <div
+              style={{
+                fontFamily: selectedFont,
+              }}
+            >
+              {orderList.map((e, index) => {
+                return (
+                  <div
+                    style={{ minHeight: VIEW_HEIGHT }}
+                    key={e.order}
+                    ref={(el) => {
+                      refs.current[index] = el;
+                    }}
+                  >
+                    {e.component}
+                  </div>
+                );
+              })}
+            </div>
+            <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
               <form
                 className={`flex flex-col bg-white shadow-xl px-4 py-4 object-cover rounded-lg ${toggleInput ? 'h-[320px]' : 'h-[54px]'} mb-[8px] z-10`}
                 onSubmit={methods.handleSubmit(onSubmit)}
@@ -272,11 +272,11 @@ const CreateCardPage = () => {
                   </div>
                 )}
               </form>
-            </FormProvider>
-          </div>
-        </>
-      ) : null}
-    </div>
+            </div>
+          </>
+        ) : null}
+      </div>
+    </FormProvider>
   );
 };
 
