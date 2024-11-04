@@ -219,7 +219,6 @@ const CreateCardPage = () => {
     initializeObserver();
     return () => unsubscribeObservers();
   }, [refs, isOnboardingComplete]);
-
   return (
     <FormProvider {...methods}>
       <div
@@ -252,12 +251,14 @@ const CreateCardPage = () => {
               );
             })}
         </div>
-        <div className='fixed bottom-0 left-0 right-0 px-[16px] z-10'>
+        <div
+          className={`fixed bottom-0 left-0 right-0 px-[16px] z-10 h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex])}]`}
+        >
           <motion.form
             initial={{ height: 54 }}
             animate={{ height: toggleInput ? 320 : 54 }}
             transition={{ duration: 0.3 }}
-            className={`flex flex-col bg-white shadow-xl p-[16px] object-cover rounded-lg ${toggleInput ? 'h-[320px]' : 'h-[54px]'} mb-[8px] z-10 gap-[8px]`}
+            className={`flex flex-col bg-white shadow-xl p-[16px] object-cover rounded-lg mb-[8px] z-10 gap-[8px]`}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <div className='flex justify-between items-center'>

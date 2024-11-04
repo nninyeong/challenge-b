@@ -1,6 +1,6 @@
-const HEIGHT_COMPACT = 'h-[54px]';
-const HEIGHT_MAIN_OR_BACKGROUND = 'h-[240px]';
-const HEIGHT_DEFAULT = 'h-[320px]';
+const HEIGHT_COMPACT = '54px';
+const HEIGHT_MAIN_OR_BACKGROUND = '240px';
+const HEIGHT_DEFAULT = '320px';
 
 const createCardFormHeightMapper = (toggleInput: boolean, currentInputName: string) => {
   if (!toggleInput) return HEIGHT_COMPACT;
