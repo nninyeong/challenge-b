@@ -11,16 +11,18 @@ const GuestInfo = ({ attendance, guestbook, dDay, weddingInfo, mainPhotoInfo }: 
   return (
     <>
       {guestbook && <GuestBook />}
-      <div className='pb-20 px-4 w-full'>
-        <EventStatus
-          attendanceButton={attendance}
-          dDayCount={dDay}
-          weddingInfoDate={weddingInfo.date}
-          leftName={mainPhotoInfo.leftName}
-          rightName={mainPhotoInfo.rightName}
-          icon={mainPhotoInfo.icon}
-        />
-      </div>
+      {attendance && dDay && (
+        <div className='pb-20 px-4 w-full'>
+          <EventStatus
+            attendanceButton={attendance}
+            dDayCount={dDay}
+            weddingInfoDate={weddingInfo.date}
+            leftName={mainPhotoInfo.leftName}
+            rightName={mainPhotoInfo.rightName}
+            icon={mainPhotoInfo.icon}
+          />
+        </div>
+      )}
     </>
   );
 };

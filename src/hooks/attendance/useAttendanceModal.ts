@@ -2,6 +2,7 @@ import { attendanceSchema } from "@/lib/zod/attendanceSchema";
 import { AttendanceFormData } from "@/types/guestInfo.types";
 import browserClient from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Notify } from "notiflix";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
@@ -34,9 +35,9 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
 
     if (error) {
       console.error('Error inserting data:', error);
-      alert('참석 정보를 저장하는 중 오류가 발생했습니다.');
+      Notify.failure('참석 정보를 저장하는 중 오류가 발생했습니다.');
     } else {
-      alert('참석 정보가 저장되었습니다.');
+      Notify.success('참석 정보가 저장되었습니다.');
       closeModal();
     }
   };

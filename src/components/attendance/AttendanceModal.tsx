@@ -27,16 +27,6 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
         className='bg-white text-black w-[343px] h-auto p-4 rounded-md'
         onClick={(e) => e.stopPropagation()}
       >
-        <div
-          className='cursor-pointer flex justify-end'
-          onClick={onClick}
-        >
-          <img
-            src='/assets/images/icons/x-03-gray.svg'
-            alt='x'
-            className='w-[24px] h-[24px]'
-          />
-        </div>
         <div className='flex flex-col justify-center items-center'>
           <div className='flex justify-center mb-6'>
             <img
@@ -56,7 +46,6 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 placeholder='성함'
                 {...register('name')}
               />
-              {errors.name && <span>{errors.name.message}</span>}
               <select
                 className='border-gray-500 border outline-none col-span-2 p-2 w-[77px] h-8 text-[12px] rounded-lg'
                 {...register('attendanceCount', {
@@ -69,7 +58,6 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 <option value={4}>4</option>
                 <option value={5}>5</option>
               </select>
-              {errors.attendanceCount && <span>{errors.attendanceCount.message}</span>}
               <div>
                 <label className='text-[14px] text-gray-600 flex items-center cursor-pointer ml-2'>
                   <input
@@ -90,7 +78,6 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                   <span className='ml-2'>식사여부</span>
                 </label>
               </div>
-              {errors.mealOption && <span>{errors.mealOption.message}</span>}
             </div>
             <div className='flex w-full justify-between'>
               <div className='relative'>
@@ -140,9 +127,17 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 </label>
               </div>
             </div>
-            {errors.personType && <span>{errors.personType.message}</span>}
           </div>
-          <button className='w-full h-12 mt-4 bg-primary300 text-white py-2 px-4 rounded-xl'>참석 의사 전달하기</button>
+          {errors.name && <span className='text-red-500 text-[12px]'>{errors.name.message}</span>}
+          <div className='flex gap-2 mt-4'>
+            <button
+              className='w-24 h-12 bg-gray-300 text-white py-2 px-4 rounded-xl'
+              onClick={onClick}
+            >
+              취소
+            </button>
+            <button className='w-[207px] h-12 bg-primary300 text-white py-2 px-4 rounded-xl'>참석 의사 전달하기</button>
+          </div>
         </form>
       </div>
     </div>
