@@ -16,7 +16,7 @@ const getExistingInvitation = async () => {
     console.error(error);
   }
 
-  return data;
+  return data || null;
 };
 
 export const useGetInvitationQuery = () => {
