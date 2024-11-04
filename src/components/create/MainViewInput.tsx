@@ -29,15 +29,33 @@ const MainViewInput = () => {
           <div
             key={item.type}
             onClick={() => handleDecorateImage(item)}
-            className={`p-2 cursor-pointer flex flex-col justify-center items-center `}
+            className={`p-2 cursor-pointer flex flex-col justify-center items-center ${
+              selectedType.type === item.type ? 'text-primary-300' : 'text-gray-600'
+            }`}
           >
+            <label className='flex justify-center gap-[4px] items-center'>
+              <input
+                type='radio'
+                name='decorateImage'
+                value={item.type}
+                checked={selectedType.type === item.type}
+                onChange={() => handleDecorateImage(item)}
+                className='sr-only'
+              />
+              <span
+                className={`w-3.5 h-3.5 rounded-full border-[1px] flex items-center justify-center ${
+                  selectedType.type === item.type ? 'border-primary-300' : 'border-gray-400'
+                }`}
+              >
+                {selectedType.type === item.type && <span className='w-2 h-2 bg-primary-300 rounded-full' />}
+              </span>
+              <p className='font-md'>{item.name}</p>
+            </label>
+
             <DecorateImageTypeComponent
               type={item.type}
               isSelected={selectedType.type === item.type}
             />
-            <p className={`${selectedType.type === item.type && 'text-primary-300'} font-semibold text-gray-600 mt-2`}>
-              {item.name}
-            </p>
           </div>
         ))}
       </div>
