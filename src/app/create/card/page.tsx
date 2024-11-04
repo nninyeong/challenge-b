@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
@@ -23,6 +22,7 @@ import Button from '@/components/ui/Button';
 import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
 import EventBus from '@/utils/EventBus';
+import { motion } from 'framer-motion';
 
 const DELAY_TIME: number = 300;
 
@@ -39,9 +39,9 @@ const CreateCardPage = () => {
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const [toggleInput, setToggleInput] = useToggle();
-
   const [nameIndex, setNameIndex] = useState<number>(0);
   const [inputIndex, setInputIndex] = useState<number>(0);
+  const [isRendered, setIsRendered] = useState<boolean>(false);
   const orderList = INITIAL_ORDER(methods);
 
   const refs = useRef<null[] | HTMLDivElement[]>([]);
@@ -58,14 +58,6 @@ const CreateCardPage = () => {
   const { mutate: insertInvitation } = useInsertInvitation();
 
   const { reset } = methods;
-
-  useEffect(() => {
-    if (existingInvitation === null) {
-      reset(INVITATION_DEFAULT_VALUE);
-    } else {
-      loadFormData({ existingInvitation, reset });
-    }
-  }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
     const { data: user } = await browserClient.auth.getUser();
@@ -166,6 +158,53 @@ const CreateCardPage = () => {
       isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
     }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
   };
+
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOnboardingComplete && isRendered) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOnboardingComplete, isRendered]);
+
+  useEffect(() => {
+    if (existingInvitation === null) {
+      reset(INVITATION_DEFAULT_VALUE);
+    } else {
+      loadFormData({ existingInvitation, reset });
+    }
+  }, [existingInvitation, reset]);
+
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOnboardingComplete && isRendered) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOnboardingComplete, isRendered]);
+
+  useEffect(() => {
+    if (existingInvitation === null) {
+      reset(INVITATION_DEFAULT_VALUE);
+    } else {
+      loadFormData({ existingInvitation, reset });
+    }
+  }, [existingInvitation, reset]);
+
   useEffect(() => {
     subscribeBackgroundColor();
     subscribeFont();
@@ -181,6 +220,7 @@ const CreateCardPage = () => {
   }, [refs, isOnboardingComplete]);
 
   return (
+<<<<<<< HEAD
     <div
       className={`relative w-full h-full font-${selectedFont}`}
       style={{
@@ -217,66 +257,121 @@ const CreateCardPage = () => {
               <form
                 className={`flex flex-col bg-white shadow-xl px-4 py-4 object-cover rounded-lg ${toggleInput ? 'h-[320px]' : 'h-[54px]'} mb-[8px] z-10`}
                 onSubmit={methods.handleSubmit(onSubmit)}
-              >
-                <div className='flex justify-between items-center'>
-                  <button
-                    type='button'
-                    onClick={setToggleInput}
-                    className='flex justify-center items-center text-black '
-                  >
-                    {toggleInput ? (
-                      <FaSortDown
-                        size={28}
-                        viewBox='0 110 320 512'
-                      />
-                    ) : (
-                      <FaSortUp
-                        size={28}
-                        viewBox='0 -100 320 512'
-                      />
-                    )}
-                    {orderList[currentStep].name[nameIndex]}
-                  </button>
-
-                  <div className='flex items-center'>
-                    <button
-                      type='button'
-                      onClick={handleDebouncedPrevious}
-                      className='bg-red-300'
-                      disabled={currentStep === 0 && inputIndex === 0}
-                    >
-                      <MdNavigateBefore />
-                    </button>
-                    <button
-                      className='bg-blue-300'
-                      type='button'
-                      onClick={handleDebouncedNext}
-                      disabled={isLastInput}
-                    >
-                      <MdNavigateNext />
-                    </button>
-                  </div>
+=======
+    <FormProvider {...methods}>
+      <div
+        className={`relative w-full h-full font-${selectedFont}`}
+        style={{
+          backgroundColor: backgroundColor,
+        }}
+      >
+        <OnBoarding
+          setIsOnboardingComplete={setIsOnboardingComplete}
+          isOnboardingComplete={isOnboardingComplete}
+        />
+        <div
+          style={{
+            fontFamily: selectedFont,
+          }}
+        >
+          {isRendered &&
+            orderList.map((e, index) => {
+              return (
+                <div
+                  style={{ minHeight: VIEW_HEIGHT }}
+                  key={e.order}
+                  ref={(el) => {
+                    refs.current[index] = el;
+                  }}
+                >
+                  {e.component}
                 </div>
-
-                {toggleInput && (
-                  <div className={`${toggleInput ? 'display-none' : ''}`}>
-                    {orderList[currentStep].input[inputIndex]}
-                    {currentStep === refs.current.length - 1 && (
-                      <Button
-                        className='rounded-[12px] w-[311px] h-[48px]'
-                        type='submit'
-                      >
-                        청첩장 제작 완료
-                      </Button>
-                    )}
-                  </div>
+              );
+            })}
+        </div>
+        <div className='fixed bottom-0 left-0 right-0 px-[16px] z-10'>
+          <motion.form
+            initial={{ height: 54 }}
+            animate={{ height: toggleInput ? 320 : 54 }}
+            transition={{ duration: 0.3 }}
+            className={`flex flex-col bg-white shadow-xl p-[16px] object-cover rounded-lg ${toggleInput ? 'h-[320px]' : 'h-[54px]'} mb-[8px] z-10 gap-[8px]`}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <div className='flex justify-between items-center'>
+              <button
+                type='button'
+                onClick={setToggleInput}
+                className='flex justify-center items-center text-gray-900 text-[18px] font-bold'
+>>>>>>> 064ae6baa81d3fa102cc534e597328c2379126c1
+              >
+                {toggleInput ? (
+                  <FaSortDown
+                    size={28}
+                    viewBox='0 110 320 512'
+                  />
+                ) : (
+                  <FaSortUp
+                    size={28}
+                    viewBox='0 -100 320 512'
+                  />
                 )}
+<<<<<<< HEAD
               </form>
             </div>
           </FormProvider>
         </>
       ) : null}
     </div>
+=======
+                {orderList[currentStep].name[nameIndex]}
+              </button>
+
+              <div className='flex items-center'>
+                <button
+                  type='button'
+                  onClick={handleDebouncedPrevious}
+                  disabled={currentStep === 0 && inputIndex === 0}
+                  className='w-[28px] h-[28px]'
+                >
+                  <img
+                    src='/assets/images/icons/chevron-left.svg'
+                    width={28}
+                    height={28}
+                  />
+                </button>
+                <button
+                  type='button'
+                  onClick={handleDebouncedNext}
+                  disabled={isLastInput}
+                  className='w-[28px] h-[28px]'
+                >
+                  <img
+                    src='/assets/images/icons/chevron-right.svg'
+                    width={28}
+                    height={28}
+                  />
+                </button>
+              </div>
+            </div>
+
+            {toggleInput && (
+              <div className={`${toggleInput ? 'display-none' : ''}`}>
+                {orderList[currentStep].input[inputIndex]}
+                {currentStep === refs.current.length - 1 && (
+                  <Button
+                    className='rounded-[12px] w-[311px] h-[48px]'
+                    type='submit'
+                  >
+                    청첩장 제작 완료
+                  </Button>
+                )}
+              </div>
+            )}
+          </motion.form>
+        </div>
+      </div>
+    </FormProvider>
+>>>>>>> 064ae6baa81d3fa102cc534e597328c2379126c1
   );
 };
 

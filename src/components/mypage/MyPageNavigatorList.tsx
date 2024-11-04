@@ -30,7 +30,7 @@ const MyPageNavigatorList = ({ user }: MyPageUserProps) => {
 
   const handleMyReviewNavigator = (name: MenuNameType) => {
     if (name === '나의 후기관리') {
-      setIsReviewBottomSheetOpen((prev) => !prev);
+      setIsReviewBottomSheetOpen((prev: boolean) => !prev);
     } else {
       Notify.failure('준비중인 서비스입니다.');
     }
