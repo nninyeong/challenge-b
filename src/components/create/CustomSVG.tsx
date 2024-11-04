@@ -6,9 +6,11 @@ export const ArchSvg = ({ color }: { color: ColorType }) => {
     <svg
       width='100%'
       height='100%'
-      viewBox='0 190 343 172'
+      viewBox='0 0 343 172'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      preserveAspectRatio='xMinYMin meet'
+      style={{ display: 'block' }}
     >
       <path
         fillRule='evenodd'
