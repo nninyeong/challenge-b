@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import FlexColCenterContainer from '../FlexColCenterContainer';
+import { convertIndexToAccountLabel } from '@/utils/convertIndexToAccountLabel';
 
 const AccountInput = () => {
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
@@ -17,14 +18,6 @@ const AccountInput = () => {
     name: 'account.bride',
   });
 
-  const convertIndexToAccountLabel = (index: number) => {
-    if (index === 0) {
-      return accountType === 'groom' ? '신랑' : '신부';
-    }
-
-    if (index === 1) return '아버지';
-    if (index === 2) return '어머니';
-  };
   return (
     <FlexColCenterContainer className='text-sm gap-4 w-full'>
       <div className='flex gap-3 h-[32px] w-full'>
@@ -75,7 +68,7 @@ const AccountInput = () => {
             key={`${accountType}${index}`}
             className='flex justify-center items-center text-[14px] h-[32px] mb-[8px] w-full gap-[19px]'
           >
-            <label className='w-[37px] whitespace-nowrap'>{convertIndexToAccountLabel(index)}</label>
+            <label className='w-[37px] whitespace-nowrap'>{convertIndexToAccountLabel(index, accountType)}</label>
             <div className='flex justify-center items-center gap-[8px]'>
               <input
                 className='px-[8px] w-[60px] h-[30px] rounded-md'
