@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { IoClose } from 'react-icons/io5';
 
 type GalleryPropType = Pick<InvitationFormType, 'gallery'>;
+
 const WeddingGallery = ({ gallery }: GalleryPropType) => {
   const gridType = gallery?.grid;
   const ratio = gallery?.ratio;
@@ -34,8 +35,8 @@ const WeddingGallery = ({ gallery }: GalleryPropType) => {
               objectFit='cover'
             />
             <IoClose
-              className='cursor-pointer text-white absolute right-2 top-2'
-              size={30}
+              className='cursor-pointer text-white absolute right-2 top-2 bg-gray-800/50'
+              size={15}
               onClick={() => handleDeleteImage(image)}
             />
           </div>
