@@ -26,11 +26,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
   return [
     {
       order: 0,
-      component: methods && (
-        <FormProvider {...methods}>
-          <MainPhotoPreView control={methods.control} />
-        </FormProvider>
-      ),
+      component: methods && <MainPhotoPreView control={methods.control} />,
       name: ['청첩장 대표 사진', '청첩장 무드 프리셋', '청첩장 메인 화면', '청첩장 스티커'],
       input: [
         <MainPhotoInput key={'photoview'} />,
