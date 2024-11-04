@@ -19,6 +19,8 @@ import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { useRouter } from 'next/navigation';
 import { VIEW_HEIGHT } from '@/constants/viewHeight';
+import Button from '@/components/ui/Button';
+import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
 
 const DELAY_TIME: number = 300;
@@ -75,7 +77,10 @@ const CreateCardPage = () => {
     if (existingInvitation === null) {
       insertInvitation(invitationData);
     } else {
-      updateInvitation(invitationData);
+      const { isSuccess } = await revalidateInvitation(existingInvitation.id);
+      if (isSuccess) {
+        updateInvitation(invitationData);
+      }
     }
 
     Notify.success('청첩장이 성공적으로 제출되었습니다.');
@@ -231,12 +236,12 @@ const CreateCardPage = () => {
                   </div>
                   {orderList[currentStep].input[inputIndex]}
                   {currentStep === refs.current.length - 1 && (
-                    <button
-                      className='w-full'
+                    <Button
+                      className='rounded-[12px] w-[311px] h-[48px]'
                       type='submit'
                     >
-                      제출
-                    </button>
+                      청첩장 제작 완료
+                    </Button>
                   )}
                 </form>
               </FormProvider>

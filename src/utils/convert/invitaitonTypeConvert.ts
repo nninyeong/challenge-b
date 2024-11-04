@@ -13,6 +13,7 @@ import {
   StickerType,
   WeddingInfoType,
   GalleryType,
+  OrderItem,
 } from '@/types/invitationFormType.type';
 
 export const convertToCamelCase = (invitation: Invitation): InvitationFormType => {
@@ -35,6 +36,7 @@ export const convertToCamelCase = (invitation: Invitation): InvitationFormType =
     dDay: invitation.d_day as boolean,
     mainPhotoInfo: invitation.main_photo_info as MainPhotoType,
     isPrivate: invitation.isPrivate as boolean,
+    renderOrder: invitation.render_order as OrderItem[],
   };
 };
 
@@ -58,5 +60,6 @@ export const convertToSnakeCase = (invitation: InvitationFormType) => {
     d_day: invitation.dDay as boolean,
     main_photo_info: invitation.mainPhotoInfo as MainPhotoType,
     isPrivate: invitation.isPrivate as boolean,
+    render_order: invitation.renderOrder as OrderItem[],
   };
 };

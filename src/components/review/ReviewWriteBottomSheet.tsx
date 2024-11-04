@@ -2,12 +2,10 @@
 
 import { motion } from 'framer-motion';
 import ReviewForm from './ReviewForm';
+import { useReviewBottomSheetContext } from '@/provider/reviewBottomSheetProvider';
 
-const ReviewWriteBottomSheet = ({
-  setOpenBottomSheet,
-}: {
-  setOpenBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const ReviewWriteBottomSheet = () => {
+  const { setIsReviewBottomSheetOpen } = useReviewBottomSheetContext((state) => state);
   return (
     <motion.div
       key='bottom-sheet'
@@ -18,7 +16,7 @@ const ReviewWriteBottomSheet = ({
       style={{ transform: 'translateY(0%)' }}
     >
       <button
-        onClick={() => setOpenBottomSheet(false)}
+        onClick={() => setIsReviewBottomSheetOpen(false)}
         className='fixed top-[16px] right-[16px]'
       >
         <img
@@ -26,7 +24,7 @@ const ReviewWriteBottomSheet = ({
           alt='close'
         />
       </button>
-      <ReviewForm setOpenBottomSheet={setOpenBottomSheet} />
+      <ReviewForm />
     </motion.div>
   );
 };
