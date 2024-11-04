@@ -7,6 +7,8 @@ const ONBOARDING_MESSAGE_DATA: string[] = [
   '스크롤 시 입력폼 업데이트',
   '접고 펼치며 자유롭게 제작해요',
 ] as const;
+
+const ONBOARDING_HEIGHT: string = 'calc(100vh - 64px)';
 const OnBoarding = ({
   isOnboardingComplete,
   setIsOnboardingComplete,
@@ -28,7 +30,7 @@ const OnBoarding = ({
       onClick={handleNextStep}
       className={`${isOnboardingComplete ? 'hidden' : 'flex'} inset-0 bg-gradient-to-b from-transparent text-white
       to-black overflow-hidden absolute flex-col items-center justify-end w-full text-center cursor-pointer bg-opacity-80 py-5 z-50`}
-      style={{ height: 'calc(100vh - 64px)' }}
+      style={{ height: ONBOARDING_HEIGHT }}
     >
       <div className='w-[60px] h-[100px] border-2 border-white border-solid rounded-lg flex justify-center items-end pb-2'>
         <OnBoardingStepMotion step={onBoardStep} />
