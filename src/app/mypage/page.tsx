@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { getIsLogin } from '@/utils/supabase/server';
-import { FaChevronRight } from 'react-icons/fa';
 import { redirect } from 'next/navigation';
 import { getUserInfo } from '@/utils/server-action';
 import LogoutButton from '@/components/mypage/LogoutButton';
@@ -8,6 +7,7 @@ import LogoutButton from '@/components/mypage/LogoutButton';
 import MyInvitationCard from '@/components/mypage/MyInvitationCard';
 import Link from 'next/link';
 import TogglePrivate from '@/components/mypage/TogglePrivate';
+import MyPageMenuItem from '@/components/mypage/MyPageMenuItem';
 
 const MyPage = async (): Promise<JSX.Element | null> => {
   const isLogin = await getIsLogin();
@@ -50,19 +50,27 @@ const MyPage = async (): Promise<JSX.Element | null> => {
           <TogglePrivate />
         </div>
         <nav className='mt-4'>
-          <ul className='flex flex-col gap-4 items-center'>
-            {MENU_LISTS.map((menu) => (
-              <Link
-                href={menu.href}
-                key={menu.name}
-                className='w-full  border border-solid border-l-0 border-r-0 border-t-0 border-gray-100  cursor-pointer'
-              >
-                <li className='flex justify-between items-center p-2'>
-                  {menu.name}
-                  <FaChevronRight className='text-gray-700' />
-                </li>
-              </Link>
-            ))}
+          <ul>
+            {MENU_LISTS.map((menu) => {
+              if (menu.name === '방문객 명단 다운로드') {
+                return (
+                  <MyPageMenuItem
+                    key={menu.name}
+                    name={menu.name}
+                  />
+                );
+              }
+
+              return (
+                <Link
+                  href={menu.href!}
+                  key={menu.name}
+                  className='w-full border border-solid border-l-0 border-r-0 border-t-0 border-gray-100 cursor-pointer'
+                >
+                  <MyPageMenuItem name={menu.name} />
+                </Link>
+              );
+            })}
           </ul>
         </nav>
 
@@ -77,6 +85,6 @@ export default MyPage;
 const MENU_LISTS = [
   { name: '결제내역', href: '/' },
   { name: '1:1문의', href: '/' },
-  { name: '방문객 명단 다운로드', href: '/test' },
+  { name: '방문객 명단 다운로드', onClick: 'downloadCsv' },
   { name: '나의 후기관리', href: '/review' },
 ];
