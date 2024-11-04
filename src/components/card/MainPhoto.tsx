@@ -19,8 +19,8 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
   ({ mainPhotoInfo, bgColor, mainView, stickers }, ref) => {
     const previewRef = useRef<HTMLDivElement | null>(null);
     const [activeStickerId, setActiveStickerId] = useState<string | null>(null);
-    const handleActiveSticker = (id?: string) => {
-      setActiveStickerId(id || null);
+    const handleActiveSticker = (id: string | null) => {
+      setActiveStickerId(id);
     };
     const path = usePathname();
 

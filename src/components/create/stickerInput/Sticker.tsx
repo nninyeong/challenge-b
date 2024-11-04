@@ -2,7 +2,7 @@
 
 import { StickerType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
-import { MutableRefObject, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { NumberSize, Resizable } from 're-resizable';
 import { Direction } from 're-resizable/lib/resizer';
@@ -23,7 +23,7 @@ const Sticker = ({
   sticker: StickerType;
   previewRef: MutableRefObject<HTMLDivElement | null>;
   activeStickerId: string | null;
-  onActivate: (id?: string) => void;
+  onActivate: (id: string | null) => void;
 }) => {
   const { setValue, control } = useFormContext();
   const stickersWatch = useWatch({
@@ -33,6 +33,22 @@ const Sticker = ({
   const touchOffset = useRef({ x: 0, y: 0 });
   const stickerRef = useRef<HTMLDivElement | null>(null); // 상위 div의 ref
   const [isResizing, setIsResizing] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (activeStickerId === sticker.id && stickerRef.current && !stickerRef.current.contains(e.target as Node)) {
+        onActivate(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [activeStickerId]);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
     if (isResizing) return;
@@ -47,7 +63,7 @@ const Sticker = ({
       y: touch.clientY - currentSticker.top,
     };
 
-    onActivate();
+    onActivate(null);
   };
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
