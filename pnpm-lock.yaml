@@ -25,6 +25,9 @@ importers:
       framer-motion:
         specifier: ^11.11.9
         version: 11.11.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      html-to-image:
+        specifier: ^1.11.11
+        version: 1.11.11
       next:
         specifier: 14.2.15
         version: 14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1240,6 +1243,9 @@ packages:
   hoist-non-react-statics@3.3.2:
     resolution:
       { integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw== }
+
+  html-to-image@1.11.11:
+    resolution: {integrity: sha512-9gux8QhvjRO/erSnDPv28noDZcPZmYE7e1vFsBLKLlRlKDSqNJYebj6Qz1TGd5lsRV+X+xYyjCKjuZdABinWjA==}
 
   https-proxy-agent@7.0.5:
     resolution:
@@ -3595,6 +3601,8 @@ snapshots:
   hoist-non-react-statics@3.3.2:
     dependencies:
       react-is: 16.13.1
+
+  html-to-image@1.11.11: {}
 
   https-proxy-agent@7.0.5:
     dependencies:

@@ -22,6 +22,7 @@ import { VIEW_HEIGHT } from '@/constants/viewHeight';
 import Button from '@/components/ui/Button';
 import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
+import EventBus from '@/utils/EventBus';
 
 const DELAY_TIME: number = 300;
 
@@ -74,6 +75,9 @@ const CreateCardPage = () => {
       return;
     }
 
+    Notify.success('청첩장 생성을 시작합니다.');
+    await EventBus.publish('invitationSaved', null);
+
     if (existingInvitation === null) {
       insertInvitation(invitationData);
     } else {
@@ -100,6 +104,7 @@ const CreateCardPage = () => {
         updateInvitation(formData);
       }
     }
+
     if (inputIndex < orderList[currentStep].input.length - 1) {
       setInputIndex((prev) => prev + 1);
     } else {
