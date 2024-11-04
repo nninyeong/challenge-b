@@ -3,7 +3,6 @@
 import 'react-color-palette/css';
 import { useFormContext } from 'react-hook-form';
 import { ImSpinner11 } from 'react-icons/im';
-import FlexColCenterContainer from '../FlexColCenterContainer';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import ColorPaletteModal from './ColorPaletteModal';
@@ -63,7 +62,7 @@ const MainViewInput = () => {
       </div>
       <p className='font-bold text-xl'>청첩장 배경 컬러</p>
       <div className='grid grid-cols-5 place-content-center place-items-center text-sm'>
-        <FlexColCenterContainer>
+        <div className='flex-col-center'>
           <button
             type='button'
             className='w-[30px] h-[30px] border-2 border-solid rounded-full flex justify-center items-center bg-white'
@@ -72,11 +71,12 @@ const MainViewInput = () => {
             <ImSpinner11 className='rotate-90' />
           </button>
           <p>원본</p>
-        </FlexColCenterContainer>
+        </div>
 
         {COLOR_DEFAULT_PALETTE.map((colorElement) => {
           return (
-            <FlexColCenterContainer
+            <div
+              className='flex-col-center'
               key={`colorElement${colorElement.r}${colorElement.g}${colorElement.b}${colorElement.a}`}
             >
               <button
@@ -88,10 +88,10 @@ const MainViewInput = () => {
                 }} //NOTE - Tailwind는 동적으로 background color 지정이 안됨
               />
               <p>{colorElement.name}</p>
-            </FlexColCenterContainer>
+            </div>
           );
         })}
-        <FlexColCenterContainer>
+        <div className='flex-col-center'>
           <button
             type='button'
             className='w-[30px] h-[30px] border-2 border-solid rounded-full flex justify-center items-center bg-white'
@@ -99,7 +99,7 @@ const MainViewInput = () => {
             onClick={() => setOpenModal(!openModal)}
           />
           <p>직접 선택</p>
-        </FlexColCenterContainer>
+        </div>
         {openModal && portalElement
           ? createPortal(
               <ColorPaletteModal

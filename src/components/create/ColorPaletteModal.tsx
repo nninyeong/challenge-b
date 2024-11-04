@@ -3,7 +3,6 @@
 import { Alpha, Hue, Saturation, useColor } from 'react-color-palette';
 import { useFormContext } from 'react-hook-form';
 import { ColorType } from '@/types/invitationFormType.type';
-import FlexColCenterContainer from '../FlexColCenterContainer';
 
 const ColorPaletteModal = ({
   setOpenModal,
@@ -28,7 +27,7 @@ const ColorPaletteModal = ({
           onChange={setColor}
           height={100}
         />
-        <FlexColCenterContainer className='px-2 h-full gap-2'>
+        <div className='flex-col-center px-2 h-full gap-2'>
           <div className='flex justify-center items-center w-full'>
             <div
               className={`w-[30px] h-[30px] border-2 border-solid rounded-full`}
@@ -54,7 +53,7 @@ const ColorPaletteModal = ({
               적용
             </button>
           </div>
-        </FlexColCenterContainer>
+        </div>
       </div>
     </div>
   );
