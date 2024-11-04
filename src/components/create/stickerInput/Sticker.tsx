@@ -2,7 +2,7 @@
 
 import { StickerType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
-import { MutableRefObject, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { NumberSize, Resizable } from 're-resizable';
 import { Direction } from 're-resizable/lib/resizer';
@@ -11,8 +11,6 @@ import { calculateRelativePosition } from '@/utils/calculate/calculateRelativePo
 const preventTouchScroll = (e: TouchEvent) => {
   e.preventDefault();
 };
-
-const DELETE_BUTTON_SIZE = 24;
 
 const Sticker = ({
   sticker,
@@ -23,7 +21,7 @@ const Sticker = ({
   sticker: StickerType;
   previewRef: MutableRefObject<HTMLDivElement | null>;
   activeStickerId: string | null;
-  onActivate: (id?: string) => void;
+  onActivate: (id: string | null) => void;
 }) => {
   const { setValue, control } = useFormContext();
   const stickersWatch = useWatch({
@@ -34,10 +32,25 @@ const Sticker = ({
   const stickerRef = useRef<HTMLDivElement | null>(null); // 상위 div의 ref
   const [isResizing, setIsResizing] = useState<boolean>(false);
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (activeStickerId === sticker.id && stickerRef.current && !stickerRef.current.contains(e.target as Node)) {
+        onActivate(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [activeStickerId]);
+
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
-    if (isResizing) return;
+    if (isResizing || !previewRef.current) return;
     document.addEventListener('touchmove', preventTouchScroll, { passive: false });
-    if (!previewRef.current) return;
 
     const touch = e.touches[0];
     const currentSticker = e.currentTarget.getBoundingClientRect();
@@ -47,22 +60,15 @@ const Sticker = ({
       y: touch.clientY - currentSticker.top,
     };
 
-    onActivate();
+    onActivate(null);
   };
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
-    if (isResizing) return;
+    if (isResizing || !previewRef.current || !stickerRef.current) return;
     document.removeEventListener('touchmove', preventTouchScroll);
-    if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.changedTouches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(
-      touch,
-      touchOffset,
-      previewRef,
-      stickerRef,
-      DELETE_BUTTON_SIZE,
-    );
+    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
 
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) {
@@ -77,17 +83,10 @@ const Sticker = ({
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLImageElement>) => {
-    if (isResizing) return;
-    if (!previewRef.current || !stickerRef.current) return;
+    if (isResizing || !previewRef.current || !stickerRef.current) return;
 
     const touch = e.touches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(
-      touch,
-      touchOffset,
-      previewRef,
-      stickerRef,
-      DELETE_BUTTON_SIZE,
-    );
+    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
 
     requestAnimationFrame(() => {
       if (!stickerRef.current) return;
@@ -126,8 +125,7 @@ const Sticker = ({
   };
 
   const handleResize = (e: MouseEvent | TouchEvent, direction: Direction, ref: HTMLElement) => {
-    if (!isActive) return;
-    if (!previewRef.current || !stickerRef.current) return;
+    if (!isActive || !previewRef.current || !stickerRef.current) return;
 
     const aspectRatio = sticker.width / sticker.height;
 
@@ -156,33 +154,39 @@ const Sticker = ({
           left: `${sticker.posX}%`,
         }}
       >
-        <div className={`w-full text-right h-[${DELETE_BUTTON_SIZE}px]`}>
+        <div className='relative w-full h-full'>
           {isActive && (
-            <button
-              className={`bg-x-03 w-[${DELETE_BUTTON_SIZE}px] h-full`}
-              onClick={handleDeleteSticker}
-            />
+            <>
+              <button
+                className={`absolute bg-x-circle-contained top-[-12px] right-[-12px] w-[24px] h-[24px] z-10`}
+                onClick={handleDeleteSticker}
+              ></button>
+              <div className='absolute top-[-3px] left-[-3px] bg-primary-300 w-[6px] h-[6px] rounded-[8px]'></div>
+              <div className='absolute bottom-[-3px] left-[-3px] bg-primary-300 w-[6px] h-[6px] rounded-[8px]'></div>
+              <div className='absolute bottom-[-3px] right-[-3px] bg-primary-300 w-[6px] h-[6px] rounded-[8px]'></div>
+            </>
           )}
+
+          <Resizable
+            defaultSize={{ width: sticker.width, height: sticker.height }}
+            onResizeStart={handleResizeStart}
+            onResize={handleResize}
+            onResizeStop={handleResizeStop}
+            enable={{ bottomRight: true, topLeft: false, bottomLeft: false, topRight: false }}
+            lockAspectRatio={true}
+          >
+            <Image
+              src={sticker.url}
+              alt={sticker.stickerImageId}
+              width={sticker.width}
+              height={sticker.height}
+              className={`${isActive && 'border-[1px] border-primary-300'} w-full h-full`}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              onTouchMove={handleTouchMove}
+            />
+          </Resizable>
         </div>
-        <Resizable
-          defaultSize={{ width: sticker.width, height: sticker.height }}
-          onResizeStart={handleResizeStart}
-          onResize={handleResize}
-          onResizeStop={handleResizeStop}
-          enable={{ bottomRight: true }}
-          lockAspectRatio={true}
-        >
-          <Image
-            src={sticker.url}
-            alt={sticker.stickerImageId}
-            width={sticker.width}
-            height={sticker.height}
-            className={`${isActive && 'border-[1px] border-primary-300'} w-full h-full`}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            onTouchMove={handleTouchMove}
-          />
-        </Resizable>
       </div>
     </>
   );

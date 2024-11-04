@@ -1,9 +1,17 @@
 import Image from 'next/image';
 
-const Gallery = () => {
-  const placeholderImg = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6c3aYUkJ6HhXVkwqnenl9C4xGHtrvCSrZQQ&s';
-  const images = Array(14).fill(placeholderImg);
+const IMAGES = [
+  '/assets/images/gallery/1.png',
+  '/assets/images/gallery/2.png',
+  '/assets/images/gallery/3.png',
+  '/assets/images/gallery/4.png',
+  '/assets/images/gallery/5.png',
+  '/assets/images/gallery/6.png',
+  '/assets/images/gallery/7.png',
+  '/assets/images/gallery/8.png',
+];
 
+const Gallery = () => {
   return (
     <div className='flex flex-col gap-[40px] mb-[56px]'>
       <div>
@@ -12,7 +20,7 @@ const Gallery = () => {
       </div>
       <div className='flex justify-around overflow-x-auto scrollbar-hidden'>
         <div className='grid grid-rows-2 grid-flow-col gap-4 h-[416px] max-w-[1440px]'>
-          {images.map((image, index) => (
+          {IMAGES.map((image, index) => (
             <div
               key={`이미지${index}`}
               className='relative w-[152px] h-[200px] rounded-lg overflow-hidden'
