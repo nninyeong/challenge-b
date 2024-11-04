@@ -37,8 +37,6 @@ const MainPhotoInput = () => {
   };
   return (
     <div className='flex flex-col justify-center items-center gap-2'>
-      <h2 className='text-[18px] font-bold text-black text-center '>청첩장 대표 사진</h2>
-
       <div className='flex justify-center items-center gap-2'>
         <label className='font-bold text-black text-[14px] w-[48px] text-center'>이름</label>
         <div className='gap-2 flex justify-center items-center w-[221px]'>
