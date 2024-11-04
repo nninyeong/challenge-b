@@ -15,6 +15,7 @@ const DEFAULT_OPTIONS: ObserverOptions = {
 export const useIntersectionObserver = (
   refs: MutableRefObject<(HTMLDivElement | null)[]>,
   setCurrentStep: (step: number) => void,
+  setNameIndex: (step: number) => void,
   setInputIndex: (step: number) => void,
 ) => {
   const observers = useRef<IntersectionObserver[]>([]);
@@ -24,6 +25,7 @@ export const useIntersectionObserver = (
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const currentStepIndex = refs.current.findIndex((ref) => ref === entry.target);
+        setNameIndex(0);
         setInputIndex(0);
         setCurrentStep(currentStepIndex);
       }
