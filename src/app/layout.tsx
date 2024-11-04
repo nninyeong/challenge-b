@@ -6,6 +6,7 @@ import Header from '@/components/layouts/Header';
 import Footer from '@/components/layouts/Footer';
 import Script from 'next/script';
 import SetScreenHeight from '@/components/layouts/SetScreenHeight';
+import { ReviewBottomSheetProvider } from '@/provider/reviewBottomSheetProvider';
 
 const SuitMedium = localFont({
   src: '../../public/assets/fonts/SUIT-Medium.otf',
@@ -32,10 +33,12 @@ export default function RootLayout({
         />
         <SetScreenHeight />
         <Providers>
-          <Header />
-          <main className='h-full w-full flex-1'>{children}</main>
-          <div id='modal'></div>
-          <Footer />
+          <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
+            <Header />
+            <main className='h-full w-full flex-1'>{children}</main>
+            <div id='modal'></div>
+            <Footer />
+          </ReviewBottomSheetProvider>
         </Providers>
       </body>
     </html>
