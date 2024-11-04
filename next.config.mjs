@@ -23,12 +23,6 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'encrypted-tbn0.gstatic.com',
-        port: '',
-        pathname: '/**',
-      },
       { protocol: 'http', hostname: 'img1.kakaocdn.net', port: '', pathname: '/**' },
       {
         protocol: 'https',
