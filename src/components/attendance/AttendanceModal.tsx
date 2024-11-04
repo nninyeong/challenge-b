@@ -30,7 +30,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
           <div className='flex justify-center mb-6'>
             <img
               src='/assets/images/check-broken.svg'
-              alt='attendanceImg'
+              alt=''
             />
           </div>
           <div className='w-[240px] text-center mb-[30px] text-[20px] text-primary300'>
