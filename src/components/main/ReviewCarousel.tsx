@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Carousel from './Carousel';
 
 const ReviewCarousel = () => {
