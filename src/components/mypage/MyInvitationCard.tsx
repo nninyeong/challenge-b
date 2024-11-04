@@ -6,6 +6,7 @@ import { IoClose } from 'react-icons/io5';
 import { PiLinkSimpleBold } from 'react-icons/pi';
 import Button from '../ui/Button';
 import { useDeleteInvitationCard, useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
+import { Confirm, Notify } from 'notiflix';
 
 const MyInvitationCard = () => {
   const { data: invitationCards, isLoading, error } = useGetAllinvitationCard();
@@ -13,8 +14,19 @@ const MyInvitationCard = () => {
   const mutation = useDeleteInvitationCard();
 
   const handleDeleteCards = (invitationId: string) => {
-    const confirmed = confirm('청첩장을 삭제하시겠습니까?');
-    if (confirmed) mutation.mutate(invitationId);
+    Confirm.show(
+      '청첩장을 삭제하시겠습니까?',
+      '삭제를 원하시면 Yes를 눌러주세요',
+      'Yes',
+      'No',
+      () => {
+        Notify.success('청첩장이 삭제완료되었습니다.');
+        mutation.mutate(invitationId);
+      },
+      () => {
+        Notify.failure('취소되었습니다.');
+      },
+    );
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -33,7 +45,7 @@ const MyInvitationCard = () => {
         .then(() => console.log('공유성공'))
         .catch((error) => console.error('공유실패', error));
     } else {
-      alert('공유하기가 지원되지 않는 환경입니다.');
+      Notify.success('공유하기가 지원되지 않는 환경입니다.');
     }
   };
   return (
