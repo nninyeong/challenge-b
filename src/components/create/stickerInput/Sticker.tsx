@@ -7,6 +7,8 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { NumberSize, Resizable } from 're-resizable';
 import { Direction } from 're-resizable/lib/resizer';
 import { calculateRelativePosition } from '@/utils/calculate/calculateRelativePosition';
+import { calculateAngle } from '@/utils/calculate/calculateAngle';
+import { calculateComponentRotation } from '@/utils/calculate/calculateComponentRotation';
 
 const preventTouchScroll = (e: TouchEvent) => {
   e.preventDefault();
@@ -34,7 +36,8 @@ const Sticker = ({
   const [isRotating, setIsRotating] = useState<boolean>(false);
   const originRef = useRef({ x: 0, y: 0 });
   const rotationStartPosition = useRef({ x: 0, y: 0 });
-  const rotationStartDeg = useRef<number>(sticker.rotation);
+  const rotationStartDeg = useRef<number>(sticker.rotation || 0);
+  const accumulatedRotation = useRef<number>(sticker.rotation || 0);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent | TouchEvent) => {
@@ -155,16 +158,11 @@ const Sticker = ({
     setIsRotating(true);
     document.addEventListener('touchmove', preventTouchScroll, { passive: false });
 
-    // rotation이 시작했을 때 스티커의 원점과 이벤트발생 시작점을 저장해둠
     const stickerBound = stickerRef.current.getBoundingClientRect();
     const originX = stickerBound.left - window.scrollX + stickerBound.width / 2;
     const originY = stickerBound.top - window.scrollY + stickerBound.height / 2;
     originRef.current = { x: originX, y: originY };
-
-    const transform = stickerRef.current.style.transform;
-    const match = transform.match(/rotate\(([-\d.]+)deg\)/); // `rotate(...)` 패턴 찾기
-    const rotation = match ? parseFloat(match[1]) : 0;
-    rotationStartDeg.current = rotation;
+    rotationStartDeg.current = sticker.rotation;
 
     const touch = e.touches[0];
     rotationStartPosition.current = { x: touch.clientX, y: touch.clientY };
@@ -176,24 +174,21 @@ const Sticker = ({
     if (!isRotating || isResizing || !stickerRef.current) return;
 
     const touch = e.touches[0];
-    // 회전할 각도 구해서 아래에서 회전시키기 애니메이션프레임으로=
-    // const angleAtRotationStart = getAngle(originRef.current, rotationStartPosition.current);
-    const angleAtCurrent = getAngle(originRef.current, { x: touch.clientX, y: touch.clientY });
+    const angleAtCurrent = calculateAngle(originRef.current, { x: touch.clientX, y: touch.clientY });
     let delta = angleAtCurrent - rotationStartDeg.current;
     if (delta < 0) delta += 360;
+    const updatedRotation = accumulatedRotation.current + delta;
 
     requestAnimationFrame(() => {
       if (!stickerRef.current) return;
-      stickerRef.current.style.transform = `rotate(${delta}deg)`;
+      stickerRef.current.style.transform = `rotate(${updatedRotation}deg)`;
     });
   };
 
   const handleRotationStop = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!stickerRef.current || !isRotating || isResizing) return;
-    const transform = stickerRef.current.style.transform;
-    const match = transform.match(/rotate\(([-\d.]+)deg\)/); // `rotate(...)` 패턴 찾기
-    const rotation = match ? parseFloat(match[1]) : 0;
-
+    const rotation = calculateComponentRotation(stickerRef);
+    accumulatedRotation.current = rotation;
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) {
         return { ...sticker, rotation };
@@ -263,10 +258,3 @@ const Sticker = ({
 };
 
 export default Sticker;
-
-function getAngle(center: { x: number; y: number }, point: { x: number; y: number }): number {
-  const dx = point.x - center.x;
-  const dy = point.y - center.y;
-  const angle = Math.atan2(dy, dx) * (180 / Math.PI); // 라디안을 도 단위로 변환
-  return angle >= 0 ? angle : 360 + angle; // 음수를 방지해 0-360도로 맞춤
-}
