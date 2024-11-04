@@ -41,7 +41,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
           <div>
             <div className='flex items-center gap-2 mb-2'>
               <input
-                className='border-gray-500 border outline-none col-span-2 p-2 w-[77px] h-8 text-[12px] rounded-lg'
+                className='border-gray-300 border outline-none col-span-2 p-2 w-[77px] h-8 text-[12px] rounded-lg'
                 placeholder='성함'
                 {...register('name')}
               />
@@ -51,7 +51,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 onSelect={(value) => {
                   setValue('attendanceCount', parseInt(value, 5));
                 }}
-                width='77px' 
+                width='79px' 
                 backgroundColor='#000000'
               />
               <div>
