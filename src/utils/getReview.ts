@@ -5,14 +5,14 @@ import { UsersResponse } from '@/types/users.types';
 
 type ReviewProps = {
   pageParam: number;
-  row: number;
+  ROW: number;
 };
 
-export const getReview = async ({ pageParam = 0, row }: ReviewProps): Promise<Review[]> => {
+export const getReview = async ({ pageParam = 0, ROW }: ReviewProps): Promise<Review[]> => {
   const { data, error } = await browserClient
     .from('reviews')
     .select('*')
-    .range(pageParam, pageParam + row - 1);
+    .range(pageParam, pageParam + ROW - 1);
 
   if (error) {
     console.error(error);
@@ -39,4 +39,13 @@ export const getAuthUsersProfile = async () => {
     console.error(error);
   }
   return data as unknown as UsersResponse;
+};
+
+export const getMyReview = async (id: string) => {
+  const { data, error } = await browserClient.from('reviews').select('*').eq('user_id', id).maybeSingle();
+  if (error) {
+    console.error(error);
+  }
+
+  return data;
 };

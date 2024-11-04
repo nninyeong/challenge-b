@@ -13,7 +13,7 @@ const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry;
         <span onClick={toggleAccordion}>x {/* @TODO 나중에 아이콘으로 변경 필요 */}</span>
       </div>
       <div>{guestBook.name}</div>
-      <div>{guestBook.content}</div>
+      <div className='break-words whitespace-pre-wrap'>{guestBook.content}</div>
       <div
         className={`transition-[max-height] duration-300 overflow-hidden ${isAccordionOpen ? 'max-h-[200px]' : 'max-h-0'}`}
       >

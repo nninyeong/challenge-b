@@ -10,7 +10,7 @@ const AccountModalPersonalBox = ({ accountData }: { accountData: AccountType }) 
     }
   };
   return (
-    <div className='pl-[40px] pr-[12px] w-[312px] h-[64px] bg-gray-50 rounded-lg flex justify-between'>
+    <div className='pl-[16px] pr-[12px] w-[312px] h-[64px] bg-gray-50 rounded-lg flex justify-between'>
       <div className='flex flex-col justify-center'>
         <p className='text-[14px] text-gray-700 font-medium'>
           {`${accountData.bank} (예금주 : ${accountData.depositor} )`}
