@@ -73,6 +73,7 @@ const config: Config = {
         'x-01': "url('/assets/images/icons/x-01.svg')",
         'x-02': "url('/assets/images/icons/x-02.svg')",
         'x-03': "url('/assets/images/icons/x-03.svg')",
+        'mood-preset-01': "url('/assets/images/branding/mood-preset-01.png')",
       },
     },
   },

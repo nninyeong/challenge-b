@@ -12,4 +12,7 @@ export const NOTIFLIX_INIT_VALUES: INotifyOptions = {
   success: {
     background: 'rgba(64, 64, 64, 0.8)',
   },
+  failure: {
+    background: 'rgba(233, 0, 0, 0.70)',
+  },
 };

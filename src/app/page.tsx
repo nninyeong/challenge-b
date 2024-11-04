@@ -16,11 +16,13 @@ export default function Home() {
   }, []);
 
   return (
-    <div className='items-center px-[16px] h-full mb-[96px]'>
+    <div className='items-center mt-[59px] px-[16px] h-full'>
       <FixedQuickLink />
-      <div className='relative bg-gray-300 w-[343px] h-[328px] mx-auto mb-[56px]'>
-        소개화면 영역
-        <LinkToCreateCard buttonStyle='absolute right-[8px] bottom-[8px]' />
+      <div className='relative w-[343px] h-[328px] rounded-[12px] mx-auto mb-[56px] bg-mood-preset-01 bg-cover bg-no-repeat bg-center'>
+        <p className='absolute left-[24px] top-[36px] w-[249px] h-[68px] text-[28px] text-white font-bold'>
+          To Speed up Your Creative Workflow
+        </p>
+        <LinkToCreateCard buttonStyle='absolute left-0 right-0 bottom-[24px] mx-auto px-[16px] py-[8px] w-fit h-[35px] tracking-[-0.032px] leading-[120%] flex justify-center items-center rounded-[24px] border border-white text-white text-[16px] font-bold bg-[#FF666666]/40 backdrop-blur-[5px]' />
       </div>
       <Gallery />
       <MoodKeyword />
