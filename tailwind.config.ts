@@ -74,6 +74,7 @@ const config: Config = {
         'x-02': "url('/assets/images/icons/x-02.svg')",
         'x-03': "url('/assets/images/icons/x-03.svg')",
         'x-circle-contained': "url('/assets/images/icons/x-circle-contained.svg')",
+        'mood-preset-01': "url('/assets/images/branding/mood-preset-01.png')",
       },
     },
   },

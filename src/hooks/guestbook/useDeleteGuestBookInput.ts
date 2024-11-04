@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import useDeleteGuestBookEntry from './useDeleteGuestBookEntry';
+import { Notify } from 'notiflix';
 
 const useDeleteGuestBookInput = (
   invitationId: string,
@@ -18,7 +19,7 @@ const useDeleteGuestBookInput = (
     e.preventDefault();
 
     if (!password.trim()) {
-      alert('패스워드를 입력해주세요.');
+      Notify.failure('패스워드를 입력해주세요.');
       return;
     }
 

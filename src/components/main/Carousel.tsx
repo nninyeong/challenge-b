@@ -1,12 +1,17 @@
 'use client';
 
+import { useAuthUserQuery } from '@/hooks/queries/review/useGetReview';
 import { useGetReviewCarouselQuery } from '@/hooks/queries/review/useGetReviewCarousel';
+import { formatDate } from '@/utils/formatDate';
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
+
+const MAX_CONTENT_LENGTH = 60;
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { data: reviewsData = [], isLoading } = useGetReviewCarouselQuery();
+  const { data: users } = useAuthUserQuery();
 
   const extendedReviewArr = useMemo(() => {
     return isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData, reviewsData[0]];
@@ -39,6 +44,10 @@ const Carousel = () => {
     };
   };
 
+  const sliceContent = (content: string) => {
+    return content.slice(0, MAX_CONTENT_LENGTH) + (content.length > MAX_CONTENT_LENGTH ? '...' : '');
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -51,12 +60,14 @@ const Carousel = () => {
       >
         {extendedReviewArr.map((review, index) => {
           const imgUrls = review.image_url || [];
+          const user = users?.users.find((user) => user.id === review.user_id);
+          const avatarUrl = user?.user_metadata?.avatar_url || '/images/defaultImg.png';
           return (
             <div
               key={`${review.id}-${index}`}
               className='mx-[8px]'
             >
-              <div className='relative w-[216px] h-[222px] rounded-t-lg overflow-hidden'>
+              <div className='relative w-[216px] h-[192px] rounded-t-lg overflow-hidden'>
                 {imgUrls.length > 0 && (
                   <Image
                     src={imgUrls[0]}
@@ -67,9 +78,22 @@ const Carousel = () => {
                   />
                 )}
               </div>
-              <div className='w-[216px] h-[104px] border-2 rounded-b-lg'>
-                <p>{review.user_name}</p>
-                <p>{review.content}</p>
+              <div className='w-[216px] h-[136px] bg-gray-50 rounded-b-lg p-[16px] text-[12px]'>
+                <div className='flex items-center gap-[6px] mb-[16px]'>
+                  <div className='relative w-[16px] h-[16px] rounded-full overflow-hidden'>
+                    <Image
+                      src={avatarUrl}
+                      alt='profile'
+                      layout='fill'
+                      objectFit='cover'
+                      priority
+                    />
+                  </div>
+                  <p className='text-gray-500'>
+                    {review.user_name} | {formatDate(review.created_at)}
+                  </p>
+                </div>
+                <p>{sliceContent(review.content)}</p>
               </div>
             </div>
           );

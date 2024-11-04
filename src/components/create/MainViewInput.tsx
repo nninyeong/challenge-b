@@ -44,25 +44,27 @@ const MainViewInput = () => {
 
   return (
     <div>
-      <div className='w-full h-[150px] flex justify-between items-center'>
+      <div className='w-full h-[122px] flex justify-between items-center'>
         {DECORATE_IMAGE_TYPE.map((item) => (
           <div
             key={item.type}
             onClick={() => handleDecorateImage(item)}
-            className={`p-2 cursor-pointer flex flex-col justify-center items-center `}
+            className={`cursor-pointer flex flex-col justify-center items-center `}
           >
             <DecorateImageTypeComponent
               type={item.type}
               isSelected={selectedType.type === item.type}
             />
-            <p className={`${selectedType.type === item.type && 'text-primary-300'} font-semibold text-gray-600 mt-2`}>
+            <p
+              className={`${selectedType.type === item.type && 'text-primary-300'} font-semibold text-gray-600 mt-[4px] text-[12px] h-full`}
+            >
               {item.name}
             </p>
           </div>
         ))}
       </div>
-      <p className='font-bold text-xl'>청첩장 배경 컬러</p>
-      <div className='grid grid-cols-5 place-content-center place-items-center text-sm'>
+      <p className='font-bold text-xl mt-[8px]'>청첩장 배경 컬러</p>
+      <div className='grid grid-cols-5 place-content-center place-items-center text-[10px] mt-[14px]'>
         <FlexColCenterContainer>
           <button
             type='button'
