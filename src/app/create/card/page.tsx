@@ -23,6 +23,7 @@ import Button from '@/components/ui/Button';
 import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
 import EventBus from '@/utils/EventBus';
+import { motion } from 'framer-motion';
 
 const DELAY_TIME: number = 300;
 
@@ -229,7 +230,10 @@ const CreateCardPage = () => {
             })}
         </div>
         <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-          <form
+          <motion.form
+            initial={{ height: 54 }}
+            animate={{ height: toggleInput ? 320 : 54 }}
+            transition={{ duration: 0.3 }}
             className={`flex flex-col bg-white shadow-xl px-4 py-4 object-cover rounded-lg ${toggleInput ? 'h-[320px]' : 'h-[54px]'} mb-[8px] z-10`}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
@@ -286,7 +290,7 @@ const CreateCardPage = () => {
                 )}
               </div>
             )}
-          </form>
+          </motion.form>
         </div>
       </div>
     </FormProvider>
