@@ -15,8 +15,19 @@ const MoodPresetInput = () => {
 
   const handleSelectCategory = (category: Mood) => {
     setSelectedCategory(category);
-    if (category === 'none') {
+    setSelectedPreset('preset1');
+    const selectedPresetDetails = MOOD_PRESETS[category]?.preset1;
+
+    if (selectedPresetDetails) {
+      setValue('bgColor', selectedPresetDetails.bgColor);
+      setValue('mainView', selectedPresetDetails.mainView);
+      setValue('stickers', selectedPresetDetails.stickers);
+    } else if (category === 'none') {
       setSelectedPreset('');
+      setValue('bgColor', { r: 255, g: 255, b: 255, a: 1, name: '흰색' });
+      setValue('mainView', '');
+      setValue('stickers', []);
+    } else {
       setValue('bgColor', { r: 255, g: 255, b: 255, a: 1, name: '흰색' });
       setValue('mainView', '');
       setValue('stickers', []);
