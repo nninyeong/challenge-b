@@ -14,32 +14,45 @@ const GuestInfoInput = () => {
   return (
     <>
       <div>
-        <label>
+        <label className='flex items-center gap-2 mt-5 mb-10'>
           <input
             type='checkbox'
             {...register('guestbook')}
+            className='hidden'
           />
-          {guestBookCondition ? <span>방명록 사용</span> : <span>사용안함</span>}
+          <div
+            className={`relative w-[43px] h-[30px] rounded-full cursor-pointer transition-colors duration-300 ${guestBookCondition ? 'bg-primary-300' : 'bg-gray-400'}`}
+          >
+            <div
+              className='absolute w-[18px] h-[18px] bg-white rounded-full top-1.5 left-1.5 transition-transform duration-300 transform-gpu'
+              style={{ transform: guestBookCondition ? 'translateX(13px)' : '' }}
+            ></div>
+          </div>
+          <span className={`${guestBookCondition ? 'text-primary-300' : 'text-gray-400'}`}>
+            {guestBookCondition ? '방명록 사용' : '사용안함'}
+          </span>
         </label>
       </div>
       <div>
-        <div className='text-[18px] font-bold'>디데이</div>
-        <label>
+        <div className='text-[18px] font-bold text-gray-900 mb-6'>디데이 · 참석의사 · RSVP</div>
+        <label className='flex items-center gap-2 mb-10'>
           <input
             type='checkbox'
             {...register('dDay')}
-          />
-          {dDayCondition ? <span>디데이 사용</span> : <span>사용안함</span>}
-        </label>
-      </div>
-      <div>
-        <div className='text-[18px] font-bold'>참석의사 · RSVP</div>
-        <label>
-          <input
-            type='checkbox'
             {...register('attendance')}
+            className='hidden'
           />
-          {attendanceCondition ? <span>참석 의사 전달 사용</span> : <span>사용안함</span>}
+          <div
+            className={`relative w-[43px] h-[30px] rounded-full cursor-pointer transition-colors duration-300 ${dDayCondition && attendanceCondition ? 'bg-primary-300' : 'bg-gray-400'}`}
+          >
+            <div
+              className='absolute w-[18px] h-[18px] bg-white rounded-full top-1.5 left-1.5 transition-transform duration-300 transform-gpu'
+              style={{ transform: dDayCondition && attendanceCondition ? 'translateX(13px)' : '' }}
+            ></div>
+          </div>
+          <span className={`${dDayCondition && attendanceCondition ? 'text-primary-300' : 'text-gray-400'}`}>
+            {dDayCondition && attendanceCondition ? '사용함' : '사용안함'}
+          </span>
         </label>
       </div>
     </>

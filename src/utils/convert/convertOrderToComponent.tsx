@@ -54,6 +54,7 @@ export const convertOrderToComponent = (
         guestbook={guestbook}
         dDay={dDay}
         weddingInfo={weddingInfo}
+        mainPhotoInfo={mainPhotoInfo}
       />
     ),
     [COMPONENT_TYPES.GALLERY]: <WeddingGallery gallery={gallery} />,
