@@ -3,7 +3,6 @@ import { ColorType } from '@/types/invitationFormType.type';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useFormContext } from 'react-hook-form';
-import { ImSpinner11 } from 'react-icons/im';
 import ColorPaletteModal from './ColorPaletteModal';
 
 export const COLOR_DEFAULT_PALETTE: ColorType[] = [
