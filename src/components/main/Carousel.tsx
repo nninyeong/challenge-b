@@ -14,7 +14,7 @@ const Carousel = () => {
   const { data: users } = useAuthUserQuery();
 
   const extendedReviewArr = useMemo(() => {
-    return isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData];
+    return isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData, reviewsData[0]];
   }, [isLoading, reviewsData]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Carousel = () => {
   }, [extendedReviewArr.length]);
 
   useEffect(() => {
-    if (extendedReviewArr.length > 0 && currentIndex === extendedReviewArr.length - 16) {
+    if (extendedReviewArr.length > 0 && currentIndex === extendedReviewArr.length - 17) {
       const timeout = setTimeout(() => {
         setCurrentIndex(0);
       }, 500);
