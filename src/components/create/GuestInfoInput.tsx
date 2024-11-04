@@ -14,7 +14,6 @@ const GuestInfoInput = () => {
   return (
     <>
       <div>
-        <div className='text-[18px] font-bold'>방명록</div>
         <label>
           <input
             type='checkbox'

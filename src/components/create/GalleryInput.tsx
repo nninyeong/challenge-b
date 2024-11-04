@@ -45,7 +45,6 @@ const GalleryInput = () => {
 
   return (
     <div className='text-black'>
-      <p className='text-[18px] font-bold mb-3'>청첩장 갤러리</p>
       <div className='flex w-full gap-2 items-center mb-3'>
         <p>사진비율</p>
         <GalleryButton
