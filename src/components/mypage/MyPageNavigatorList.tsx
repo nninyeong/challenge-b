@@ -2,7 +2,6 @@
 
 import { useGetReviewOnlyUser } from '@/hooks/queries/review/useGetReview';
 import { useReviewBottomSheetContext } from '@/provider/reviewBottomSheetProvider';
-import { User } from '@/types/users.types';
 import { Notify } from 'notiflix';
 import { FaChevronRight, FaChevronDown } from 'react-icons/fa';
 import ReviewCard from '../review/ReviewCard';
@@ -16,21 +15,15 @@ const MENU_LISTS = [
 
 type MenuNameType = (typeof MENU_LISTS)[number]['name'];
 
-type MyPageUserProps = {
-  user: {
-    user: User;
-  };
-};
+const MyPageNavigatorList = () => {
+  const { isReviewBottomSheetOpen, setIsReviewBottomSheetOpen } = useReviewBottomSheetContext((state) => state);
 
-const MyPageNavigatorList = ({ user }: MyPageUserProps) => {
-  const { isReviewBottomSheetOpen, setIsReviewBottomSheetOpen } = useReviewBottomSheetContext();
-
-  const userId = user.user.id;
-  const { data: myReview, isLoading, error } = useGetReviewOnlyUser(userId);
+  const { data: myReview, isLoading, error } = useGetReviewOnlyUser();
+  const reviewsData = myReview ? (Array.isArray(myReview) ? myReview : [myReview]) : [];
 
   const handleMyReviewNavigator = (name: MenuNameType) => {
     if (name === '나의 후기관리') {
-      setIsReviewBottomSheetOpen((prev: boolean) => !prev);
+      setIsReviewBottomSheetOpen(!isReviewBottomSheetOpen);
     } else {
       Notify.failure('준비중인 서비스입니다.');
     }
@@ -46,16 +39,19 @@ const MyPageNavigatorList = ({ user }: MyPageUserProps) => {
             onClick={() => handleMyReviewNavigator(menu.name)}
           >
             {menu.name}
-            <FaChevronRight className='text-gray-700' />
+            {isReviewBottomSheetOpen ? (
+              <FaChevronDown className='text-gray-700' />
+            ) : (
+              <FaChevronRight className='text-gray-700' />
+            )}
           </li>
         ))}
       </ul>
-
       {isReviewBottomSheetOpen && (
         <div className='mt-4'>
           {isLoading && <p>로딩 중...</p>}
           {error && <p className='text-red-500'>오류가 발생했습니다: {error.message}</p>}
-          {myReview ? <ReviewCard reviews={myReview} /> : <p>작성한 후기가 없습니다.</p>}
+          {myReview ? <ReviewCard reviews={reviewsData} /> : <p>작성한 후기가 없습니다.</p>}
         </div>
       )}
     </nav>

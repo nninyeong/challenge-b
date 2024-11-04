@@ -220,44 +220,6 @@ const CreateCardPage = () => {
   }, [refs, isOnboardingComplete]);
 
   return (
-<<<<<<< HEAD
-    <div
-      className={`relative w-full h-full font-${selectedFont}`}
-      style={{
-        backgroundColor: backgroundColor,
-      }}
-    >
-      <OnBoarding
-        setIsOnboardingComplete={setIsOnboardingComplete}
-        isOnboardingComplete={isOnboardingComplete}
-      />
-      {isOnboardingComplete ? (
-        <>
-          <FormProvider {...methods}>
-            <div
-              style={{
-                fontFamily: selectedFont,
-              }}
-            >
-              {orderList.map((e, index) => {
-                return (
-                  <div
-                    style={{ minHeight: VIEW_HEIGHT }}
-                    key={e.order}
-                    ref={(el) => {
-                      refs.current[index] = el;
-                    }}
-                  >
-                    {e.component}
-                  </div>
-                );
-              })}
-            </div>
-            <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-              <form
-                className={`flex flex-col bg-white shadow-xl px-4 py-4 object-cover rounded-lg ${toggleInput ? 'h-[320px]' : 'h-[54px]'} mb-[8px] z-10`}
-                onSubmit={methods.handleSubmit(onSubmit)}
-=======
     <FormProvider {...methods}>
       <div
         className={`relative w-full h-full font-${selectedFont}`}
@@ -302,7 +264,6 @@ const CreateCardPage = () => {
                 type='button'
                 onClick={setToggleInput}
                 className='flex justify-center items-center text-gray-900 text-[18px] font-bold'
->>>>>>> 064ae6baa81d3fa102cc534e597328c2379126c1
               >
                 {toggleInput ? (
                   <FaSortDown
@@ -315,14 +276,6 @@ const CreateCardPage = () => {
                     viewBox='0 -100 320 512'
                   />
                 )}
-<<<<<<< HEAD
-              </form>
-            </div>
-          </FormProvider>
-        </>
-      ) : null}
-    </div>
-=======
                 {orderList[currentStep].name[nameIndex]}
               </button>
 
@@ -371,7 +324,6 @@ const CreateCardPage = () => {
         </div>
       </div>
     </FormProvider>
->>>>>>> 064ae6baa81d3fa102cc534e597328c2379126c1
   );
 };
 
