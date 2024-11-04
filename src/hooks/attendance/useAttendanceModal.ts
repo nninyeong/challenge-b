@@ -3,12 +3,15 @@ import { AttendanceFormData } from "@/types/guestInfo.types";
 import browserClient from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Notify } from "notiflix";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
   const {
     register,
+    setValue,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<AttendanceFormData>({
     resolver: zodResolver(attendanceSchema),
@@ -19,6 +22,12 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
       attendanceCount: undefined,
     },
   });
+
+  const [selected, setSelected] = useState('신랑');
+
+  const handleSelection = (value: string) => {
+    setSelected(value);
+  };
 
   const handleAttendanceModalSubmit: SubmitHandler<AttendanceFormData> = async (data) => {
     const { personType, mealOption, name, attendanceCount } = data;
@@ -43,9 +52,13 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
   };
 
   return {
+    selected,
     register,
+    setValue,
     handleSubmit,
+    watch,
     handleAttendanceModalSubmit,
+    handleSelection,
     errors
   }
 }

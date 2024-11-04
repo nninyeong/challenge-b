@@ -1,15 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useAttendanceModal from '@/hooks/attendance/useAttendanceModal';
+import SelectBox from '../ui/SelectBox';
+
+const ATTENDANCE_PEOPLE = ['1', '2', '3', '4', '5'];
 
 const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> = ({ invitationId, onClick }) => {
-  const { register, handleSubmit, handleAttendanceModalSubmit, errors } = useAttendanceModal(invitationId, onClick);
-  const [selected, setSelected] = useState('신랑');
-
-  const handleSelection = (value: string) => {
-    setSelected(value);
-  };
+  const { selected, handleSelection, register, setValue, watch, handleSubmit, handleAttendanceModalSubmit, errors } =
+    useAttendanceModal(invitationId, onClick);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -46,18 +45,15 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 placeholder='성함'
                 {...register('name')}
               />
-              <select
-                className='border-gray-500 border outline-none col-span-2 p-2 w-[77px] h-8 text-[12px] rounded-lg'
-                {...register('attendanceCount', {
-                  valueAsNumber: true,
-                })}
-              >
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
-              </select>
+              <SelectBox
+                optionList={ATTENDANCE_PEOPLE}
+                value={String(watch('attendanceCount') || '')}
+                onSelect={(value) => {
+                  setValue('attendanceCount', parseInt(value, 5));
+                }}
+                width='77px' 
+                backgroundColor='#000000'
+              />
               <div>
                 <label className='text-[14px] text-gray-600 flex items-center cursor-pointer ml-2'>
                   <input
