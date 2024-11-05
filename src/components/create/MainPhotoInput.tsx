@@ -36,21 +36,21 @@ const MainPhotoInput = () => {
     setValue('mainPhotoInfo.introduceContent', value);
   };
   return (
-    <div className='flex flex-col justify-center items-center gap-2'>
-      <div className='flex justify-center items-center gap-2'>
-        <label className='font-bold text-black text-[14px] w-[48px] text-center'>이름</label>
-        <div className='gap-2 flex justify-center items-center w-[221px]'>
+    <div className='w-full flex flex-col '>
+      <div className='w-full flex items-center'>
+        <label className='font-bold text-gray-700 text-[14px]  text-center mr-5'>이름</label>
+        <div className='gap-2'>
           <input
             type='text'
             placeholder='좌측'
             {...register('mainPhotoInfo.leftName')}
-            className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
+            className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black mr-2'
           />
           <input
             type='text'
             placeholder='♥︎'
             {...register('mainPhotoInfo.icon')}
-            className='h-[32px] w-[48px] pl-4 pr-4 border text-[12px] rounded-[8px] placeholder:text-center text-black'
+            className='h-[32px] w-[48px] pl-4 pr-4 border text-[12px] rounded-[8px]  text-black mr-2'
           />
           <input
             type='text'
@@ -61,27 +61,27 @@ const MainPhotoInput = () => {
         </div>
       </div>
 
-      <div className='flex justify-center items-center gap-2'>
-        <label className='font-bold text-black text-[14px] w-[48px] text-center'>글꼴</label>
-        <div className='grid grid-cols-2 gap-1'>
+      <div className='flex mt-3 mb-5'>
+        <label className='font-bold text-gray-700 text-[14px] mr-5'>글꼴</label>
+        <div className='w-[208px] flex flex-wrap'>
           {FONTMENU.map((font) => (
-            <div
+            <p
               key={font.name}
               onClick={() => handleSelectFontname(font)}
-              className=' p-1 text-black bg-gray-100 hover:bg-primary300 hover:text-white rounded-md font-bold text-center cursor-pointer text-[14px] '
+              className=' pt-1 pb-1 pl-2 pr-2 text-gray-400 bg-gray-100 hover:bg-primary300 hover:text-white rounded-3xl font-bold text-center cursor-pointer text-[14px] mr-2 mb-2'
             >
               {font.name}
-            </div>
+            </p>
           ))}
         </div>
       </div>
 
-      <div className=' flex gap-4 justify-center items-center mt-2 '>
+      <div className='h-[80px] flex gap-2 justify-center   '>
         <label
           htmlFor='file'
-          className='bg-white text-center cursor-pointer px-2 py-1 rounded-md text-black h-[80px] w-[80px] flex justify-center items-center border border-dashed border-gray-600'
+          className='bg-white text-center cursor-pointer px-2 py-1 rounded-xl text-black h-[80px] w-[80px] flex justify-center items-center border border-dashed border-gray-400'
         >
-          <FaPlus size={20} />
+          <FaPlus size={18} />
         </label>
         <input
           type='file'
@@ -95,7 +95,7 @@ const MainPhotoInput = () => {
           placeholder='메인화면 문구를 설정해주세요'
           value={introduceContent || ''}
           onChange={handleSetContent}
-          style={{ width: '200px', height: '100%' }}
+          style={{ width: '200px', height: '48px' }}
         />
       </div>
     </div>

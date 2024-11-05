@@ -12,7 +12,7 @@ const useSignOut = () => {
 
   const handleSignOut = async () => {
     await client.auth.signOut();
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.guestBook(invitationId) });
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.guestBook(invitationId, 1) });
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.authUsers() });
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitationCard() });

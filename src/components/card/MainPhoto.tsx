@@ -27,11 +27,12 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
     return (
       <div className='w-full flex flex-col justify-center item-center mx-auto text-center text-black'>
         <div
-          className='quill-preview'
           dangerouslySetInnerHTML={{
             __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
           }}
+          className='text-center'
         />
+
         <div
           ref={previewRef}
           className={`flex justify-center items-center w-full overflow-hidden ${mainView.type === 'fill' ? 'px-0' : 'px-[20px]'} `}
