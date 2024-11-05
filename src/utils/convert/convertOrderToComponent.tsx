@@ -7,7 +7,8 @@ import Account from '@/components/card/Account';
 import WeddingInfo from '@/components/card/WeddingInfo';
 import NavigationDetails from '@/components/card/NavigationDetails';
 import GuestInfo from '@/components/card/GuestInfo';
-import WeddingGallery from '@/components/card/WeddingGallery';
+
+import GalleryView from '@/components/gallery/GalleryView';
 
 export const convertOrderToComponent = (
   typeOnSharedCard: (typeof COMPONENT_TYPES)[keyof typeof COMPONENT_TYPES],
@@ -57,7 +58,7 @@ export const convertOrderToComponent = (
         mainPhotoInfo={mainPhotoInfo}
       />
     ),
-    [COMPONENT_TYPES.GALLERY]: <WeddingGallery gallery={gallery} />,
+    [COMPONENT_TYPES.GALLERY]: <GalleryView gallery={gallery} />,
   };
 
   if (typeOnSharedCard === 'ONLY_FOR_CREATE') return;

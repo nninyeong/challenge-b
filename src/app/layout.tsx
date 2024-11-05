@@ -7,6 +7,7 @@ import Footer from '@/components/layouts/Footer';
 import Script from 'next/script';
 import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 import { ReviewBottomSheetProvider } from '@/provider/reviewBottomSheetProvider';
+import DndProviderWrapper from '@/components/layouts/DndProvider';
 
 const SUIT = localFont({
   src: '../../public/assets/fonts/SUIT-Variable.ttf',
@@ -43,7 +44,9 @@ export default function RootLayout({
         <Providers>
           <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
             <Header />
-            <main className='h-full max-w-full flex-1'>{children}</main>
+            <main className='h-full w-full flex-1'>
+              <DndProviderWrapper>{children}</DndProviderWrapper>
+            </main>
             <div id='modal'></div>
             <Footer />
           </ReviewBottomSheetProvider>
