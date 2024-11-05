@@ -54,7 +54,7 @@ importers:
         specifier: ^6.10.0
         version: 6.10.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
-        specifier: ^18
+        specifier: ^18.3.1
         version: 18.3.1
       react-color-palette:
         specifier: ^7.3.0
@@ -78,7 +78,7 @@ importers:
         specifier: ^16.0.1
         version: 16.0.1
       react-dom:
-        specifier: ^18
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       react-hook-form:
         specifier: ^7.53.1
@@ -103,13 +103,13 @@ importers:
         specifier: ^20
         version: 20.17.6
       '@types/react':
-        specifier: ^18
+        specifier: ^18.3.12
         version: 18.3.12
       '@types/react-dnd':
         specifier: ^3.0.2
         version: 3.0.2(@types/node@20.17.6)(@types/react@18.3.12)(react@18.3.1)
       '@types/react-dom':
-        specifier: ^18
+        specifier: ^18.3.1
         version: 18.3.1
       eslint:
         specifier: ^8
@@ -130,7 +130,7 @@ importers:
         specifier: ^3.4.1
         version: 3.4.14
       typescript:
-        specifier: ^5
+        specifier: ^5.6.3
         version: 5.6.3
 
 packages:
