@@ -1,6 +1,5 @@
 import { OrderItem } from '@/types/invitationFormType.type';
 import { useDrag, useDrop } from 'react-dnd';
-import Image from 'next/image';
 import { memo } from 'react';
 
 const DraggableRenderOrder = ({

@@ -14,7 +14,7 @@ const WeddingInfo = ({ weddingInfo }: WeddingInfoPropType) => {
   const day = getDayOfWeek(weddingInfo.date)[0];
 
   return (
-    <div className='flex flex-col items-center gap-[24px] text-center'>
+    <div className='flex flex-col items-center gap-[24px] text-center mb-[24px]'>
       <p className='text-gray-600 text-[16px] font-normal leading-[140%] tracking-[4px]'>INFORMATION</p>
       <p className='text-gray-700 text-[20px] font-bold leading-[120%] tracking-[-0.04px]'>
         {weddingInfo.date} {day} {weddingInfo.time.hour}:{weddingInfo.time.minute}

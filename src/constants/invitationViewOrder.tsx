@@ -5,7 +5,6 @@ import GuestInfoInput from '@/components/create/GuestInfoInput';
 import MainPhotoInput from '@/components/create/MainPhotoInput';
 import MainViewInput from '@/components/create/MainViewInput';
 import MoodPresetInput from '@/components/create/MoodPresetInput';
-import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import PersonalInfoInput from '@/components/create/PersonalInfoInput';
 import AccountPreView from '@/components/create/preview/AccountPreView';
 import GalleryPreview from '@/components/create/preview/GalleryPreview';
@@ -22,6 +21,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { COMPONENT_TYPES } from '@/constants/componentTypes';
 import RenderOrderInput from '@/components/create/RenderOrderInput';
 import BackgroundColorInput from '@/components/create/BackgroundColorInput';
+import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 
 export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
   return [
@@ -59,8 +59,14 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       order: 3,
       name: ['개인 정보', '계좌 정보'],
       component: methods && [
-        <PersonalInfoPreview control={methods.control} />,
-        <AccountPreView control={methods.control} />,
+        <PersonalInfoPreview
+          control={methods.control}
+          key='personalPreview'
+        />,
+        <AccountPreView
+          control={methods.control}
+          key='accountPreview'
+        />,
       ],
       input: [<PersonalInfoInput key={'personal'} />, <AccountInput key={'account'} />],
       typeOnSharedCard: COMPONENT_TYPES.PERSONAL_INFO,
@@ -70,10 +76,16 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       order: 4,
       name: ['예식 일시', '교통수단 표시'],
       component: methods && [
-        <WeddingInfoPreView control={methods.control} />,
-        <NavigationDetailsPreview control={methods.control} />,
+        <WeddingInfoPreView
+          control={methods.control}
+          key='weddingInfoPreview'
+        />,
+        <NavigationDetailsPreview
+          control={methods.control}
+          key='navigationDetailPreview'
+        />,
       ],
-      input: [<WeddingInfoInput key={'wedding'} />],
+      input: [<WeddingInfoInput key={'wedding'} />, <NavigationDetailInput key='navi' />],
       typeOnSharedCard: COMPONENT_TYPES.WEDDING_INFO,
       labelForInput: '오시는 길',
     },
