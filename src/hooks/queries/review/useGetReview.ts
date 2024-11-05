@@ -46,6 +46,5 @@ export const useGetReviewOnlyUser = () => {
       }
       return getMyReview(userId);
     },
-    enabled: true,
   });
 };
