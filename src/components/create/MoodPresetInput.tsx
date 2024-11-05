@@ -1,7 +1,7 @@
 import StickerCategoryButton from './stickerInput/StickerCategoryButton';
 import { useFormContext } from 'react-hook-form';
 import { useState } from 'react';
-import { Mood, Preset } from '@/types/invitationFormType.type';
+import { Mood, Preset, PresetDetail } from '@/types/invitationFormType.type';
 import { PRESETS } from '@/constants/invitationPresets';
 import { MOOD_PRESETS } from '@/constants/invitationMoodPresets';
 import { MOOD_LIST } from '@/constants/invitationMoods';
@@ -13,24 +13,24 @@ const MoodPresetInput = () => {
   const [selectedPreset, setSelectedPreset] = useState<string>('');
   const moodList = [...MOOD_LIST, { category: 'none', label: '직접제작' }];
 
+  const setFormValue = (presetDetail: PresetDetail | null) => {
+    setValue('bgColor', presetDetail?.bgColor || { r: 255, g: 255, b: 255, a: 1, name: '흰색' });
+    setValue('mainView', presetDetail?.mainView || '');
+    setValue('stickers', presetDetail?.stickers || []);
+  };
+
   const handleSelectCategory = (category: Mood) => {
     setSelectedCategory(category);
     setSelectedPreset('preset1');
     const selectedPresetDetails = MOOD_PRESETS[category]?.preset1;
 
     if (selectedPresetDetails) {
-      setValue('bgColor', selectedPresetDetails.bgColor);
-      setValue('mainView', selectedPresetDetails.mainView);
-      setValue('stickers', selectedPresetDetails.stickers);
+      setFormValue(selectedPresetDetails);
     } else if (category === 'none') {
       setSelectedPreset('');
-      setValue('bgColor', { r: 255, g: 255, b: 255, a: 1, name: '흰색' });
-      setValue('mainView', '');
-      setValue('stickers', []);
+      setFormValue(null);
     } else {
-      setValue('bgColor', { r: 255, g: 255, b: 255, a: 1, name: '흰색' });
-      setValue('mainView', '');
-      setValue('stickers', []);
+      setFormValue(null);
     }
   };
 
@@ -40,14 +40,10 @@ const MoodPresetInput = () => {
     const selectedPresetDetails = MOOD_PRESETS[selectedCategory]?.[preset.name];
 
     if (selectedPresetDetails) {
-      setValue('bgColor', selectedPresetDetails.bgColor);
-      setValue('mainView', selectedPresetDetails.mainView);
-      setValue('stickers', selectedPresetDetails.stickers);
+      setFormValue(selectedPresetDetails);
     } else {
       Notify.success('해당 프리셋은 준비 중입니다.');
-      setValue('bgColor', { r: 255, g: 255, b: 255, a: 1, name: '흰색' });
-      setValue('mainView', '');
-      setValue('stickers', []);
+      setFormValue(null);
     }
   };
 

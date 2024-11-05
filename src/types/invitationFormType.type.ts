@@ -110,6 +110,12 @@ export type Preset = {
   image: string | null;
 };
 
+export type PresetDetail = {
+  bgColor: ColorType;
+  mainView: DecorateImageType;
+  stickers: StickerType[];
+};
+
 export type InvitationFormType = {
   gallery: GalleryType;
   type: 'scroll' | 'slide';
