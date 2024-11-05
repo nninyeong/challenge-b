@@ -14,7 +14,7 @@ export const useReviewBottomSheetContext = <T,>(selector: (state: ReviewBottomSh
   return useStore(store, selector);
 };
 
-export const ReviewBottomSheetContext = createContext<ReviewBottomSheetStore | null>(null);
+export const ReviewBottomSheetContext = <ReviewBottomSheetStore | null>(null);
 
 type ReviewBottomSheetProviderProps = React.PropsWithChildren<ReviewBottomSheetProps>;
 
