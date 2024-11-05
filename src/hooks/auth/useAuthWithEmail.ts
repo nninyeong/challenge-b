@@ -2,6 +2,7 @@ import { SignInFormValues, SignUpFormValues } from '@/types/auth.types';
 import { useRouter } from 'next/navigation';
 import { saveSessionDataToSupabase } from '@/utils/sessionStorage/saveSessionDataToSupabase';
 import browserClient from '@/utils/supabase/client';
+import { Notify } from 'notiflix';
 
 const useAuthWithEmail = () => {
   const router = useRouter();
@@ -22,13 +23,13 @@ const useAuthWithEmail = () => {
 
     if (error) {
       console.error('회원가입 오류: ', error);
-      alert(`회원가입에 문제가 생겼습니다. 다시 한 번 시도해주세요. (${error.message})`);
+      Notify.failure(`회원가입에 문제가 생겼습니다. 다시 한 번 시도해주세요. (${error.message})`);
     } else {
       const userId = data?.user?.id;
       if (userId) {
         await saveSessionDataToSupabase(browserClient, userId);
       }
-      alert('회원가입 성공');
+      Notify.success('회원가입 성공');
       router.push('/mypage');
     }
   };
@@ -42,7 +43,7 @@ const useAuthWithEmail = () => {
 
     if (error) {
       console.error('이메일 로그인 에러: ', error);
-      alert('로그인에 문제가 발생했습니다. 다시 한 번 시도해주세요.');
+      Notify.failure('로그인에 문제가 발생했습니다. 다시 한 번 시도해주세요.');
       return { isSuccess: false, error };
     }
 
