@@ -23,7 +23,7 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
         <p className='text-xl font-semibold'>{name || DEFAULT_NAME}</p>
       </div>
 
-      <div className='flex gap-5'>
+      <div className='flex gap-4'>
         <a
           href={`tel:${phoneNumber}`}
           className='flex justify-center items-center relative rounded-t-lg overflow-hidden'
@@ -41,7 +41,7 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
           onClick={handlePhoneClick}
         >
           <img
-            src='/assets/images/icons/mail-03.svg'
+            src='/assets/images/icons/mail-05.svg'
             alt='문자'
             className='w-[24px] h-[24px]'
           />
