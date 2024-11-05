@@ -34,7 +34,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
         />
         <div
           ref={previewRef}
-          className={`flex justify-center items-center w-full overflow-x-hidden ${mainView.type === 'fill' ? 'px-0' : 'px-[20px]'} `}
+          className={`flex justify-center items-center w-full overflow-hidden ${mainView.type === 'fill' ? 'px-0' : 'px-[20px]'} `}
         >
           {!mainPhotoInfo?.imageUrl ? (
             <p className='text-gray-500 w-[375px] h-[728px] bg-gray text-center'>이미지가 업로드되지 않았습니다.</p>
