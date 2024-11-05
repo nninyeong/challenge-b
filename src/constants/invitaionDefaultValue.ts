@@ -72,7 +72,11 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
   type: 'scroll',
   moodPreset: {
     mood: 'classic',
-    preset: 'preset1',
+    preset: {
+      name: 'preset1',
+      label: '프리셋 1',
+      image: '/assets/images/presets/classicPreset1.svg',
+    },
   },
   stickers: [],
   imgRatio: {
