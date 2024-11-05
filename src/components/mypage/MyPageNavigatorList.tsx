@@ -5,6 +5,8 @@ import { useReviewBottomSheetContext } from '@/provider/reviewBottomSheetProvide
 import { Notify } from 'notiflix';
 import { FaChevronRight, FaChevronDown } from 'react-icons/fa';
 import ReviewCard from '../review/ReviewCard';
+import { useDownloadCsv } from '@/hooks/queries/mypage/useDownloadCsv';
+import { useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 
 const MENU_LISTS = [
   { name: '결제내역' },
@@ -16,6 +18,9 @@ const MENU_LISTS = [
 type MenuNameType = (typeof MENU_LISTS)[number]['name'];
 
 const MyPageNavigatorList = () => {
+  const { data: invitationCards } = useGetAllinvitationCard();
+  const invitationCardId = invitationCards?.[0]?.id;
+  const { downloadCsv } = useDownloadCsv();
   const { isReviewBottomSheetOpen, setIsReviewBottomSheetOpen } = useReviewBottomSheetContext((state) => state);
 
   const { data: myReview, isLoading, error } = useGetReviewOnlyUser();
@@ -24,6 +29,8 @@ const MyPageNavigatorList = () => {
   const handleMyReviewNavigator = (name: MenuNameType) => {
     if (name === '나의 후기관리') {
       setIsReviewBottomSheetOpen(!isReviewBottomSheetOpen);
+    } else if (name === '방문객 명단 다운로드' && invitationCardId) {
+      downloadCsv();
     } else {
       Notify.failure('준비중인 서비스입니다.');
     }
