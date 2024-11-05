@@ -47,7 +47,7 @@ const MoodPresetInput = () => {
 
   return (
     <div>
-      <div className='flex mb-[20px] gap-[8px] flex-wrap'>
+      <div className='flex mb-[14px] gap-[8px] flex-wrap'>
         {moodList.map((mood) => (
           <StickerCategoryButton
             key={`${mood.category}-button`}
