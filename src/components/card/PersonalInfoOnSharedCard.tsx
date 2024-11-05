@@ -10,7 +10,7 @@ const PersonalInfoOnSharedCard = ({ personalInfo }: PersonalInfoOnSharedCardProp
     <div className='flex flex-col justify-center items-center gap-[30px]'>
       <div className='flex gap-[50px]'>
         <div className='flex flex-col gap-[30px]'>
-          <div className='flex flex-col justify-center items-center mb-[30px]'>
+          <div className='flex flex-col justify-center items-center'>
             <PersonalInfoCard
               label={groom.relation}
               name={groom.name}
@@ -31,7 +31,7 @@ const PersonalInfoOnSharedCard = ({ personalInfo }: PersonalInfoOnSharedCardProp
         </div>
 
         <div className='flex flex-col gap-[30px]'>
-          <div className='flex flex-col justify-center items-center mb-[30px]'>
+          <div className='flex flex-col justify-center items-center'>
             <PersonalInfoCard
               label={bride.relation}
               name={bride.name}
