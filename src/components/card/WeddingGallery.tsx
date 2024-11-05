@@ -35,22 +35,26 @@ const WeddingGallery = ({ gallery }: GalleryPropType) => {
   );
 
   return (
-    <div className={`${gridClass} p-2`}>
-      {images.length > 0 ? (
-        images.map((image, index) => (
-          <GalleryImage
-            key={image}
-            image={image}
-            index={index}
-            handleDeleteImage={handleDeleteImage}
-            moveImage={moveImage}
-            ratio={ratio}
-            imgStyleClass={imgStyleClass}
-          />
-        ))
-      ) : (
-        <div>업로드 된 사진이 없습니다.</div>
-      )}
+    <div>
+      <p className=' text-center mb-8 text-[16px] text-gray-600'>GALLERY</p>
+
+      <div className={`${gridClass} gap-3.5`}>
+        {images.length > 0 ? (
+          images.map((image, index) => (
+            <GalleryImage
+              key={image}
+              image={image}
+              index={index}
+              handleDeleteImage={handleDeleteImage}
+              moveImage={moveImage}
+              ratio={ratio}
+              imgStyleClass={imgStyleClass}
+            />
+          ))
+        ) : (
+          <div>업로드 된 사진이 없습니다.</div>
+        )}
+      </div>
     </div>
   );
 };
