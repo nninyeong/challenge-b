@@ -3,24 +3,33 @@ import browserClient from '@/utils/supabase/client';
 import { GuestBookEntry } from '@/types/guestBookEntry.types';
 import { QUERY_KEYS } from '../queries/queryKeys';
 
-const fetchGuestBook = async (invitationId: string): Promise<GuestBookEntry[]> => {
-  const { data, error } = await browserClient
+const ITEMS_PER_PAGE = 6;
+
+const fetchGuestBook = async (
+  invitationId: string,
+  page: number,
+): Promise<{ data: GuestBookEntry[]; total: number }> => {
+  const from = (page - 1) * ITEMS_PER_PAGE;
+  const to = from + ITEMS_PER_PAGE - 1;
+
+  const { data, error, count } = await browserClient
     .from('guestbook')
-    .select('*')
+    .select('*', { count: 'exact' })
     .eq('invitation_id', invitationId)
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .range(from, to);
 
   if (error) {
     throw new Error('Error fetching guest book');
   }
 
-  return data as GuestBookEntry[];
+  return { data: data as GuestBookEntry[], total: count ?? 0 };
 };
 
-const useGuestBookEntries = (invitationId: string) => {
+const useGuestBookEntries = (invitationId: string, page: number) => {
   return useQuery({
-    queryKey: QUERY_KEYS.guestBook(invitationId),
-    queryFn: () => fetchGuestBook(invitationId),
+    queryKey: QUERY_KEYS.guestBook(invitationId, page),
+    queryFn: () => fetchGuestBook(invitationId, page),
   });
 };
 

@@ -46,7 +46,8 @@ const SelectBox = ({
     <>
       {isOpen && (
         <div
-          className={`fixed inset-0 bg-[${backgroundColor}] bg-opacity-60 z-10`}
+          className={`fixed inset-0 z-10`}
+          style={{ backgroundColor: `${backgroundColor}`, opacity: 0.6 }}
           onClick={() => setIsOpen(false)}
         />
       )}
@@ -68,7 +69,8 @@ const SelectBox = ({
           />
         </div>
         <ul
-          className={`${isOpen ? 'block' : 'hidden'} absolute w-full ${limitOptionHeight && `h-[${limitOptionHeight}]`} overflow-y-auto rounded-b-[8px] border-x-[.5px] border-b-[.5px]`}
+          className={`${isOpen ? 'block' : 'hidden'} absolute w-full overflow-y-auto rounded-b-[8px] border-x-[.5px] border-b-[.5px]`}
+          style={{ height: `${limitOptionHeight}` }}
         >
           {optionList.map((option) => (
             <li

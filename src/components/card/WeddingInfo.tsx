@@ -25,7 +25,10 @@ const WeddingInfo = ({ weddingInfo }: WeddingInfoPropType) => {
         <p>{`${weddingInfo.date} ${weddingInfo.time.hour} ${weddingInfo.time.minute}`}</p>
       </div>
       <div className='flex gap-[16px] text-gray-700 font-semibold leading-[140%]'>
-        <a href={`https://map.kakao.com/link/search/${weddingInfo.weddingHallAddress}`}>
+        <a
+          href={`https://map.kakao.com/link/search/${weddingInfo.weddingHallAddress}`}
+          target='_blank'
+        >
           <button className='flex justify-center items-center gap-[6px] border rounded-[300px] px-[14px] py-[8px] w-[96px] h-[40px]'>
             <Image
               src='/assets/images/icons/marker-02.svg'

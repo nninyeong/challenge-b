@@ -8,7 +8,7 @@ const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry;
   const { isAccordionOpen, toggleAccordion } = useGuestBookDeleteButton();
 
   const utcDate = new Date(guestBook.created_at);
-  const utcPlus8 = new Date(utcDate.getTime() + 8 * 60 * 60 * 1000).toISOString().slice(0, 16).replace('T', ' ');
+  const utcPlus9 = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000).toISOString().slice(0, 16).replace('T', ' ');
 
   return (
     <div className='text-black w-full px-4 mb-4'>
@@ -16,7 +16,7 @@ const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry;
         <div className='flex justify-between pt-4'>
           <div className='text-gray-900 font-bold'>{guestBook.name}</div>
           <div className='flex items-center gap-1'>
-            <div className='text-[12px] text-gray-300'>{utcPlus8}</div>
+            <div className='text-[12px] text-gray-300'>{utcPlus9}</div>
             <img
               src='/assets/images/icons/x-03-gray.svg'
               alt='x'
