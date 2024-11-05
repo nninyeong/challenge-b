@@ -258,7 +258,7 @@ const CreateCardPage = () => {
             initial={{ height: 54 }}
             animate={{ height: toggleInput ? 320 : 54 }}
             transition={{ duration: 0.3 }}
-            className={`flex flex-col bg-white shadow-xl p-[16px] object-cover rounded-lg mb-[8px] z-10 gap-[8px]`}
+            className={`flex flex-col bg-white shadow-xl w-[343px] p-[16px] object-cover rounded-lg mx-auto mb-[8px] z-10 gap-[8px]`}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <div className='flex justify-between items-center'>
