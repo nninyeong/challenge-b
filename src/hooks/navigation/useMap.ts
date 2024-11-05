@@ -1,6 +1,7 @@
 import { MapApp } from '@/types/navigationButtonType.type';
 import { getMapSettings } from './useMapSetting';
 import { isAndroid, isIOS } from 'react-device-detect';
+import { Notify } from 'notiflix';
 
 const TIMEOUT_DURATION = isIOS ? 5000 : 1500;
 
@@ -19,9 +20,9 @@ const useMap = () => {
 
     if (!isAndroid && !isIOS) {
       if (webLink) {
-        window.location.href = webLink;
+        window.open(webLink, '_blank');
       } else if (app === 'tmap') {
-        alert('모바일에서 확인할 수 있습니다.');
+        Notify.success('모바일에서 확인할 수 있습니다.');
       }
       return;
     }

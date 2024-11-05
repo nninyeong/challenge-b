@@ -32,7 +32,7 @@ const useDeleteGuestBookEntry = (
     mutationFn: (password: string) => deleteGuestBook(password),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.guestBook(invitationId),
+        queryKey: QUERY_KEYS.guestBook(invitationId, 1),
       });
       onSuccess();
       Notify.success('방명록 삭제를 완료했습니다.');
