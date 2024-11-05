@@ -9,6 +9,7 @@ export const CLASSIC_PRESET1: StickerType[] = [
     width: 171,
     height: 117,
     stickerImageId: 'classic-005.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-classic-005.svg`,
@@ -18,6 +19,7 @@ export const CLASSIC_PRESET1: StickerType[] = [
     width: 171,
     height: 117,
     stickerImageId: 'classic-005.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-classic-008.svg`,
@@ -27,6 +29,7 @@ export const CLASSIC_PRESET1: StickerType[] = [
     width: 20,
     height: 167,
     stickerImageId: 'classic-008.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-classic-008.svg`,
@@ -36,6 +39,7 @@ export const CLASSIC_PRESET1: StickerType[] = [
     width: 20,
     height: 167,
     stickerImageId: 'classic-008.svg',
+    rotation: 0,
   },
 
   {
@@ -46,6 +50,7 @@ export const CLASSIC_PRESET1: StickerType[] = [
     width: 20,
     height: 167,
     stickerImageId: 'classic-008.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-classic-008.svg`,
@@ -55,6 +60,7 @@ export const CLASSIC_PRESET1: StickerType[] = [
     width: 20,
     height: 167,
     stickerImageId: 'classic-008.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-classic-001.svg`,
@@ -64,6 +70,7 @@ export const CLASSIC_PRESET1: StickerType[] = [
     width: 273,
     height: 35,
     stickerImageId: 'classic-001.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-classic-006.svg`,
@@ -73,6 +80,7 @@ export const CLASSIC_PRESET1: StickerType[] = [
     width: 160,
     height: 40,
     stickerImageId: 'classic-006.svg',
+    rotation: 0,
   },
 ];
 
@@ -85,6 +93,7 @@ export const ROMANTIC_PRESET1: StickerType[] = [
     width: 115,
     height: 173,
     stickerImageId: 'romantic-002.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-romantic-003.svg`,
@@ -94,6 +103,7 @@ export const ROMANTIC_PRESET1: StickerType[] = [
     width: 117,
     height: 103,
     stickerImageId: 'romantic-003.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-romantic-007.svg`,
@@ -103,6 +113,7 @@ export const ROMANTIC_PRESET1: StickerType[] = [
     width: 41,
     height: 33,
     stickerImageId: 'romantic-007.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-romantic-006.svg`,
@@ -112,6 +123,7 @@ export const ROMANTIC_PRESET1: StickerType[] = [
     width: 97,
     height: 87,
     stickerImageId: 'romantic-006.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-romantic-001.svg`,
@@ -121,6 +133,7 @@ export const ROMANTIC_PRESET1: StickerType[] = [
     width: 93,
     height: 93,
     stickerImageId: 'romantic-001.svg',
+    rotation: 0,
   },
 ];
 
@@ -133,6 +146,7 @@ export const SIMPLE_PRESET1: StickerType[] = [
     width: 333,
     height: 107,
     stickerImageId: 'simple-002.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-simple-001.svg`,
@@ -142,6 +156,7 @@ export const SIMPLE_PRESET1: StickerType[] = [
     width: 227,
     height: 46,
     stickerImageId: 'simple-001.svg',
+    rotation: 0,
   },
   {
     id: `${crypto.randomUUID()}-simple-008.svg`,
@@ -151,5 +166,6 @@ export const SIMPLE_PRESET1: StickerType[] = [
     width: 335,
     height: 31,
     stickerImageId: 'simple-008.svg',
+    rotation: 0,
   },
 ];
