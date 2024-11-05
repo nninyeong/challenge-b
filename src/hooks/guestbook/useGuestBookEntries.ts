@@ -5,13 +5,16 @@ import { QUERY_KEYS } from '../queries/queryKeys';
 
 const ITEMS_PER_PAGE = 6;
 
-const fetchGuestBook = async (invitationId: string, page: number): Promise<{ data: GuestBookEntry[]; total: number }> => {
+const fetchGuestBook = async (
+  invitationId: string,
+  page: number,
+): Promise<{ data: GuestBookEntry[]; total: number }> => {
   const from = (page - 1) * ITEMS_PER_PAGE;
   const to = from + ITEMS_PER_PAGE - 1;
 
   const { data, error, count } = await browserClient
     .from('guestbook')
-    .select('*', { count: 'exact' }) 
+    .select('*', { count: 'exact' })
     .eq('invitation_id', invitationId)
     .order('created_at', { ascending: false })
     .range(from, to);

@@ -37,7 +37,11 @@ const GuestBook = () => {
       </div>
 
       <div className='w-full px-4 mt-6 mb-6'>
-        <GuestBookPagination page={page} setPage={setPage} totalPages={totalPages} />
+        <GuestBookPagination
+          page={page}
+          setPage={setPage}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );

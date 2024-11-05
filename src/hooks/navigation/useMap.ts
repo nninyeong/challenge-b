@@ -20,7 +20,7 @@ const useMap = () => {
 
     if (!isAndroid && !isIOS) {
       if (webLink) {
-        window.location.href = webLink;
+        window.open(webLink, '_blank');
       } else if (app === 'tmap') {
         Notify.success('모바일에서 확인할 수 있습니다.');
       }
