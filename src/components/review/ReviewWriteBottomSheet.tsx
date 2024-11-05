@@ -12,7 +12,7 @@ const ReviewWriteBottomSheet = () => {
       initial={{ y: '100%' }}
       animate={{ y: 0 }}
       transition={{ stiffness: 100 }}
-      className='fixed bottom-0 inset-x-0 mx-auto w-[375px] h-[555px] p-[16px] rounded-t-[24px] z-50 flex flex-col items-center bg-white shadow-lg'
+      className='fixed bottom-0 inset-x-0 mx-auto w-[375px] h-[555px] p-[16px] pb-[27px] rounded-t-[24px] z-50 flex flex-col items-center justify-end bg-white shadow-lg'
       style={{ transform: 'translateY(0%)' }}
     >
       <button
