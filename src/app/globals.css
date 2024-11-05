@@ -14,6 +14,10 @@
   }
 }
 
+.flex-col-center {
+  @apply flex flex-col justify-center items-center;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
