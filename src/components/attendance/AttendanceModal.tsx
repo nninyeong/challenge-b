@@ -51,7 +51,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 onSelect={(value) => {
                   setValue('attendanceCount', parseInt(value, 5));
                 }}
-                width='79px' 
+                width='79px'
                 backgroundColor='#000000'
               />
               <div>

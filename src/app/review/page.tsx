@@ -8,6 +8,7 @@ import ReviewWriteBottomSheet from '@/components/review/ReviewWriteBottomSheet';
 import { createPortal } from 'react-dom';
 import { useReviewInfinite } from '@/hooks/queries/review/useGetReview';
 import { useReviewBottomSheetContext } from '@/provider/reviewBottomSheetProvider';
+import { VIEW_HEIGHT } from '@/constants/viewHeight';
 
 const ReviewPage = () => {
   const [portalElement, setPortalElement] = useState<Element | null>(null);
@@ -52,8 +53,12 @@ const ReviewPage = () => {
   const reviews = reviewsData?.pages.flatMap((page) => page) || [];
 
   return (
-    <div className={`flex flex-col w-full p-4 ${isReviewBottomSheetOpen && 'bg-black bg-opacity-60'}`}>
-      <h1>후기</h1>
+    <div className={`flex flex-col w-full p-4`}>
+      <div className='w-full h-[47px]'>
+        <h1 className='text-gray-900 text-[20px] font-semibold'>드림카드 이용 후기</h1>
+        <h2 className='text-gray-700 text-[14px] font-medium'>To Speed up your Creative Workflow</h2>
+      </div>
+
       <ReviewImage />
 
       <div>
@@ -66,6 +71,9 @@ const ReviewPage = () => {
         )}
       </div>
       <ReviewWriteButton />
+      {isReviewBottomSheetOpen && (
+        <div className={`fixed bg-black bg-opacity-60 w-full h-${VIEW_HEIGHT} z-40 top-0 left-0 inset-0`}></div>
+      )}
       {isFetchingNextPage && <div>더 불러오는 중...</div>}
       {isReviewBottomSheetOpen && portalElement ? createPortal(<ReviewWriteBottomSheet />, portalElement) : null}
     </div>

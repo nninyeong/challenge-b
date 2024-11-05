@@ -22,7 +22,6 @@ const MyPageNavigatorList = () => {
   const invitationCardId = invitationCards?.[0]?.id;
   const { downloadCsv } = useDownloadCsv();
   const { isReviewBottomSheetOpen, setIsReviewBottomSheetOpen } = useReviewBottomSheetContext((state) => state);
-
   const { data: myReview, isLoading, error } = useGetReviewOnlyUser();
   const reviewsData = myReview ? (Array.isArray(myReview) ? myReview : [myReview]) : [];
 
@@ -46,7 +45,7 @@ const MyPageNavigatorList = () => {
             onClick={() => handleMyReviewNavigator(menu.name)}
           >
             {menu.name}
-            {isReviewBottomSheetOpen ? (
+            {isReviewBottomSheetOpen && menu.name === '나의 후기관리' ? (
               <FaChevronDown className='text-gray-700' />
             ) : (
               <FaChevronRight className='text-gray-700' />

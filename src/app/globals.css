@@ -9,8 +9,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ededed;
+    --foreground: #0a0a0a;
   }
 }
 
@@ -63,7 +63,7 @@ body {
 
 .custom-quill-editor .ql-toolbar {
   display: flex;
-  justify-content: center;
+
   flex-wrap: nowrap;
   background: white;
   height: 30px;
@@ -74,7 +74,6 @@ body {
 
 .custom-quill-editor .ql-toolbar button,
 .custom-quill-editor .ql-toolbar .ql-picker {
-  height: 24px;
   width: 24px;
   font-size: 10px;
 }
@@ -91,6 +90,18 @@ body {
   color: black;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+
+.quill-preview p {
+  text-align: left;
+}
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-right {
+  text-align: right;
 }
 
 .custom-checkbox {
