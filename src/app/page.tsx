@@ -2,7 +2,6 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import ReviewCarousel from '@/components/main/ReviewCarousel';
-import LinkToCreateCard from '@/components/ui/LinkToCreateCard';
 import FixedQuickLink from '@/components/ui/FixedQuickLink';
 import Gallery from '@/components/main/Gallery';
 import MoodKeyword from '@/components/main/MoodKeyword';
