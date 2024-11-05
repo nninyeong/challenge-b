@@ -265,7 +265,6 @@ const CreateCardPage = () => {
             className={`flex flex-col bg-white shadow-xl px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 h-full`}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <div></div>
             <div className='flex justify-between items-center'>
               <button
                 type='button'
