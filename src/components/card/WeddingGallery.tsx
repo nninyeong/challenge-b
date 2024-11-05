@@ -1,44 +1,52 @@
+'use client';
 import { useDeleteGalleryImage } from '@/hooks/queries/invitation/useUpdateImages';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import Image from 'next/image';
 
-import { IoClose } from 'react-icons/io5';
+import { useCallback } from 'react';
 
+import { useFormContext } from 'react-hook-form';
+import GalleryImage from '../gallery/GalleryImage';
 type GalleryPropType = Pick<InvitationFormType, 'gallery'>;
 const WeddingGallery = ({ gallery }: GalleryPropType) => {
+  const { setValue } = useFormContext();
+  const images = gallery?.images || [];
   const gridType = gallery?.grid;
   const ratio = gallery?.ratio;
-
   const imgStyleClass = ratio === 'rectangle' ? 'w-full h-[500px]' : 'w-full h-full';
-
   const gridClass = gridType === 3 ? 'grid grid-cols-3 gap-2' : 'grid grid-cols-2 gap-2';
-
   const deleteImage = useDeleteGalleryImage();
 
   const handleDeleteImage = (imageUrl: string) => {
     deleteImage.mutate(imageUrl);
+    setValue(
+      'gallery.images',
+      images.filter((img) => img !== imageUrl),
+    );
   };
+
+  const moveImage = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      const updatedImages = [...images];
+      const [removed] = updatedImages.splice(dragIndex, 1);
+      updatedImages.splice(hoverIndex, 0, removed);
+      setValue('gallery.images', updatedImages);
+    },
+    [images, setValue],
+  );
+
   return (
     <div className={`${gridClass} p-2`}>
-      {gallery && gallery.images.length > 0 ? (
-        gallery.images.map((image, i) => (
-          <div
+      {images.length > 0 ? (
+        images.map((image, index) => (
+          <GalleryImage
             key={image}
-            className={`relative ${ratio === 'rectangle' ? 'aspect-[9/14]' : 'aspect-square'}`}
-          >
-            <Image
-              src={image}
-              alt={`galleryImage${i}`}
-              className={imgStyleClass}
-              layout='fill'
-              objectFit='cover'
-            />
-            <IoClose
-              className='cursor-pointer text-white absolute right-2 top-2'
-              size={30}
-              onClick={() => handleDeleteImage(image)}
-            />
-          </div>
+            image={image}
+            index={index}
+            handleDeleteImage={handleDeleteImage}
+            moveImage={moveImage}
+            ratio={ratio}
+            imgStyleClass={imgStyleClass}
+          />
         ))
       ) : (
         <div>업로드 된 사진이 없습니다.</div>
