@@ -24,17 +24,11 @@ const fetchInvitationData = async (id: string) => {
 const CardPage = async ({ params }: { params: { id: string } }) => {
   const invitation = await fetchInvitationData(params.id);
   const { isPrivate, renderOrder, ...invitationData } = convertToCamelCase(invitation);
-  console.log(invitation);
   const fontStyle = invitation.main_photo_info.fontName;
-  console.log(fontStyle);
   return isPrivate ? (
     <div>아직 공개되지 않은 청첩장입니다.</div>
   ) : (
-<<<<<<< HEAD
-    <div className={`${fontStyle}`}>
-=======
-    <div className='flex flex-col gap-[56px]'>
->>>>>>> cdce9e1633693f82ef95859e75fb77719ae42251
+    <div className={`${fontStyle}flex flex-col gap-[56px]`}>
       {renderOrder
         .sort((a, b) => a.order - b.order)
         .map(({ typeOnSharedCard }, index) => (
