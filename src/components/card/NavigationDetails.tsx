@@ -7,7 +7,7 @@ import NavigationDetailCard from '@/components/create/NavigationDetailCard';
 type NavigationDetailsPropType = Pick<InvitationFormType, 'navigationDetail' | 'weddingInfo'>;
 const NavigationDetails = ({ navigationDetail, weddingInfo }: NavigationDetailsPropType) => {
   return (
-    <>
+    <div className='mb-[75px/]'>
       {navigationDetail.map && <MapView address={weddingInfo.weddingHallAddress} />}
       {navigationDetail.navigationButton && (
         <NavigationButtons
@@ -27,7 +27,7 @@ const NavigationDetails = ({ navigationDetail, weddingInfo }: NavigationDetailsP
           info={navigationDetail.subway}
         />
       )}
-    </>
+    </div>
   );
 };
 

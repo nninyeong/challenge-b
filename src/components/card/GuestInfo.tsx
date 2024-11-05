@@ -9,7 +9,7 @@ type GuestInfoPropType = Pick<
 >;
 const GuestInfo = ({ attendance, guestbook, dDay, weddingInfo, mainPhotoInfo }: GuestInfoPropType) => {
   return (
-    <>
+    <div className='mb-[157px]'>
       {guestbook && <GuestBook />}
       {attendance && dDay && (
         <div className='fixed bottom-4 px-4 w-[343px]'>
@@ -23,7 +23,7 @@ const GuestInfo = ({ attendance, guestbook, dDay, weddingInfo, mainPhotoInfo }: 
           />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

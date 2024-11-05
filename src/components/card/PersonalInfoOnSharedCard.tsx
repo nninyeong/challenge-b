@@ -7,7 +7,7 @@ const PersonalInfoOnSharedCard = ({ personalInfo }: PersonalInfoOnSharedCardProp
   const { bride, groom } = personalInfo;
 
   return (
-    <div className='flex flex-col justify-center items-center gap-[30px]'>
+    <div className='flex flex-col justify-center items-center gap-[30px] mb-[80px]'>
       <div className='flex gap-[50px]'>
         <div className='flex flex-col gap-[30px]'>
           <div className='flex flex-col justify-center items-center mb-[30px]'>
