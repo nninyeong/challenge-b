@@ -9,7 +9,7 @@ type ObserverOptions = {
 const DEFAULT_OPTIONS: ObserverOptions = {
   root: null,
   rootMargin: '0px',
-  threshold: 0.9,
+  threshold: 0.65,
 };
 
 export const useIntersectionObserver = (
