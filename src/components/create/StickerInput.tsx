@@ -58,7 +58,7 @@ const StickerInput = () => {
         ))}
       </div>
       {stickerByCategory && stickerByCategory[selectedCategory as string] ? (
-        <div className='grid grid-cols-4 grid-cols-row-2 gap-[8px]'>{renderSticker()}</div>
+        <div className='grid grid-cols-4 gap-[8px] h-[150px] overflow-auto'>{renderSticker()}</div>
       ) : (
         <div className='w-full text-center'>준비중인 무드입니다.</div>
       )}
