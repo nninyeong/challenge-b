@@ -83,10 +83,11 @@ const ReviewForm = () => {
   };
 
   const handleReviewFormSubmit = async (formData: ReviewType) => {
+    const images = formData.images.includes(null) ? [] : formData.images;
     const data: MutationReviewFormDataType = {
       user_id: user.userId!,
       content: formData.content,
-      image_url: formData.images,
+      image_url: images,
       user_name: user.userName!,
       avatar_url: user.avatar_url,
     };
