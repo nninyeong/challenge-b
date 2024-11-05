@@ -21,18 +21,20 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import { UseFormReturn } from 'react-hook-form';
 import { COMPONENT_TYPES } from '@/constants/componentTypes';
 import RenderOrderInput from '@/components/create/RenderOrderInput';
+import BackgroundColorInput from '@/components/create/BackgroundColorInput';
 
 export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
   return [
     {
       order: 0,
       component: methods && <MainPhotoPreView control={methods.control} />,
-      name: ['청첩장 대표 사진', '청첩장 무드 프리셋', '청첩장 메인 화면', '청첩장 스티커'],
+      name: ['청첩장 대표 사진', '청첩장 무드 프리셋', '청첩장 스티커', '청첩장 메인 화면', '청첩장 배경 컬러'],
       input: [
         <MainPhotoInput key={'photoview'} />,
         <MoodPresetInput key={'mood'} />,
         <StickerInput key={'sticker'} />,
         <MainViewInput key={'mainview'} />,
+        <BackgroundColorInput key={'backgroundColor'} />,
       ],
       typeOnSharedCard: COMPONENT_TYPES.MAIN_PHOTO,
       labelForInput: '청첩장 대표이미지',
