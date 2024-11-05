@@ -53,7 +53,11 @@ const ReviewPage = () => {
 
   return (
     <div className={`flex flex-col w-full p-4 ${isReviewBottomSheetOpen && 'bg-black bg-opacity-60'}`}>
-      <h1>후기</h1>
+      <div className='w-full h-[47px]'>
+        <h1 className='text-gray-900 text-[20px] font-semibold'>드림카드 이용 후기</h1>
+        <h2 className='text-gray-700 text-[14px] font-medium'>To Speed up your Creative Workflow</h2>
+      </div>
+
       <ReviewImage />
 
       <div>
