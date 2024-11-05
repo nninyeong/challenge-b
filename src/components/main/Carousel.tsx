@@ -53,7 +53,7 @@ const Carousel = () => {
   }
 
   return (
-    <div className='overflow-hidden w-full'>
+    <div className='overflow-hidden w-full py-[10px]'>
       <div
         className='flex justify-center'
         style={getCarouselStyle()}
@@ -67,7 +67,7 @@ const Carousel = () => {
               key={`${review.id}-${index}`}
               className='mx-[8px]'
             >
-              <div className='relative w-[216px] h-[192px] rounded-t-lg overflow-hidden'>
+              <div className='relative w-[216px] h-[192px] rounded-t-2xl overflow-hidden shadow-md'>
                 {imgUrls.length > 0 && (
                   <Image
                     src={imgUrls[0]}
@@ -77,8 +77,9 @@ const Carousel = () => {
                     priority
                   />
                 )}
+                <div className='absolute inset-0 bg-black opacity-50' />
               </div>
-              <div className='w-[216px] h-[136px] bg-gray-50 rounded-b-lg p-[16px] text-[12px]'>
+              <div className='w-[216px] h-[136px] rounded-b-2xl p-[16px] text-[12px] shadow-md'>
                 <div className='flex items-center gap-[6px] mb-[16px]'>
                   <div className='relative w-[16px] h-[16px] rounded-full overflow-hidden'>
                     <Image
