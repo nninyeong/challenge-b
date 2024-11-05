@@ -26,6 +26,11 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
     name: 'stickers',
   });
 
+  const weddingInfo = useWatch({
+    control,
+    name: 'weddingInfo',
+  });
+
   const mainPhotoRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const captureAndSendImage = async () => {
@@ -46,6 +51,7 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
       bgColor={svgBgColor}
       mainView={mainViewType}
       stickers={stickers}
+      weddingInfo={weddingInfo}
     />
   );
 };
