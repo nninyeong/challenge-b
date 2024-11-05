@@ -5,6 +5,7 @@ import CreateGuestBook from './CreateGuestBook';
 import GuestBookCard from './GuestBookCard';
 import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathname';
 import { useState } from 'react';
+import GuestBookPagination from './GuestBookPagination';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -22,7 +23,7 @@ const GuestBook = () => {
 
   return (
     <div>
-      <div className='text-center mb-6 tracking-[4px]'>GUEST BOOK</div>
+      <div className='text-gray-600 text-center mb-6 tracking-[4px]'>GUEST BOOK</div>
       <CreateGuestBook invitationId={invitationId} />
 
       <div>
@@ -35,18 +36,8 @@ const GuestBook = () => {
         ))}
       </div>
 
-      <div className='w-full px-4 mt-6 mb-20'>
-        <div className='h-10 px-1 bg-primary300 flex justify-between items-center rounded-full'>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => setPage(index + 1)}
-              className={`w-8 h-8 px-2  rounded-full text-[20px] ${page === index + 1 ? 'bg-white text-primary300' : 'text-white'}`}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
+      <div className='w-full px-4 mt-6 mb-6'>
+        <GuestBookPagination page={page} setPage={setPage} totalPages={totalPages} />
       </div>
     </div>
   );
