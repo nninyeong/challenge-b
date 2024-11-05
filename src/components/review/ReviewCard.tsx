@@ -1,3 +1,4 @@
+'use client';
 import { Review } from '@/types/review.types';
 
 import { useRouter } from 'next/navigation';

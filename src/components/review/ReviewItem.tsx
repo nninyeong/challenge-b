@@ -1,3 +1,4 @@
+'use client';
 import { formatDate } from '@/utils/formatDate';
 import { maskIdLastFour } from '@/utils/maskIdLastFour';
 import { getContentPreview, MAX_CONTENT_LENGTH } from '@/utils/getContentPreview';
@@ -5,6 +6,8 @@ import Image from 'next/image';
 import { Review } from '@/types/review.types';
 import { User } from '@/types/users.types';
 import { Notify } from 'notiflix';
+import { usePathname } from 'next/navigation';
+import { useDeleteReviewMutation } from '@/hooks/queries/review/useDeleteReviewMutation';
 const ReviewItem = ({
   review,
   user,
@@ -19,9 +22,15 @@ const ReviewItem = ({
   onNavigate: () => void;
 }) => {
   const firstImage = review.image_url?.[0] || '/assets/images/defaultImg.png';
+  const pathname = usePathname();
+  const { mutate: deleteMyReview } = useDeleteReviewMutation();
   const handleNotYetButton = () => {
     Notify.info('아직 준비중인 기능입니다.');
   };
+  const handleDeleteMyReview = () => {
+    deleteMyReview(user.id);
+  };
+
   return (
     <div className='flex flex-col justify-between min-h-[159px] items-center border-b border-gray-50 border-solid mb-4 pb-[15px]'>
       <div className='w-full flex cursor-pointer relative'>
@@ -79,26 +88,41 @@ const ReviewItem = ({
         )}
       </div>
       <div className='self-end flex gap-[8px]'>
-        <button
-          className='text-[12px] flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[76px] h-[24px] text-primary-300'
-          onClick={handleNotYetButton}
-        >
-          <img
-            src='/assets/images/icons/link-angled.svg'
-            alt='공유하기'
-          />
-          <span>공유하기</span>
-        </button>
-        <button
-          className='text-[12px] flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[76px] h-[24px] text-primary-300'
-          onClick={handleNotYetButton}
-        >
-          <img
-            src='/assets/images/icons/smiley-happy.svg'
-            alt='도움돼요'
-          />
-          <span>도움돼요</span>
-        </button>
+        {pathname === '/mypage' ? (
+          <button
+            className='text-[12px] flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[76px] h-[24px] text-primary-300'
+            onClick={handleDeleteMyReview}
+          >
+            <img
+              src='/assets/images/icons/trash-01.svg'
+              alt='삭제하기'
+            />
+            <span>삭제하기</span>
+          </button>
+        ) : (
+          <>
+            <button
+              className='text-[12px] flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[76px] h-[24px] text-primary-300'
+              onClick={handleNotYetButton}
+            >
+              <img
+                src='/assets/images/icons/link-angled.svg'
+                alt='공유하기'
+              />
+              <span>공유하기</span>
+            </button>
+            <button
+              className='text-[12px] flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[76px] h-[24px] text-primary-300'
+              onClick={handleNotYetButton}
+            >
+              <img
+                src='/assets/images/icons/smiley-happy.svg'
+                alt='도움돼요'
+              />
+              <span>도움돼요</span>
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
