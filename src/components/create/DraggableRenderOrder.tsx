@@ -55,11 +55,10 @@ const DraggableRenderOrder = ({
       ref={combinedRef}
       className={`${isDragging && 'opacity-50'} flex justify-start items-center gap-[8px] h-[24px] text-[16px] text-gray-800 font-main font-medium`}
     >
-      <Image
-        src='/assets/images/icons/equals.svg'
+      <img
+        src='/assets/images/icons/equals.webp'
         alt=''
-        width={24}
-        height={24}
+        className='w-[24px] h-[24px]'
       />
       <span>{labelForInput}</span>
     </div>
