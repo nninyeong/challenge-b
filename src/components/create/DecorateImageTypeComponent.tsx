@@ -25,8 +25,8 @@ const DecorateImageTypeComponent = ({ type, isSelected }: { type: string; isSele
 
   return (
     <div
-      className={`w-[55px] h-[100px] rounded-lg border-2 border-gray-200 flex flex-col justify-end items-center   ${
-        isSelected ? 'border-primary-300 shadow-primary-200 shadow-sm' : 'border-gray-300'
+      className={`w-[55px] h-[100px] rounded-lg border-[1px] flex flex-col justify-end items-center mt-[8px]  ${
+        isSelected ? 'border-primary-300 shadow-primary-200 shadow-sm' : 'border-gray-200'
       }`}
     >
       <div className={styleConverter()} />

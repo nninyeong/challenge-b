@@ -2,22 +2,32 @@ import { attendanceSchema } from "@/lib/zod/attendanceSchema";
 import { AttendanceFormData } from "@/types/guestInfo.types";
 import browserClient from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Notify } from "notiflix";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
   const {
     register,
+    setValue,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<AttendanceFormData>({
     resolver: zodResolver(attendanceSchema),
     defaultValues: {
-      personType: '',
-      mealOption: '',
+      personType: '신랑',
+      mealOption: false,
       name: '',
       attendanceCount: undefined,
     },
   });
+
+  const [selected, setSelected] = useState('신랑');
+
+  const handleSelection = (value: string) => {
+    setSelected(value);
+  };
 
   const handleAttendanceModalSubmit: SubmitHandler<AttendanceFormData> = async (data) => {
     const { personType, mealOption, name, attendanceCount } = data;
@@ -28,23 +38,27 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
         division: personType,
         name,
         person_count: attendanceCount,
-        whether_food: mealOption === '예정',
+        whether_food: mealOption,
       },
     ]);
 
     if (error) {
       console.error('Error inserting data:', error);
-      alert('참석 정보를 저장하는 중 오류가 발생했습니다.');
+      Notify.failure('참석 정보를 저장하는 중 오류가 발생했습니다.');
     } else {
-      alert('참석 정보가 저장되었습니다.');
+      Notify.success('참석 정보가 저장되었습니다.');
       closeModal();
     }
   };
 
   return {
+    selected,
     register,
+    setValue,
     handleSubmit,
+    watch,
     handleAttendanceModalSubmit,
+    handleSelection,
     errors
   }
 }

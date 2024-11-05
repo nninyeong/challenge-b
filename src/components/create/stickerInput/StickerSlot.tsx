@@ -31,17 +31,18 @@ const StickerSlot = ({ stickerImage }: PropsType) => {
 
   return (
     <div
-      className='flex justify-center items-center border border-gray-200 rounded-[12px] aspect-square w-full h-full hover:cursor-pointer'
+      className='flex justify-center items-center p-[8px] border border-gray-200 rounded-[12px] aspect-square w-full h-full hover:cursor-pointer'
       onClick={handleSelectSticker}
     >
-      <Image
-        alt='sticker'
-        key={stickerImage.id}
-        src={stickerImage.url}
-        className='object-fit m-[8px]'
-        width={100}
-        height={100}
-      />
+      <div className='relative w-full h-full'>
+        <Image
+          alt='sticker'
+          key={stickerImage.id}
+          src={stickerImage.url}
+          className='object-contain'
+          fill
+        />
+      </div>
     </div>
   );
 };
