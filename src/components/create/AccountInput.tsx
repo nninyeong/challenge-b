@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import FlexColCenterContainer from '../FlexColCenterContainer';
 import { convertIndexToAccountLabel } from '@/utils/convertIndexToAccountLabel';
 
 const AccountInput = () => {
@@ -19,7 +18,7 @@ const AccountInput = () => {
   });
 
   return (
-    <FlexColCenterContainer className='text-sm gap-4 w-full'>
+    <div className='flex-col-center text-sm gap-4 w-full'>
       <div className='flex gap-3 h-[32px] w-full'>
         <label className='self-center w-[50px]'>제목</label>
         <input
@@ -89,7 +88,7 @@ const AccountInput = () => {
           </div>
         ))}
       </div>
-    </FlexColCenterContainer>
+    </div>
   );
 };
 

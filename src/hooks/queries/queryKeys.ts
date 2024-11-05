@@ -7,4 +7,5 @@ export const QUERY_KEYS = {
   authUsers: () => ['authUsers'],
   allImageReviews: () => ['allImageReviews'],
   reviews: () => ['reviews'],
+  userReview: () => ['userReview'],
 };

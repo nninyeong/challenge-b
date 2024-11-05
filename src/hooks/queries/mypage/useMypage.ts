@@ -2,6 +2,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '../queryKeys';
 import { deleteInvitationCard, getInvitationCard } from '@/utils/myPage';
+import { Notify } from 'notiflix';
 
 export const useGetAllinvitationCard = () => {
   return useQuery({
@@ -16,11 +17,11 @@ export const useDeleteInvitationCard = () => {
     mutationFn: deleteInvitationCard,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitationCard() });
-      alert('청첩장이 삭제완료되었습니다.');
+      Notify.success('청첩장이 삭제완료되었습니다.');
     },
     onError: (error) => {
       console.error('Delete Invitation Card Error', error);
-      alert('청첩장 삭제에 실패했습니다.');
+      Notify.failure('청첩장 삭제에 실패했습니다.');
     },
   });
 };

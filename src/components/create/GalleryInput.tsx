@@ -60,7 +60,7 @@ const GalleryInput = () => {
           직사각형
         </GalleryButton>
       </div>
-      <div className='flex w-full gap-2 items-center mb-9'>
+      <div className='flex w-full gap-2 items-center mb-[30px]'>
         <p>배치방법</p>
         <GalleryButton
           onClick={() => handleGridTypeStyle(2)}
