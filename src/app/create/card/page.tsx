@@ -23,7 +23,7 @@ import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
 import EventBus from '@/utils/EventBus';
 import { motion } from 'framer-motion';
-import createCardFormHeightMapper from '@/utils/createCardFormHeightMapper';
+import createCardFormHeightMapper, { FOLDED_HEIGHT } from '@/utils/createCardFormHeightMapper';
 
 const DELAY_TIME: number = 300;
 
@@ -251,14 +251,18 @@ const CreateCardPage = () => {
               );
             })}
         </div>
-        <div
-          className={`fixed bottom-0 left-0 right-0 px-[16px] z-10 h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex])}]`}
+        <motion.div
+          initial={{ height: FOLDED_HEIGHT }}
+          animate={{
+            height: createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex]),
+          }}
+          transition={{
+            duration: 0.4,
+          }}
+          className={`fixed bottom-0 left-0 right-0 px-[16px] z-10 mb-[8px]  h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex])}]`}
         >
-          <motion.form
-            initial={{ height: 54 }}
-            animate={{ height: toggleInput ? 320 : 54 }}
-            transition={{ duration: 0.3 }}
-            className={`flex flex-col bg-white shadow-xl w-[343px] p-[16px] object-cover rounded-lg mx-auto mb-[8px] z-10 gap-[8px]`}
+          <form
+            className={`flex flex-col bg-white shadow-xl p-[16px] object-cover rounded-lg z-10 gap-[8px] h-full`}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <div className='flex justify-between items-center'>
@@ -322,8 +326,8 @@ const CreateCardPage = () => {
                 )}
               </div>
             )}
-          </motion.form>
-        </div>
+          </form>
+        </motion.div>
       </div>
     </FormProvider>
   );

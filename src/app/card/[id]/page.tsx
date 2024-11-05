@@ -28,7 +28,7 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
   return isPrivate ? (
     <div>아직 공개되지 않은 청첩장입니다.</div>
   ) : (
-    <div>
+    <div className='flex flex-col gap-[56px]'>
       {renderOrder
         .sort((a, b) => a.order - b.order)
         .map(({ typeOnSharedCard }, index) => (
