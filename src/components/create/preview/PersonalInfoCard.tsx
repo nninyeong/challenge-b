@@ -1,3 +1,5 @@
+import { Notify } from 'notiflix';
+
 type PersonInfoCardProps = {
   label: string | null;
   name: string | null;
@@ -12,7 +14,7 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
   const handlePhoneClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!phoneNumber) {
       e.preventDefault();
-      alert(DEFAULT_PHONE_NUMBER);
+      Notify.warning(DEFAULT_PHONE_NUMBER);
     }
   };
 
