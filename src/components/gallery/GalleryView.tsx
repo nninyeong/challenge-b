@@ -15,7 +15,7 @@ const GalleryView = ({ gallery }: GalleryViewProps) => {
   return (
     <div className='mt-8 mb-8'>
       <p className=' text-center mb-8 text-[16px] text-gray-600'>GALLERY</p>
-      <div className={`w-full ${gridClass}  gap-3.5 `}>
+      <div className={`w-full ${gridClass}  gap-3.5 p-4`}>
         {gallery.images.map((image, index) => (
           <div
             key={image}
