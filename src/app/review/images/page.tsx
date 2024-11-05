@@ -1,8 +1,5 @@
 'use client';
-import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
 import { useGetAllImageReivews } from '@/hooks/queries/review/useGetAllImageReviews';
-import { getAllImageReviews } from '@/utils/getReview';
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
