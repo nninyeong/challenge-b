@@ -22,8 +22,8 @@ const StickerSlot = ({ stickerImage }: PropsType) => {
       stickerImageId: stickerImage.id,
       posX: '0',
       posY: '0',
-      width: stickerImage.width ?? 100,
-      height: stickerImage.height ?? 100,
+      width: Math.max(stickerImage.width, 100),
+      height: Math.max(stickerImage.height, 100),
       rotation: 0,
     });
 
