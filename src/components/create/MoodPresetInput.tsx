@@ -24,12 +24,10 @@ const MoodPresetInput = () => {
     setSelectedPreset('preset1');
     const selectedPresetDetails = MOOD_PRESETS[category]?.preset1;
 
-    if (selectedPresetDetails) {
+    if (selectedPresetDetails && category !== 'none') {
       setFormValue(selectedPresetDetails);
-    } else if (category === 'none') {
-      setSelectedPreset('');
-      setFormValue(null);
     } else {
+      setSelectedPreset('');
       setFormValue(null);
     }
   };

@@ -50,7 +50,7 @@ export const MOOD_PRESETS = {
   },
   simple: {
     preset1: {
-      bgColor: COLOR_DEFAULT_PALETTE[7],
+      bgColor: COLOR_DEFAULT_PALETTE[6],
       mainView: DECORATE_IMAGE_TYPE[0],
       stickers: SIMPLE_PRESET1,
     },
