@@ -9,9 +9,7 @@ type GalleryPropType = Pick<InvitationFormType, 'gallery'>;
 
 const WeddingGallery = ({ gallery }: GalleryPropType) => {
   const { setValue } = useFormContext();
-  const images = gallery?.images || [];
-  const gridType = gallery?.grid;
-  const ratio = gallery?.ratio;
+  const { images = [], grid: gridType, ratio } = gallery || {};
   const imgStyleClass = ratio === 'rectangle' ? 'w-full h-[500px]' : 'w-full h-full';
   const gridClass = `grid ${gridType === 3 ? 'grid-cols-3' : 'grid-cols-2'} gap-2 transition-all duration-300 ease-in-out`;
   const deleteImage = useDeleteGalleryImage();
