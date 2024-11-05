@@ -1,7 +1,6 @@
 'use client';
 
 import { StickerType } from '@/types/invitationFormType.type';
-import Image from 'next/image';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { NumberSize, Resizable } from 're-resizable';
@@ -239,11 +238,10 @@ const Sticker = ({
             enable={{ bottomRight: true, topLeft: false, bottomLeft: false, topRight: false }}
             lockAspectRatio={true}
           >
-            <Image
+            <img
               src={sticker.url}
               alt={sticker.stickerImageId}
-              width={sticker.width}
-              height={sticker.height}
+              style={{ width: sticker.width, height: sticker.height }}
               className={`${isActive && 'border-[1px] border-primary-300'} w-full h-full`}
               onTouchStart={handleTouchStart}
               onTouchEnd={handleTouchEnd}
