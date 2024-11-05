@@ -6,19 +6,19 @@ import AddressModal from '@/components/create/modal/AddressModal';
 import SelectBox from '@/components/ui/SelectBox';
 
 const HOURS_FOR_WEDDING_INFO = [
-  '오전 09시',
-  '오전 10시',
-  '오전 11시',
-  '낮 12시',
-  '오후 1시',
-  '오후 2시',
-  '오후 3시',
-  '오후 4시',
-  '오후 6시',
-  '오후 7시',
+  '오전 09',
+  '오전 10',
+  '오전 11',
+  '낮 12',
+  '오후 1',
+  '오후 2',
+  '오후 3',
+  '오후 4',
+  '오후 6',
+  '오후 7',
 ];
 
-const MINUTES_FOR_WEDDING_INFO = ['00분', '30분'];
+const MINUTES_FOR_WEDDING_INFO = ['00', '30'];
 
 const WeddingInfoInput = () => {
   const { register, setValue } = useFormContext();

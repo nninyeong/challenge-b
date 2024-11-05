@@ -86,7 +86,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
           <p>{mainPhotoInfo?.icon || '♥︎'}</p>
           <p>{mainPhotoInfo?.rightName || '우측 이름'}</p>
         </div>
-        <div className='text-[16px] text-gray-700'>
+        <div className='text-[16px] text-gray-700 flex flex-col'>
           <p>
             {weddingInfo.date} {day} {weddingInfo.time.hour}:{weddingInfo.time.minute}
           </p>
