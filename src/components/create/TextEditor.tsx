@@ -16,7 +16,52 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const TextEditor = ({ value, onChange, placeholder, style }: TextEditorProps) => {
   const modules = {
-    toolbar: [['bold', 'italic', 'underline', { color: [] }, { background: [] }]],
+    toolbar: [
+      [
+        'bold',
+        'italic',
+        'underline',
+        {
+          color: [
+            'black',
+            'white',
+            'pink',
+            'blue',
+            'skyblue',
+            'gray',
+            'beige',
+            'darkGray',
+            'navy',
+            'ivory',
+            'brown',
+            'red',
+            'orange',
+            'yellow',
+            'green',
+          ],
+        },
+        {
+          background: [
+            'black',
+            'white',
+            'pink',
+            'blue',
+            'skyblue',
+            'gray',
+            'beige',
+            'darkGray',
+            'navy',
+            'ivory',
+            'brown',
+            'red',
+            'orange',
+            'yellow',
+            'green',
+          ],
+        },
+        { align: [] },
+      ],
+    ],
   };
 
   return (
