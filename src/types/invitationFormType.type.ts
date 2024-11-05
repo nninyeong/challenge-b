@@ -103,7 +103,18 @@ export type OrderItem = {
 };
 
 export type Mood = 'classic' | 'romantic' | 'modern' | 'floral' | 'rustic' | 'simple' | 'none';
-export type Preset = 'preset1' | 'preset2' | 'preset3';
+
+export type Preset = {
+  name: 'preset1' | 'preset2' | 'preset3';
+  label: string;
+  image: string | null;
+};
+
+export type PresetDetail = {
+  bgColor: ColorType;
+  mainView: DecorateImageType;
+  stickers: StickerType[];
+};
 
 export type InvitationFormType = {
   gallery: GalleryType;
