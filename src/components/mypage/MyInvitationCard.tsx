@@ -33,7 +33,7 @@ const MyInvitationCard = () => {
   if (error) return <div>error</div>;
 
   const invitationCard = invitationCards?.[0];
-  const invitationUrl = `http://localhost:3000/card/${invitationCard?.id}`;
+  const invitationUrl = `${window.location.origin}/card/${invitationCard?.id}`;
   const handleCopyLink = async () => {
     try {
       if (navigator.share) {
