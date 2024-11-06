@@ -3,7 +3,7 @@
 import { GuestBookEntry } from '@/types/guestBookEntry.types';
 import DeleteGuestBookAccordion from '@/components/guestbook/DeleteGuestBookAccordion';
 import useGuestBookDeleteButton from '@/hooks/guestbook/useGuestBookDeleteButton';
-import convertToUserTimezone from '@/utils/dayToKst';
+import convertToUserTimezone from '@/utils/date/dayToKst';
 
 const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry; invitationId: string }) => {
   const { isAccordionOpen, toggleAccordion } = useGuestBookDeleteButton();
