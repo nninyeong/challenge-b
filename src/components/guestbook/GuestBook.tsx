@@ -26,23 +26,37 @@ const GuestBook = () => {
       <div className='text-gray-600 text-center mb-6 tracking-[4px]'>GUEST BOOK</div>
       <CreateGuestBook invitationId={invitationId} />
 
-      <div>
-        {guestBooks.map((guestBook) => (
-          <GuestBookCard
-            key={guestBook.guestbook_id}
-            guestBook={guestBook}
-            invitationId={invitationId}
-          />
-        ))}
-      </div>
+      {guestBooks.length === 0 ? (
+        <div className='text-black w-full px-4 mb-4'>
+          <div className='bg-gray-50 rounded-xl px-4 h-[96px] flex flex-col justify-center items-center gap-[3px]'>
+            <img
+              src='/assets/images/empty-guestbook.svg'
+              alt=''
+            />
+            <span className='text-gray-700 text-[14px]'>아직 남긴 방명록이 없어요.</span>
+          </div>
+        </div>
+      ) : (
+        <div>
+          {guestBooks.map((guestBook) => (
+            <GuestBookCard
+              key={guestBook.guestbook_id}
+              guestBook={guestBook}
+              invitationId={invitationId}
+            />
+          ))}
+        </div>
+      )}
 
-      <div className='w-full px-4 mt-6 mb-6'>
-        <GuestBookPagination
-          page={page}
-          setPage={setPage}
-          totalPages={totalPages}
-        />
-      </div>
+      {totalPages > 0 && (
+        <div className='w-full px-4 mt-6 mb-6'>
+          <GuestBookPagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
+          />
+        </div>
+      )}
     </div>
   );
 };

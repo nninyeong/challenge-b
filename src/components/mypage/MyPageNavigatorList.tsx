@@ -6,7 +6,6 @@ import { Notify } from 'notiflix';
 import { FaChevronRight, FaChevronDown } from 'react-icons/fa';
 import ReviewCard from '../review/ReviewCard';
 import { useDownloadCsv } from '@/hooks/queries/mypage/useDownloadCsv';
-import { useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 
 const MENU_LISTS = [
   { name: '결제내역' },
@@ -18,8 +17,6 @@ const MENU_LISTS = [
 type MenuNameType = (typeof MENU_LISTS)[number]['name'];
 
 const MyPageNavigatorList = () => {
-  const { data: invitationCards } = useGetAllinvitationCard();
-  const invitationCardId = invitationCards?.[0]?.id;
   const { downloadCsv } = useDownloadCsv();
   const { isReviewBottomSheetOpen, setIsReviewBottomSheetOpen } = useReviewBottomSheetContext((state) => state);
   const { data: myReview, isLoading, error } = useGetReviewOnlyUser();
@@ -28,10 +25,10 @@ const MyPageNavigatorList = () => {
   const handleMyReviewNavigator = (name: MenuNameType) => {
     if (name === '나의 후기관리') {
       setIsReviewBottomSheetOpen(!isReviewBottomSheetOpen);
-    } else if (name === '방문객 명단 다운로드' && invitationCardId) {
+    } else if (name === '방문객 명단 다운로드') {
       downloadCsv();
     } else {
-      Notify.failure('준비중인 서비스입니다.');
+      Notify.info('준비중인 서비스입니다.');
     }
   };
 
@@ -57,7 +54,11 @@ const MyPageNavigatorList = () => {
         <div className='mt-4'>
           {isLoading && <p>로딩 중...</p>}
           {error && <p className='text-red-500'>오류가 발생했습니다: {error.message}</p>}
-          {myReview ? <ReviewCard reviews={reviewsData} /> : <p>작성한 후기가 없습니다.</p>}
+          {myReview ? (
+            <ReviewCard reviews={reviewsData} />
+          ) : (
+            <p className='w-full text-center'>작성한 후기가 없습니다.</p>
+          )}
         </div>
       )}
     </nav>

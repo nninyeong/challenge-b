@@ -14,9 +14,10 @@ import {
   WeddingInfoType,
   GalleryType,
   OrderItem,
+  InvitationFetchType,
 } from '@/types/invitationFormType.type';
 
-export const convertToCamelCase = (invitation: Invitation): InvitationFormType => {
+export const convertToCamelCase = (invitation: Invitation): InvitationFetchType => {
   return {
     gallery: invitation.gallery as GalleryType,
     type: invitation.type as 'scroll' | 'slide',
@@ -37,6 +38,7 @@ export const convertToCamelCase = (invitation: Invitation): InvitationFormType =
     mainPhotoInfo: invitation.main_photo_info as MainPhotoType,
     isPrivate: invitation.isPrivate as boolean,
     renderOrder: invitation.render_order as OrderItem[],
+    userId: invitation.user_id as string,
   };
 };
 

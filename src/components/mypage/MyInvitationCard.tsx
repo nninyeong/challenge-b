@@ -33,21 +33,25 @@ const MyInvitationCard = () => {
   if (error) return <div>error</div>;
 
   const invitationCard = invitationCards?.[0];
-
+  const invitationUrl = `http://localhost:3000/card/${invitationCard?.id}`;
   const handleCopyLink = async () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: `{${invitationCard?.greeting_message?.title} }` || '우리 결혼합니다.',
-          text: `{${invitationCard?.greeting_message?.content} }`,
-          url: `{http://localhost:3000/card/${invitationCard?.id}}`,
-        })
-        .then(() => Notify.success('링크복사가 완료되었습니다.'))
-        .catch(() => Notify.failure('취소되었습니다.'));
-    } else {
-      Notify.success('공유하기가 지원되지 않는 환경입니다.');
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: invitationCard?.greeting_message?.title || '우리 결혼합니다.',
+          url: invitationUrl,
+        });
+        Notify.success('링크복사가 완료되었습니다.');
+      } else {
+        await navigator.clipboard.writeText(invitationUrl);
+        Notify.success('링크가 클립보드에 복사되었습니다.');
+      }
+    } catch (error) {
+      Notify.failure('취소되었습니다.');
+      console.log(error);
     }
   };
+
   return (
     <div className='w-full h-[152px] flex mx-auto rounded-xl mt-8 shadow-sm shadow-gray-400 p-4'>
       {invitationCard ? (
@@ -79,8 +83,8 @@ const MyInvitationCard = () => {
               </div>
             </div>
             <IoClose
-              color='white'
-              size='24'
+              color='gray'
+              size='20'
               className='cursor-pointer'
               onClick={() => handleDeleteCards(invitationCard.id)}
             />
