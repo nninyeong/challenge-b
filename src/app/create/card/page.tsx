@@ -17,7 +17,7 @@ import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { useRouter } from 'next/navigation';
-import { VIEW_HEIGHT } from '@/constants/viewHeight';
+import { MOBILE_VIEW_HEIGHT } from '@/constants/screenSize';
 import Button from '@/components/ui/Button';
 import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
@@ -257,7 +257,7 @@ const CreateCardPage = () => {
             orderList.map((e, index) => {
               return (
                 <div
-                  style={{ minHeight: VIEW_HEIGHT }}
+                  style={{ minHeight: MOBILE_VIEW_HEIGHT }}
                   key={e.order}
                   ref={(el) => {
                     refs.current[index] = el;
