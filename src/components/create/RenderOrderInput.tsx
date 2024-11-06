@@ -1,4 +1,3 @@
-
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import { memo, useCallback } from 'react';
@@ -39,7 +38,7 @@ const RenderOrderInput = () => {
   );
 
   return (
-    <div className='mb-[20px]'>
+    <div className='mb-[15px] h-[204px]'>
       <RenderOrderCustomPreview />
       <div>
         {sortedRenderOrder.map((option) => {

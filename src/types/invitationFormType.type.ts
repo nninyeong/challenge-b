@@ -94,9 +94,7 @@ export type OrderItem = {
     | 'MAIN_PHOTO'
     | 'GREETING'
     | 'PERSONAL_INFO'
-    | 'ACCOUNT'
     | 'WEDDING_INFO'
-    | 'NAVIGATION_DETAILS'
     | 'GUEST_INFO'
     | 'GALLERY'
     | 'ONLY_FOR_CREATE';
