@@ -8,9 +8,6 @@ const PreviewShowAttendanceModal = () => {
   const { invitationId } = useInvitationIdByPathname();
   const { showModal, toggleModal } = useAttendanceContext();
 
-  console.log('showModal:', showModal);
-  console.log('invitationId:', invitationId);
-
   return (
     <>
       {showModal && (
