@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
@@ -43,7 +43,14 @@ const CreateCardPage = () => {
   const [nameIndex, setNameIndex] = useState<number>(0);
   const [inputIndex, setInputIndex] = useState<number>(0);
   const [isRendered, setIsRendered] = useState<boolean>(false);
-  const orderList = INITIAL_ORDER(methods);
+  const [orderList, setOrderList] = useState(() => INITIAL_ORDER(methods));
+  const renderOrderList = useWatch({ control: methods.control, name: 'renderOrder' });
+  const sortedOrderListWithRenderOrder = orderList.sort((a, b) => {
+    const orderA = renderOrderList.find((item) => item.typeOnSharedCard === a.typeOnSharedCard)?.order;
+    const orderB = renderOrderList.find((item) => item.typeOnSharedCard === b.typeOnSharedCard)?.order;
+
+    return (orderA ?? a.order) - (orderB ?? b.order);
+  });
 
   const refs = useRef<null[] | HTMLDivElement[]>([]);
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
@@ -160,6 +167,16 @@ const CreateCardPage = () => {
     }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
   };
 
+  useEffect(() => {
+    setOrderList(
+      sortedOrderListWithRenderOrder.map((e, index) => {
+        return {
+          ...e,
+          order: index,
+        };
+      }),
+    );
+  }, [renderOrderList]);
   useEffect(() => {
     setIsRendered(true);
   }, []);
