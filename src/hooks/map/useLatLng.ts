@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix';
 import { useEffect, useState } from 'react';
 
 const useLatLng = (address: string) => {
@@ -13,7 +14,7 @@ const useLatLng = (address: string) => {
           const result = res[0];
           setCoords({ lat: parseFloat(result.y), lng: parseFloat(result.x) });
         } else {
-          alert('유효한 주소가 아닙니다. 다시 확인해주세요.');
+          Notify.failure('유효한 주소가 아닙니다. 다시 확인해주세요.');
           setCoords({ lat: 33.450701, lng: 126.570667 });
         }
       });

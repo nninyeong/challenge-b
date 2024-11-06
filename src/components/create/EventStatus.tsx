@@ -13,7 +13,7 @@ type Props = {
 const EventStatus = (props: Props) => {
   return (
     <div
-      className={`py-3 px-4 ${props.dDayCount ? 'flex justify-between' : 'text-center'} border border-gray-200 bg-white rounded-xl text-primary300`}
+      className={`w-full flex justify-between text-primary300`}
     >
       <div className='flex flex-col gap-2'>
         <div className='flex gap-2 font-bold'>

@@ -2,10 +2,11 @@
 import { handleGoogleSignIn, handleKakaoSignIn } from '@/utils/supabase/signIn';
 import AuthForm from '@/components/auth/AuthForm';
 import Link from 'next/link';
+import { Notify } from 'notiflix';
 
 const SignInPage = () => {
   const alertComingSoon = () => {
-    alert('준비중인 서비스입니다.');
+    Notify.info('준비중인 서비스입니다.');
   };
 
   return (
