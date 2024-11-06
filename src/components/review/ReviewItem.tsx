@@ -8,6 +8,7 @@ import { User } from '@/types/users.types';
 import { Notify } from 'notiflix';
 import { usePathname } from 'next/navigation';
 import { useDeleteReviewMutation } from '@/hooks/queries/review/useDeleteReviewMutation';
+import { MdOutlineImageNotSupported } from 'react-icons/md';
 const ReviewItem = ({
   review,
   user,
@@ -21,7 +22,6 @@ const ReviewItem = ({
   onToggle: () => void;
   onNavigate: () => void;
 }) => {
-  const firstImage = review.image_url?.[0] || '/assets/images/defaultImg.png';
   const pathname = usePathname();
   const { mutate: deleteMyReview } = useDeleteReviewMutation();
   const handleNotYetButton = () => {
@@ -35,37 +35,55 @@ const ReviewItem = ({
     <div className='flex flex-col justify-between min-h-[159px] items-center border-b border-gray-50 border-solid mb-4 pb-[15px]'>
       <div className='w-full flex cursor-pointer relative'>
         <div className='w-[80px] h-[80px] flex-shrink-0 relative'>
-          <Image
-            src={firstImage}
-            alt='후기 이미지'
-            fill
-            priority
-            objectFit='cover'
-            className='rounded-[12px] h-full'
-            onClick={firstImage ? onNavigate : undefined}
-            sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
-          />
-          {review.image_url.length > 1 && (
-            <div className='absolute right-1 bottom-1 rounded'>
-              <img
-                src='/assets/images/icons/layers-1.svg'
-                alt='more images icon'
+          {review.image_url && review.image_url.length > 0 ? (
+            <Image
+              src={review.image_url?.[0]}
+              alt='후기 이미지'
+              fill
+              priority
+              objectFit='cover'
+              className='rounded-[12px] h-full'
+              onClick={review.image_url ? onNavigate : undefined}
+              sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
+            />
+          ) : (
+            <div className='w-full h-full rounded-xl border border-solid border-gray-300 p-2'>
+              <MdOutlineImageNotSupported
+                size={20}
+                color='gray'
               />
             </div>
           )}
+          <div className='absolute right-1 bottom-1 rounded  '>
+            <img
+              src='/assets/images/icons/layers-1.svg'
+              alt='more images icon'
+            />
+          </div>
         </div>
 
         <div
           className={`w-full flex flex-col whitespace-pre-wrap break-words ${isExpanded ? 'h-auto' : 'h-[80%] overflow-hidden'}`}
         >
           <div className='flex ml-[16px] items-center text-[12px]'>
-            <Image
-              src={user.user_metadata.avatar_url || '/images/defaultImg.png'}
-              alt='profile'
-              width={30}
-              height={30}
-              className='rounded-full h-[30px]'
-            />
+            {user.user_metadata.avatar_url && user.user_metadata.avatar_url.length > 0 ? (
+              <Image
+                src={user.user_metadata.avatar_url || '/assets/images/defaultImg.png'}
+                alt='profile'
+                width={30}
+                height={30}
+                className='rounded-full h-[30px]'
+              />
+            ) : (
+              <Image
+                src='/assets/images/defaultImg.png'
+                alt='profile'
+                width={30}
+                height={30}
+                className='rounded-full h-[30px]'
+              />
+            )}
+
             <h3 className='ml-[8px] text-gray-500'>{maskIdLastFour(user.user_metadata.email)}</h3>
             <p className='text-gray-500'> | {formatDate(review.created_at)}</p>
           </div>
