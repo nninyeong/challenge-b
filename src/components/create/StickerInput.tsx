@@ -53,7 +53,7 @@ const StickerInput = () => {
 
   return (
     <div>
-      <div className='flex mb-[40px] gap-[8px] flex-wrap'>
+      <div className='flex mb-[35px] gap-[8px] flex-wrap'>
         {MOOD_LIST.map((mood) => (
           <StickerCategoryButton
             key={`${mood.category}-button`}
@@ -66,7 +66,7 @@ const StickerInput = () => {
         ))}
       </div>
       {stickerByCategory && stickerByCategory[selectedCategory] ? (
-        <div className='grid grid-cols-4 gap-[8px] h-[150px] overflow-auto'>{renderSticker()}</div>
+        <div className='grid grid-cols-4 gap-[9px] h-[150px] overflow-auto'>{renderSticker()}</div>
       ) : null}
     </div>
   );
