@@ -54,12 +54,14 @@ const ReviewItem = ({
               />
             </div>
           )}
-          <div className='absolute right-1 bottom-1 rounded  '>
-            <img
-              src='/assets/images/icons/layers-1.svg'
-              alt='more images icon'
-            />
-          </div>
+          {review.image_url.length > 1 && (
+            <div className='absolute right-1 bottom-1 rounded  '>
+              <img
+                src='/assets/images/icons/layers-1.svg'
+                alt='more images icon'
+              />
+            </div>
+          )}
         </div>
 
         <div
