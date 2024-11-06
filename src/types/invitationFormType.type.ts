@@ -115,7 +115,7 @@ export type PresetDetail = {
   stickers: StickerType[];
 };
 
-export type InvitationFormType = {
+export type InvitationFetchType = {
   gallery: GalleryType;
   type: 'scroll' | 'slide';
   moodPreset: MoodPresetType;
@@ -135,7 +135,10 @@ export type InvitationFormType = {
   mainPhotoInfo: MainPhotoType;
   isPrivate: boolean;
   renderOrder: OrderItem[];
+  userId: string;
 };
+
+export type InvitationFormType = Omit<InvitationFetchType, 'userId'>;
 
 export type InvitationCard = {
   main_photo_info: {
