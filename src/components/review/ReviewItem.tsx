@@ -25,7 +25,7 @@ const ReviewItem = ({
   const pathname = usePathname();
   const { mutate: deleteMyReview } = useDeleteReviewMutation();
   const handleNotYetButton = () => {
-    Notify.info('아직 준비중인 기능입니다.');
+    Notify.info('준비중인 서비스입니다.');
   };
   const handleDeleteMyReview = () => {
     deleteMyReview(user.id);

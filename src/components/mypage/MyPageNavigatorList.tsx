@@ -31,7 +31,7 @@ const MyPageNavigatorList = () => {
     } else if (name === '방문객 명단 다운로드' && invitationCardId) {
       downloadCsv();
     } else {
-      Notify.failure('준비중인 서비스입니다.');
+      Notify.info('준비중인 서비스입니다.');
     }
   };
 

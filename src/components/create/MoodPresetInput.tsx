@@ -40,7 +40,7 @@ const MoodPresetInput = () => {
     if (selectedPresetDetails) {
       setFormValue(selectedPresetDetails);
     } else {
-      Notify.success('해당 프리셋은 준비 중입니다.');
+      Notify.info('준비중인 서비스입니다.');
       setFormValue(null);
     }
   };

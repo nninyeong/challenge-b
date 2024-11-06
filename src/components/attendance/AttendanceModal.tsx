@@ -19,7 +19,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
 
   return (
     <div
-      className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/60 z-20'
+      className='fixed top-0 bottom-0 left-0 right-0 w-full h-full px-[16px] bg-[#404040]/50 flex justify-center items-center z-50'
       onClick={onClick}
     >
       <div

@@ -17,7 +17,7 @@ const ReviewWriteBottomSheet = () => {
     >
       <button
         onClick={() => setIsReviewBottomSheetOpen(false)}
-        className='fixed top-[16px] right-[16px]'
+        className='absolute top-[16px] right-[16px]'
       >
         <img
           src='/assets/images/icons/x-03.svg'

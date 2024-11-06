@@ -38,8 +38,7 @@ const MyInvitationCard = () => {
     if (navigator.share) {
       navigator
         .share({
-          title: `{${invitationCard?.greeting_message?.title} }` || '우리 결혼합니다.',
-          text: `{${invitationCard?.greeting_message?.content} }`,
+          title: invitationCard?.greeting_message?.title || '우리 결혼합니다.',
           url: `{http://localhost:3000/card/${invitationCard?.id}}`,
         })
         .then(() => Notify.success('링크복사가 완료되었습니다.'))

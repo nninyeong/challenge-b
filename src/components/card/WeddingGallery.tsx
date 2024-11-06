@@ -34,11 +34,11 @@ const WeddingGallery = ({ gallery }: GalleryPropType) => {
 
   return (
     <div className='mb-[56px] h-fit'>
-      <p className='text-center mb-8 text-[16px] text-gray-600'>GALLERY</p>
+      <p className='text-center mb-8 text-[16px] text-gray-600 tracking-wider'>GALLERY</p>
 
-      <div className={`${gridClass} gap-3.5 p-4`}>
-        {images.length > 0 ? (
-          images.map((image, index) => (
+      {images.length > 0 ? (
+        <div className={`${gridClass} gap-3.5 p-4`}>
+          {images.map((image, index) => (
             <GalleryImage
               key={image}
               image={image}
@@ -48,11 +48,11 @@ const WeddingGallery = ({ gallery }: GalleryPropType) => {
               ratio={ratio}
               imgStyleClass={imgStyleClass}
             />
-          ))
-        ) : (
-          <div>업로드 된 사진이 없습니다.</div>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className='w-full text-center'>업로드 된 사진이 없습니다.</div>
+      )}
     </div>
   );
 };
