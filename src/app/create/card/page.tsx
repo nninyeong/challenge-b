@@ -276,7 +276,7 @@ const CreateCardPage = () => {
           transition={{
             duration: 0.4,
           }}
-          className={`fixed bottom-0 left-0 right-0 px-[16px] z-10 mb-[8px] w-fit h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex])}]`}
+          className={`fixed bottom-0 px-[16px] z-10 mb-[8px] w-fit h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex])}]`}
         >
           <form
             className={`flex flex-col bg-white shadow-xl px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full`}
