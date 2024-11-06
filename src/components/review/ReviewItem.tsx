@@ -8,7 +8,7 @@ import { User } from '@/types/users.types';
 import { Notify } from 'notiflix';
 import { usePathname } from 'next/navigation';
 import { useDeleteReviewMutation } from '@/hooks/queries/review/useDeleteReviewMutation';
-import { MdOutlineImageNotSupported } from 'react-icons/md';
+
 const ReviewItem = ({
   review,
   user,
