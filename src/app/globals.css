@@ -9,9 +9,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ededed;
+    --foreground: #0a0a0a;
   }
+}
+
+.flex-col-center {
+  @apply flex flex-col justify-center items-center;
 }
 
 body {
@@ -49,32 +53,135 @@ body {
 
 @font-face {
   font-family: 'Main';
-  src: url('../../public/assets/fonts/SUIT-Medium.otf');
+  src: url('../../public/assets/fonts/SUIT-Variable.ttf');
 }
 
-@font-face{
-  font-family:"JejuGothic";
+@font-face {
+  font-family: 'JejuGothic';
   src: url('../../public/assets/fonts/JejuGothic.ttf');
 }
+
 .custom-quill-editor .ql-toolbar {
   display: flex;
-  justify-content: center;
+
   flex-wrap: nowrap;
   background: white;
   height: 30px;
   align-items: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .custom-quill-editor .ql-toolbar button,
 .custom-quill-editor .ql-toolbar .ql-picker {
-  height: 24px;
   width: 24px;
   font-size: 10px;
 }
 
+.custom-quill-editor .ql-container {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
 .custom-quill-editor .ql-editor {
   background: white;
-  height: 50px;
+  font-style: normal;
   font-size: 10px;
   color: black;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.quill-preview p {
+  text-align: left;
+}
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-right {
+  text-align: right;
+}
+
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.custom-checkbox:checked {
+  background-color: #ff6666;
+  border-color: #ff6666;
+  position: relative;
+}
+
+.custom-checkbox:checked::after {
+  content: '✔';
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.custom-radio {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+
+.custom-radio:checked {
+  background-color: white;
+  border: 2px solid #ff6666;
+}
+
+.custom-radio:checked::after {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: #ff6666;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+div#NotiflixNotifyWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+div#NotiflixNotifyWrap div {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 12px;
+  padding-left: 12px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.scrollbar-hidden {
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }

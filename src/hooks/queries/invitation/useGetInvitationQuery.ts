@@ -1,10 +1,9 @@
 'use client';
-import { createClient } from '@/utils/supabase/client';
+import browserClient from '@/utils/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '../queryKeys';
 
 const getExistingInvitation = async () => {
-  const browserClient = createClient();
   const { data: user } = await browserClient.auth.getUser();
 
   if (!user.user) {
@@ -17,7 +16,7 @@ const getExistingInvitation = async () => {
     console.error(error);
   }
 
-  return data;
+  return data || null;
 };
 
 export const useGetInvitationQuery = () => {

@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signInSchema, signUpSchema } from '@/lib/zod/authSchema';
 import InputForValidate from '@/components/auth/InputForValidate';
 import useAuthWithEmail from '@/hooks/auth/useAuthWithEmail';
+import Button from '@/components/ui/Button';
 
 const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
   const { emailSignUp, emailSignIn } = useAuthWithEmail();
@@ -35,14 +36,23 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
   };
 
   return (
-    <div>
+    <div className='w-full'>
       <form
         onSubmit={handleSubmit(handleAuthSubmit)}
-        className='flex flex-col gap-[24px] mt-[50px]'
+        className='flex flex-col mt-[40px] w-full'
       >
+        {mode === 'signup' && (
+          <InputForValidate
+            type='text'
+            placeholder='닉네임 최소 2글자'
+            validateFor='username'
+            register={register}
+            errorMessage={'username' in errors ? errors.username?.message : undefined}
+          />
+        )}
         <InputForValidate
           type='text'
-          placeholder='이메일'
+          placeholder='이메일 주소'
           validateFor='email'
           register={register}
           errorMessage={errors.email?.message}
@@ -58,26 +68,19 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
           <>
             <InputForValidate
               type='password'
-              placeholder='비밀번호 확인'
+              placeholder='비밀번호 확인 입력'
               validateFor='passwordCheck'
               register={register}
               errorMessage={'passwordCheck' in errors ? errors.passwordCheck?.message : undefined}
             />
-            <InputForValidate
-              type='text'
-              placeholder='이름'
-              validateFor='username'
-              register={register}
-              errorMessage={'username' in errors ? errors.username?.message : undefined}
-            />
           </>
         )}
-        <button
+        <Button
           type='submit'
-          className='w-full border rounded h-[56px]'
+          className='w-full h-[56px] rounded-[12px] text-[20px]'
         >
           {mode === 'signup' ? '회원가입' : '로그인'}
-        </button>
+        </Button>
       </form>
     </div>
   );

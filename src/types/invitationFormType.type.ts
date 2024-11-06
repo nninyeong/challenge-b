@@ -1,14 +1,18 @@
 import { AccountInfoType } from './accountType.type';
 
-type PersonalType = {
+export type ParentType = {
   name: string;
+  relation: string;
   phoneNumber: string;
-  fatherName: string;
-  fatherPhoneNumber: string;
-  isFatherDeceased: boolean;
-  motherName: string;
-  motherPhoneNumber: string;
-  isMotherDeceased: boolean;
+  isDeceased: boolean;
+};
+
+export type PersonalType = {
+  name: string;
+  relation: string;
+  phoneNumber: string;
+  father: ParentType;
+  mother: ParentType;
 };
 
 export type PersonalInfoType = {
@@ -41,7 +45,9 @@ export type NavigationDetailType = {
 };
 
 export type GalleryType = {
-  images: File[];
+  images: string[];
+  grid: number;
+  ratio: string;
 };
 
 export type ImageRatioType = {
@@ -67,13 +73,53 @@ export type StickerType = {
   url: string;
   posX: string;
   posY: string;
+  width: number;
+  height: number;
+  rotation: number;
+};
+
+export type DecorateImageType = {
+  name: string;
+  type: string;
+};
+
+export type MoodPresetType = {
+  mood: Mood;
+  preset: Preset;
+};
+
+export type OrderItem = {
+  order: number;
+  typeOnSharedCard:
+    | 'MAIN_PHOTO'
+    | 'GREETING'
+    | 'PERSONAL_INFO'
+    | 'WEDDING_INFO'
+    | 'GUEST_INFO'
+    | 'GALLERY'
+    | 'ONLY_FOR_CREATE';
+  labelForInput: string;
+};
+
+export type Mood = 'classic' | 'romantic' | 'modern' | 'floral' | 'rustic' | 'simple' | 'none';
+
+export type Preset = {
+  name: 'preset1' | 'preset2' | 'preset3';
+  label: string;
+  image: string | null;
+};
+
+export type PresetDetail = {
+  bgColor: ColorType;
+  mainView: DecorateImageType;
+  stickers: StickerType[];
 };
 
 export type InvitationFormType = {
   gallery: GalleryType;
   type: 'scroll' | 'slide';
-  mood: string;
-  mainView: string;
+  moodPreset: MoodPresetType;
+  mainView: DecorateImageType;
   bgColor: ColorType;
   stickers: StickerType[];
   imgRatio: ImageRatioType;
@@ -87,4 +133,18 @@ export type InvitationFormType = {
   attendance: boolean;
   dDay: boolean;
   mainPhotoInfo: MainPhotoType;
+  isPrivate: boolean;
+  renderOrder: OrderItem[];
+};
+
+export type InvitationCard = {
+  main_photo_info: {
+    imageUrl: string;
+  };
+  isPrivate: boolean;
+  id: string;
+  greeting_message: {
+    title: string;
+    content: string;
+  };
 };

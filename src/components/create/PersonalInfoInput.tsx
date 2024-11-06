@@ -1,144 +1,53 @@
 'use client';
-import { useFormContext } from 'react-hook-form';
+
+import { useState } from 'react';
+import { PersonalInfo } from './PersonalInfo';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 const PersonalInfoInput = () => {
-  const { register } = useFormContext();
+  const [personalInfoType, setPersonalInfoType] = useState<'groom' | 'bride'>('groom');
+  const { control, setValue } = useFormContext();
+
+  const groomInfo = useWatch({ control, name: 'personalInfo.groom' });
+  const brideInfo = useWatch({ control, name: 'personalInfo.bride' });
+
+  const handleButtonClick = (type: 'groom' | 'bride') => {
+    setPersonalInfoType(type);
+    if (type === 'groom') {
+      setValue('personalInfo.groom', groomInfo);
+    } else {
+      setValue('personalInfo.bride', brideInfo);
+    }
+  };
 
   return (
-    <div className='flex flex-col gap-5 items-center justify-center w-full mt-2'>
-      <div className='flex flex-col gap-3'>
-        <div className='flex items-center gap-1 text-[14px] font-medium'>
-          <label className='w-[50px]'>신랑</label>
-          <input
-            type='text'
-            placeholder='이름'
-            {...register('personalInfo.groom.name')}
-            className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-          <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>아들</p>
-          <input
-            type='text'
-            placeholder='- 없이 입력'
-            {...register('personalInfo.groom.phonNumber')}
-            className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-        </div>
-
-        <div className='flex items-center gap-1 text-[14px] font-medium'>
-          <label className='w-[50px]'>아버지</label>
-          <input
-            type='text'
-            placeholder='성함'
-            {...register('personalInfo.groom.fatherName')}
-            className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-          <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>
-            아버지
-          </p>
-          <input
-            type='text'
-            placeholder='01012345678'
-            {...register('personalInfo.groom.fatherPhoneNumber')}
-            className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-          <input
-            type='checkbox'
-            {...register('personalInfo.groom.isFatherDeceased')}
-          />
-          <label>故</label>
-        </div>
-
-        <div className='flex items-center gap-1 text-[14px] font-medium'>
-          <label className='w-[50px]'>어머니</label>
-          <input
-            type='text'
-            placeholder='성함'
-            {...register('personalInfo.groom.motherName')}
-            className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-          <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>
-            어머니
-          </p>
-          <input
-            type='text'
-            placeholder='01012345678'
-            {...register('personalInfo.groom.motherPhoneNumber')}
-            className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-          <input
-            type='checkbox'
-            {...register('personalInfo.groom.isMotherDeceased')}
-          />
-          <label>故</label>
-        </div>
+    <div className='flex flex-col gap-5 items-center justify-center w-full mt-[8px]'>
+      <div className='relative w-[221px] h-[31px] bg-gray-100 rounded-full p-1 flex items-center cursor-pointer'>
+        <div
+          className={`absolute top-0 left-0 w-[46%] h-full bg-[#FF6666] rounded-full transition-transform duration-300 ease-in-out ${
+            personalInfoType === 'bride' ? 'translate-x-[117%]' : ''
+          }`}
+        ></div>
+        <button
+          type='button'
+          onClick={() => handleButtonClick('groom')}
+          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out ${
+            personalInfoType === 'groom' ? 'text-white' : 'text-[#8c8c8c]'
+          } mr-6`}
+        >
+          신랑측 정보
+        </button>
+        <button
+          type='button'
+          onClick={() => handleButtonClick('bride')}
+          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out ${
+            personalInfoType === 'bride' ? 'text-white' : 'text-[#8c8c8c]'
+          }`}
+        >
+          신부측 정보
+        </button>
       </div>
-
-      <div className='flex flex-col gap-3'>
-        <div className='flex items-center gap-1 text-[14px] font-medium'>
-          <label className='w-[50px]'>신부</label>
-          <input
-            type='text'
-            placeholder='이름'
-            {...register('personalInfo.bride.name')}
-            className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-          <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>딸</p>
-          <input
-            type='text'
-            placeholder='01012345678'
-            {...register('personalInfo.bride.phoneNumber')}
-            className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-        </div>
-
-        <div className='flex items-center gap-1 text-[14px] font-medium'>
-          <label className='w-[50px]'>아버지</label>
-          <input
-            type='text'
-            placeholder='성함'
-            {...register('personalInfo.bride.fatherName')}
-            className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-          <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>
-            아버지
-          </p>
-          <input
-            type='text'
-            placeholder='01012345678'
-            {...register('personalInfo.bride.fatherPhoneNumber')}
-            className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-          <input
-            type='checkbox'
-            {...register('personalInfo.bride.isFatherDeceased')}
-          />
-          <label>故</label>
-        </div>
-
-        <div className='flex items-center gap-1 text-[14px] font-medium'>
-          <label className='w-[50px]'>어머니</label>
-          <input
-            type='text'
-            placeholder='성함'
-            {...register('personalInfo.bride.motherName')}
-            className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-          <p className='flex items-center h-[32px] w-[48px] border text-[12px] rounded-[8px] bg-white pl-[5px]'>
-            어머니
-          </p>
-          <input
-            type='text'
-            placeholder='01012345678'
-            {...register('personalInfo.bride.motherPhoneNumber')}
-            className='h-[32px] w-[92px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
-          />
-          <input
-            type='checkbox'
-            {...register('personalInfo.bride.isMotherDeceased')}
-          />
-          <label>故</label>
-        </div>
-      </div>
+      <PersonalInfo type={personalInfoType} />
     </div>
   );
 };

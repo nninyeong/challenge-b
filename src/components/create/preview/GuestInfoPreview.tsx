@@ -1,36 +1,38 @@
 'use client';
 
-import GuestBook from '@/components/guestbook/GuestBook';
 import { Control, useWatch } from 'react-hook-form';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import EventStatus from '../EventStatus';
+import CreateGuestInfo from '@/components/create/CreateGuestInfo';
 
 const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> }) => {
-  const attendanceButton = useWatch({
+  const attendance = useWatch({
     control,
     name: 'attendance',
   });
-  const guestBookButton = useWatch({
+  const guestbook = useWatch({
     control,
     name: 'guestbook',
   });
-  const dDayCount = useWatch({
+  const dDay = useWatch({
     control,
     name: 'dDay',
   });
-  const weddingInfoDate = useWatch({
+  const weddingInfo = useWatch({
     control,
     name: 'weddingInfo',
   });
+  const mainPhotoInfo = useWatch({
+    control,
+    name: "mainPhotoInfo"
+  })
   return (
-    <>
-      {guestBookButton && <GuestBook />}
-      <EventStatus
-        attendanceButton={attendanceButton}
-        dDayCount={dDayCount}
-        weddingInfoDate={weddingInfoDate.date}
-      />
-    </>
+    <CreateGuestInfo
+      attendance={attendance}
+      guestbook={guestbook}
+      dDay={dDay}
+      weddingInfo={weddingInfo}
+      mainPhotoInfo={mainPhotoInfo}
+    />
   );
 };
 

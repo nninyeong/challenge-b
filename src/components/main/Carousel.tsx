@@ -1,50 +1,34 @@
 'use client';
 
-import { createClient } from '@/utils/supabase/client';
-import { useQuery } from '@tanstack/react-query';
+import { useAuthUserQuery } from '@/hooks/queries/review/useGetReview';
+import { useGetReviewCarouselQuery } from '@/hooks/queries/review/useGetReviewCarousel';
+import { formatDate } from '@/utils/formatDate';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+
+const MAX_CONTENT_LENGTH = 60;
 
 const Carousel = () => {
-  const browserClient = createClient();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { data: reviewsData = [], isLoading } = useGetReviewCarouselQuery();
+  const { data: users } = useAuthUserQuery();
 
-  const getReviews = async () => {
-    const response = await browserClient
-      .from('reviews')
-      .select('*')
-      .filter('image_url', 'neq', '[]')
-      .order('created_at', { ascending: false })
-      .limit(8);
-
-    if (response.error) {
-      console.error(response.error);
-    }
-
-    if (response.data === null) {
-      return [];
-    }
-
-    return response.data;
-  };
-
-  const { data: reviewsData = [], isLoading } = useQuery({
-    queryKey: ['reviews'],
-    queryFn: getReviews,
-  });
-
-  const extendedReviewArr = [...reviewsData, ...reviewsData, ...reviewsData];
+  const extendedReviewArr = useMemo(() => {
+    return isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData, reviewsData[0]];
+  }, [isLoading, reviewsData]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % extendedReviewArr.length);
-    }, 3000);
+    if (extendedReviewArr.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % extendedReviewArr.length);
+      }, 3000);
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, [extendedReviewArr.length]);
 
   useEffect(() => {
-    if (currentIndex === extendedReviewArr.length - 16) {
+    if (extendedReviewArr.length > 0 && currentIndex === extendedReviewArr.length - 17) {
       const timeout = setTimeout(() => {
         setCurrentIndex(0);
       }, 500);
@@ -60,23 +44,31 @@ const Carousel = () => {
     };
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  const sliceContent = (content: string) => {
+    return content.slice(0, MAX_CONTENT_LENGTH) + (content.length > MAX_CONTENT_LENGTH ? '...' : '');
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className='overflow-hidden w-full'>
+    <div className='overflow-hidden w-full py-[10px]'>
       <div
         className='flex justify-center'
         style={getCarouselStyle()}
       >
         {extendedReviewArr.map((review, index) => {
-          const imgUrls = review.image_url as string[] | null;
+          const imgUrls = review.image_url || [];
+          const user = users?.users.find((user) => user.id === review.user_id);
+          const avatarUrl = user?.user_metadata?.avatar_url || '/images/defaultImg.png';
           return (
             <div
               key={`${review.id}-${index}`}
               className='mx-[8px]'
             >
-              <div className='relative w-[216px] h-[222px] rounded-t-lg overflow-hidden'>
-                {imgUrls && imgUrls.length > 0 && (
+              <div className='relative w-[216px] h-[192px] rounded-t-2xl overflow-hidden shadow-md'>
+                {imgUrls.length > 0 && (
                   <Image
                     src={imgUrls[0]}
                     alt='리뷰 이미지'
@@ -85,10 +77,24 @@ const Carousel = () => {
                     priority
                   />
                 )}
+                <div className='absolute inset-0 bg-black opacity-50' />
               </div>
-              <div className='w-[216px] h-[104px] border-2 rounded-b-lg'>
-                <p>{review.user_name}</p>
-                <p>{review.content}</p>
+              <div className='w-[216px] h-[136px] rounded-b-2xl p-[16px] text-[12px] shadow-md'>
+                <div className='flex items-center gap-[6px] mb-[16px]'>
+                  <div className='relative w-[16px] h-[16px] rounded-full overflow-hidden'>
+                    <Image
+                      src={avatarUrl}
+                      alt='profile'
+                      layout='fill'
+                      objectFit='cover'
+                      priority
+                    />
+                  </div>
+                  <p className='text-gray-500'>
+                    {review.user_name} | {formatDate(review.created_at)}
+                  </p>
+                </div>
+                <p>{sliceContent(review.content)}</p>
               </div>
             </div>
           );

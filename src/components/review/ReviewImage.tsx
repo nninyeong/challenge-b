@@ -1,21 +1,13 @@
 'use client';
 
+import { useReviewImage } from '@/hooks/queries/review/useGetReview';
 import { Review } from '@/types/review.types';
-import { getAllImageReviews } from '@/utils/getReview';
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const ReviewImage = () => {
-  const {
-    data: allReviews,
-    isLoading,
-    error,
-  } = useQuery<Review[]>({
-    queryKey: ['allImageReviews'],
-    queryFn: getAllImageReviews,
-  });
+  const { data: allReviews, isLoading, error } = useReviewImage();
 
   const router = useRouter();
   const [displayedReviews, setDisplayedReviews] = useState<Review[]>([]);
@@ -58,7 +50,7 @@ const ReviewImage = () => {
   };
 
   return (
-    <div className='w-full grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-2 pt-2 pb-2 '>
+    <div className='w-full grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-[13px] mt-[20px] mb-[24px]'>
       {displayedReviews?.map((review, reviewIndex) => {
         const firstImage = review.image_url?.[0];
         const isLastImage = reviewIndex === displayedReviews.length - 1;
@@ -73,16 +65,16 @@ const ReviewImage = () => {
                 src={firstImage}
                 alt={`${reviewIndex + 1}`}
                 fill
-                style={{ objectFit: 'cover' }}
+                objectFit='cover'
                 sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
-                className='rounded'
+                className='rounded-[12px]'
                 priority
               />
             )}
             {isLastImage && (
               <button
                 onClick={handleOpenNewPage}
-                className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded'
+                className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-[12px]'
               >
                 더보기
               </button>

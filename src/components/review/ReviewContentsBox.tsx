@@ -5,12 +5,16 @@ type PropsType = {
   writer: string;
   content: string;
   created: string;
+  avatar_url: string | null;
 };
 const MAX_CONTENT_LENGTH = 50 as const;
-const ReviewContentsBox = ({ writer, content, created }: PropsType) => {
+const ReviewContentsBox = ({ writer, content, created, avatar_url }: PropsType) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
-  const convertedCreatedDate = new Date(created).toLocaleDateString('ko-KR').slice(0, -1);
+  const convertedCreatedDate = new Date(created)
+    .toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    .replace(/\.\s/g, '.')
+    .slice(0, -1);
 
   const toggleContent = () => {
     setIsExpanded((prev) => !prev);
@@ -24,19 +28,19 @@ const ReviewContentsBox = ({ writer, content, created }: PropsType) => {
     return review.slice(0, MAX_CONTENT_LENGTH) + (isContentLengthOverMaxLength ? '...' : '');
   };
   return (
-    <div className='w-full absolute bottom-0 left-0 p-6 text-white flex flex-col justify-center'>
-      <div className='flex justify-start items-center gap-3 text-sm'>
+    <div className='w-full absolute bottom-0 left-0 p-[16px] text-white flex flex-col justify-center'>
+      <div className='flex justify-start items-center text-[12px]'>
         <Image
-          src='/images/defaultImg.jpg'
+          src={avatar_url === null ? '/assets/images/defaultImg.png' : avatar_url}
           width={30}
           height={30}
           alt='default'
           className='rounded-full'
         />
-        <p>{writer}</p> | <span>{convertedCreatedDate}</span>
+        <p className='pl-[8px]'>{writer}</p> <p className='px-[4px]'>|</p> <span>{convertedCreatedDate}</span>
       </div>
-      <div className='flex flex-col'>
-        <p className='mt-5 break-words'>{sliceContent(content)}</p>
+      <div className='flex flex-col mt-[14px] mb-[8px]'>
+        <p className='break-words text-[12px]'>{sliceContent(content)}</p>
         {content.length > MAX_CONTENT_LENGTH && (
           <button
             onClick={toggleContent}

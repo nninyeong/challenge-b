@@ -1,222 +1,132 @@
 'use client';
-import AccountInput from '@/components/create/AccountInput';
-import GuestInfoInput from '@/components/create/GuestInfoInput';
-import GuestInfoPreview from '@/components/create/preview/GuestInfoPreview';
-import AccountPreView from '@/components/create/preview/AccountPreView';
+
 import { useEffect, useRef, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
-import WeddingInfoPreView from '@/components/create/preview/WeddingInfoPreView';
-import WeddingInfoInput from '@/components/create/WeddingInfoInput';
-import PersonalInfoPreview from '@/components/create/preview/PersonalInfoPreView';
-import PersonalInfoInput from '@/components/create/PersonalInfoInput';
-import { createClient } from '@/utils/supabase/client';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import MainPhotoPreView from '@/components/create/preview/MainPhotoPreView';
-import MainPhotoInput from '@/components/create/MainPhotoInput';
-import NavigationDetailsPreview from '@/components/create/preview/NavigationDetailsPreview';
-import NavigationDetailInput from '@/components/create/NavigationDetailInput';
-import MainViewInput from '@/components/create/MainViewInput';
 import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
 import { useUpdateInvitation } from '@/hooks/queries/invitation/useUpdateInvitation';
 import { useInsertInvitation } from '@/hooks/queries/invitation/useInsertInvitation';
-import { converToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
 import OnBoarding from '@/components/create/OnBoarding';
-
-const browserClient = createClient();
-
-const OBSERVER_OPTIONS = {
-  root: null,
-  rootMargin: '0px',
-  threshold: 0.9,
-};
+import browserClient from '@/utils/supabase/client';
+import { loadFormData } from '@/utils/form/loadFormData';
+import { FaSortDown, FaSortUp } from 'react-icons/fa';
+import useToggle from '@/utils/useToggle';
+import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
+import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
+import colorConverter from '@/utils/colorConverter';
+import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
+import { useRouter } from 'next/navigation';
+import { VIEW_HEIGHT } from '@/constants/viewHeight';
+import Button from '@/components/ui/Button';
+import { revalidateInvitation } from '@/utils/revalidateInvitation';
+import { Notify } from 'notiflix';
+import EventBus from '@/utils/EventBus';
+import { motion } from 'framer-motion';
+import createCardFormHeightMapper, { FOLDED_HEIGHT } from '@/utils/createCardFormHeightMapper';
 
 const DELAY_TIME: number = 300;
 
 const CreateCardPage = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const router = useRouter();
+
+  const methods = useForm<InvitationFormType>({
+    mode: 'onChange',
+    defaultValues: INVITATION_DEFAULT_VALUE,
+  });
+
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
-  const refs = [
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-    useRef<HTMLDivElement | null>(null),
-  ];
+  const [toggleInput, setToggleInput] = useToggle();
+  const [nameIndex, setNameIndex] = useState<number>(0);
+  const [inputIndex, setInputIndex] = useState<number>(0);
+  const [isRendered, setIsRendered] = useState<boolean>(false);
+  const [orderList, setOrderList] = useState(() => INITIAL_ORDER(methods));
+  const renderOrderList = useWatch({ control: methods.control, name: 'renderOrder' });
+  const sortedOrderListWithRenderOrder = orderList.sort((a, b) => {
+    const orderA = renderOrderList.find((item) => item.typeOnSharedCard === a.typeOnSharedCard)?.order;
+    const orderB = renderOrderList.find((item) => item.typeOnSharedCard === b.typeOnSharedCard)?.order;
 
-  const observers = useRef<IntersectionObserver[]>([]);
-  const isNavigating = useRef<boolean>(false);
+    return (orderA ?? a.order) - (orderB ?? b.order);
+  });
+
+  const refs = useRef<null[] | HTMLDivElement[]>([]);
+  const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
+    refs,
+    setCurrentStep,
+    setNameIndex,
+    setInputIndex,
+  );
+  const isLastInput = refs.current.length !== 0 && currentStep === refs.current.length - 1;
 
   const { data: existingInvitation } = useGetInvitationQuery();
   const { mutate: updateInvitation } = useUpdateInvitation();
   const { mutate: insertInvitation } = useInsertInvitation();
 
-  const methods = useForm<InvitationFormType>({
-    mode: 'onChange',
-    defaultValues: {
-      bgColor: { r: 255, g: 255, b: 255, a: 1, name: '흰색' },
-      personalInfo: {
-        bride: {
-          name: '',
-          phoneNumber: '',
-          fatherName: '',
-          fatherPhoneNumber: '',
-          isFatherDeceased: false,
-          motherName: '',
-          motherPhoneNumber: '',
-          isMotherDeceased: false,
-        },
-        groom: {
-          name: '',
-          phoneNumber: '',
-          fatherName: '',
-          fatherPhoneNumber: '',
-          isFatherDeceased: false,
-          motherName: '',
-          motherPhoneNumber: '',
-          isMotherDeceased: false,
-        },
-      },
-      account: {
-        title: '',
-        content: '',
-        bride: [
-          { bank: '', accountNumber: '', depositor: '' },
-          { bank: '', accountNumber: '', depositor: '' },
-          { bank: '', accountNumber: '', depositor: '' },
-        ],
-        groom: [
-          { bank: '', accountNumber: '', depositor: '' },
-          { bank: '', accountNumber: '', depositor: '' },
-          { bank: '', accountNumber: '', depositor: '' },
-        ],
-      },
-      guestbook: false,
-      attendance: false,
-      weddingInfo: {
-        date: '',
-        time: { hour: '', minute: '' },
-        weddingHallAddress: '',
-        weddingHallName: '',
-        weddingHallContact: '',
-      },
-      mainPhotoInfo: {
-        leftName: '',
-        rightName: '',
-        icon: '',
-        introduceContent: '',
-        imageUrl: '',
-        fontName: '',
-      },
-      navigationDetail: {
-        map: false,
-        navigationButton: false,
-        subway: '',
-        bus: '',
-      },
-      gallery: { images: [] },
-      type: 'scroll',
-      mood: '',
-      stickers: [],
-      imgRatio: {},
-      mainText: '',
-      greetingMessage: {},
-      dDay: false,
-    },
-  });
-
   const { reset } = methods;
-
-  useEffect(() => {
-    const loadFormData = async () => {
-      const { data: user } = await browserClient.auth.getUser();
-      const localData = localStorage.getItem('invitationFormData');
-
-      if (!user.user) {
-        if (localData) {
-          reset(JSON.parse(localData));
-        } else {
-          reset();
-        }
-      } else {
-        if (existingInvitation) {
-          const convertedInvitation = converToCamelCase(existingInvitation);
-          reset(convertedInvitation);
-        } else {
-          if (localData) {
-            reset(JSON.parse(localData));
-          } else {
-            reset();
-          }
-        }
-      }
-    };
-
-    loadFormData();
-  }, [existingInvitation, reset]);
 
   const onSubmit = async (invitationData: InvitationFormType) => {
     const { data: user } = await browserClient.auth.getUser();
 
     if (!user.user) {
-      localStorage.setItem('invitationFormData', JSON.stringify(invitationData));
-      alert('생성을 원하시면 로그인 해주세요!');
+      sessionStorage.setItem('invitationFormData', JSON.stringify(invitationData));
+      Notify.success('생성을 원하시면 로그인 해주세요!');
+      router.push('/signin');
       return;
     }
 
-    if (existingInvitation) {
-      updateInvitation(invitationData);
-    } else {
+    Notify.success('청첩장 생성을 시작합니다.');
+    await EventBus.publish('invitationSaved', null);
+
+    if (existingInvitation === null) {
       insertInvitation(invitationData);
+    } else {
+      const { isSuccess } = await revalidateInvitation(existingInvitation.id);
+      if (isSuccess) {
+        updateInvitation(invitationData);
+      }
     }
+
+    Notify.success('청첩장이 성공적으로 제출되었습니다.');
+    router.push('/mypage');
   };
 
-  const handleDebouncedNext = debounce(() => {
-    if (currentStep < refs.length) {
-      isNavigating.current = true;
+  const handleDebouncedNext = debounce(async () => {
+    const { data: user } = await browserClient.auth.getUser();
+    const formData = methods.getValues();
+
+    if (!user.user) {
+      sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
+    } else {
+      if (existingInvitation === null) {
+        insertInvitation(formData);
+      } else {
+        updateInvitation(formData);
+      }
+    }
+
+    if (inputIndex < orderList[currentStep].input.length - 1) {
+      setNameIndex((prev) => prev + 1);
+      setInputIndex((prev) => prev + 1);
+    } else {
+      setNameIndex(0);
+      setInputIndex(0);
       setCurrentStep((prev) => prev + 1);
     }
   }, DELAY_TIME);
 
   const handleDebouncedPrevious = debounce(() => {
-    if (currentStep > 1) {
-      isNavigating.current = true;
+    isNavigating.current = true;
+    if (inputIndex > 0) {
+      setNameIndex((prev) => prev - 1);
+      setInputIndex((prev) => prev - 1);
+    } else if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
     }
   }, DELAY_TIME);
 
-  const observerCallback = (entries: IntersectionObserverEntry[]) => {
-    if (isNavigating.current) return; // 수동 전환 중에는 옵저버 무시
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const currentStepIndex = refs.findIndex((ref) => ref.current === entry.target);
-        if (currentStepIndex + 1 !== currentStep) {
-          setCurrentStep(currentStepIndex + 1);
-        }
-      }
-    });
-  };
-
-  const unsubscribeObservers = () => {
-    observers.current.forEach((observer, index) => {
-      if (refs[index]?.current) observer.unobserve(refs[index].current!);
-    });
-  };
-
-  const observeObserver = () => {
-    refs.forEach((ref, index) => {
-      if (ref.current) {
-        const observer = new IntersectionObserver(observerCallback, OBSERVER_OPTIONS);
-        observer.observe(ref.current);
-        observers.current[index] = observer;
-      }
-    });
-  };
   const subscribeFont = () => {
     const subscriptionFont = methods.watch((value) => {
       const font = value?.mainPhotoInfo?.fontName;
@@ -231,15 +141,23 @@ const CreateCardPage = () => {
       const color = value.bgColor;
 
       if (color) {
-        setBackgroundColor(`rgba(${color.r},${color.g},${color.b},${color.a})`);
+        setBackgroundColor(
+          colorConverter({
+            r: color.r as number,
+            g: color.g as number,
+            b: color.b as number,
+            a: color.a as number,
+            name: color.name as string,
+          }),
+        );
       }
       return () => subscription.unsubscribe();
     });
   };
 
   const scrollEvent = () => {
-    if (refs[currentStep - 1].current) {
-      refs[currentStep - 1].current?.scrollIntoView({
+    if (refs.current[currentStep]) {
+      refs.current[currentStep].scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
@@ -248,6 +166,62 @@ const CreateCardPage = () => {
       isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
     }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
   };
+
+  useEffect(() => {
+    setOrderList(
+      sortedOrderListWithRenderOrder.map((e, index) => {
+        return {
+          ...e,
+          order: index,
+        };
+      }),
+    );
+  }, [renderOrderList]);
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOnboardingComplete && isRendered) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOnboardingComplete, isRendered]);
+
+  useEffect(() => {
+    if (existingInvitation === null) {
+      reset(INVITATION_DEFAULT_VALUE);
+    } else {
+      loadFormData({ existingInvitation, reset });
+    }
+  }, [existingInvitation, reset]);
+
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOnboardingComplete && isRendered) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOnboardingComplete, isRendered]);
+
+  useEffect(() => {
+    if (existingInvitation === null) {
+      reset(INVITATION_DEFAULT_VALUE);
+    } else {
+      loadFormData({ existingInvitation, reset });
+    }
+  }, [existingInvitation, reset]);
 
   useEffect(() => {
     subscribeBackgroundColor();
@@ -259,119 +233,120 @@ const CreateCardPage = () => {
   }, [currentStep]);
 
   useEffect(() => {
-    unsubscribeObservers();
-    observeObserver();
+    initializeObserver();
     return () => unsubscribeObservers();
-  }, [currentStep, refs]);
-
+  }, [refs, isOnboardingComplete]);
   return (
-    <div
-      className={`relative w-full h-full font-${selectedFont}`}
-      style={{
-        backgroundColor: backgroundColor,
-      }}
-    >
-      <OnBoarding
-        setIsOnboardingComplete={setIsOnboardingComplete}
-        isOnboardingComplete={isOnboardingComplete}
-      />
-      {isOnboardingComplete ? (
-        <>
-          <div
-            style={{
-              fontFamily: selectedFont,
-            }}
-          >
-            {/*대표사진 프리뷰*/}
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[0]}
-            >
-              <MainPhotoPreView control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[1]}
-            >
-              <PersonalInfoPreview control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[2]}
-            >
-              <AccountPreView control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[3]}
-            >
-              <WeddingInfoPreView control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[4]}
-            >
-              <NavigationDetailsPreview control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[5]}
-            >
-              <GuestInfoPreview control={methods.control} />
-            </div>
-            <div
-              className='min-h-[calc(100vh-114px)]'
-              ref={refs[6]}
-            >
-              colorpalette
-            </div>
-          </div>
-          <div className='fixed bottom-0 left-0 right-0 px-4 z-10'>
-            <FormProvider {...methods}>
-              <form
-                className='bg-[#bfbfbf] bg-opacity-50 px-4 rounded-lg h-[320px] z-10'
-                onSubmit={methods.handleSubmit(onSubmit)}
-              >
-                <div className='w-full flex items-center justify-end'>
-                  <button
-                    type='button'
-                    onClick={handleDebouncedPrevious}
-                    className='bg-red-300'
-                    disabled={currentStep === 1}
-                  >
-                    <MdNavigateBefore />
-                  </button>
-                  <button
-                    className='bg-blue-300'
-                    type='button'
-                    onClick={handleDebouncedNext}
-                    disabled={currentStep === refs.length}
-                  >
-                    <MdNavigateNext />
-                  </button>
+    <FormProvider {...methods}>
+      <div
+        className={`relative w-full h-full font-${selectedFont}`}
+        style={{
+          backgroundColor: backgroundColor,
+        }}
+      >
+        <OnBoarding
+          setIsOnboardingComplete={setIsOnboardingComplete}
+          isOnboardingComplete={isOnboardingComplete}
+        />
+        <div
+          style={{
+            fontFamily: selectedFont,
+          }}
+        >
+          {isRendered &&
+            orderList.map((e, index) => {
+              return (
+                <div
+                  style={{ minHeight: VIEW_HEIGHT }}
+                  key={e.order}
+                  ref={(el) => {
+                    refs.current[index] = el;
+                  }}
+                >
+                  {e.component}
                 </div>
+              );
+            })}
+        </div>
+        <motion.div
+          initial={{ height: FOLDED_HEIGHT }}
+          animate={{
+            height: createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex]),
+          }}
+          transition={{
+            duration: 0.4,
+          }}
+          className={`fixed bottom-0 left-0 right-0 px-[16px] z-10 mb-[8px] w-fit h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex])}]`}
+        >
+          <form
+            className={`flex flex-col bg-white shadow-xl px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full`}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <div className='flex justify-between items-center'>
+              <button
+                type='button'
+                onClick={setToggleInput}
+                className='flex justify-center items-center text-gray-900 text-[18px] font-bold'
+              >
+                {toggleInput ? (
+                  <FaSortDown
+                    size={28}
+                    viewBox='0 110 320 512'
+                  />
+                ) : (
+                  <FaSortUp
+                    size={28}
+                    viewBox='0 -100 320 512'
+                  />
+                )}
+                {orderList[currentStep].name[nameIndex]}
+              </button>
 
-                {currentStep === 1 && <MainPhotoInput />}
-                {currentStep === 2 && <MainViewInput />}
-                {currentStep === 3 && <PersonalInfoInput />}
-                {currentStep === 4 && <AccountInput />}
-                {currentStep === 5 && <WeddingInfoInput />}
-                {currentStep === 6 && <NavigationDetailInput />}
-                {currentStep === 7 && <GuestInfoInput />}
-                {currentStep === refs.length && (
-                  <button
-                    className='w-full'
+              <div className='flex items-center'>
+                <button
+                  type='button'
+                  onClick={handleDebouncedPrevious}
+                  disabled={currentStep === 0 && inputIndex === 0}
+                  className='w-[28px] h-[28px]'
+                >
+                  <img
+                    src='/assets/images/icons/chevron-left.svg'
+                    width={28}
+                    height={28}
+                  />
+                </button>
+                <button
+                  type='button'
+                  onClick={handleDebouncedNext}
+                  disabled={isLastInput}
+                  className='w-[28px] h-[28px]'
+                >
+                  <img
+                    src='/assets/images/icons/chevron-right.svg'
+                    width={28}
+                    height={28}
+                  />
+                </button>
+              </div>
+            </div>
+
+            {toggleInput && (
+              <div className={`${toggleInput ? 'display-none' : ''}`}>
+                {orderList[currentStep].input[inputIndex]}
+                {currentStep === refs.current.length - 1 && (
+                  <Button
+                    className='rounded-[12px] w-[311px] h-[48px]'
                     type='submit'
                   >
-                    제출
-                  </button>
+                    청첩장 제작 완료
+                  </Button>
                 )}
-              </form>
-            </FormProvider>
-          </div>
-        </>
-      ) : null}
-    </div>
+              </div>
+            )}
+          </form>
+        </motion.div>
+      </div>
+    </FormProvider>
   );
 };
 
