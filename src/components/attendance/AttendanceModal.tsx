@@ -33,7 +33,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
               alt=''
             />
           </div>
-          <div className='w-[240px] text-center mb-[30px] text-[20px] text-primary300'>
+          <div className='w-[230px] text-center mb-[30px] text-[20px] text-primary300'>
             참석 여부를 통해 특별한 날 함께하실지 알려 주세요.
           </div>
         </div>
@@ -49,7 +49,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 optionList={ATTENDANCE_PEOPLE}
                 value={String(watch('attendanceCount') || '')}
                 onSelect={(value) => {
-                  setValue('attendanceCount', parseInt(value, 5));
+                  setValue('attendanceCount', parseInt(value, 10));
                 }}
                 width='79px'
                 backgroundColor='#000000'
