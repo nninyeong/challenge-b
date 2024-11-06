@@ -1,7 +1,7 @@
 'use client';
 
-import { useGetAllinvitationCard } from "@/hooks/queries/mypage/useMypage";
-import { useDownloadCsv } from "@/hooks/queries/mypage/useDownloadCsv";
+import { useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
+import { useDownloadCsv } from '@/hooks/queries/mypage/useDownloadCsv';
 import { FaChevronRight } from 'react-icons/fa';
 
 type MenuItemProps = {
@@ -12,7 +12,7 @@ type MenuItemProps = {
 const MyPageMenuItem: React.FC<MenuItemProps> = ({ name, onClick }) => {
   const { downloadCsv } = useDownloadCsv();
   const { data: invitationCards } = useGetAllinvitationCard();
-  const invitationCardId = invitationCards?.[0]?.id; // invitation ID 가져오기
+  const invitationCardId = invitationCards?.[0]?.id;
 
   const handleClick = () => {
     if (name === '방문객 명단 다운로드' && invitationCardId) {
