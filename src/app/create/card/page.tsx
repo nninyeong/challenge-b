@@ -36,6 +36,9 @@ const CreateCardPage = () => {
   });
 
   const [currentStep, setCurrentStep] = useState<number>(0);
+
+  const [currentStepLabel, setCurrentStepLabel] = useState<string>('');
+
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
@@ -52,12 +55,13 @@ const CreateCardPage = () => {
     return (orderA ?? a.order) - (orderB ?? b.order);
   });
 
-  const refs = useRef<null[] | HTMLDivElement[]>([]);
+  const refs = useRef<(HTMLDivElement | null)[]>([]);
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
     refs,
     setCurrentStep,
     setNameIndex,
     setInputIndex,
+    setCurrentStepLabel,
   );
   const isLastInput = refs.current.length !== 0 && currentStep === refs.current.length - 1;
 
@@ -255,12 +259,29 @@ const CreateCardPage = () => {
         >
           {isRendered &&
             orderList.map((e, index) => {
+              if (Array.isArray(e.component)) {
+                return e.component.map((ele) => {
+                  return (
+                    <div
+                      data-group-label={e.labelForInput}
+                      style={{ minHeight: MOBILE_VIEW_HEIGHT }}
+                      key={crypto.randomUUID()}
+                      ref={(el) => {
+                        refs.current.push(el);
+                      }}
+                    >
+                      {ele}
+                    </div>
+                  );
+                });
+              }
               return (
                 <div
+                  data-group-label={e.labelForInput}
                   style={{ minHeight: MOBILE_VIEW_HEIGHT }}
-                  key={e.order}
+                  key={crypto.randomUUID()}
                   ref={(el) => {
-                    refs.current[index] = el;
+                    refs.current.push(el);
                   }}
                 >
                   {e.component}

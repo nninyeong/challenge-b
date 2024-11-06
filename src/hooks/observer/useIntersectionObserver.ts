@@ -17,6 +17,7 @@ export const useIntersectionObserver = (
   setCurrentStep: (step: number) => void,
   setNameIndex: (step: number) => void,
   setInputIndex: (step: number) => void,
+  setCurrentStepLabel: (step: string) => void,
 ) => {
   const observers = useRef<IntersectionObserver[]>([]);
   const isNavigating = useRef<boolean>(false);
@@ -24,10 +25,12 @@ export const useIntersectionObserver = (
     if (isNavigating.current) return;
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        const currentStepIndex = refs.current.findIndex((ref) => ref === entry.target);
-        setNameIndex(0);
-        setInputIndex(0);
-        setCurrentStep(currentStepIndex);
+        const label = entry.target.getAttribute('data-group-label');
+        setCurrentStepLabel(label!);
+        // const currentStepIndex = refs.current.findIndex((ref) => ref === entry.target);
+        // setNameIndex(0);
+        // setInputIndex(0);
+        // setCurrentStep(currentStepIndex);
       }
     });
   };

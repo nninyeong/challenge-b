@@ -18,7 +18,7 @@ type ReviewType = {
 
 const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
   const reviewData: ReviewType = await getReviewDetail(params.id);
-
+  console.log(reviewData);
   return (
     <div
       className='relative'
