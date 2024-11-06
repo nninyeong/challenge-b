@@ -35,7 +35,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
           dangerouslySetInnerHTML={{
             __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
           }}
-          className='text-center'
+          className='text-center leading-9 mb-4'
         />
 
         <div
