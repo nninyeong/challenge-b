@@ -41,7 +41,7 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
       { bank: '', accountNumber: '', depositor: '' },
     ],
   },
-  guestbook: false,
+  guestbook: true,
   attendance: false,
   weddingInfo: {
     date: '2024.11.22',
@@ -88,7 +88,7 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
     title: '',
     content: '',
   },
-  dDay: false,
+  dDay: true,
   mainView: {
     name: '기본',
     type: 'default',
