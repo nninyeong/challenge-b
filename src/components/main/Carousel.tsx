@@ -3,6 +3,7 @@
 import { useAuthUserQuery } from '@/hooks/queries/review/useGetReview';
 import { useGetReviewCarouselQuery } from '@/hooks/queries/review/useGetReviewCarousel';
 import { formatDate } from '@/utils/formatDate';
+import { maskIdLastFour } from '@/utils/maskIdLastFour';
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -91,7 +92,7 @@ const Carousel = () => {
                     />
                   </div>
                   <p className='text-gray-500'>
-                    {review.user_name} | {formatDate(review.created_at)}
+                    {maskIdLastFour(user!.user_metadata.email)} | {formatDate(review.created_at)}
                   </p>
                 </div>
                 <p>{sliceContent(review.content)}</p>
