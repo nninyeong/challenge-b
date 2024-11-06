@@ -29,7 +29,7 @@ const Account = ({ account }: AccountPropType) => {
     }
   };
   return (
-    <div className='flex flex-col justify-center items-center'>
+    <div className='flex flex-col justify-center items-center mb-[80px]'>
       <p className='text-xl'>{account.title ? account.title : '제목'}</p>
       <p className=''>{account.content ? account.content : '내용'}</p>
       <div className='flex flex-col gap-5 mt-5 w-full justify-center items-center'>
