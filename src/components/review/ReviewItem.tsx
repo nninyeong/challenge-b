@@ -47,12 +47,10 @@ const ReviewItem = ({
               sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
             />
           ) : (
-            <div className='w-full h-full rounded-xl border border-solid border-gray-300 p-2'>
-              <MdOutlineImageNotSupported
-                size={20}
-                color='gray'
-              />
-            </div>
+            <img
+              src='/assets/images/card/no-review.svg'
+              alt='no review'
+            />
           )}
           {review.image_url.length > 1 && (
             <div className='absolute right-1 bottom-1 rounded  '>
