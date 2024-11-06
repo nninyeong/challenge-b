@@ -8,7 +8,7 @@ import ReviewWriteBottomSheet from '@/components/review/ReviewWriteBottomSheet';
 import { createPortal } from 'react-dom';
 import { useReviewInfinite } from '@/hooks/queries/review/useGetReview';
 import { useReviewBottomSheetContext } from '@/provider/reviewBottomSheetProvider';
-import { VIEW_HEIGHT } from '@/constants/viewHeight';
+import { MOBILE_VIEW_HEIGHT } from '@/constants/screenSize';
 
 const ReviewPage = () => {
   const [portalElement, setPortalElement] = useState<Element | null>(null);
@@ -72,7 +72,7 @@ const ReviewPage = () => {
       </div>
       <ReviewWriteButton />
       {isReviewBottomSheetOpen && (
-        <div className={`fixed bg-black bg-opacity-60 w-full h-${VIEW_HEIGHT} z-40 top-0 left-0 inset-0`}></div>
+        <div className={`fixed bg-black bg-opacity-60 w-full h-${MOBILE_VIEW_HEIGHT} z-40 top-0 left-0 inset-0`}></div>
       )}
       {isFetchingNextPage && <div>더 불러오는 중...</div>}
       {isReviewBottomSheetOpen && portalElement ? createPortal(<ReviewWriteBottomSheet />, portalElement) : null}

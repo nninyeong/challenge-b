@@ -6,7 +6,7 @@ const Header = async () => {
   const isAuthenticated = await getIsLogin();
 
   return (
-    <header className='w-[375px] h-[64px] flex justify-between items-center px-[16px] bg-white'>
+    <header className='w-full h-[64px] flex justify-between items-center px-[16px] bg-white'>
       <Link href='/'>
         <img
           src='/assets/images/branding/logoWithName.svg'

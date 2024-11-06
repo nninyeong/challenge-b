@@ -8,6 +8,7 @@ import Script from 'next/script';
 import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 import { ReviewBottomSheetProvider } from '@/provider/reviewBottomSheetProvider';
 import DndProviderWrapper from '@/components/layouts/DndProvider';
+import { MOBILE_VIEW_WIDTH } from '@/constants/screenSize';
 
 const SUIT = localFont({
   src: '../../public/assets/fonts/SUIT-Variable.ttf',
@@ -34,7 +35,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] max-w-[375px] mx-auto bg-gray-100 overflow-x-hidden`}
+        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] max-w-[${MOBILE_VIEW_WIDTH}] mx-auto bg-gray-100 overflow-x-hidden`}
       >
         <Script
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAOAPP_KEY}&libraries=services&autoload=false`}
