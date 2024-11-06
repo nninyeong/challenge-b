@@ -50,7 +50,7 @@ const WeddingGallery = ({ gallery }: GalleryPropType) => {
             />
           ))
         ) : (
-          <div>업로드 된 사진이 없습니다.</div>
+          <div className='text-center'>업로드 된 사진이 없습니다.</div>
         )}
       </div>
     </div>

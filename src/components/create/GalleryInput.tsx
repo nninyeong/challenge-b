@@ -4,6 +4,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { FaPlus } from 'react-icons/fa6';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 import GalleryButton from '../gallery/GalleryButton';
+import { Notify } from 'notiflix';
 
 const MAX_FILES = 18;
 
@@ -18,7 +19,7 @@ const GalleryInput = () => {
     const existingImages = getValues('gallery.images') || [];
 
     if (files && files.length + existingImages.length > MAX_FILES) {
-      alert(`사진은 최대 ${MAX_FILES}장까지 등록할 수 있습니다.`);
+      Notify.failure(`사진은 최대 ${MAX_FILES}장까지 등록할 수 있습니다.`);
       return;
     }
 
