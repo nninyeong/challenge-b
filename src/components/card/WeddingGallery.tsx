@@ -34,7 +34,7 @@ const WeddingGallery = ({ gallery }: GalleryPropType) => {
 
   return (
     <div className='mb-[56px] h-fit'>
-      <p className='text-center mb-8 text-[16px] text-gray-600'>GALLERY</p>
+      <p className='text-center mb-8 text-[16px] text-gray-600 tracking-wider'>GALLERY</p>
 
       <div className={`${gridClass} gap-3.5 p-4`}>
         {images.length > 0 ? (
