@@ -16,18 +16,21 @@ export const PersonalInfo = ({ type }: Props) => {
           placeholder={type === 'groom' ? '신랑' : '신부'}
           {...register(`personalInfo.${type}.relation`)}
           className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+          maxLength={5}
         />
         <input
           type='text'
           placeholder='이름'
           {...register(`personalInfo.${type}.name`)}
           className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+          maxLength={5}
         />
         <input
           type='text'
           placeholder='- 없이 입력'
           {...register(`personalInfo.${type}.phoneNumber`)}
           className='h-[32px] w-[151px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+          maxLength={15}
         />
       </div>
 
@@ -38,18 +41,21 @@ export const PersonalInfo = ({ type }: Props) => {
             placeholder='아버지'
             {...register(`personalInfo.${type}.father.relation`)}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+            maxLength={5}
           />
           <input
             type='text'
             placeholder='성함'
             {...register(`personalInfo.${type}.father.name`)}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+            maxLength={5}
           />
           <input
             type='text'
             placeholder='01012345678'
             {...register(`personalInfo.${type}.father.phoneNumber`)}
             className='h-[32px] w-[151px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+            maxLength={15}
           />
         </div>
 
@@ -69,18 +75,21 @@ export const PersonalInfo = ({ type }: Props) => {
             placeholder='어머니'
             {...register(`personalInfo.${type}.mother.relation`)}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+            maxLength={5}
           />
           <input
             type='text'
             placeholder='성함'
             {...register(`personalInfo.${type}.mother.name`)}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+            maxLength={5}
           />
           <input
             type='text'
             placeholder='01012345678'
             {...register(`personalInfo.${type}.mother.phoneNumber`)}
             className='h-[32px] w-[151px] pl-[8px] py-[9px] border text-[12px] rounded-[8px]'
+            maxLength={15}
           />
         </div>
 

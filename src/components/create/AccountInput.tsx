@@ -25,6 +25,7 @@ const AccountInput = () => {
           className='px-[8px] w-full rounded-md'
           {...register('account.title')}
           placeholder='신랑 & 신부에게 마음 전하기'
+          maxLength={20}
         />
       </div>
       <div className='flex gap-3 h-[32px] w-full'>
@@ -33,6 +34,7 @@ const AccountInput = () => {
           className='px-[8px] w-full rounded-md'
           {...register('account.content')}
           placeholder='축복의 의미로 축의금을 전달해보세요.'
+          maxLength={20}
         />
       </div>
       <div className='relative w-[267px] h-[31px] bg-gray-100 rounded-full p-1 flex items-center cursor-pointer'>
@@ -73,16 +75,19 @@ const AccountInput = () => {
                 className='px-[8px] w-[60px] h-[30px] rounded-md'
                 {...register(`account.${accountType}[${index}].bank`)}
                 placeholder='은행'
+                maxLength={9}
               />
               <input
                 className='px-[8px] w-[117px] h-[30px] rounded-md'
                 {...register(`account.${accountType}[${index}].accountNumber`)}
                 placeholder='계좌번호'
+                maxLength={27}
               />
               <input
                 className='px-[8px] w-[60px] h-[30px] rounded-md'
                 {...register(`account.${accountType}[${index}].depositor`)}
                 placeholder='예금주'
+                maxLength={5}
               />
             </div>
           </div>
