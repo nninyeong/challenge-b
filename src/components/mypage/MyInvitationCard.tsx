@@ -78,8 +78,8 @@ const MyInvitationCard = () => {
               </div>
             </div>
             <IoClose
-              color='white'
-              size='24'
+              color='gray'
+              size='20'
               className='cursor-pointer'
               onClick={() => handleDeleteCards(invitationCard.id)}
             />
