@@ -28,8 +28,12 @@ const GuestBook = () => {
 
       {guestBooks.length === 0 ? (
         <div className='text-black w-full px-4 mb-4'>
-          <div className='bg-gray-50 rounded-xl px-4 h-[83px] flex justify-center items-center'>
-            방명록에 첫 게시글을 남겨주세요.
+          <div className='bg-gray-50 rounded-xl px-4 h-[96px] flex flex-col justify-center items-center gap-[3px]'>
+            <img
+              src='/assets/images/empty-guestbook.svg'
+              alt=''
+            />
+            <span className='text-gray-700 text-[14px]'>아직 남긴 방명록이 없어요.</span>
           </div>
         </div>
       ) : (
@@ -44,7 +48,6 @@ const GuestBook = () => {
         </div>
       )}
 
-      
       {totalPages > 0 && (
         <div className='w-full px-4 mt-6 mb-6'>
           <GuestBookPagination
