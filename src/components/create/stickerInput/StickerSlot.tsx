@@ -20,10 +20,10 @@ const StickerSlot = ({ stickerImage }: PropsType) => {
       id: `${crypto.randomUUID()}-${stickerImage.id}`,
       url: `${stickerImage.url}`,
       stickerImageId: stickerImage.id,
-      posX: '0',
-      posY: '0',
-      width: stickerImage.width,
-      height: stickerImage.height,
+      posX: '5',
+      posY: '5',
+      width: stickerImage.width < 100 ? +stickerImage.width * 3 : stickerImage.width,
+      height: stickerImage.width < 100 ? +stickerImage.height * 3 : stickerImage.height,
       rotation: 0,
     });
 
