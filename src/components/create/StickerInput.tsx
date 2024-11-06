@@ -1,13 +1,21 @@
 import { useGetAllStickers } from '@/hooks/queries/useGetStickers';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StickerCategoryButton from '@/components/create/stickerInput/StickerCategoryButton';
 import StickerSlot from '@/components/create/stickerInput/StickerSlot';
 import { MOOD_LIST } from '@/constants/invitationMoods';
+import { Notify } from 'notiflix';
 
 const StickerInput = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('classic');
 
   const { data: stickerByCategory, isLoading, error } = useGetAllStickers();
+
+  useEffect(() => {
+    if (stickerByCategory && !stickerByCategory[selectedCategory]) {
+      Notify.info('준비중인 서비스입니다.');
+    }
+  }, [selectedCategory, stickerByCategory]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -35,7 +43,7 @@ const StickerInput = () => {
       );
     }
 
-    return stickerByCategory[selectedCategory].map((sticker) => (
+    return stickerByCategory[selectedCategory]?.map((sticker) => (
       <StickerSlot
         key={sticker.id}
         stickerImage={sticker}
@@ -57,11 +65,9 @@ const StickerInput = () => {
           />
         ))}
       </div>
-      {stickerByCategory && stickerByCategory[selectedCategory as string] ? (
+      {stickerByCategory && stickerByCategory[selectedCategory] ? (
         <div className='grid grid-cols-4 gap-[8px] h-[150px] overflow-auto'>{renderSticker()}</div>
-      ) : (
-        <div className='w-full text-center'>준비중인 무드입니다.</div>
-      )}
+      ) : null}
     </div>
   );
 };
