@@ -1,6 +1,7 @@
 import ReviewContentsBox from '@/components/review/ReviewContentsBox';
 import ReviewSlide from '@/components/review/ReviewSlide';
 import { MOBILE_VIEW_HEIGHT } from '@/constants/screenSize';
+import { getAuthUsersProfile } from '@/utils/getReview';
 import { getReviewDetail } from '@/utils/server-action';
 
 interface ParamsType {
@@ -18,6 +19,8 @@ type ReviewType = {
 
 const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
   const reviewData: ReviewType = await getReviewDetail(params.id);
+  const users = await getAuthUsersProfile();
+  const reviewUser = users.users.find((e) => e.id === reviewData.user_id);
 
   return (
     <div
@@ -28,7 +31,7 @@ const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
 
       <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60'></div>
       <ReviewContentsBox
-        writer={reviewData.user_name!}
+        user={reviewUser!}
         content={reviewData.content}
         created={reviewData.created_at}
         avatar_url={reviewData.avatar_url}
