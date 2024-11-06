@@ -44,6 +44,7 @@ const MainPhotoInput = () => {
             type='text'
             placeholder='좌측'
             {...register('mainPhotoInfo.leftName')}
+            maxLength={5}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black mr-2'
           />
           <input
@@ -51,12 +52,14 @@ const MainPhotoInput = () => {
             placeholder='♥︎'
             {...register('mainPhotoInfo.icon')}
             className='h-[32px] w-[48px] pl-4 pr-4 border text-[12px] rounded-[8px]  text-black mr-2'
+            maxLength={1}
           />
           <input
             type='text'
             placeholder='우측'
             {...register('mainPhotoInfo.rightName')}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
+            maxLength={5}
           />
         </div>
       </div>
