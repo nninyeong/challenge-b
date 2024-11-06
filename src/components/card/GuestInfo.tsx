@@ -1,7 +1,9 @@
 'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
+import { AttendanceProvider } from '@/context/AttendanceContext';
 import GuestBook from '@/components/guestbook/GuestBook';
-import EventStatus from '@/components/create/EventStatus';
+import PreviewEventStatus from '@/components/create/PreviewEventStatus';
+import PreviewShowAttendanceModal from '../attendance/PreviewShowAttendanceModal';
 
 type GuestInfoPropType = Pick<
   InvitationFormType,
@@ -9,11 +11,11 @@ type GuestInfoPropType = Pick<
 >;
 const GuestInfo = ({ attendance, guestbook, dDay, weddingInfo, mainPhotoInfo }: GuestInfoPropType) => {
   return (
-    <>
+    <AttendanceProvider>
       {guestbook && <GuestBook />}
       {attendance && dDay && (
         <div className='border border-gray-200 fixed left-1/2 bottom-[16px] w-[343px] h-[67px] bg-white z-50 rounded-[12px] flex justify-between items-center px-[16px] py-[12px] transform -translate-x-1/2'>
-          <EventStatus
+          <PreviewEventStatus
             attendanceButton={attendance}
             dDayCount={dDay}
             weddingInfoDate={weddingInfo.date}
@@ -23,7 +25,8 @@ const GuestInfo = ({ attendance, guestbook, dDay, weddingInfo, mainPhotoInfo }: 
           />
         </div>
       )}
-    </>
+      <PreviewShowAttendanceModal />
+    </AttendanceProvider>
   );
 };
 
