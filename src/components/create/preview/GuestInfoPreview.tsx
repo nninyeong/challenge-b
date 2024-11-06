@@ -2,7 +2,7 @@
 
 import { Control, useWatch } from 'react-hook-form';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import GuestInfo from '@/components/card/GuestInfo';
+import CreateGuestInfo from '@/components/create/CreateGuestInfo';
 
 const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> }) => {
   const attendance = useWatch({
@@ -26,7 +26,7 @@ const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> })
     name: "mainPhotoInfo"
   })
   return (
-    <GuestInfo
+    <CreateGuestInfo
       attendance={attendance}
       guestbook={guestbook}
       dDay={dDay}

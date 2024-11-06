@@ -1,5 +1,5 @@
 export const QUERY_KEYS = {
-  guestBook: (invitationId: string) => ['guestbook', invitationId] as const,
+  guestBook: (invitationId: string, page: number) => ['guestbook', invitationId, page] as const,
   invitation: () => ['invitation'] as const,
   stickerImages: () => ['stickerImages'],
   invitationCard: () => ['invitationCard'],
@@ -7,4 +7,6 @@ export const QUERY_KEYS = {
   authUsers: () => ['authUsers'],
   allImageReviews: () => ['allImageReviews'],
   reviews: () => ['reviews'],
+  userReview: () => ['userReview'],
+  imageReivew: () => ['imageReview'],
 };

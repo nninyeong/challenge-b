@@ -36,7 +36,7 @@ const CreateGuestBook: React.FC<{ invitationId: string }> = ({ invitationId }) =
           {errors.content && <p className='text-red-500'>{errors.content.message}</p>}
         </div>
         <button
-          className='w-[calc(100%-32px)] ml-4 h-12 bg-gray-900 rounded-xl'
+          className='w-[calc(100%-32px)] ml-4 mb-14 h-12 bg-gray-900 rounded-xl text-white'
           type='submit'
         >
           축하메세지 남기기

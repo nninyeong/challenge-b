@@ -7,7 +7,8 @@ import Account from '@/components/card/Account';
 import WeddingInfo from '@/components/card/WeddingInfo';
 import NavigationDetails from '@/components/card/NavigationDetails';
 import GuestInfo from '@/components/card/GuestInfo';
-import WeddingGallery from '@/components/card/WeddingGallery';
+
+import GalleryView from '@/components/gallery/GalleryView';
 
 export const convertOrderToComponent = (
   typeOnSharedCard: (typeof COMPONENT_TYPES)[keyof typeof COMPONENT_TYPES],
@@ -36,18 +37,32 @@ export const convertOrderToComponent = (
         bgColor={bgColor}
         mainView={mainView}
         stickers={stickers}
+        weddingInfo={weddingInfo}
+        key='mainPhoto-sharedCard'
       />
     ),
     [COMPONENT_TYPES.GREETING]: <Greeting greetingMessage={greetingMessage} />,
-    [COMPONENT_TYPES.PERSONAL_INFO]: <PersonalInfoOnSharedCard personalInfo={personalInfo} />,
-    [COMPONENT_TYPES.ACCOUNT]: <Account account={account} />,
-    [COMPONENT_TYPES.WEDDING_INFO]: <WeddingInfo weddingInfo={weddingInfo} />,
-    [COMPONENT_TYPES.NAVIGATION_DETAILS]: (
+    [COMPONENT_TYPES.PERSONAL_INFO]: [
+      <PersonalInfoOnSharedCard
+        personalInfo={personalInfo}
+        key='personalInfo-sharedCard'
+      />,
+      <Account
+        account={account}
+        key='account-sharedCard'
+      />,
+    ],
+    [COMPONENT_TYPES.WEDDING_INFO]: [
+      <WeddingInfo
+        weddingInfo={weddingInfo}
+        key='weddingInfo-sharedCard'
+      />,
       <NavigationDetails
         navigationDetail={navigationDetail}
         weddingInfo={weddingInfo}
-      />
-    ),
+        key='navigationDetail-sharedCard'
+      />,
+    ],
     [COMPONENT_TYPES.GUEST_INFO]: (
       <GuestInfo
         attendance={attendance}
@@ -55,9 +70,15 @@ export const convertOrderToComponent = (
         dDay={dDay}
         weddingInfo={weddingInfo}
         mainPhotoInfo={mainPhotoInfo}
+        key='guestInfo-sharedCard'
       />
     ),
-    [COMPONENT_TYPES.GALLERY]: <WeddingGallery gallery={gallery} />,
+    [COMPONENT_TYPES.GALLERY]: (
+      <GalleryView
+        gallery={gallery}
+        key='gallery-sharedCard'
+      />
+    ),
   };
 
   if (typeOnSharedCard === 'ONLY_FOR_CREATE') return;

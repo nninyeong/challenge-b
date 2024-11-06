@@ -16,7 +16,7 @@ export const uploadGalleryImageToSupabaseStorage = async (file: File) => {
 
   const { data, error } = await supabase.storage.from('invitation').upload(`/gallery/${fileName}`, file);
 
-  if (error) return console.error('대표사진 업로드를 실패하였습니다.', error);
+  if (error) return console.error('갤러리 업로드를 실패하였습니다.', error);
 
   const { data: urlData } = supabase.storage.from('invitation').getPublicUrl(data.path);
   return urlData.publicUrl as unknown as string;

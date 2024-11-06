@@ -1,12 +1,13 @@
 'use client';
 
 import { StickerType } from '@/types/invitationFormType.type';
-import Image from 'next/image';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { NumberSize, Resizable } from 're-resizable';
 import { Direction } from 're-resizable/lib/resizer';
 import { calculateRelativePosition } from '@/utils/calculate/calculateRelativePosition';
+import { calculateAngle } from '@/utils/calculate/calculateAngle';
+import { calculateComponentRotation } from '@/utils/calculate/calculateComponentRotation';
 
 const preventTouchScroll = (e: TouchEvent) => {
   e.preventDefault();
@@ -31,11 +32,17 @@ const Sticker = ({
   const touchOffset = useRef({ x: 0, y: 0 });
   const stickerRef = useRef<HTMLDivElement | null>(null); // 상위 div의 ref
   const [isResizing, setIsResizing] = useState<boolean>(false);
+  const [isRotating, setIsRotating] = useState<boolean>(false);
+  const originRef = useRef({ x: 0, y: 0 });
+  const rotationStartPosition = useRef({ x: 0, y: 0 });
+  const rotationStartDeg = useRef<number>(sticker.rotation || 0);
+  const accumulatedRotation = useRef<number>(sticker.rotation || 0);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent | TouchEvent) => {
       if (activeStickerId === sticker.id && stickerRef.current && !stickerRef.current.contains(e.target as Node)) {
         onActivate(null);
+        document.removeEventListener('touchmove', preventTouchScroll);
       }
     };
 
@@ -64,7 +71,7 @@ const Sticker = ({
   };
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLImageElement>) => {
-    if (isResizing || !previewRef.current || !stickerRef.current) return;
+    if (isRotating || isResizing || !previewRef.current || !stickerRef.current) return;
     document.removeEventListener('touchmove', preventTouchScroll);
 
     const touch = e.changedTouches[0];
@@ -83,7 +90,7 @@ const Sticker = ({
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLImageElement>) => {
-    if (isResizing || !previewRef.current || !stickerRef.current) return;
+    if (isRotating || isResizing || !previewRef.current || !stickerRef.current) return;
 
     const touch = e.touches[0];
     const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
@@ -144,6 +151,56 @@ const Sticker = ({
     ref.style.maxHeight = `${maxHeight}px`;
   };
 
+  const handleRotationStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isActive || isResizing || !stickerRef.current) return;
+    e.stopPropagation();
+    setIsRotating(true);
+    document.addEventListener('touchmove', preventTouchScroll, { passive: false });
+
+    const stickerBound = stickerRef.current.getBoundingClientRect();
+    const originX = stickerBound.left - window.scrollX + stickerBound.width / 2;
+    const originY = stickerBound.top - window.scrollY + stickerBound.height / 2;
+    originRef.current = { x: originX, y: originY };
+    rotationStartDeg.current = sticker.rotation;
+
+    const touch = e.touches[0];
+    rotationStartPosition.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleRotationMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (!isRotating || isResizing || !stickerRef.current) return;
+
+    const touch = e.touches[0];
+    const angleAtCurrent = calculateAngle(originRef.current, { x: touch.clientX, y: touch.clientY });
+    let delta = angleAtCurrent - rotationStartDeg.current;
+    if (delta < 0) delta += 360;
+    const updatedRotation = accumulatedRotation.current + delta;
+
+    requestAnimationFrame(() => {
+      if (!stickerRef.current) return;
+      stickerRef.current.style.transform = `rotate(${updatedRotation}deg)`;
+    });
+  };
+
+  const handleRotationStop = () => {
+    if (!stickerRef.current || !isRotating || isResizing) return;
+    const rotation = calculateComponentRotation(stickerRef);
+    accumulatedRotation.current = rotation;
+    const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
+      if (stickerItem.id === sticker.id) {
+        return { ...sticker, rotation };
+      } else {
+        return stickerItem;
+      }
+    });
+
+    setValue('stickers', [...updatedSticker]);
+
+    setIsRotating(false);
+    document.removeEventListener('touchmove', preventTouchScroll);
+  };
+
   return (
     <>
       <div
@@ -152,6 +209,7 @@ const Sticker = ({
           position: 'absolute',
           top: `${sticker.posY}%`,
           left: `${sticker.posX}%`,
+          transform: `rotate(${sticker.rotation}deg)`,
         }}
       >
         <div className='relative w-full h-full'>
@@ -163,7 +221,12 @@ const Sticker = ({
               ></button>
               <div className='absolute top-[-3px] left-[-3px] bg-primary-300 w-[6px] h-[6px] rounded-[8px]'></div>
               <div className='absolute bottom-[-3px] left-[-3px] bg-primary-300 w-[6px] h-[6px] rounded-[8px]'></div>
-              <div className='absolute bottom-[-3px] right-[-3px] bg-primary-300 w-[6px] h-[6px] rounded-[8px]'></div>
+              <div
+                className='absolute bottom-[-12px] right-[-12px] bg-yellow-300 w-[24px] h-[24px] rounded-[8px] z-10'
+                onTouchStart={handleRotationStart}
+                onTouchMove={handleRotationMove}
+                onTouchEnd={handleRotationStop}
+              ></div>
             </>
           )}
 
@@ -175,11 +238,10 @@ const Sticker = ({
             enable={{ bottomRight: true, topLeft: false, bottomLeft: false, topRight: false }}
             lockAspectRatio={true}
           >
-            <Image
+            <img
               src={sticker.url}
               alt={sticker.stickerImageId}
-              width={sticker.width}
-              height={sticker.height}
+              style={{ width: sticker.width, height: sticker.height }}
               className={`${isActive && 'border-[1px] border-primary-300'} w-full h-full`}
               onTouchStart={handleTouchStart}
               onTouchEnd={handleTouchEnd}

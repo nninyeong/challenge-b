@@ -1,6 +1,5 @@
-import { DndProvider } from 'react-dnd-multi-backend';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { HTML5toTouch } from '@/lib/reactDnd/dndBackends';
+
 import { memo, useCallback } from 'react';
 import DraggableRenderOrder from '@/components/create/DraggableRenderOrder';
 import RenderOrderCustomPreview from '@/components/create/RenderOrderCustomPreview';
@@ -39,23 +38,21 @@ const RenderOrderInput = () => {
   );
 
   return (
-    <div className='mb-[20px]'>
-      <DndProvider options={HTML5toTouch}>
-        <RenderOrderCustomPreview />
-        <div>
-          {sortedRenderOrder.map((option) => {
-            if (option.labelForInput === 'ONLY_FOR_CREATE') return;
-            return (
-              <DraggableRenderOrder
-                key={option.labelForInput}
-                option={option}
-                moveOption={moveOption}
-                findOption={findOption}
-              />
-            );
-          })}
-        </div>
-      </DndProvider>
+    <div className='mb-[15px] h-[204px]'>
+      <RenderOrderCustomPreview />
+      <div>
+        {sortedRenderOrder.map((option) => {
+          if (option.labelForInput === 'ONLY_FOR_CREATE') return;
+          return (
+            <DraggableRenderOrder
+              key={option.labelForInput}
+              option={option}
+              moveOption={moveOption}
+              findOption={findOption}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

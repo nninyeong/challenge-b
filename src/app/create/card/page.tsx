@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { debounce } from '@/utils/debounce';
 import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
@@ -23,7 +23,7 @@ import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
 import EventBus from '@/utils/EventBus';
 import { motion } from 'framer-motion';
-import createCardFormHeightMapper from '@/utils/createCardFormHeightMapper';
+import createCardFormHeightMapper, { FOLDED_HEIGHT } from '@/utils/createCardFormHeightMapper';
 
 const DELAY_TIME: number = 300;
 
@@ -43,7 +43,14 @@ const CreateCardPage = () => {
   const [nameIndex, setNameIndex] = useState<number>(0);
   const [inputIndex, setInputIndex] = useState<number>(0);
   const [isRendered, setIsRendered] = useState<boolean>(false);
-  const orderList = INITIAL_ORDER(methods);
+  const [orderList, setOrderList] = useState(() => INITIAL_ORDER(methods));
+  const renderOrderList = useWatch({ control: methods.control, name: 'renderOrder' });
+  const sortedOrderListWithRenderOrder = orderList.sort((a, b) => {
+    const orderA = renderOrderList.find((item) => item.typeOnSharedCard === a.typeOnSharedCard)?.order;
+    const orderB = renderOrderList.find((item) => item.typeOnSharedCard === b.typeOnSharedCard)?.order;
+
+    return (orderA ?? a.order) - (orderB ?? b.order);
+  });
 
   const refs = useRef<null[] | HTMLDivElement[]>([]);
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
@@ -161,6 +168,16 @@ const CreateCardPage = () => {
   };
 
   useEffect(() => {
+    setOrderList(
+      sortedOrderListWithRenderOrder.map((e, index) => {
+        return {
+          ...e,
+          order: index,
+        };
+      }),
+    );
+  }, [renderOrderList]);
+  useEffect(() => {
     setIsRendered(true);
   }, []);
 
@@ -251,14 +268,18 @@ const CreateCardPage = () => {
               );
             })}
         </div>
-        <div
-          className={`fixed bottom-0 left-0 right-0 px-[16px] z-10 h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex])}]`}
+        <motion.div
+          initial={{ height: FOLDED_HEIGHT }}
+          animate={{
+            height: createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex]),
+          }}
+          transition={{
+            duration: 0.4,
+          }}
+          className={`fixed bottom-0 left-0 right-0 px-[16px] z-10 mb-[8px] w-fit h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex])}]`}
         >
-          <motion.form
-            initial={{ height: 54 }}
-            animate={{ height: toggleInput ? 320 : 54 }}
-            transition={{ duration: 0.3 }}
-            className={`flex flex-col bg-white shadow-xl p-[16px] object-cover rounded-lg mb-[8px] z-10 gap-[8px]`}
+          <form
+            className={`flex flex-col bg-white shadow-xl px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full`}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <div className='flex justify-between items-center'>
@@ -322,8 +343,8 @@ const CreateCardPage = () => {
                 )}
               </div>
             )}
-          </motion.form>
-        </div>
+          </form>
+        </motion.div>
       </div>
     </FormProvider>
   );

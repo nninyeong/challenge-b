@@ -12,6 +12,7 @@ export const getReview = async ({ pageParam = 0, ROW }: ReviewProps): Promise<Re
   const { data, error } = await browserClient
     .from('reviews')
     .select('*')
+    .order('created_at', { ascending: false })
     .range(pageParam, pageParam + ROW - 1);
 
   if (error) {

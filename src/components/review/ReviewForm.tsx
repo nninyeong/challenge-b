@@ -83,10 +83,11 @@ const ReviewForm = () => {
   };
 
   const handleReviewFormSubmit = async (formData: ReviewType) => {
+    const images = formData.images.includes(null) ? [] : formData.images;
     const data: MutationReviewFormDataType = {
       user_id: user.userId!,
       content: formData.content,
-      image_url: formData.images,
+      image_url: images,
       user_name: user.userName!,
       avatar_url: user.avatar_url,
     };
@@ -111,11 +112,11 @@ const ReviewForm = () => {
       onSubmit={handleSubmit(handleReviewFormSubmit)}
       className='flex flex-col justify-center w-full'
     >
-      <div className='flex gap-[8px] mt-[24px] h-[22px]'>
+      <div className='flex gap-[8px] h-[22px]'>
         <p className='text-gray-900 text-[18px] font-bold'>내용을 작성해주세요</p>
         <p className='text-gray-500 text-[16px] font-semibold'>200자 이내</p>
       </div>
-      <div className='relative w-full mt-[14px] w-[343px] h-[240px]'>
+      <div className='relative w-full mt-[14px] h-[184px]'>
         <textarea
           className='w-full h-full rounded-[12px] border-[1px] border-gray-200 p-[16px] resize-none text-[12px] text-gray-700'
           maxLength={200}

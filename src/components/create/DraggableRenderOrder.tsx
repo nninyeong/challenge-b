@@ -1,6 +1,5 @@
 import { OrderItem } from '@/types/invitationFormType.type';
 import { useDrag, useDrop } from 'react-dnd';
-import Image from 'next/image';
 import { memo } from 'react';
 
 const DraggableRenderOrder = ({
@@ -53,15 +52,14 @@ const DraggableRenderOrder = ({
   return (
     <div
       ref={combinedRef}
-      className={`${isDragging && 'opacity-50'} flex justify-start items-center gap-[8px] h-[24px] text-[16px] text-gray-800 font-main font-medium`}
+      className={`${isDragging && 'opacity-50'} flex justify-start items-center gap-[8px] h-[24px] text-[16px] text-gray-800 font-main font-medium mb-[10px]`}
     >
-      <Image
-        src='/assets/images/icons/equals.svg'
+      <img
+        src='/assets/images/icons/equals.webp'
         alt=''
-        width={24}
-        height={24}
+        className='w-[24px] h-[24px]'
       />
-      <span>{labelForInput}</span>
+      <span className='text-[16px] text-gray-600 font-semibold'>{labelForInput}</span>
     </div>
   );
 };

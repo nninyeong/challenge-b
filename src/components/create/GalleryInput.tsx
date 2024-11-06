@@ -45,8 +45,8 @@ const GalleryInput = () => {
 
   return (
     <div className='text-black'>
-      <div className='flex w-full gap-2 items-center mb-3'>
-        <p>사진비율</p>
+      <div className='flex items-center mb-3'>
+        <p className='mr-4'>사진비율</p>
         <GalleryButton
           onClick={() => handleImgCutStyle('square')}
           isActive={ratio === 'square'}
@@ -60,8 +60,8 @@ const GalleryInput = () => {
           직사각형
         </GalleryButton>
       </div>
-      <div className='flex w-full gap-2 items-center mb-[30px]'>
-        <p>배치방법</p>
+      <div className='flex items-center'>
+        <p className='mr-4'>배치방법</p>
         <GalleryButton
           onClick={() => handleGridTypeStyle(2)}
           isActive={gridType === 2}
@@ -76,7 +76,7 @@ const GalleryInput = () => {
         </GalleryButton>
       </div>
 
-      <div className='flex gap-2 items-end'>
+      <div className='flex gap-2 items-end mt-7'>
         <label
           htmlFor='file'
           className='bg-white text-center cursor-pointer px-2 py-1 rounded-xl text-black h-[80px] w-[80px] flex justify-center items-center border border-dashed border-gray-600'

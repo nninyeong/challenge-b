@@ -7,6 +7,7 @@ import Footer from '@/components/layouts/Footer';
 import Script from 'next/script';
 import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 import { ReviewBottomSheetProvider } from '@/provider/reviewBottomSheetProvider';
+import DndProviderWrapper from '@/components/layouts/DndProvider';
 
 const SUIT = localFont({
   src: '../../public/assets/fonts/SUIT-Variable.ttf',
@@ -33,7 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] max-w-full overflow-x-hidden`}
+        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] max-w-[375px] mx-auto bg-gray-100 overflow-x-hidden`}
       >
         <Script
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAOAPP_KEY}&libraries=services&autoload=false`}
@@ -43,7 +44,9 @@ export default function RootLayout({
         <Providers>
           <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
             <Header />
-            <main className='h-full max-w-full flex-1'>{children}</main>
+            <main className='w-full h-full flex-1 bg-white'>
+              <DndProviderWrapper>{children}</DndProviderWrapper>
+            </main>
             <div id='modal'></div>
             <Footer />
           </ReviewBottomSheetProvider>

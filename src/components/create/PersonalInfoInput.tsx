@@ -21,7 +21,7 @@ const PersonalInfoInput = () => {
   };
 
   return (
-    <div className='flex flex-col gap-5 items-center justify-center w-full mt-[28px]'>
+    <div className='flex flex-col gap-5 items-center justify-center w-full mt-[8px]'>
       <div className='relative w-[221px] h-[31px] bg-gray-100 rounded-full p-1 flex items-center cursor-pointer'>
         <div
           className={`absolute top-0 left-0 w-[46%] h-full bg-[#FF6666] rounded-full transition-transform duration-300 ease-in-out ${

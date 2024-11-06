@@ -1,0 +1,55 @@
+import { StickerType } from '@/types/invitationFormType.type';
+
+export const SIMPLE_PRESET1: StickerType[] = [
+  {
+    id: `${crypto.randomUUID()}-simple-002.svg`,
+    url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/simple-002.svg',
+    posX: '0',
+    posY: '1.3333333333333335',
+    width: 333,
+    height: 107,
+    stickerImageId: 'simple-002.svg',
+    rotation: 0,
+  },
+  {
+    id: `${crypto.randomUUID()}-simple-001.svg`,
+    url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/simple-001.svg',
+    posX: '13.591666666666665',
+    posY: '3.3333333333333335',
+    width: 227,
+    height: 46,
+    stickerImageId: 'simple-001.svg',
+    rotation: 0,
+  },
+  {
+    id: `${crypto.randomUUID()}-simple-008.svg`,
+    url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/simple-008.svg',
+    posX: '0',
+    posY: '94.5',
+    width: 335,
+    height: 31,
+    stickerImageId: 'simple-008.svg',
+    rotation: 0,
+  },
+
+  {
+    id: `${crypto.randomUUID()}-simple-005.svg`,
+    url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/simple-005.svg',
+    posX: '-21.187420654296876',
+    posY: '19.494841257731117',
+    width: 206,
+    height: 206,
+    stickerImageId: 'simple-005.svg',
+    rotation: 20.4328,
+  },
+  {
+    id: `${crypto.randomUUID()}-simple-004.svg`,
+    url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/simple-004.svg',
+    posX: '68.33868815104167',
+    posY: '63.74813842773438',
+    width: 166,
+    height: 166,
+    stickerImageId: 'simple-004.svg',
+    rotation: 681.653,
+  },
+];
