@@ -36,7 +36,7 @@ const MainPhotoInput = () => {
     setValue('mainPhotoInfo.introduceContent', value);
   };
   return (
-    <div className='w-full flex flex-col '>
+    <div className='w-full flex flex-col gap-3 '>
       <div className='w-full flex items-center'>
         <label className='font-bold text-gray-700 text-[14px]  text-center mr-5'>이름</label>
         <div className='gap-2'>
@@ -61,7 +61,7 @@ const MainPhotoInput = () => {
         </div>
       </div>
 
-      <div className='flex mt-3 mb-5'>
+      <div className='flex '>
         <label className='font-bold text-gray-700 text-[14px] mr-5'>글꼴</label>
         <div className='w-[208px] flex flex-wrap'>
           {FONTMENU.map((font) => (
