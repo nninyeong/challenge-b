@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import Providers from '@/app/provider';
-import Header from '@/components/layouts/Header';
-import Footer from '@/components/layouts/Footer';
 import Script from 'next/script';
 import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 import { ReviewBottomSheetProvider } from '@/provider/reviewBottomSheetProvider';
