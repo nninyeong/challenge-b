@@ -44,12 +44,10 @@ export default function RootLayout({
         <SetScreenHeight />
         <Providers>
           <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
-            <Header />
-            <main className='w-full h-full flex-1 bg-white'>
+            <div className='w-full h-full flex-1 bg-white'>
               <DndProviderWrapper>{children}</DndProviderWrapper>
-            </main>
+            </div>
             <div id='modal'></div>
-            <Footer />
           </ReviewBottomSheetProvider>
         </Providers>
       </body>
