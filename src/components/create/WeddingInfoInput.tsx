@@ -53,6 +53,7 @@ const WeddingInfoInput = () => {
             {...register('weddingInfo.date')}
             placeholder='2024-11-21'
             className='w-[172px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
+            maxLength={21}
           />
         </div>
         <div className='grid grid-cols-[80px_1fr] items-center'>
@@ -102,6 +103,7 @@ const WeddingInfoInput = () => {
           <input
             className='w-[235px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
             {...register('weddingInfo.weddingHallName')}
+            maxLength={21}
           />
         </div>
         <div className='grid grid-cols-[80px_1fr]'>
@@ -110,6 +112,7 @@ const WeddingInfoInput = () => {
             className='w-[172px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
             placeholder='연락처를 입력해주세요.'
             {...register('weddingInfo.weddingHallContact')}
+            maxLength={15}
           />
         </div>
       </div>

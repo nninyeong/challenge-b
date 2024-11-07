@@ -37,26 +37,29 @@ const MainPhotoInput = () => {
   };
   return (
     <div className='w-full flex flex-col gap-3 '>
-      <div className='w-full flex items-center'>
+      <div className='w-full flex'>
         <label className='font-bold text-gray-700 text-[14px]  text-center mr-5'>이름</label>
-        <div className='gap-2'>
+        <div className='gap-2 w-full justify-center'>
           <input
             type='text'
             placeholder='좌측'
             {...register('mainPhotoInfo.leftName')}
+            maxLength={5}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black mr-2'
           />
           <input
             type='text'
             placeholder='♥︎'
             {...register('mainPhotoInfo.icon')}
-            className='h-[32px] w-[48px] pl-4 pr-4 border text-[12px] rounded-[8px]  text-black mr-2'
+            className='text-center h-[32px] w-[48px] pl-4 pr-4 border text-[12px] rounded-[8px]  text-black mr-2'
+            maxLength={1}
           />
           <input
             type='text'
             placeholder='우측'
             {...register('mainPhotoInfo.rightName')}
             className='h-[32px] w-[72px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
+            maxLength={5}
           />
         </div>
       </div>

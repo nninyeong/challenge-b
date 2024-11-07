@@ -24,6 +24,8 @@ import { Notify } from 'notiflix';
 import EventBus from '@/utils/EventBus';
 import { motion } from 'framer-motion';
 import createCardFormHeightMapper, { FOLDED_HEIGHT } from '@/utils/createCardFormHeightMapper';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { validationSchema } from '@/lib/zod/validationSchema';
 
 const DELAY_TIME: number = 300;
 
@@ -31,6 +33,7 @@ const CreateCardPage = () => {
   const router = useRouter();
 
   const methods = useForm<InvitationFormType>({
+    resolver: zodResolver(validationSchema),
     mode: 'onChange',
     defaultValues: INVITATION_DEFAULT_VALUE,
   });
@@ -100,6 +103,10 @@ const CreateCardPage = () => {
   const handleDebouncedNext = debounce(async () => {
     const { data: user } = await browserClient.auth.getUser();
     const formData = methods.getValues();
+    
+    if (methods.formState.errors.weddingInfo?.date?.message) {
+      Notify.failure(methods.formState.errors.weddingInfo?.date?.message);
+    }
 
     if (!user.user) {
       sessionStorage.setItem('invitationFormData', JSON.stringify(formData));

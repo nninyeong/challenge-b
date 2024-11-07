@@ -1,14 +1,16 @@
 'use client';
+import { User } from '@/types/users.types';
+import { maskIdLastFour } from '@/utils/maskIdLastFour';
 import Image from 'next/image';
 import { useState } from 'react';
 type PropsType = {
-  writer: string;
   content: string;
   created: string;
   avatar_url: string | null;
+  user: User;
 };
 const MAX_CONTENT_LENGTH = 50 as const;
-const ReviewContentsBox = ({ writer, content, created, avatar_url }: PropsType) => {
+const ReviewContentsBox = ({ content, created, avatar_url, user }: PropsType) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const convertedCreatedDate = new Date(created)
@@ -37,7 +39,8 @@ const ReviewContentsBox = ({ writer, content, created, avatar_url }: PropsType) 
           alt='default'
           className='rounded-full'
         />
-        <p className='pl-[8px]'>{writer}</p> <p className='px-[4px]'>|</p> <span>{convertedCreatedDate}</span>
+        <p className='pl-[8px]'>{maskIdLastFour(user.user_metadata.email!)}</p> <p className='px-[4px]'>|</p>
+        <span>{convertedCreatedDate}</span>
       </div>
       <div className='flex flex-col mt-[14px] mb-[8px]'>
         <p className='break-words text-[12px]'>{sliceContent(content)}</p>
