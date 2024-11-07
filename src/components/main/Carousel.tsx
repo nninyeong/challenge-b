@@ -3,6 +3,7 @@
 import { useAuthUserQuery } from '@/hooks/queries/review/useGetReview';
 import { useGetReviewCarouselQuery } from '@/hooks/queries/review/useGetReviewCarousel';
 import { formatDate } from '@/utils/formatDate';
+import { maskIdLastFour } from '@/utils/maskIdLastFour';
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -61,7 +62,7 @@ const Carousel = () => {
         {extendedReviewArr.map((review, index) => {
           const imgUrls = review.image_url || [];
           const user = users?.users.find((user) => user.id === review.user_id);
-          const avatarUrl = user?.user_metadata?.avatar_url || '/images/defaultImg.png';
+          const avatarUrl = user?.user_metadata?.avatar_url || '/assets/images/defaultImg.png';
           return (
             <div
               key={`${review.id}-${index}`}
@@ -91,7 +92,7 @@ const Carousel = () => {
                     />
                   </div>
                   <p className='text-gray-500'>
-                    {review.user_name} | {formatDate(review.created_at)}
+                    {maskIdLastFour(user!.user_metadata.email)} | {formatDate(review.created_at)}
                   </p>
                 </div>
                 <p>{sliceContent(review.content)}</p>
