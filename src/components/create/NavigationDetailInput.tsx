@@ -52,6 +52,7 @@ const NavigationDetailInput = () => {
             placeholder='오시는 길 내용을 입력하세요.'
             {...register('navigationDetail.bus')}
             className='h-[64px] w-full pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black resize-none'
+            maxLength={70}
           />
         </div>
         <div className='flex justify-between w-full gap-4'>
@@ -59,6 +60,7 @@ const NavigationDetailInput = () => {
           <textarea
             placeholder='오시는 길 내용을 입력하세요.'
             {...register('navigationDetail.subway')}
+            maxLength={70}
             className='h-[64px] w-full pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black resize-none'
           />
         </div>

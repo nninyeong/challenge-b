@@ -81,11 +81,14 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
             </div>
           )}
         </div>
-        <div className='flex justify-center items-center gap-2 mt-4 text-[24px] text-gray-900 font-semibold tracking-[2px] mb-[12px]'>
-          <p>{mainPhotoInfo?.leftName || '좌측 이름'}</p>
-          <p>{mainPhotoInfo?.icon || '♥︎'}</p>
-          <p>{mainPhotoInfo?.rightName || '우측 이름'}</p>
+        <div className='flex items-center justify-center mt-4 text-[24px] text-gray-900 font-semibold mb-[12px] text-center relative'>
+          <p className='flex-1 text-right whitespace-nowrap pr-4'>{mainPhotoInfo?.leftName || '좌측 이름'}</p>
+          <p className='absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap'>
+            {mainPhotoInfo?.icon || '♥︎'}
+          </p>
+          <p className='flex-1 text-left whitespace-nowrap pl-4'>{mainPhotoInfo?.rightName || '우측 이름'}</p>
         </div>
+
         <div className='text-[16px] text-gray-700 flex flex-col'>
           <p>
             {weddingInfo.date} {day} {weddingInfo.time.hour}:{weddingInfo.time.minute}

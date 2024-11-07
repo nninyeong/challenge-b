@@ -17,6 +17,7 @@ const GreetingInput = () => {
           type='text'
           className='w-[266px] rounded-lg mb-2 p-2 border border-solid border-gray-300 text-[12px] placeholder:text-gray-300 text-gray-300'
           {...register('greetingMessage.title')}
+          maxLength={20}
         />
       </div>
       <div className='flex'>
