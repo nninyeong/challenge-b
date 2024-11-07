@@ -38,11 +38,13 @@ const RenderOrderInput = () => {
   );
 
   return (
-    <div className='mb-[15px] h-[204px]'>
+    <div className='mt-[10px] h-[204px]'>
       <RenderOrderCustomPreview />
       <div>
         {sortedRenderOrder.map((option) => {
-          if (option.labelForInput === 'ONLY_FOR_CREATE') return;
+          if (option.typeOnSharedCard === 'MAIN_PHOTO') return;
+          if (option.typeOnSharedCard === 'ONLY_FOR_CREATE') return;
+
           return (
             <DraggableRenderOrder
               key={option.labelForInput}
