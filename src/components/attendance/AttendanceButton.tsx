@@ -5,7 +5,7 @@ import AttendanceModal from './AttendanceModal';
 import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathname';
 
 const AttendanceButton = () => {
-  const { isCreate, invitationId } = useInvitationIdByPathname();
+  const { isCreatePage, invitationId } = useInvitationIdByPathname();
   const { showModal, handleModalClick } = useAttendanceButton();
 
   return (
@@ -20,7 +20,7 @@ const AttendanceButton = () => {
         <AttendanceModal
           invitationId={invitationId}
           onClick={handleModalClick}
-          isCreate={isCreate}
+          isCreatePage={isCreatePage}
         />
       )}
     </>

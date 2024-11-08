@@ -6,9 +6,9 @@ import SelectBox from '../ui/SelectBox';
 
 const ATTENDANCE_PEOPLE = ['1', '2', '3', '4', '5'];
 
-const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isCreate: boolean }> = ({ invitationId, onClick, isCreate }) => {
+const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isCreatePage: boolean }> = ({ invitationId, onClick, isCreatePage }) => {
   const { selected, handleSelection, register, setValue, watch, handleSubmit, handleAttendanceModalSubmit, errors } =
-    useAttendanceModal(invitationId, onClick, isCreate);
+    useAttendanceModal(invitationId, onClick, isCreatePage);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';

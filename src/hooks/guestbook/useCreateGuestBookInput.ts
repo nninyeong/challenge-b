@@ -5,7 +5,7 @@ import useAddGuestBookEntry from './useCreateGuestBookEntry';
 import { GuestBookFormData } from '@/types/guestInfo.types';
 import { Notify } from 'notiflix';
 
-const useCreateGuestBookInput = (invitationId: string, isCreate: boolean) => {
+const useCreateGuestBookInput = (invitationId: string, isCreatePage: boolean) => {
   const {
     register,
     handleSubmit,
@@ -21,7 +21,7 @@ const useCreateGuestBookInput = (invitationId: string, isCreate: boolean) => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    if (isCreate) {
+    if (isCreatePage) {
       Notify.info('제작페이지에서는 작성하실 수 없습니다.');
       return;
     }

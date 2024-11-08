@@ -6,7 +6,7 @@ import { Notify } from 'notiflix';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-const useAttendanceModal = (invitationId: string, closeModal: () => void, isCreate: boolean) => {
+const useAttendanceModal = (invitationId: string, closeModal: () => void, isCreatePage: boolean) => {
   const {
     register,
     setValue,
@@ -30,7 +30,7 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void, isCrea
   };
 
   const handleAttendanceModalSubmit: SubmitHandler<AttendanceFormData> = async (data) => {
-    if (isCreate) {
+    if (isCreatePage) {
       Notify.info('제작 페이지에서는 참석여부 작성이 불가능합니다');
       return;
     }

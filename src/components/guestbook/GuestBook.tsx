@@ -10,7 +10,7 @@ import GuestBookPagination from './GuestBookPagination';
 const ITEMS_PER_PAGE = 6;
 
 const GuestBook = () => {
-  const { isCreate, invitationId } = useInvitationIdByPathname();
+  const { isCreatePage, invitationId } = useInvitationIdByPathname();
   const [page, setPage] = useState(1);
 
   const { data, isLoading, error } = useGuestBookEntries(invitationId, page);
@@ -24,7 +24,7 @@ const GuestBook = () => {
   return (
     <div>
       <div className='text-gray-600 text-center mb-6 tracking-[4px]'>GUEST BOOK</div>
-      <CreateGuestBook invitationId={invitationId} isCreate={isCreate} />
+      <CreateGuestBook invitationId={invitationId} isCreatePage={isCreatePage} />
 
       {guestBooks.length === 0 ? (
         <div className='text-black w-full px-4 mb-4'>
@@ -43,7 +43,7 @@ const GuestBook = () => {
               key={guestBook.guestbook_id}
               guestBook={guestBook}
               invitationId={invitationId}
-              isCreate={isCreate}
+              isCreatePage={isCreatePage}
             />
           ))}
         </div>
