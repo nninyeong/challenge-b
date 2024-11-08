@@ -28,6 +28,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { validationSchema } from '@/lib/zod/validationSchema';
 
 const DELAY_TIME: number = 300;
+const AUTO_SAVE_INTERVAL: number = 180000;
 
 const CreateCardPage = () => {
   const router = useRouter();
@@ -99,7 +100,7 @@ const CreateCardPage = () => {
   const handleDebouncedNext = debounce(async () => {
     const { data: user } = await browserClient.auth.getUser();
     const formData = methods.getValues();
-    
+
     if (methods.formState.errors.weddingInfo?.date?.message) {
       Notify.failure(methods.formState.errors.weddingInfo?.date?.message);
     }
@@ -173,6 +174,25 @@ const CreateCardPage = () => {
       isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
     }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
   };
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const { data: user } = await browserClient.auth.getUser();
+      const formData = methods.getValues();
+
+      if (!user.user) {
+        sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
+      } else {
+        if (existingInvitation === null) {
+          insertInvitation(formData);
+        } else {
+          updateInvitation(formData);
+        }
+      }
+    }, AUTO_SAVE_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [existingInvitation]);
 
   useEffect(() => {
     setOrderList(
