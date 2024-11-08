@@ -26,14 +26,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
     const path = usePathname();
 
     return (
-      <div className='w-full flex flex-col justify-center item-center mx-auto mt-[72px] mb-[59px] text-center text-black'>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
-          }}
-          className='text-center leading-9 mb-4'
-        />
-
+      <div className='w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center text-black'>
         <div
           ref={previewRef}
           className={`flex justify-center items-center w-full overflow-hidden ${mainView.type === 'fill' ? 'px-0' : 'px-[20px]'} `}
