@@ -39,11 +39,12 @@ export default function RootLayout({
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAOAPP_KEY}&libraries=services&autoload=false`}
           strategy='beforeInteractive'
         />
-        <InitClientSettings />
         <Providers>
           <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
             <div className='w-full h-full flex-1 bg-white'>
-              <DndProviderWrapper>{children}</DndProviderWrapper>
+              <DndProviderWrapper>
+                <InitClientSettings>{children}</InitClientSettings>
+              </DndProviderWrapper>
             </div>
             <div id='modal'></div>
           </ReviewBottomSheetProvider>

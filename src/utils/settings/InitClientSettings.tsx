@@ -8,7 +8,11 @@ const setScreenHeight = () => {
   document.documentElement.style.setProperty('--vh', `${screenHeight}px`);
 };
 
-const InitClientSettings = () => {
+const InitClientSettings = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
   useEffect(() => {
     Notify.init(NOTIFLIX_INIT_VALUES);
 
@@ -18,7 +22,7 @@ const InitClientSettings = () => {
     return () => window.removeEventListener('resize', setScreenHeight);
   }, []);
 
-  return null;
+  return <>{children}</>;
 };
 
 export default InitClientSettings;
