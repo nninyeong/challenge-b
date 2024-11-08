@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import Providers from '@/app/provider';
-import Header from '@/components/layouts/Header';
-import Footer from '@/components/layouts/Footer';
 import Script from 'next/script';
 import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 import { ReviewBottomSheetProvider } from '@/provider/reviewBottomSheetProvider';
@@ -44,12 +42,10 @@ export default function RootLayout({
         <SetScreenHeight />
         <Providers>
           <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
-            <Header />
-            <main className='w-full h-full flex-1 bg-white'>
+            <div className='w-full h-full flex-1 bg-white'>
               <DndProviderWrapper>{children}</DndProviderWrapper>
-            </main>
+            </div>
             <div id='modal'></div>
-            <Footer />
           </ReviewBottomSheetProvider>
         </Providers>
       </body>
