@@ -20,17 +20,17 @@ const useStickerMove = ({
   setValue,
   onActivate,
 }: UseStickerMovementProps) => {
-  const touchOffset = useRef({ x: 0, y: 0 });
+  const offset = useRef({ x: 0, y: 0 });
 
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
     if (!previewRef.current) return;
 
     const touch = e.touches[0];
-    const currentSticker = e.currentTarget.getBoundingClientRect();
+    const stickerBounds = e.currentTarget.getBoundingClientRect();
 
-    touchOffset.current = {
-      x: touch.clientX - currentSticker.left,
-      y: touch.clientY - currentSticker.top,
+    offset.current = {
+      x: touch.clientX - stickerBounds.left,
+      y: touch.clientY - stickerBounds.top,
     };
 
     onActivate(null);
@@ -44,7 +44,7 @@ const useStickerMove = ({
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.touches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
+    const { relativeX, relativeY } = calculateRelativePosition(touch, offset, previewRef, stickerRef);
 
     requestAnimationFrame(() => {
       stickerRef.current!.style.left = `${relativeX}%`;
@@ -56,7 +56,7 @@ const useStickerMove = ({
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.changedTouches[0];
-    const { relativeX, relativeY } = calculateRelativePosition(touch, touchOffset, previewRef, stickerRef);
+    const { relativeX, relativeY } = calculateRelativePosition(touch, offset, previewRef, stickerRef);
 
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) return { ...sticker, posX: relativeX, posY: relativeY };
@@ -70,8 +70,53 @@ const useStickerMove = ({
     document.removeEventListener('touchend', handleTouchEnd);
   };
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!stickerRef.current || !previewRef.current) return;
+
+    const stickerBounds = e.currentTarget.getBoundingClientRect();
+    offset.current = {
+      x: e.clientX - stickerBounds.left,
+      y: e.clientY - stickerBounds.top,
+    };
+
+    onActivate(null);
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!stickerRef.current || !previewRef.current) return;
+
+    const { relativeX, relativeY } = calculateRelativePosition(e, offset, previewRef, stickerRef);
+
+    requestAnimationFrame(() => {
+      stickerRef.current!.style.left = `${relativeX}%`;
+      stickerRef.current!.style.top = `${relativeY}%`;
+    });
+  };
+
+  const handleMouseUp = (e: MouseEvent) => {
+    if (!previewRef.current || !stickerRef.current) return;
+
+    const { relativeX, relativeY } = calculateRelativePosition(e, offset, previewRef, stickerRef);
+
+    const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
+      if (stickerItem.id === sticker.id) return { ...sticker, posX: relativeX, posY: relativeY };
+      else return stickerItem;
+    });
+
+    setValue('stickers', [...updatedSticker]);
+    onActivate(sticker.id);
+
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  };
+
   return {
     handleTouchStart,
+    handleMouseDown,
   };
 };
 

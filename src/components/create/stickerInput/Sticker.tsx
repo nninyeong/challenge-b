@@ -23,7 +23,14 @@ const Sticker = ({
   }) as StickerType[];
   const stickerRef = useRef<HTMLDivElement | null>(null);
   const isActive = activeStickerId === sticker.id; // 상위 컴포넌트에서 활성화된 스티커가 하나이도록 관리할 거기 때문에 상위에서 받아서 해당 컴포넌트의 아이디와 비교하는 것이 적합하다고 생각
-  const { handleTouchStart } = useStickerMove({ sticker, previewRef, stickerRef, stickersWatch, setValue, onActivate });
+  const { handleTouchStart, handleMouseDown } = useStickerMove({
+    sticker,
+    previewRef,
+    stickerRef,
+    stickersWatch,
+    setValue,
+    onActivate,
+  });
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent | TouchEvent) => {
@@ -59,6 +66,7 @@ const Sticker = ({
         alt={sticker.stickerImageId}
         className='w-full h-full touch-none'
         onTouchStart={handleTouchStart}
+        onMouseDown={handleMouseDown}
       />
     </div>
   );
