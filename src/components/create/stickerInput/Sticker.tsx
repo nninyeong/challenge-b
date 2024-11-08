@@ -209,6 +209,8 @@ const Sticker = ({
           position: 'absolute',
           top: `${sticker.posY}%`,
           left: `${sticker.posX}%`,
+          width: `${sticker.width}`,
+          height: `${sticker.height}`,
           transform: `rotate(${sticker.rotation}deg)`,
         }}
       >
@@ -241,7 +243,6 @@ const Sticker = ({
             <img
               src={sticker.url}
               alt={sticker.stickerImageId}
-              style={{ width: sticker.width, height: sticker.height }}
               className={`${isActive && 'border-[1px] border-primary-300'} w-full h-full`}
               onTouchStart={handleTouchStart}
               onTouchEnd={handleTouchEnd}
