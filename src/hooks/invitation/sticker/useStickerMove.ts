@@ -1,4 +1,4 @@
-import { FieldValue, FieldValues, UseFormSetValue } from 'react-hook-form';
+import { FieldValues, UseFormSetValue } from 'react-hook-form';
 import { StickerType } from '@/types/invitationFormType.type';
 import { useRef } from 'react';
 import { calculateRelativePosition } from '@/utils/calculate/calculateRelativePosition';
