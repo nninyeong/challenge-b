@@ -25,7 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html
+      lang='en'
+      className='overflow-x-hidden'
+    >
       <head>
         <meta
           name='viewport'
@@ -33,7 +36,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] max-w-[${MOBILE_VIEW_WIDTH}] mx-auto bg-gray-100 overflow-x-hidden`}
+        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] max-w-[${MOBILE_VIEW_WIDTH}] mx-auto bg-gray-100`}
       >
         <Script
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAOAPP_KEY}&libraries=services&autoload=false`}

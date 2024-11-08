@@ -30,7 +30,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
     const day = getDayOfWeek(weddingInfo.date)[0];
 
     return (
-      <div className='w-full flex flex-col justify-center item-center mx-auto mt-[72px] mb-[59px] text-center text-black'>
+      <div className='overflow-hidden w-full flex flex-col justify-center item-center mx-auto mt-[72px] mb-[59px] text-center text-black'>
         <div
           dangerouslySetInnerHTML={{
             __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
