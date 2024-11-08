@@ -7,7 +7,6 @@ import { forwardRef, useRef, useState } from 'react';
 import { InvitationFormType, StickerType } from '@/types/invitationFormType.type';
 import { usePathname } from 'next/navigation';
 import StickerOnSharedCard from '@/components/card/StickerOnSharedCard';
-import { getDayOfWeek } from '@/utils/date/getDayOfWeek';
 
 const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
   e.preventDefault();
