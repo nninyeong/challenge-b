@@ -28,7 +28,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { validationSchema } from '@/lib/zod/validationSchema';
 
 const DELAY_TIME: number = 300;
-const AUTO_SAVE_INTERVAL: number = 300000;
+const AUTO_SAVE_INTERVAL: number = 120000;
 
 const CreateCardPage = () => {
   const router = useRouter();
@@ -48,6 +48,7 @@ const CreateCardPage = () => {
   const [inputIndex, setInputIndex] = useState<number>(0);
   const [isRendered, setIsRendered] = useState<boolean>(false);
   const [orderList, setOrderList] = useState(() => INITIAL_ORDER(methods));
+  const [prevFormData, setPrevFormData] = useState(methods.getValues());
   const renderOrderList = useWatch({ control: methods.control, name: 'renderOrder' });
   const sortedOrderListWithRenderOrder = orderList.sort((a, b) => {
     const orderA = renderOrderList.find((item) => item.typeOnSharedCard === a.typeOnSharedCard)?.order;
@@ -179,20 +180,28 @@ const CreateCardPage = () => {
     const interval = setInterval(async () => {
       const { data: user } = await browserClient.auth.getUser();
       const formData = methods.getValues();
+      const isInvitationModified = JSON.stringify(formData) !== JSON.stringify(prevFormData);
+      console.log(formData);
 
-      if (!user.user) {
-        sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
-      } else {
-        if (existingInvitation === null) {
-          insertInvitation(formData);
+      console.log(isInvitationModified);
+
+      if (isInvitationModified) {
+        if (!user.user) {
+          sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
         } else {
-          updateInvitation(formData);
+          if (existingInvitation === null) {
+            insertInvitation(formData);
+          } else {
+            updateInvitation(formData);
+          }
         }
+
+        setPrevFormData(formData);
       }
     }, AUTO_SAVE_INTERVAL);
 
     return () => clearInterval(interval);
-  }, [existingInvitation]);
+  }, [existingInvitation, methods]);
 
   useEffect(() => {
     setOrderList(
