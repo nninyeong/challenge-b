@@ -44,6 +44,7 @@ const Sticker = ({
   return (
     <div
       ref={stickerRef}
+      className={`${isActive && 'border-[1px] border-primary-300'} box-content`}
       style={{
         position: 'absolute',
         top: `${sticker.posY}%`,
@@ -56,7 +57,7 @@ const Sticker = ({
       <img
         src={sticker.url}
         alt={sticker.stickerImageId}
-        className={`${isActive && 'border-[1px] border-primary-300'} w-full h-full touch-none`}
+        className='w-full h-full touch-none'
         onTouchStart={handleTouchStart}
       />
     </div>
