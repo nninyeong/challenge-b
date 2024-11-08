@@ -12,9 +12,7 @@ type Props = {
 
 const EventStatus = (props: Props) => {
   return (
-    <div
-      className={`w-full flex justify-between text-primary300`}
-    >
+    <div className={`w-full flex justify-between text-primary300`}>
       <div className='flex flex-col gap-2'>
         <div className='flex gap-2 font-bold'>
           <span>{props.leftName}</span>
