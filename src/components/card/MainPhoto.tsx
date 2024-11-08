@@ -14,20 +14,16 @@ const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
   e.stopPropagation();
 };
 
-type MainPhotoPropType = Pick<
-  InvitationFormType,
-  'mainPhotoInfo' | 'bgColor' | 'mainView' | 'stickers' | 'weddingInfo'
->;
+type MainPhotoPropType = Pick<InvitationFormType, 'mainPhotoInfo' | 'bgColor' | 'mainView' | 'stickers'>;
 
 const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
-  ({ mainPhotoInfo, bgColor, mainView, stickers, weddingInfo }, ref) => {
+  ({ mainPhotoInfo, bgColor, mainView, stickers }, ref) => {
     const previewRef = useRef<HTMLDivElement | null>(null);
     const [activeStickerId, setActiveStickerId] = useState<string | null>(null);
     const handleActiveSticker = (id: string | null) => {
       setActiveStickerId(id);
     };
     const path = usePathname();
-    const day = getDayOfWeek(weddingInfo.date)[0];
 
     return (
       <div className='w-full flex flex-col justify-center item-center mx-auto mt-[72px] mb-[59px] text-center text-black'>
@@ -90,10 +86,12 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
         </div>
 
         <div className='text-[16px] text-gray-700 flex flex-col'>
-          <p>
-            {weddingInfo.date} {day} {weddingInfo.time.hour}:{weddingInfo.time.minute}
-          </p>
-          <p>{weddingInfo.weddingHallName}</p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
+            }}
+            className='text-center leading-9 mb-4'
+          />
         </div>
       </div>
     );
