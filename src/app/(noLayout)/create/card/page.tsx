@@ -28,7 +28,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { validationSchema } from '@/lib/zod/validationSchema';
 
 const DELAY_TIME: number = 300;
-const AUTO_SAVE_INTERVAL: number = 180000;
+const AUTO_SAVE_INTERVAL: number = 300000;
 
 const CreateCardPage = () => {
   const router = useRouter();
