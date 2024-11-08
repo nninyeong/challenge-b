@@ -5,7 +5,7 @@ import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathn
 import AttendanceModal from './AttendanceModal';
 
 const PreviewShowAttendanceModal = () => {
-  const { invitationId } = useInvitationIdByPathname();
+  const { isCreate, invitationId } = useInvitationIdByPathname();
   const { showModal, toggleModal } = useAttendanceContext();
 
   return (
@@ -14,6 +14,7 @@ const PreviewShowAttendanceModal = () => {
         <AttendanceModal
           invitationId={invitationId}
           onClick={toggleModal}
+          isCreate={isCreate}
         />
       )}
     </>

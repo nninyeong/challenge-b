@@ -1,12 +1,12 @@
-import { attendanceSchema } from "@/lib/zod/attendanceSchema";
-import { AttendanceFormData } from "@/types/guestInfo.types";
-import browserClient from "@/utils/supabase/client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Notify } from "notiflix";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { attendanceSchema } from '@/lib/zod/attendanceSchema';
+import { AttendanceFormData } from '@/types/guestInfo.types';
+import browserClient from '@/utils/supabase/client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Notify } from 'notiflix';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
+const useAttendanceModal = (invitationId: string, closeModal: () => void, isCreate: boolean) => {
   const {
     register,
     setValue,
@@ -30,6 +30,11 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
   };
 
   const handleAttendanceModalSubmit: SubmitHandler<AttendanceFormData> = async (data) => {
+    if (isCreate) {
+      Notify.info('제작 페이지에서는 참석여부 작성이 불가능합니다');
+      return;
+    }
+
     const { personType, mealOption, name, attendanceCount } = data;
 
     const { error } = await browserClient.from('attendance').insert([
@@ -59,8 +64,8 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void) => {
     watch,
     handleAttendanceModalSubmit,
     handleSelection,
-    errors
-  }
-}
+    errors,
+  };
+};
 
 export default useAttendanceModal;

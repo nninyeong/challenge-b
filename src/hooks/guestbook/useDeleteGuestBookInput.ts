@@ -7,6 +7,7 @@ const useDeleteGuestBookInput = (
   id: string | null,
   signedPassword: string | null,
   onClose: () => void,
+  isCreate: boolean
 ) => {
   const [password, setPassword] = useState('');
   const { mutate: deleteGuestBookEntry } = useDeleteGuestBookEntry(invitationId, id, signedPassword, onClose);
@@ -20,6 +21,9 @@ const useDeleteGuestBookInput = (
 
     if (!password.trim()) {
       Notify.failure('패스워드를 입력해주세요.');
+      return;
+    } else if(isCreate) {
+      Notify.info('제작페이지에서는 삭제가 불가능합니다.');
       return;
     }
 
