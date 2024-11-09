@@ -4,6 +4,7 @@ import { StickerType } from '@/types/invitationFormType.type';
 import { MutableRefObject, useEffect, useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import useStickerMove from '@/hooks/invitation/sticker/useStickerMove';
+import useStickerRotation from '@/hooks/invitation/sticker/useStickerRotation';
 
 const Sticker = ({
   sticker,
@@ -30,6 +31,14 @@ const Sticker = ({
     stickersWatch,
     setValue,
     onActivate,
+  });
+
+  const { handleTouchRotationStart } = useStickerRotation({
+    sticker,
+    stickerRef,
+    stickersWatch,
+    setValue,
+    isActive,
   });
 
   useEffect(() => {
@@ -61,6 +70,22 @@ const Sticker = ({
         transform: `rotate(${sticker.rotation}deg)`,
       }}
     >
+      {isActive && (
+        <>
+          <div
+            className='absolute top-[-3px] left-[-3px] bg-primary-300 w-[12px] h-[12px] rounded-[8px] touch-none'
+            onTouchStart={handleTouchRotationStart}
+          ></div>
+          <div
+            className='absolute bottom-[-3px] left-[-3px] bg-primary-300 w-[12px] h-[12px] rounded-[8px] touch-none'
+            onTouchStart={handleTouchRotationStart}
+          ></div>
+          <div
+            className='absolute bottom-[-3px] right-[-3px] bg-primary-300 w-[12px] h-[12px] rounded-[8px] touch-none'
+            onTouchStart={handleTouchRotationStart}
+          ></div>
+        </>
+      )}
       <img
         src={sticker.url}
         alt={sticker.stickerImageId}
