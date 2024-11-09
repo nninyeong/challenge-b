@@ -63,23 +63,12 @@ const useStickerRotation = ({ sticker, stickerRef, stickersWatch, setValue, isAc
     const scaleFactor = currentDistance / startDistanceRef.current;
     const updatedScale = initialScaleRef.current * scaleFactor;
 
-    requestAnimationFrame(() => {
-      if (!stickerRef.current) return;
-      stickerRef.current.style.transform = `rotate(${updatedRotation}deg) scale(${updatedScale})`;
-    });
-  };
-
-  const handleTouchRotationEnd = (e: TouchEvent) => {
-    e.stopPropagation();
-    if (!isActive || !stickerRef.current) return;
-
-    const rotation = calculateComponentRotation(stickerRef); // 최종 회전값 계산
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) {
         return {
           ...sticker,
-          rotation,
-          scale: parseFloat(stickerRef.current?.style.transform.match(/scale\(([^)]+)\)/)?.[1] || '1'),
+          rotation: updatedRotation,
+          scale: updatedScale,
         };
       } else {
         return stickerItem;
@@ -87,6 +76,11 @@ const useStickerRotation = ({ sticker, stickerRef, stickersWatch, setValue, isAc
     });
 
     setValue('stickers', [...updatedSticker]);
+  };
+
+  const handleTouchRotationEnd = (e: TouchEvent) => {
+    e.stopPropagation();
+
     document.removeEventListener('touchmove', handleTouchRotationMove);
     document.removeEventListener('touchend', handleTouchRotationEnd);
   };
