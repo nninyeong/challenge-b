@@ -60,14 +60,14 @@ const Sticker = ({
   return (
     <div
       ref={stickerRef}
-      className={`${isActive && 'border-[1px] border-primary-300'} box-content`}
+      className={`${isActive && 'border-[1px] border-primary-300'} box-content origin-center transform`}
       style={{
         position: 'absolute',
         top: `${sticker.posY}%`,
         left: `${sticker.posX}%`,
         width: `${sticker.width}px`,
         height: `${sticker.height}px`,
-        transform: `rotate(${sticker.rotation}deg)`,
+        transform: `rotate(${sticker.rotation}deg) scale(${sticker.scale ?? 1})`,
       }}
     >
       {isActive && (

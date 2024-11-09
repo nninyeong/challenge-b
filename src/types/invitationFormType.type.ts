@@ -76,6 +76,7 @@ export type StickerType = {
   width: number;
   height: number;
   rotation: number;
+  scale?: number;
 };
 
 export type DecorateImageType = {
