@@ -4,8 +4,9 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 const AccountInput = () => {
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
-  const [modalValue, setModalValue] = useState(''); // 모달 입력값 저장
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [modalValue, setModalValue] = useState('');
   const { register, control, setValue, watch } = useFormContext();
 
   const { fields: groomFields } = useFieldArray({
@@ -20,18 +21,23 @@ const AccountInput = () => {
 
   // 모달 열기
   const openModal = (index: number) => {
+    setSelectedIndex(index);
+    setModalValue(''); // 모달 열 때 초기화
     setIsModalOpen(true);
   };
 
   // 모달 닫기
   const closeModal = () => {
     setIsModalOpen(false);
-    setModalValue(''); // 초기화
+    setModalValue('');
+    setSelectedIndex(null);
   };
 
   // 모달의 값 설정 후 닫기
-  const handleModalSubmit = (index: number) => {
-    setValue(`account.${accountType}[${index}].kakaopay`, modalValue); // 모달에서 입력한 값을 설정
+  const handleModalSubmit = () => {
+    if (selectedIndex !== null) {
+      setValue(`account.${accountType}[${selectedIndex}].kakaopay`, modalValue); // 선택된 인덱스의 kakaoPay 필드에 저장
+    }
     closeModal();
   };
 
@@ -83,7 +89,7 @@ const AccountInput = () => {
 
       <div className='w-[311px]'>
         {(accountType === 'groom' ? groomFields : brideFields).map((field, index) => {
-          const kakaopayValue = watch(`account.${accountType}[${index}].kakaopay`); // kakaoPay 상태값 감시
+          const kakaopayValue = watch(`account.${accountType}[${index}].kakaopay`);
 
           return (
             <div
@@ -111,7 +117,7 @@ const AccountInput = () => {
                 />
                 <button
                   type='button'
-                  onClick={() => openModal(index)}
+                  onClick={() => openModal(index)} // 모달 열기
                 >
                   <img
                     src={
@@ -129,21 +135,28 @@ const AccountInput = () => {
       </div>
 
       {/* 모달 */}
-      {/* {isModalOpen && (
-        <div className='modal'>
-          <div className='modal-content'>
-            <h2>카카오페이 정보 입력</h2>
+      {isModalOpen && (
+        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+          <div className='bg-white p-4 rounded-md'>
+            <h2 className='text-lg font-bold mb-4'>카카오페이 정보 입력</h2>
             <input
               type='text'
               value={modalValue}
               onChange={(e) => setModalValue(e.target.value)}
               placeholder='카카오페이 정보 입력'
+              className='w-full px-4 py-2 mb-4 border rounded'
             />
-            <button onClick={() => handleModalSubmit(index)}>저장</button>
-            <button onClick={closeModal}>취소</button>
+            <div className='flex justify-end gap-2'>
+              <button onClick={closeModal} className='px-4 py-2 bg-gray-300 rounded'>
+                취소
+              </button>
+              <button onClick={handleModalSubmit} className='px-4 py-2 bg-blue-500 text-white rounded'>
+                저장
+              </button>
+            </div>
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 };
