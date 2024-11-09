@@ -73,15 +73,30 @@ const Sticker = ({
       {isActive && (
         <>
           <div
-            className='absolute top-[-3px] left-[-3px] bg-primary-300 w-[12px] h-[12px] rounded-[8px] touch-none'
+            className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
+            style={{
+              top: '-3px', // 핸들러의 중점이 부모의 모서리에 위치하도록 설정
+              left: '-3px',
+              transform: `scale(${1 / (sticker.scale ?? 1)})`, // 역 scale 적용으로 크기 고정
+            }}
             onTouchStart={handleTouchRotationStart}
           ></div>
           <div
-            className='absolute bottom-[-3px] left-[-3px] bg-primary-300 w-[12px] h-[12px] rounded-[8px] touch-none'
+            className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
+            style={{
+              bottom: '-3px',
+              left: '-3px',
+              transform: `scale(${1 / (sticker.scale ?? 1)})`,
+            }}
             onTouchStart={handleTouchRotationStart}
           ></div>
           <div
-            className='absolute bottom-[-3px] right-[-3px] bg-primary-300 w-[12px] h-[12px] rounded-[8px] touch-none'
+            className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
+            style={{
+              bottom: '-3px',
+              right: '-3px',
+              transform: `scale(${1 / (sticker.scale ?? 1)})`,
+            }}
             onTouchStart={handleTouchRotationStart}
           ></div>
         </>
