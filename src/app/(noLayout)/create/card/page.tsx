@@ -28,7 +28,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { validationSchema } from '@/lib/zod/validationSchema';
 
 const DELAY_TIME: number = 300;
-const AUTO_SAVE_INTERVAL: number = 120000;
+const DELAY_TIME2: number = 3000;
 
 const CreateCardPage = () => {
   const router = useRouter();
@@ -48,7 +48,6 @@ const CreateCardPage = () => {
   const [inputIndex, setInputIndex] = useState<number>(0);
   const [isRendered, setIsRendered] = useState<boolean>(false);
   const [orderList, setOrderList] = useState(() => INITIAL_ORDER(methods));
-  const [prevFormData, setPrevFormData] = useState(methods.getValues());
   const renderOrderList = useWatch({ control: methods.control, name: 'renderOrder' });
   const sortedOrderListWithRenderOrder = orderList.sort((a, b) => {
     const orderA = renderOrderList.find((item) => item.typeOnSharedCard === a.typeOnSharedCard)?.order;
@@ -56,7 +55,7 @@ const CreateCardPage = () => {
 
     return (orderA ?? a.order) - (orderB ?? b.order);
   });
-
+  const prevFormDataRef = useRef<string>('');
   const refs = useRef<null[] | HTMLDivElement[]>([]);
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
     refs,
@@ -136,6 +135,38 @@ const CreateCardPage = () => {
     }
   }, DELAY_TIME);
 
+  const handleDebouncedSave = debounce(async () => {
+    const { data: user } = await browserClient.auth.getUser();
+    const formData = methods.getValues();
+
+    const isInvitationModified = JSON.stringify(formData) !== prevFormDataRef.current;
+
+    if (isInvitationModified) {
+      if (!user.user) {
+        sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
+        console.log('추가');
+      } else {
+        if (existingInvitation === null) {
+          insertInvitation(formData);
+          console.log('추가');
+        } else {
+          updateInvitation(formData);
+          console.log('추가');
+        }
+      }
+      prevFormDataRef.current = JSON.stringify(formData);
+    }
+  }, DELAY_TIME2);
+
+  const subscribeEveryValues = () => {
+    const subscription = methods.watch((value) => {
+      if (value) {
+        handleDebouncedSave();
+      }
+      return () => subscription.unsubscribe();
+    });
+  };
+
   const subscribeFont = () => {
     const subscriptionFont = methods.watch((value) => {
       const font = value?.mainPhotoInfo?.fontName;
@@ -175,33 +206,6 @@ const CreateCardPage = () => {
       isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
     }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
   };
-
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      const { data: user } = await browserClient.auth.getUser();
-      const formData = methods.getValues();
-      const isInvitationModified = JSON.stringify(formData) !== JSON.stringify(prevFormData);
-      console.log(formData);
-
-      console.log(isInvitationModified);
-
-      if (isInvitationModified) {
-        if (!user.user) {
-          sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
-        } else {
-          if (existingInvitation === null) {
-            insertInvitation(formData);
-          } else {
-            updateInvitation(formData);
-          }
-        }
-
-        setPrevFormData(formData);
-      }
-    }, AUTO_SAVE_INTERVAL);
-
-    return () => clearInterval(interval);
-  }, [existingInvitation, methods]);
 
   useEffect(() => {
     setOrderList(
@@ -260,6 +264,7 @@ const CreateCardPage = () => {
   }, [existingInvitation, reset]);
 
   useEffect(() => {
+    subscribeEveryValues();
     subscribeBackgroundColor();
     subscribeFont();
   }, [methods]);
