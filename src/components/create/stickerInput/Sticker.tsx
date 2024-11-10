@@ -57,6 +57,11 @@ const Sticker = ({
     };
   }, [activeStickerId]);
 
+  const handleDeleteSticker = () => {
+    const filteredStickers = stickersWatch.filter((previousSticker) => previousSticker.id !== sticker.id);
+    setValue('stickers', filteredStickers);
+  };
+
   return (
     <div
       ref={stickerRef}
@@ -72,12 +77,21 @@ const Sticker = ({
     >
       {isActive && (
         <>
+          <button
+            className={`absolute bg-x-circle-contained top-[-12px] right-[-12px] w-[24px] h-[24px] z-10`}
+            style={{
+              top: '-6px',
+              right: '-6px',
+              transform: `scale(${1 / (sticker.scale ?? 1)})`,
+            }}
+            onClick={handleDeleteSticker}
+          ></button>
           <div
             className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
             style={{
-              top: '-3px', // 핸들러의 중점이 부모의 모서리에 위치하도록 설정
+              top: '-3px',
               left: '-3px',
-              transform: `scale(${1 / (sticker.scale ?? 1)})`, // 역 scale 적용으로 크기 고정
+              transform: `scale(${1 / (sticker.scale ?? 1)})`,
             }}
             onTouchStart={handleTouchTransformStart}
             onMouseDown={handleMouseTransformStart}
