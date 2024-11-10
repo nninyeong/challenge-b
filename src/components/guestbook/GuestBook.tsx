@@ -11,7 +11,7 @@ import { useFontStore } from '@/store/useFontStore';
 const ITEMS_PER_PAGE = 6;
 
 const GuestBook = () => {
-  const { invitationId } = useInvitationIdByPathname();
+  const { isCreatePage, invitationId } = useInvitationIdByPathname();
   const [page, setPage] = useState(1);
   const fontSize = useFontStore((state) => state.fontSize);
   const { data, isLoading, error } = useGuestBookEntries(invitationId, page);
@@ -54,6 +54,7 @@ const GuestBook = () => {
               key={guestBook.guestbook_id}
               guestBook={guestBook}
               invitationId={invitationId}
+              isCreatePage={isCreatePage}
             />
           ))}
         </div>

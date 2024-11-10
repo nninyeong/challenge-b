@@ -5,7 +5,15 @@ import DeleteGuestBookAccordion from '@/components/guestbook/DeleteGuestBookAcco
 import useGuestBookDeleteButton from '@/hooks/guestbook/useGuestBookDeleteButton';
 import convertToUserTimezone from '@/utils/date/dayToKst';
 import { useFontStore } from '@/store/useFontStore';
-const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry; invitationId: string }) => {
+const GuestBookCard = ({
+  guestBook,
+  invitationId,
+  isCreatePage,
+}: {
+  guestBook: GuestBookEntry;
+  invitationId: string;
+  isCreatePage: boolean;
+}) => {
   const { isAccordionOpen, toggleAccordion } = useGuestBookDeleteButton();
   const { year, month, day, hour, minute } = convertToUserTimezone(guestBook.created_at);
   const fontSize = useFontStore((state) => state.fontSize);
@@ -40,6 +48,7 @@ const GuestBookCard = ({ guestBook, invitationId }: { guestBook: GuestBookEntry;
               id={guestBook.guestbook_id}
               signedPassword={guestBook.password}
               onClose={toggleAccordion}
+              isCreatePage={isCreatePage}
             />
           )}
         </div>

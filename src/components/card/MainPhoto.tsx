@@ -15,33 +15,22 @@ const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
   e.stopPropagation();
 };
 
-type MainPhotoPropType = Pick<
-  InvitationFormType,
-  'mainPhotoInfo' | 'bgColor' | 'mainView' | 'stickers' | 'weddingInfo'
->;
+type MainPhotoPropType = Pick<InvitationFormType, 'mainPhotoInfo' | 'bgColor' | 'mainView' | 'stickers'>;
 
 const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
-  ({ mainPhotoInfo, bgColor, mainView, stickers, weddingInfo }, ref) => {
+  ({ mainPhotoInfo, bgColor, mainView, stickers }, ref) => {
     const previewRef = useRef<HTMLDivElement | null>(null);
     const [activeStickerId, setActiveStickerId] = useState<string | null>(null);
     const handleActiveSticker = (id: string | null) => {
       setActiveStickerId(id);
     };
     const path = usePathname();
-    const day = getDayOfWeek(weddingInfo.date)[0];
     const fontSize = useFontStore((state) => state.fontSize);
     return (
       <div
         style={{ fontSize: `${16 + fontSize}px` }}
-        className='w-full flex flex-col justify-center item-center mx-auto mt-[72px] mb-[59px] text-center text-black'
+        className='w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center text-black'
       >
-        <div
-          dangerouslySetInnerHTML={{
-            __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
-          }}
-          className='text-center leading-9 mb-4'
-        />
-
         <div
           ref={previewRef}
           className={`flex justify-center items-center w-full overflow-hidden ${mainView.type === 'fill' ? 'px-0' : 'px-[20px]'} `}
@@ -93,11 +82,13 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
           <p className='flex-1 text-left whitespace-nowrap pl-4'>{mainPhotoInfo?.rightName || '우측 이름'}</p>
         </div>
 
-        <div className=' text-gray-700 flex flex-col'>
-          <p>
-            {weddingInfo.date} {day} {weddingInfo.time.hour}:{weddingInfo.time.minute}
-          </p>
-          <p>{weddingInfo.weddingHallName}</p>
+        <div className='text-[16px] text-gray-700 flex flex-col'>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
+            }}
+            className='text-center leading-9 mb-4'
+          />
         </div>
       </div>
     );

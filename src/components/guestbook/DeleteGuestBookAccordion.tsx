@@ -7,17 +7,20 @@ const DeleteGuestBookAccordion = ({
   id,
   signedPassword,
   onClose,
+  isCreatePage
 }: {
   invitationId: string;
   id: string | null;
   signedPassword: string | null;
   onClose: () => void;
+  isCreatePage: boolean;
 }) => {
   const { password, handlePasswordChange, handleGuestBookDelete } = useDeleteGuestBookInput(
     invitationId,
     id,
     signedPassword,
     onClose,
+    isCreatePage
   );
 
   return (
