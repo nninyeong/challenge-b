@@ -6,13 +6,14 @@ import GuestBookCard from './GuestBookCard';
 import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathname';
 import { useState } from 'react';
 import GuestBookPagination from './GuestBookPagination';
+import { useFontStore } from '@/store/useFontStore';
 
 const ITEMS_PER_PAGE = 6;
 
 const GuestBook = () => {
   const { invitationId } = useInvitationIdByPathname();
   const [page, setPage] = useState(1);
-
+  const fontSize = useFontStore((state) => state.fontSize);
   const { data, isLoading, error } = useGuestBookEntries(invitationId, page);
   const guestBooks = data?.data ?? [];
   const total = data?.total ?? 0;
@@ -23,7 +24,12 @@ const GuestBook = () => {
 
   return (
     <div>
-      <div className='text-gray-600 text-center mb-6 tracking-[4px]'>GUEST BOOK</div>
+      <div
+        style={{ fontSize: `${16 + fontSize}px` }}
+        className='text-gray-600 text-center mb-6 tracking-[4px]'
+      >
+        GUEST BOOK
+      </div>
       <CreateGuestBook invitationId={invitationId} />
 
       {guestBooks.length === 0 ? (
@@ -33,7 +39,12 @@ const GuestBook = () => {
               src='/assets/images/empty-guestbook.svg'
               alt=''
             />
-            <span className='text-gray-700 text-[14px]'>아직 남긴 방명록이 없어요.</span>
+            <span
+              style={{ fontSize: `${14 + fontSize}px` }}
+              className='text-gray-700 '
+            >
+              아직 남긴 방명록이 없어요.
+            </span>
           </div>
         </div>
       ) : (

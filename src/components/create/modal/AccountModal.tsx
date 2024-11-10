@@ -1,6 +1,6 @@
 import { AccountType } from '@/types/accountType.type';
 import AccountModalPersonalBox from '../AccountModalPersonalBox';
-
+import { useFontStore } from '@/store/useFontStore';
 const AccountModal = ({
   accounts,
   accountType,
@@ -10,8 +10,10 @@ const AccountModal = ({
   accountType: 'groom' | 'bride';
   setOpenAccountModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const fontSize = useFontStore((state) => state.fontSize);
   return (
     <div
+      style={{ fontSize: `calc(16px + ${fontSize}px)` }}
       className='w-[343px] h-[382px] inset-0 rounded-lg bg-white shadow-md 
     z-50 flex flex-col justify-center items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pb-[16px] pl-[16px] pr-[16px] pt-[24px]'
     >
@@ -23,7 +25,7 @@ const AccountModal = ({
         />
       </div>
       <div className='flex flex-col gap-[8px] mb-[16px] mt-[24px]'>
-        <p className='text-gray-900 font-semibold text-[16px]'>{accountType === 'groom' ? '신랑' : '신부'}혼주 계좌</p>
+        <p className='text-gray-900 font-semibold '>{accountType === 'groom' ? '신랑' : '신부'}혼주 계좌</p>
         <AccountModalPersonalBox
           accountData={accounts[1]}
           setOpenAccountModal={setOpenAccountModal}

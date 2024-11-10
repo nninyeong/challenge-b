@@ -1,13 +1,17 @@
 'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import PersonalInfoCard from '../create/preview/PersonalInfoCard';
+import { useFontStore } from '@/store/useFontStore';
 
 type PersonalInfoOnSharedCardPropsType = Pick<InvitationFormType, 'personalInfo'>;
 const PersonalInfoOnSharedCard = ({ personalInfo }: PersonalInfoOnSharedCardPropsType) => {
   const { bride, groom } = personalInfo;
-
+  const fontSize = useFontStore((state) => state.fontSize);
   return (
-    <div className='flex flex-col justify-center items-center gap-[30px] mb-[80px]'>
+    <div
+      style={{ fontSize: `${16 + fontSize}px` }}
+      className='flex flex-col justify-center items-center gap-[30px] mb-[80px]'
+    >
       <div className='flex gap-[50px]'>
         <div className='flex flex-col gap-[30px]'>
           <div className='flex flex-col justify-center items-center mb-[30px]'>

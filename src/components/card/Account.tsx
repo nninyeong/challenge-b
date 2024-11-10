@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { AccountType } from '@/types/accountType.type';
 import { createPortal } from 'react-dom';
 import AccountModal from '@/components/create/modal/AccountModal';
+import { useFontStore } from '@/store/useFontStore';
 
 type AccountPropType = Pick<InvitationFormType, 'account'>;
 const Account = ({ account }: AccountPropType) => {
@@ -28,13 +29,19 @@ const Account = ({ account }: AccountPropType) => {
       setAccountType('groom');
     }
   };
+
+  const fontSize = useFontStore((state) => state.fontSize);
+
   return (
     <div className='flex flex-col justify-center items-center mb-[80px]'>
-      <p className='text-xl'>{account.title ? account.title : '제목'}</p>
-      <p className=''>{account.content ? account.content : '내용'}</p>
-      <div className='flex flex-col gap-5 mt-5 w-full justify-center items-center'>
+      <p style={{ fontSize: ` ${20 + fontSize}px)` }}>{account.title ? account.title : '제목'}</p>
+      <p>{account.content ? account.content : '내용'}</p>
+      <div
+        className='flex flex-col gap-5 mt-5 w-full justify-center items-center'
+        style={{ fontSize: `${16 + fontSize}px` }}
+      >
         <button
-          className='rounded-full border-2 w-[343px] h-[48px]'
+          className='rounded-full border-2 w-[343px] h-[48px] '
           onClick={() => handleOpenAccountModal('groom')}
         >
           신랑 측 계좌번호

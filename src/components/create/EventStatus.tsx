@@ -1,5 +1,6 @@
 import AttendanceButton from '@/components/attendance/AttendanceButton';
 import DdayCounter from '@/components/ddaycounter/DdayCounter';
+import { useFontStore } from '@/store/useFontStore';
 
 type Props = {
   attendanceButton: boolean;
@@ -11,8 +12,10 @@ type Props = {
 };
 
 const EventStatus = (props: Props) => {
+  const fontSize = useFontStore((state) => state.fontSize);
   return (
     <div
+      style={{ fontSize: `${16 + fontSize}px` }}
       className={`w-full flex justify-between text-primary300`}
     >
       <div className='flex flex-col gap-2'>

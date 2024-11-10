@@ -22,6 +22,7 @@ import { COMPONENT_TYPES } from '@/constants/componentTypes';
 import RenderOrderInput from '@/components/create/RenderOrderInput';
 import BackgroundColorInput from '@/components/create/BackgroundColorInput';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
+import FontInput from '@/components/create/FontInput';
 
 export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
   return [
@@ -35,12 +36,14 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
         <StickerInput key={'sticker'} />,
         <MainViewInput key={'mainview'} />,
         <BackgroundColorInput key={'backgroundColor'} />,
+        <FontInput key={'fontInfo'} />,
       ],
       typeOnSharedCard: COMPONENT_TYPES.MAIN_PHOTO,
       labelForInput: '청첩장 대표이미지',
     },
+
     {
-      order: 1,
+      order: 2,
       name: ['청첩장 갤러리'],
       component: methods && <GalleryPreview control={methods.control} />,
       input: [<GalleryInput key={'guest'} />],
@@ -48,7 +51,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       labelForInput: '갤러리',
     },
     {
-      order: 2,
+      order: 3,
       name: ['인사말'],
       component: methods && <GreetingPreview control={methods.control} />,
       input: [<GreetingInput key={'greeting'} />],
@@ -56,7 +59,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       labelForInput: '인사말',
     },
     {
-      order: 3,
+      order: 4,
       name: ['개인 정보', '계좌 정보'],
       component: methods && [
         <PersonalInfoPreview
@@ -73,7 +76,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       labelForInput: '기본 정보',
     },
     {
-      order: 4,
+      order: 5,
       name: ['예식 일시', '교통수단 표시'],
       component: methods && [
         <WeddingInfoPreView
@@ -90,7 +93,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       labelForInput: '오시는 길',
     },
     {
-      order: 5,
+      order: 6,
       name: ['방명록'],
       component: methods && <GuestInfoPreview control={methods.control} />,
       input: [<GuestInfoInput key={'guest'} />],
@@ -98,7 +101,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       labelForInput: '방명록',
     },
     {
-      order: 6,
+      order: 7,
       name: ['순서변경'],
       component: null,
       input: [<RenderOrderInput key='renderOrder' />],

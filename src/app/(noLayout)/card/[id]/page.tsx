@@ -31,7 +31,7 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
   const userId = data?.user?.id;
 
   const { isPrivate, renderOrder, ...invitationData } = invitationFetchData;
-  const fontStyle = invitationFetchData.mainPhotoInfo.fontName;
+  const fontStyle = invitationFetchData.fontInfo.fontName;
   const bgColor = invitationFetchData.bgColor;
 
   const canView = userId === invitationData.userId || !isPrivate;

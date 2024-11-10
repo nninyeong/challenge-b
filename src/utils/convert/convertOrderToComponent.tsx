@@ -41,6 +41,7 @@ export const convertOrderToComponent = (
         key='mainPhoto-sharedCard'
       />
     ),
+
     [COMPONENT_TYPES.GREETING]: <Greeting greetingMessage={greetingMessage} />,
     [COMPONENT_TYPES.PERSONAL_INFO]: [
       <PersonalInfoOnSharedCard

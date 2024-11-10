@@ -1,4 +1,5 @@
 import { Notify } from 'notiflix';
+import { useFontStore } from '@/store/useFontStore';
 
 type PersonInfoCardProps = {
   label: string | null;
@@ -17,9 +18,12 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
       Notify.warning(DEFAULT_PHONE_NUMBER);
     }
   };
-
+  const fontSize = useFontStore((state) => state.fontSize);
   return (
-    <div className='flex flex-col justify-center items-center gap-2'>
+    <div
+      style={{ fontSize: `${16 + fontSize}px` }}
+      className='flex flex-col justify-center items-center gap-2'
+    >
       <div className='flex items-center gap-2'>
         <p className='text-center'>{label || DEFAULT_LABEL}</p>
         <p className='text-xl font-semibold'>{name || DEFAULT_NAME}</p>

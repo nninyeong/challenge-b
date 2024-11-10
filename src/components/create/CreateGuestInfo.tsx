@@ -12,7 +12,7 @@ const GuestInfo = ({ attendance, guestbook, dDay, weddingInfo, mainPhotoInfo }: 
     <>
       {guestbook && <GuestBook />}
       {attendance && dDay && (
-        <div className='ml-4 border border-gray-200 left-1/2 bottom-[16px] w-[343px] h-[67px] bg-white rounded-[12px] flex justify-between items-center px-[16px] py-[12px]'>
+        <div className='ml-4 border border-gray-200 left-1/2 bottom-[16px] w-[343px]  bg-white rounded-[12px] flex justify-between items-center px-[16px] py-[12px]'>
           <EventStatus
             attendanceButton={attendance}
             dDayCount={dDay}

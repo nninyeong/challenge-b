@@ -2,6 +2,7 @@
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import Image from 'next/image';
 import { getDayOfWeek } from '@/utils/date/getDayOfWeek';
+import { useFontStore } from '@/store/useFontStore';
 
 const DEFAULT_VALUES = {
   name: '예식장 이름을 입력해주세요.',
@@ -12,15 +13,24 @@ const DEFAULT_VALUES = {
 type WeddingInfoPropType = Pick<InvitationFormType, 'weddingInfo'>;
 const WeddingInfo = ({ weddingInfo }: WeddingInfoPropType) => {
   const day = getDayOfWeek(weddingInfo.date)[0];
-
+  const fontSize = useFontStore((state) => state.fontSize);
   return (
-    <div className='flex flex-col items-center gap-[24px] text-center mb-[24px]'>
-      <p className='text-gray-600 text-[16px] font-normal leading-[140%] tracking-[4px]'>INFORMATION</p>
-      <p className='text-gray-700 text-[20px] font-bold leading-[120%] tracking-[-0.04px]'>
+    <div
+      style={{ fontSize: `${16 + fontSize}px` }}
+      className='flex flex-col items-center gap-[24px] text-center mb-[24px]'
+    >
+      <p className='text-gray-600  font-normal leading-[140%] tracking-[4px]'>INFORMATION</p>
+      <p
+        style={{ fontSize: `${20 + fontSize}px` }}
+        className='text-gray-700  font-bold leading-[120%] tracking-[-0.04px]'
+      >
         {weddingInfo.date} {day} {weddingInfo.time.hour}:{weddingInfo.time.minute}
       </p>
-      <div className='text-gray-700 text-[16px] leading-[140%]'>
-        <p className='text-gray-800 text-[20px] leading-[120%] mb-[8px]'>
+      <div className='text-gray-700  leading-[140%]'>
+        <p
+          style={{ fontSize: `${20 + fontSize}px` }}
+          className='text-gray-800  leading-[120%] mb-[8px]'
+        >
           {weddingInfo.weddingHallName || DEFAULT_VALUES.name}
         </p>
         <p>{weddingInfo.weddingHallAddress || DEFAULT_VALUES.address}</p>
@@ -45,11 +55,11 @@ const WeddingInfo = ({ weddingInfo }: WeddingInfoPropType) => {
           <button className='flex justify-center items-center gap-[6px] border rounded-[300px] p-[16px] w-[96px] h-[40px]'>
             <Image
               src='/assets/images/icons/phone.svg'
-              alt=''
+              alt='phone'
               width={24}
               height={24}
             />
-            <span className='text-gray-600 text-[16px]'>전화</span>
+            <span>전화</span>
           </button>
         </a>
       </div>

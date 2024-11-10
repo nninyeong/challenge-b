@@ -41,6 +41,8 @@ const CreateCardPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
+  const [fontColor, setFontColor] = useState<string>('black');
+  const [fontSize, setFontSize] = useState<number>(0);
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const [toggleInput, setToggleInput] = useToggle();
   const [nameIndex, setNameIndex] = useState<number>(0);
@@ -99,7 +101,7 @@ const CreateCardPage = () => {
   const handleDebouncedNext = debounce(async () => {
     const { data: user } = await browserClient.auth.getUser();
     const formData = methods.getValues();
-    
+
     if (methods.formState.errors.weddingInfo?.date?.message) {
       Notify.failure(methods.formState.errors.weddingInfo?.date?.message);
     }
@@ -136,11 +138,31 @@ const CreateCardPage = () => {
 
   const subscribeFont = () => {
     const subscriptionFont = methods.watch((value) => {
-      const font = value?.mainPhotoInfo?.fontName;
+      const font = value?.fontInfo?.fontName;
       if (font) {
         setSelectedFont(font);
       }
       return () => subscriptionFont.unsubscribe();
+    });
+  };
+
+  const subscribeFontColor = () => {
+    const subscriptionFontColor = methods.watch((value) => {
+      const fontColor = value?.fontInfo?.color;
+      if (fontColor) {
+        setFontColor(fontColor);
+      }
+      return () => subscriptionFontColor.unsubscribe();
+    });
+  };
+
+  const subscribeFontSize = () => {
+    const subscriptionFontSize = methods.watch((value) => {
+      const fontSize = value?.fontInfo?.size;
+      if (fontSize) {
+        setFontSize(fontSize);
+      }
+      return () => subscriptionFontSize.unsubscribe();
     });
   };
   const subscribeBackgroundColor = () => {
@@ -233,6 +255,8 @@ const CreateCardPage = () => {
   useEffect(() => {
     subscribeBackgroundColor();
     subscribeFont();
+    subscribeFontColor();
+    subscribeFontSize();
   }, [methods]);
 
   useEffect(() => {
@@ -246,9 +270,10 @@ const CreateCardPage = () => {
   return (
     <FormProvider {...methods}>
       <div
-        className={`relative w-full h-full font-${selectedFont}`}
+        className={`relative w-full h-full font-${selectedFont} font-${fontColor}`}
         style={{
           backgroundColor: backgroundColor,
+          fontSize: ` calc(16px + ${fontSize})`,
         }}
       >
         <OnBoarding

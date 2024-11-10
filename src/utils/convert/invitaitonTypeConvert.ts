@@ -15,6 +15,7 @@ import {
   GalleryType,
   OrderItem,
   InvitationFetchType,
+  FontInfoType,
 } from '@/types/invitationFormType.type';
 
 export const convertToCamelCase = (invitation: Invitation): InvitationFetchType => {
@@ -39,6 +40,7 @@ export const convertToCamelCase = (invitation: Invitation): InvitationFetchType 
     isPrivate: invitation.isPrivate as boolean,
     renderOrder: invitation.render_order as OrderItem[],
     userId: invitation.user_id as string,
+    fontInfo: invitation.font_info as FontInfoType,
   };
 };
 
@@ -63,5 +65,6 @@ export const convertToSnakeCase = (invitation: InvitationFormType) => {
     main_photo_info: invitation.mainPhotoInfo as MainPhotoType,
     isPrivate: invitation.isPrivate as boolean,
     render_order: invitation.renderOrder as OrderItem[],
+    font_info: invitation.fontInfo,
   };
 };

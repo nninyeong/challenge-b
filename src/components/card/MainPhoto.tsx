@@ -8,6 +8,7 @@ import { InvitationFormType, StickerType } from '@/types/invitationFormType.type
 import { usePathname } from 'next/navigation';
 import StickerOnSharedCard from '@/components/card/StickerOnSharedCard';
 import { getDayOfWeek } from '@/utils/date/getDayOfWeek';
+import { useFontStore } from '@/store/useFontStore';
 
 const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
   e.preventDefault();
@@ -28,9 +29,12 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
     };
     const path = usePathname();
     const day = getDayOfWeek(weddingInfo.date)[0];
-
+    const fontSize = useFontStore((state) => state.fontSize);
     return (
-      <div className='w-full flex flex-col justify-center item-center mx-auto mt-[72px] mb-[59px] text-center text-black'>
+      <div
+        style={{ fontSize: `${16 + fontSize}px` }}
+        className='w-full flex flex-col justify-center item-center mx-auto mt-[72px] mb-[59px] text-center text-black'
+      >
         <div
           dangerouslySetInnerHTML={{
             __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
@@ -89,7 +93,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
           <p className='flex-1 text-left whitespace-nowrap pl-4'>{mainPhotoInfo?.rightName || '우측 이름'}</p>
         </div>
 
-        <div className='text-[16px] text-gray-700 flex flex-col'>
+        <div className=' text-gray-700 flex flex-col'>
           <p>
             {weddingInfo.date} {day} {weddingInfo.time.hour}:{weddingInfo.time.minute}
           </p>

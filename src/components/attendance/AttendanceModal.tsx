@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import useAttendanceModal from '@/hooks/attendance/useAttendanceModal';
 import SelectBox from '../ui/SelectBox';
+import { useFontStore } from '@/store/useFontStore';
 
 const ATTENDANCE_PEOPLE = ['1', '2', '3', '4', '5'];
 
@@ -16,9 +17,10 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
       document.body.style.overflow = 'auto';
     };
   }, []);
-
+  const fontSize = useFontStore((state) => state.fontSize);
   return (
     <div
+      style={{ fontSize: `${16 + fontSize}px` }}
       className='fixed top-0 bottom-0 left-0 right-0 w-full h-full px-[16px] bg-[#404040]/50 flex justify-center items-center z-50'
       onClick={onClick}
     >
@@ -33,7 +35,10 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
               alt=''
             />
           </div>
-          <div className='w-[230px] text-center mb-[30px] text-[20px] text-primary300'>
+          <div
+            style={{ fontSize: `${20 + fontSize}px` }}
+            className='w-[230px] text-center mb-[30px]  text-primary300'
+          >
             참석 여부를 통해 특별한 날 함께하실지 알려 주세요.
           </div>
         </div>
@@ -41,7 +46,8 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
           <div>
             <div className='flex items-center gap-2 mb-2'>
               <input
-                className='border-gray-300 border outline-none col-span-2 p-2 w-[77px] h-8 text-[12px] rounded-lg'
+                style={{ fontSize: `${12 + fontSize}px` }}
+                className='border-gray-300 border outline-none col-span-2 p-2 w-[77px] h-8  rounded-lg'
                 placeholder='성함'
                 {...register('name')}
               />
@@ -55,7 +61,10 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                 backgroundColor='#000000'
               />
               <div>
-                <label className='text-[14px] text-gray-600 flex items-center cursor-pointer ml-2'>
+                <label
+                  style={{ fontSize: `${14 + fontSize}px` }}
+                  className=' text-gray-600 flex items-center cursor-pointer ml-2'
+                >
                   <input
                     type='checkbox'
                     className='hidden peer'
@@ -88,7 +97,8 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                     className='hidden'
                   />
                   <div
-                    className={`flex justify-center items-center gap-1 w-[152px] h-10 border border-gray-300 rounded-md text-[14px] text-gray-500 ${selected === '신랑' ? 'text-primary300 border-primary300' : ''}`}
+                    style={{ fontSize: `${14 + fontSize}px` }}
+                    className={`flex justify-center items-center gap-1 w-[152px] h-10 border border-gray-300 rounded-md  text-gray-500 ${selected === '신랑' ? 'text-primary300 border-primary300' : ''}`}
                   >
                     <img
                       src='/assets/images/icons/attendance-groom.svg'
@@ -111,7 +121,8 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
                     className='hidden'
                   />
                   <div
-                    className={`flex justify-center items-center gap-1 w-[152px] h-10 border border-gray-300 rounded-md text-[14px] text-gray-500 ${selected === '신부' ? 'text-primary300 border-primary300' : ''}`}
+                    style={{ fontSize: `${14 + fontSize}px` }}
+                    className={`flex justify-center items-center gap-1 w-[152px] h-10 border border-gray-300 rounded-md text-gray-500 ${selected === '신부' ? 'text-primary300 border-primary300' : ''}`}
                   >
                     <img
                       src='/assets/images/icons/attendance-bride.svg'
@@ -124,7 +135,14 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void }> =
               </div>
             </div>
           </div>
-          {errors.name && <span className='text-red-500 text-[12px]'>{errors.name.message}</span>}
+          {errors.name && (
+            <span
+              style={{ fontSize: `${12 + fontSize}px` }}
+              className='text-red-500 '
+            >
+              {errors.name.message}
+            </span>
+          )}
           <div className='flex gap-2 mt-4'>
             <button
               className='w-24 h-12 bg-gray-300 text-white py-2 px-4 rounded-xl'
