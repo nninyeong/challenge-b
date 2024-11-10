@@ -1,24 +1,23 @@
+// ColorPaletteModal.tsx
 'use client';
 
 import { Alpha, Hue, Saturation, useColor } from 'react-color-palette';
-import { useFormContext } from 'react-hook-form';
-import { ColorType } from '@/types/invitationFormType.type';
 
-const ColorPaletteModal = ({
-  setOpenModal,
-  setMyColor,
-}: {
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setMyColor: React.Dispatch<React.SetStateAction<ColorType>>;
-}) => {
+import { ColorType } from '@/types/invitationFormType.type';
+type ColorPaletteModalProps = {
+  setOpenModal: (value: boolean) => void;
+  onChangeColor: (color: ColorType) => void;
+};
+
+const ColorPaletteModal: React.FC<ColorPaletteModalProps> = ({ setOpenModal, onChangeColor }) => {
   const [color, setColor] = useColor('#ffffff');
-  const { setValue } = useFormContext();
 
   const handleApplyButton = () => {
-    setValue('bgColor', { ...color.rgb, name: '커스텀' });
-    setMyColor({ ...color.rgb, name: '커스텀' });
+    const updatedColor = { ...color.rgb, name: '커스텀' };
+    onChangeColor(updatedColor);
     setOpenModal(false);
   };
+
   return (
     <div className='z-50 w-[200px] h-[200px] fixed bottom-24 right-5 bg-white rounded-xl flex flex-col items-center'>
       <div className='w-[200px] h-[100px]'>
@@ -31,7 +30,7 @@ const ColorPaletteModal = ({
           <div className='flex justify-center items-center w-full'>
             <div
               className={`w-[30px] h-[30px] border-2 border-solid rounded-full`}
-              style={{ backgroundColor: color.hex }} //NOTE - Tailwind는 동적으로 background color 지정이 안됨
+              style={{ backgroundColor: color.hex }}
             />
             <div className='flex-grow flex flex-col gap-2'>
               <Hue

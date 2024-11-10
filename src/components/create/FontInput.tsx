@@ -1,5 +1,6 @@
 import { useFontStore } from '@/store/useFontStore';
 import { useFormContext } from 'react-hook-form';
+import BackgroundColorInput from './BackgroundColorInput';
 
 const FONTMENU = [
   { name: '나눔손글씨', font: 'NanumPen' },
@@ -70,6 +71,7 @@ const FontInput = () => {
           ))}
         </div>
       </div>
+      <BackgroundColorInput />
     </div>
   );
 };
