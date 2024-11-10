@@ -2,7 +2,7 @@ import { StickerType } from '@/types/invitationFormType.type';
 
 export const RUSTIC_PRESET1: StickerType[] = [
   {
-    id: '502635e8-94cf-420a-a361-92a207d1b632-rustic-007.svg',
+    id: `${crypto.randomUUID()}-rustic-007.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/rustic-007.svg',
     posX: 11.880556233723958,
     posY: 49.859779309003784,
@@ -13,7 +13,7 @@ export const RUSTIC_PRESET1: StickerType[] = [
     stickerImageId: 'rustic-007.svg',
   },
   {
-    id: 'b9d2fab9-f0d8-4a19-adb6-bcfb8905a36d-rustic-005.svg',
+    id: `${crypto.randomUUID()}-rustic-005.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/rustic-005.svg',
     posX: 13.027775065104166,
     posY: 67.11405240572415,
@@ -23,7 +23,7 @@ export const RUSTIC_PRESET1: StickerType[] = [
     stickerImageId: 'rustic-005.svg',
   },
   {
-    id: '790e264f-1954-40c1-a85a-cf5cffeef3e9-rustic-017.svg',
+    id: `${crypto.randomUUID()}-rustic-017.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/rustic-017.svg',
     posX: 93.68333333333332,
     posY: 50.629344353309044,
@@ -34,7 +34,7 @@ export const RUSTIC_PRESET1: StickerType[] = [
     stickerImageId: 'rustic-017.svg',
   },
   {
-    id: 'd4088bfa-1447-4b64-ac84-a6be2a2bf1e2-rustic-014.svg',
+    id: `${crypto.randomUUID()}-rustic-014.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/rustic-014.svg',
     posX: 82.02222086588542,
     posY: 66.04734322963617,
@@ -45,7 +45,7 @@ export const RUSTIC_PRESET1: StickerType[] = [
     stickerImageId: 'rustic-014.svg',
   },
   {
-    id: '67acc9f7-4c53-4d79-97a9-ad7e34509f28-rustic-015.svg',
+    id: `${crypto.randomUUID()}-rustic-015.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/rustic-015.svg',
     posX: 70.66666666666667,
     posY: 90.56824904221756,
@@ -55,7 +55,7 @@ export const RUSTIC_PRESET1: StickerType[] = [
     stickerImageId: 'rustic-015.svg',
   },
   {
-    id: 'e0c5ac67-312f-4f87-8fe0-d352185b28a5-rustic-001.svg',
+    id: `${crypto.randomUUID()}-rustic-001.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/rustic-001.svg',
     posX: 84.53333333333333,
     posY: 92.58981362367288,
@@ -65,7 +65,7 @@ export const RUSTIC_PRESET1: StickerType[] = [
     stickerImageId: 'rustic-001.svg',
   },
   {
-    id: '91e803e9-81ba-4509-b081-3a3185bf7034-rustic-008.svg',
+    id: `${crypto.randomUUID()}-rustic-008.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/rustic-008.svg',
     posX: 15.188889567057293,
     posY: 93.20579920059595,
@@ -76,7 +76,7 @@ export const RUSTIC_PRESET1: StickerType[] = [
     stickerImageId: 'rustic-008.svg',
   },
   {
-    id: '793733d1-eceb-4f54-b0ca-1bf0bdb22212-rustic-002.svg',
+    id: `${crypto.randomUUID()}-rustic-002.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/rustic-002.svg',
     posX: 27.458333333333336,
     posY: 89.55495785444211,

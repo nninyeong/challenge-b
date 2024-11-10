@@ -2,7 +2,7 @@ import { StickerType } from '@/types/invitationFormType.type';
 
 export const FLORAL_PRESET1: StickerType[] = [
   {
-    id: '328c3ae8-f2ec-4dfe-baad-152718b93973-floral-008.svg',
+    id: `${crypto.randomUUID()}-floral-008.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/floral-008.svg',
     posX: 85.31110636393228,
     posY: 5.714142016875439,
@@ -13,7 +13,7 @@ export const FLORAL_PRESET1: StickerType[] = [
     stickerImageId: 'floral-008.svg',
   },
   {
-    id: '53f149ef-6ae5-488e-83a4-40a89aadc3d6-floral-007.svg',
+    id: `${crypto.randomUUID()}-floral-007.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/floral-007.svg',
     posX: 9.424989827473958,
     posY: 10.314837480202698,
@@ -23,7 +23,7 @@ export const FLORAL_PRESET1: StickerType[] = [
     stickerImageId: 'floral-007.svg',
   },
   {
-    id: '1994855a-75a8-45a9-a872-938c49dd5f42-floral-006.svg',
+    id: `${crypto.randomUUID()}-floral-006.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/floral-006.svg',
     posX: 4.291666666666667,
     posY: 16.185897435897438,
@@ -33,7 +33,7 @@ export const FLORAL_PRESET1: StickerType[] = [
     stickerImageId: 'floral-006.svg',
   },
   {
-    id: '3333ec83-0c44-4987-97eb-d9cd64c11db9-floral-004.svg',
+    id: `${crypto.randomUUID()}-floral-004.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/floral-004.svg',
     posX: 8.563883463541666,
     posY: 90.7051282051282,
@@ -43,7 +43,7 @@ export const FLORAL_PRESET1: StickerType[] = [
     stickerImageId: 'floral-004.svg',
   },
   {
-    id: 'c41a3de4-bc16-419d-8444-1d84237d22b7-floral-005.svg',
+    id: `${crypto.randomUUID()}-floral-005.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/floral-005.svg',
     posX: 93.9444559733073,
     posY: 88.92227686368503,
@@ -54,7 +54,7 @@ export const FLORAL_PRESET1: StickerType[] = [
     stickerImageId: 'floral-005.svg',
   },
   {
-    id: '2da2a263-db28-42a0-a4a4-dadb35a16ff3-floral-003.svg',
+    id: `${crypto.randomUUID()}-floral-003.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/floral-003.svg',
     posX: 79.22221171061197,
     posY: 90.54821148896829,
@@ -65,7 +65,7 @@ export const FLORAL_PRESET1: StickerType[] = [
     stickerImageId: 'floral-003.svg',
   },
   {
-    id: 'f0b3b5d5-801f-4009-b52f-df80790d4f0f-floral-001.svg',
+    id: `${crypto.randomUUID()}-floral-001.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/floral-001.svg',
     posX: 27.661100260416667,
     posY: 88.11598557692307,

@@ -2,7 +2,7 @@ import { StickerType } from '@/types/invitationFormType.type';
 
 export const MODERN_PRESET1: StickerType[] = [
   {
-    id: '35c5f398-638e-4ac6-913f-40f74ef59ae9-modern-005.svg',
+    id: `${crypto.randomUUID()}-modern-005.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/modern-005.svg',
     posX: 68.79443918863932,
     posY: 9.67715031061417,
@@ -12,7 +12,7 @@ export const MODERN_PRESET1: StickerType[] = [
     stickerImageId: 'modern-005.svg',
   },
   {
-    id: 'f8810325-0a79-4875-b6f7-c49ba0d45574-modern-002.svg',
+    id: `${crypto.randomUUID()}-modern-002.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/modern-002.svg',
     posX: 80.55833333333334,
     posY: 6.345152243589744,
@@ -22,7 +22,7 @@ export const MODERN_PRESET1: StickerType[] = [
     stickerImageId: 'modern-002.svg',
   },
   {
-    id: '5d358890-0554-4d6b-9cb4-bead7d2fd77b-modern-001.svg',
+    id: `${crypto.randomUUID()}-modern-001.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/modern-001.svg',
     posX: 4.072216796875,
     posY: 27.081665625939,
@@ -32,7 +32,7 @@ export const MODERN_PRESET1: StickerType[] = [
     stickerImageId: 'modern-001.svg',
   },
   {
-    id: 'ac5fca10-fdc1-42c9-af65-ad53a9d022bd-modern-003.svg',
+    id: `${crypto.randomUUID()}-modern-003.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/modern-003.svg',
     posX: 59.791666666666664,
     posY: 91.1358173076923,
@@ -42,7 +42,7 @@ export const MODERN_PRESET1: StickerType[] = [
     stickerImageId: 'modern-003.svg',
   },
   {
-    id: 'c3e98029-6795-414c-bb6d-40c8797bcb20-modern-004.svg',
+    id: `${crypto.randomUUID()}-modern-004.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/modern-004.svg',
     posX: 83.59721679687499,
     posY: 95.86338141025641,
@@ -52,7 +52,7 @@ export const MODERN_PRESET1: StickerType[] = [
     stickerImageId: 'modern-004.svg',
   },
   {
-    id: '76dcf3c9-da50-4837-9fa7-448085d01b4a-modern-004.svg',
+    id: `${crypto.randomUUID()}-modern-004.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/modern-004.svg',
     posX: 51.15833333333333,
     posY: 97.37246586726262,
@@ -62,7 +62,7 @@ export const MODERN_PRESET1: StickerType[] = [
     stickerImageId: 'modern-004.svg',
   },
   {
-    id: '1091b025-ca08-4fad-852a-8df6cca783e6-modern-003.svg',
+    id: `${crypto.randomUUID()}-modern-003.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/modern-003.svg',
     posX: 17.483317057291668,
     posY: 96.27403968419785,

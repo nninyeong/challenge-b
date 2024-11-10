@@ -2,7 +2,7 @@ import { StickerType } from '@/types/invitationFormType.type';
 
 export const ROMANTIC_PRESET1: StickerType[] = [
   {
-    id: '650ad410-d1e6-4073-a535-1e6553437f8a-romantic-002.svg',
+    id: `${crypto.randomUUID()}-romantic-002.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/romantic-002.svg',
     posX: 16.763883463541667,
     posY: 12.339743589743591,
@@ -12,7 +12,7 @@ export const ROMANTIC_PRESET1: StickerType[] = [
     stickerImageId: 'romantic-002.svg',
   },
   {
-    id: '4ea6ca57-3a35-44de-b669-e9792de21d23-romantic-007.svg',
+    id: `${crypto.randomUUID()}-romantic-007.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/romantic-007.svg',
     posX: 85.447216796875,
     posY: 12.810496794871796,
@@ -22,7 +22,7 @@ export const ROMANTIC_PRESET1: StickerType[] = [
     stickerImageId: 'romantic-007.svg',
   },
   {
-    id: 'dcc8cf8a-1f6d-42bd-9d2d-2d4f8dc62616-romantic-006.svg',
+    id: `${crypto.randomUUID()}-romantic-006.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/romantic-006.svg',
     posX: 50.516666666666666,
     posY: 95.30248397435898,
@@ -32,7 +32,7 @@ export const ROMANTIC_PRESET1: StickerType[] = [
     stickerImageId: 'romantic-006.svg',
   },
   {
-    id: '1da2ceb7-a157-4f1b-ba9e-f35c11879d64-romantic-011.svg',
+    id: `${crypto.randomUUID()}-romantic-011.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/romantic-011.svg',
     posX: 6.947212727864584,
     posY: 16.132479447584885,
@@ -42,7 +42,7 @@ export const ROMANTIC_PRESET1: StickerType[] = [
     stickerImageId: 'romantic-011.svg',
   },
   {
-    id: 'c1a839bf-e20b-422e-b645-ba00c70ef311-romantic-009.svg',
+    id: `${crypto.randomUUID()}-romantic-009.svg`,
     url: 'https://llgxyrndifqzbvolykbu.supabase.co/storage/v1/object/public/stickers/romantic-009.svg',
     posX: 84.43333333333334,
     posY: 88.9423076923077,
