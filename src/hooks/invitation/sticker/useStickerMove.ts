@@ -80,9 +80,11 @@ const useStickerMove = ({
     if (!stickerRef.current || !previewRef.current) return;
 
     const stickerBounds = e.currentTarget.getBoundingClientRect();
+    const centerX = stickerBounds.left + stickerBounds.width / 2;
+    const centerY = stickerBounds.top + stickerBounds.height / 2;
     offset.current = {
-      x: e.clientX - stickerBounds.left,
-      y: e.clientY - stickerBounds.top,
+      x: e.clientX - centerX,
+      y: e.clientY - centerY,
     };
 
     onActivate(null);
