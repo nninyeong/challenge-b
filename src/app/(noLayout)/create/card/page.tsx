@@ -144,14 +144,11 @@ const CreateCardPage = () => {
     if (isInvitationModified) {
       if (!user.user) {
         sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
-        console.log('추가');
       } else {
         if (existingInvitation === null) {
           insertInvitation(formData);
-          console.log('추가');
         } else {
           updateInvitation(formData);
-          console.log('추가');
         }
       }
       prevFormDataRef.current = JSON.stringify(formData);
