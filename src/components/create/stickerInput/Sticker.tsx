@@ -78,10 +78,10 @@ const Sticker = ({
       {isActive && (
         <>
           <button
-            className={`absolute bg-x-circle-contained top-[-12px] right-[-12px] w-[24px] h-[24px] z-10`}
+            className={`absolute bg-x-circle-contained w-[24px] h-[24px] z-10`}
             style={{
-              top: '-6px',
-              right: '-6px',
+              top: '-12px',
+              right: '-12px',
               transform: `scale(${1 / (sticker.scale ?? 1)})`,
             }}
             onClick={handleDeleteSticker}
