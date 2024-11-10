@@ -2,7 +2,6 @@ import { StickerType } from '@/types/invitationFormType.type';
 import { FieldValues, UseFormSetValue } from 'react-hook-form';
 import { useRef } from 'react';
 import { calculateAngle } from '@/utils/calculate/calculateAngle';
-import { calculateComponentRotation } from '@/utils/calculate/calculateComponentRotation';
 import { calculateDistance } from '@/utils/calculate/calculateDistance';
 
 type UseStickerRotationProps = {
@@ -30,12 +29,10 @@ const useStickerTransform = ({ sticker, stickerRef, stickersWatch, setValue, isA
     pivotRef.current = { x: pivotX, y: pivotY };
 
     const touch = e.touches[0];
-    const currentAngle = calculateAngle(pivotRef.current, {
+    startDegRef.current = calculateAngle(pivotRef.current, {
       x: touch.pageX,
       y: touch.pageY,
     });
-
-    startDegRef.current = currentAngle;
     previousRotationRef.current = sticker.rotation || 0;
     startDistanceRef.current = calculateDistance(pivotRef.current, { x: touch.pageX, y: touch.pageY });
     startScaleRef.current = parseFloat(stickerRef.current.style.transform.match(/scale\(([^)]+)\)/)?.[1] || '1');
@@ -53,9 +50,7 @@ const useStickerTransform = ({ sticker, stickerRef, stickersWatch, setValue, isA
     const pivotY = stickerBound.top - window.scrollY + stickerBound.height / 2;
     pivotRef.current = { x: pivotX, y: pivotY };
 
-    const currentAngle = calculateAngle(pivotRef.current, { x: e.pageX, y: e.pageY });
-
-    startDegRef.current = currentAngle;
+    startDegRef.current = calculateAngle(pivotRef.current, { x: e.pageX, y: e.pageY });
     previousRotationRef.current = sticker.rotation || 0;
     startDistanceRef.current = calculateDistance(pivotRef.current, { x: e.pageX, y: e.pageY });
     startScaleRef.current = sticker.scale || 1;
