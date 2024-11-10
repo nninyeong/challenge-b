@@ -4,6 +4,17 @@ import { convertToCamelCase } from '@/utils/convert/invitaitonTypeConvert';
 import { createClient } from '@/utils/supabase/server';
 import { Fragment } from 'react';
 import { convertOrderToComponent } from '@/utils/convert/convertOrderToComponent';
+import { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  return {
+    openGraph: {
+      title: '청첩장이 도착했습니다.',
+      description: '링크를 눌러 확인해보세요.',
+      images: `/(noLayout)/card/${params.id}/og-image`, // 동적으로 Open Graph 이미지 경로 지정
+    },
+  };
+}
 
 export const generateStaticParams = async () => {
   const { data } = await supabase.from('invitation').select('id');
