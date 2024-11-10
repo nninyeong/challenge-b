@@ -67,7 +67,7 @@ const Sticker = ({
         left: `${sticker.posX}%`,
         width: `${sticker.width}px`,
         height: `${sticker.height}px`,
-        transform: `rotate(${sticker.rotation}deg) scale(${sticker.scale ?? 1})`,
+        transform: `translate(-50%, -50%) rotate(${sticker.rotation}deg) scale(${sticker.scale ?? 1})`,
       }}
     >
       {isActive && (

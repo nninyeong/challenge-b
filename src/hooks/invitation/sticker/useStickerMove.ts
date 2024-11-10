@@ -28,9 +28,14 @@ const useStickerMove = ({
     const touch = e.touches[0];
     const stickerBounds = e.currentTarget.getBoundingClientRect();
 
+    // 스티커의 중심 좌표 계산
+    const centerX = stickerBounds.left + stickerBounds.width / 2;
+    const centerY = stickerBounds.top + stickerBounds.height / 2;
+
+    // 터치한 위치와 중심점 사이의 offset 계산
     offset.current = {
-      x: touch.clientX - stickerBounds.left,
-      y: touch.clientY - stickerBounds.top,
+      x: touch.clientX - centerX,
+      y: touch.clientY - centerY,
     };
 
     onActivate(null);
