@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { AccountType } from '@/types/accountType.type';
 import { createPortal } from 'react-dom';
 import AccountModal from '@/components/create/modal/AccountModal';
-import { useFontStore } from '@/store/useFontStore';
+import { useFontStore, useFontColorStore } from '@/store/useFontStore';
 
 type AccountPropType = Pick<InvitationFormType, 'account'>;
 const Account = ({ account }: AccountPropType) => {
@@ -31,9 +31,14 @@ const Account = ({ account }: AccountPropType) => {
   };
 
   const fontSize = useFontStore((state) => state.fontSize);
+  const fontColor = useFontColorStore((state) => state.fontColor);
+  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
 
   return (
-    <div className='flex flex-col justify-center items-center mb-[80px]'>
+    <div
+      style={{ color: `${rgbaColor}` }}
+      className='flex flex-col justify-center items-center mb-[80px]'
+    >
       <p style={{ fontSize: ` ${20 + fontSize}px)` }}>{account.title ? account.title : '제목'}</p>
       <p>{account.content ? account.content : '내용'}</p>
       <div

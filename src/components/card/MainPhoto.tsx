@@ -8,7 +8,7 @@ import { InvitationFormType, StickerType } from '@/types/invitationFormType.type
 import { usePathname } from 'next/navigation';
 import StickerOnSharedCard from '@/components/card/StickerOnSharedCard';
 
-import { useFontStore } from '@/store/useFontStore';
+import { useFontColorStore, useFontStore } from '@/store/useFontStore';
 
 const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
   e.preventDefault();
@@ -26,10 +26,13 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
     };
     const path = usePathname();
     const fontSize = useFontStore((state) => state.fontSize);
+    const fontColor = useFontColorStore((state) => state.fontColor);
+    const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
+
     return (
       <div
-        style={{ fontSize: `${16 + fontSize}px` }}
-        className='w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center text-black'
+        style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
+        className='w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center '
       >
         <div
           ref={previewRef}
@@ -74,7 +77,10 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
             </div>
           )}
         </div>
-        <div className='flex items-center justify-center mt-4 text-[24px] text-gray-900 font-semibold mb-[12px] text-center relative'>
+        <div
+          style={{ fontSize: `${16 + fontSize}px` }}
+          className='flex items-center justify-center mt-4 text-[24px]  font-semibold mb-[12px] text-center relative'
+        >
           <p className='flex-1 text-right whitespace-nowrap pr-4'>{mainPhotoInfo?.leftName || '좌측 이름'}</p>
           <p className='absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap'>
             {mainPhotoInfo?.icon || '♥︎'}
@@ -82,7 +88,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
           <p className='flex-1 text-left whitespace-nowrap pl-4'>{mainPhotoInfo?.rightName || '우측 이름'}</p>
         </div>
 
-        <div className='text-[16px] text-gray-700 flex flex-col'>
+        <div className=' text-opacity-75 flex flex-col'>
           <div
             dangerouslySetInnerHTML={{
               __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',

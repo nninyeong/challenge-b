@@ -3,16 +3,11 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import MapView from '@/components/map/MapView';
 import NavigationButtons from '@/components/create/NavigationButtons';
 import NavigationDetailCard from '@/components/create/NavigationDetailCard';
-import { useFontStore } from '@/store/useFontStore';
 
 type NavigationDetailsPropType = Pick<InvitationFormType, 'navigationDetail' | 'weddingInfo'>;
 const NavigationDetails = ({ navigationDetail, weddingInfo }: NavigationDetailsPropType) => {
-  const fontSize = useFontStore((state) => state.fontSize);
   return (
-    <div
-      style={{ fontSize: `${16 + fontSize}px` }}
-      className='mb-[75px]'
-    >
+    <div className='mb-[75px/]'>
       {navigationDetail.map && <MapView address={weddingInfo.weddingHallAddress} />}
       {navigationDetail.navigationButton && (
         <NavigationButtons

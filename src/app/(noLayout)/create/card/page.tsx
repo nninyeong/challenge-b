@@ -41,8 +41,7 @@ const CreateCardPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
-  const [fontColor, setFontColor] = useState<string>('black');
-  const [fontSize, setFontSize] = useState<number>(0);
+
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const [toggleInput, setToggleInput] = useToggle();
   const [nameIndex, setNameIndex] = useState<number>(0);
@@ -146,25 +145,6 @@ const CreateCardPage = () => {
     });
   };
 
-  const subscribeFontColor = () => {
-    const subscriptionFontColor = methods.watch((value) => {
-      const fontColor = value?.fontInfo?.color;
-      if (fontColor) {
-        setFontColor(fontColor);
-      }
-      return () => subscriptionFontColor.unsubscribe();
-    });
-  };
-
-  const subscribeFontSize = () => {
-    const subscriptionFontSize = methods.watch((value) => {
-      const fontSize = value?.fontInfo?.size;
-      if (fontSize) {
-        setFontSize(fontSize);
-      }
-      return () => subscriptionFontSize.unsubscribe();
-    });
-  };
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
       const color = value.bgColor;
@@ -255,8 +235,6 @@ const CreateCardPage = () => {
   useEffect(() => {
     subscribeBackgroundColor();
     subscribeFont();
-    subscribeFontColor();
-    subscribeFontSize();
   }, [methods]);
 
   useEffect(() => {
@@ -267,13 +245,13 @@ const CreateCardPage = () => {
     initializeObserver();
     return () => unsubscribeObservers();
   }, [refs, isOnboardingComplete]);
+
   return (
     <FormProvider {...methods}>
       <div
-        className={`relative w-full h-full font-${selectedFont} font-${fontColor}`}
+        className={`relative w-full h-full font-${selectedFont} `}
         style={{
           backgroundColor: backgroundColor,
-          fontSize: ` calc(16px + ${fontSize})`,
         }}
       >
         <OnBoarding

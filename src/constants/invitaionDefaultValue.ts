@@ -56,7 +56,6 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
     icon: '',
     introduceContent: '',
     imageUrl: '',
-    fontName: '',
   },
   navigationDetail: {
     map: false,
@@ -95,4 +94,15 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
   },
   isPrivate: false,
   renderOrder: extractOrderAndType(),
+  fontInfo: {
+    size: 0,
+    fontName: 'main',
+    color: {
+      r: 0,
+      g: 0,
+      b: 0,
+      a: 0,
+      name: '커스텀',
+    },
+  },
 };

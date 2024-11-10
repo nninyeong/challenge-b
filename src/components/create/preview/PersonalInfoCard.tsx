@@ -1,5 +1,5 @@
 import { Notify } from 'notiflix';
-import { useFontStore } from '@/store/useFontStore';
+import { useFontStore, useFontColorStore } from '@/store/useFontStore';
 
 type PersonInfoCardProps = {
   label: string | null;
@@ -19,14 +19,22 @@ const PersonalInfoCard = ({ label, name, phoneNumber }: PersonInfoCardProps) => 
     }
   };
   const fontSize = useFontStore((state) => state.fontSize);
+  const fontColor = useFontColorStore((state) => state.fontColor);
+  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
+
   return (
     <div
-      style={{ fontSize: `${16 + fontSize}px` }}
+      style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
       className='flex flex-col justify-center items-center gap-2'
     >
       <div className='flex items-center gap-2'>
         <p className='text-center'>{label || DEFAULT_LABEL}</p>
-        <p className='text-xl font-semibold'>{name || DEFAULT_NAME}</p>
+        <p
+          style={{ fontSize: `${20 + fontSize}px` }}
+          className=' font-semibold'
+        >
+          {name || DEFAULT_NAME}
+        </p>
       </div>
 
       <div className='flex gap-4'>

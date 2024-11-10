@@ -17,6 +17,7 @@ const GuestBookCard = ({
   const { isAccordionOpen, toggleAccordion } = useGuestBookDeleteButton();
   const { year, month, day, hour, minute } = convertToUserTimezone(guestBook.created_at);
   const fontSize = useFontStore((state) => state.fontSize);
+
   return (
     <div
       style={{ fontSize: `${16 + fontSize}px` }}

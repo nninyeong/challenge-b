@@ -7,6 +7,7 @@ const GreetingPreview = ({ control }: { control: Control<InvitationFormType> }) 
     control,
     name: 'greetingMessage',
   });
+ 
 
   return <Greeting greetingMessage={greetingMessage} />;
 };

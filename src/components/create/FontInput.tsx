@@ -1,6 +1,8 @@
-import { useFontStore } from '@/store/useFontStore';
+import { useFontColorStore, useFontStore } from '@/store/useFontStore';
 import { useFormContext } from 'react-hook-form';
-import BackgroundColorInput from './BackgroundColorInput';
+import ColorPalette from './ColorPalette';
+
+import { ColorType } from '@/types/invitationFormType.type';
 
 const FONTMENU = [
   { name: '나눔손글씨', font: 'NanumPen' },
@@ -14,6 +16,7 @@ const FONTMENU = [
 const FontSizeList = [-2, -1, 0, +1, +2];
 const FontInput = () => {
   const { setValue, getValues } = useFormContext();
+
   const currentFontSize = getValues('fontInfo.size') || 0;
   const handleSelectFontname = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedFontName = event.target.value;
@@ -31,6 +34,13 @@ const FontInput = () => {
       resetFontSize();
     }
     setValue('fontInfo.size', size);
+  };
+
+  const { fontColor, setFontColor } = useFontColorStore();
+
+  const handleFontColorChange = (color: ColorType) => {
+    setFontColor(color);
+    setValue('fontInfo.color', color);
   };
 
   return (
@@ -71,7 +81,12 @@ const FontInput = () => {
           ))}
         </div>
       </div>
-      <BackgroundColorInput />
+      <div className='mt-[21px]'>
+        <ColorPalette
+          onChangeColor={(color) => handleFontColorChange(color)}
+          selectedColor={fontColor}
+        />
+      </div>
     </div>
   );
 };

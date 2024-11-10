@@ -6,7 +6,7 @@ const NavigationButtons = ({ address, name }: { address: string; name: string })
   const { openKakaoMap, openNaverMap, openTMap } = useOpenMapHandlers({ lat: coords.lat, lng: coords.lng }, name);
 
   return (
-    <div className='flex justify-between w-full px-8 text-black mt-6 mb-14'>
+    <div className='flex justify-between w-full px-8  mt-6 mb-14'>
       <button
         onClick={openTMap}
         className='flex gap-[6px] items-center'

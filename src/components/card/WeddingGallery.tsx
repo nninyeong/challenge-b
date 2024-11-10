@@ -4,7 +4,7 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import { useCallback } from 'react';
 import { useFormContext } from 'react-hook-form';
 import GalleryImage from '../gallery/GalleryImage';
-import { useFontStore } from '@/store/useFontStore';
+import { useFontStore, useFontColorStore } from '@/store/useFontStore';
 
 type GalleryPropType = Pick<InvitationFormType, 'gallery'>;
 
@@ -34,12 +34,15 @@ const WeddingGallery = ({ gallery }: GalleryPropType) => {
   );
 
   const fontSize = useFontStore((state) => state.fontSize);
+  const fontColor = useFontColorStore((state) => state.fontColor);
+  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
+
   return (
     <div
-      style={{ fontSize: `${16 + fontSize}px` }}
+      style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
       className='mb-[56px] h-fit'
     >
-      <p className='text-center mb-8 text-gray-600 tracking-wider'>GALLERY</p>
+      <p className='text-center mb-8 text-opcity-50 tracking-wider'>GALLERY</p>
 
       {images.length > 0 ? (
         <div className={`${gridClass} gap-3.5 p-4`}>

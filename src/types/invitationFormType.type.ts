@@ -155,6 +155,12 @@ export type InvitationCard = {
 
 export type FontInfoType = {
   fontName: string;
-  color: string;
+  color: {
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+    name: string;
+  };
   size: number;
 };

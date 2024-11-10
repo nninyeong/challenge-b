@@ -1,15 +1,18 @@
 'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import PersonalInfoCard from '../create/preview/PersonalInfoCard';
-import { useFontStore } from '@/store/useFontStore';
+import { useFontStore, useFontColorStore } from '@/store/useFontStore';
 
 type PersonalInfoOnSharedCardPropsType = Pick<InvitationFormType, 'personalInfo'>;
 const PersonalInfoOnSharedCard = ({ personalInfo }: PersonalInfoOnSharedCardPropsType) => {
   const { bride, groom } = personalInfo;
   const fontSize = useFontStore((state) => state.fontSize);
+  const fontColor = useFontColorStore((state) => state.fontColor);
+  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
+
   return (
     <div
-      style={{ fontSize: `${16 + fontSize}px` }}
+      style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
       className='flex flex-col justify-center items-center gap-[30px] mb-[80px]'
     >
       <div className='flex gap-[50px]'>

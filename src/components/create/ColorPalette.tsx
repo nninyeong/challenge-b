@@ -48,7 +48,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
 
       {COLOR_DEFAULT_PALETTE.map((colorElement) => (
         <div
-          className='flex-col'
+          className='flex flex-col justify-center items-center '
           key={`colorElement${colorElement.r}${colorElement.g}${colorElement.b}${colorElement.a}`}
         >
           <button
@@ -67,7 +67,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
         </div>
       ))}
 
-      <div className='flex-col-center'>
+      <div className='flex flex-col-center justify-center items-center '>
         <button
           type='button'
           className='w-[35px] h-[35px] border-[1px] border-solid border-gray-200 rounded-full flex justify-center items-center bg-white'

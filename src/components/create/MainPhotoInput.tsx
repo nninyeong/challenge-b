@@ -23,9 +23,9 @@ const MainPhotoInput = () => {
     setValue('mainPhotoInfo.introduceContent', value);
   };
   return (
-    <div className='w-full flex flex-col gap-3 '>
-      <div className='w-full flex'>
-        <label className='font-bold text-gray-700 text-[14px]  text-center mr-5'>이름</label>
+    <div className='w-full flex flex-col gap-3 justify-center mt-3.5'>
+      <div className='w-full flex justify-center items-center'>
+        <label className='font-bold text-gray-700 text-[14px]  text-center mr-5 whitespace-nowrap'>이름</label>
         <div className='gap-2 w-full justify-center'>
           <input
             type='text'
@@ -51,11 +51,7 @@ const MainPhotoInput = () => {
         </div>
       </div>
 
-      <div className='flex '>
-        <label className='font-bold text-gray-700 text-[14px] mr-5'>글꼴</label>
-      </div>
-
-      <div className='h-[80px] flex gap-2 justify-center   '>
+      <div className='h-[80px] flex gap-2   '>
         <label
           htmlFor='file'
           className='bg-white text-center cursor-pointer px-2 py-1 rounded-xl text-black h-[80px] w-[80px] flex justify-center items-center border border-dashed border-gray-400'
@@ -74,7 +70,7 @@ const MainPhotoInput = () => {
           placeholder='메인화면 문구를 설정해주세요'
           value={introduceContent || ''}
           onChange={handleSetContent}
-          style={{ width: '200px', height: '48px' }}
+          style={{ width: '200px', height: '95px' }}
         />
       </div>
     </div>
