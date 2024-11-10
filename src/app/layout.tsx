@@ -3,10 +3,10 @@ import localFont from 'next/font/local';
 import './globals.css';
 import Providers from '@/app/provider';
 import Script from 'next/script';
-import SetScreenHeight from '@/components/layouts/SetScreenHeight';
 import { ReviewBottomSheetProvider } from '@/provider/reviewBottomSheetProvider';
 import DndProviderWrapper from '@/components/layouts/DndProvider';
 import { MOBILE_VIEW_WIDTH } from '@/constants/screenSize';
+import InitClientSettings from '@/utils/settings/InitClientSettings';
 
 const SUIT = localFont({
   src: '../../public/assets/fonts/SUIT-Variable.ttf',
@@ -39,11 +39,12 @@ export default function RootLayout({
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAOAPP_KEY}&libraries=services&autoload=false`}
           strategy='beforeInteractive'
         />
-        <SetScreenHeight />
         <Providers>
           <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
             <div className='w-full h-full flex-1 bg-white'>
-              <DndProviderWrapper>{children}</DndProviderWrapper>
+              <DndProviderWrapper>
+                <InitClientSettings>{children}</InitClientSettings>
+              </DndProviderWrapper>
             </div>
             <div id='modal'></div>
           </ReviewBottomSheetProvider>
