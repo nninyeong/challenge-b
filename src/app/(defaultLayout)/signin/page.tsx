@@ -31,36 +31,36 @@ const SignInPage = () => {
           <Link href='/signup'>회원가입</Link>
         </div>
         <h5 className='text-[20px] text-gray-600 mt-[40px]'>간편 로그인</h5>
-        <div className='flex gap-[16px] text-[12px] text-center whitespace-pre leading-[12px]'>
+        <div className='flex gap-[24px] text-[12px] text-center whitespace-pre leading-[12px]'>
           <button
-            className='w-[88px] h-[88px] border rounded-full bg-[#FAE100] flex flex-col justify-center items-center gap-[10px]'
+            className='w-[48px] h-[48px] border rounded-full bg-[#FAE100] flex flex-col justify-center items-center gap-[10px]'
             onClick={handleKakaoSignIn}
           >
             <img
-              src='/assets/images/button/kakaoIcon.svg'
+              src='/assets/images/icons/icon-kakao.webp'
               alt='카카오 로그인'
+              className='w-[24px] h-[24px]'
             />
-            <p>카카오{'\n'}로그인</p>
           </button>
           <button
-            className='w-[88px] h-[88px] border rounded-full bg-white flex flex-col justify-center items-center gap-[10px]'
+            className='w-[48px] h-[48px] border rounded-full bg-white flex flex-col justify-center items-center gap-[10px]'
             onClick={handleGoogleSignIn}
           >
             <img
-              src='/assets/images/button/googleIcon.svg'
+              src='/assets/images/icons/icon-google.webp'
               alt='구글 로그인'
+              className='w-[24px] h-[24px]'
             />
-            <p>구글{'\n'}로그인</p>
           </button>
           <button
-            className='w-[88px] h-[88px] border rounded-full bg-[#03CF5C] flex flex-col justify-center items-center gap-[10px]'
+            className='w-[48px] h-[48px] border rounded-full bg-[#03CF5C] flex flex-col justify-center items-center gap-[10px]'
             onClick={alertComingSoon}
           >
             <img
-              src='/assets/images/button/naverIcon.svg'
+              src='/assets/images/icons/icon-naver.webp'
               alt='네이버 로그인'
+              className='w-[24px] h-[24px]'
             />
-            <p>네이버{'\n'}로그인</p>
           </button>
         </div>
       </section>
