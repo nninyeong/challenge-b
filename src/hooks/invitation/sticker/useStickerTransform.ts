@@ -3,6 +3,7 @@ import { FieldValues, UseFormSetValue } from 'react-hook-form';
 import { useRef } from 'react';
 import { calculateAngle } from '@/utils/calculate/calculateAngle';
 import { calculateComponentRotation } from '@/utils/calculate/calculateComponentRotation';
+import { calculateDistance } from '@/utils/calculate/calculateDistance';
 
 type UseStickerRotationProps = {
   sticker: StickerType;
@@ -12,14 +13,14 @@ type UseStickerRotationProps = {
   isActive: boolean;
 };
 
-const useStickerRotation = ({ sticker, stickerRef, stickersWatch, setValue, isActive }: UseStickerRotationProps) => {
+const useStickerTransform = ({ sticker, stickerRef, stickersWatch, setValue, isActive }: UseStickerRotationProps) => {
   const pivotRef = useRef({ x: 0, y: 0 });
   const startDegRef = useRef<number>(0); // 회전 기준 각도
   const previousRotationRef = useRef<number>(sticker.rotation || 0); // 이전 회전값
   const startDistanceRef = useRef<number>(0); // 초기 거리
-  const initialScaleRef = useRef<number>(1); // 초기 스케일 값
+  const startScaleRef = useRef<number>(1); // 초기 스케일 값
 
-  const handleTouchRotationStart = (e: React.TouchEvent<HTMLDivElement>) => {
+  const handleTouchTransformStart = (e: React.TouchEvent<HTMLDivElement>) => {
     e.stopPropagation();
     if (!isActive || !stickerRef.current) return;
 
@@ -37,13 +38,13 @@ const useStickerRotation = ({ sticker, stickerRef, stickersWatch, setValue, isAc
     startDegRef.current = currentAngle;
     previousRotationRef.current = sticker.rotation || 0;
     startDistanceRef.current = calculateDistance(pivotRef.current, { x: touch.pageX, y: touch.pageY });
-    initialScaleRef.current = parseFloat(stickerRef.current.style.transform.match(/scale\(([^)]+)\)/)?.[1] || '1');
+    startScaleRef.current = parseFloat(stickerRef.current.style.transform.match(/scale\(([^)]+)\)/)?.[1] || '1');
 
-    document.addEventListener('touchmove', handleTouchRotationMove);
-    document.addEventListener('touchend', handleTouchRotationEnd);
+    document.addEventListener('touchmove', handleTouchTransformMove);
+    document.addEventListener('touchend', handleTouchTransformEnd);
   };
 
-  const handleTouchRotationMove = (e: TouchEvent) => {
+  const handleTouchTransformMove = (e: TouchEvent) => {
     e.stopPropagation();
     if (!isActive || !stickerRef.current) return;
 
@@ -61,7 +62,7 @@ const useStickerRotation = ({ sticker, stickerRef, stickersWatch, setValue, isAc
 
     // 스케일 조정 계산
     const scaleFactor = currentDistance / startDistanceRef.current;
-    const updatedScale = initialScaleRef.current * scaleFactor;
+    const updatedScale = startScaleRef.current * scaleFactor;
 
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) {
@@ -78,21 +79,14 @@ const useStickerRotation = ({ sticker, stickerRef, stickersWatch, setValue, isAc
     setValue('stickers', [...updatedSticker]);
   };
 
-  const handleTouchRotationEnd = (e: TouchEvent) => {
+  const handleTouchTransformEnd = (e: TouchEvent) => {
     e.stopPropagation();
 
-    document.removeEventListener('touchmove', handleTouchRotationMove);
-    document.removeEventListener('touchend', handleTouchRotationEnd);
+    document.removeEventListener('touchmove', handleTouchTransformMove);
+    document.removeEventListener('touchend', handleTouchTransformEnd);
   };
 
-  return { handleTouchRotationStart };
+  return { handleTouchTransformStart };
 };
 
-export default useStickerRotation;
-
-// 거리 계산 함수
-function calculateDistance(point1: { x: number; y: number }, point2: { x: number; y: number }): number {
-  const dx = point2.x - point1.x;
-  const dy = point2.y - point1.y;
-  return Math.sqrt(dx * dx + dy * dy);
-}
+export default useStickerTransform;

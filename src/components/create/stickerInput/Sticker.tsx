@@ -4,7 +4,7 @@ import { StickerType } from '@/types/invitationFormType.type';
 import { MutableRefObject, useEffect, useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import useStickerMove from '@/hooks/invitation/sticker/useStickerMove';
-import useStickerRotation from '@/hooks/invitation/sticker/useStickerRotation';
+import useStickerTransform from '@/hooks/invitation/sticker/useStickerTransform';
 
 const Sticker = ({
   sticker,
@@ -33,7 +33,7 @@ const Sticker = ({
     onActivate,
   });
 
-  const { handleTouchRotationStart } = useStickerRotation({
+  const { handleTouchTransformStart } = useStickerTransform({
     sticker,
     stickerRef,
     stickersWatch,
@@ -79,7 +79,7 @@ const Sticker = ({
               left: '-3px',
               transform: `scale(${1 / (sticker.scale ?? 1)})`, // 역 scale 적용으로 크기 고정
             }}
-            onTouchStart={handleTouchRotationStart}
+            onTouchStart={handleTouchTransformStart}
           ></div>
           <div
             className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
@@ -88,7 +88,7 @@ const Sticker = ({
               left: '-3px',
               transform: `scale(${1 / (sticker.scale ?? 1)})`,
             }}
-            onTouchStart={handleTouchRotationStart}
+            onTouchStart={handleTouchTransformStart}
           ></div>
           <div
             className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
@@ -97,7 +97,7 @@ const Sticker = ({
               right: '-3px',
               transform: `scale(${1 / (sticker.scale ?? 1)})`,
             }}
-            onTouchStart={handleTouchRotationStart}
+            onTouchStart={handleTouchTransformStart}
           ></div>
         </>
       )}
