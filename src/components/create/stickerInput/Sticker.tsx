@@ -33,7 +33,7 @@ const Sticker = ({
     onActivate,
   });
 
-  const { handleTouchTransformStart } = useStickerTransform({
+  const { handleTouchTransformStart, handleMouseTransformStart } = useStickerTransform({
     sticker,
     stickerRef,
     stickersWatch,
@@ -80,6 +80,7 @@ const Sticker = ({
               transform: `scale(${1 / (sticker.scale ?? 1)})`, // 역 scale 적용으로 크기 고정
             }}
             onTouchStart={handleTouchTransformStart}
+            onMouseDown={handleMouseTransformStart}
           ></div>
           <div
             className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
@@ -89,6 +90,7 @@ const Sticker = ({
               transform: `scale(${1 / (sticker.scale ?? 1)})`,
             }}
             onTouchStart={handleTouchTransformStart}
+            onMouseDown={handleMouseTransformStart}
           ></div>
           <div
             className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
@@ -98,13 +100,15 @@ const Sticker = ({
               transform: `scale(${1 / (sticker.scale ?? 1)})`,
             }}
             onTouchStart={handleTouchTransformStart}
+            onMouseDown={handleMouseTransformStart}
           ></div>
         </>
       )}
       <img
         src={sticker.url}
         alt={sticker.stickerImageId}
-        className='w-full h-full touch-none'
+        className='w-full h-full touch-none select-none'
+        draggable={false}
         onTouchStart={handleTouchStart}
         onMouseDown={handleMouseDown}
       />

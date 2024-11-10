@@ -44,6 +44,26 @@ const useStickerTransform = ({ sticker, stickerRef, stickersWatch, setValue, isA
     document.addEventListener('touchend', handleTouchTransformEnd);
   };
 
+  const handleMouseTransformStart = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (!isActive || !stickerRef.current) return;
+
+    const stickerBound = stickerRef.current.getBoundingClientRect();
+    const pivotX = stickerBound.left - window.scrollX + stickerBound.width / 2;
+    const pivotY = stickerBound.top - window.scrollY + stickerBound.height / 2;
+    pivotRef.current = { x: pivotX, y: pivotY };
+
+    const currentAngle = calculateAngle(pivotRef.current, { x: e.pageX, y: e.pageY });
+
+    startDegRef.current = currentAngle;
+    previousRotationRef.current = sticker.rotation || 0;
+    startDistanceRef.current = calculateDistance(pivotRef.current, { x: e.pageX, y: e.pageY });
+    startScaleRef.current = sticker.scale || 1;
+
+    document.addEventListener('mousemove', handleMouseTransformMove);
+    document.addEventListener('mouseup', handleMouseTransformEnd);
+  };
+
   const handleTouchTransformMove = (e: TouchEvent) => {
     e.stopPropagation();
     if (!isActive || !stickerRef.current) return;
@@ -79,6 +99,40 @@ const useStickerTransform = ({ sticker, stickerRef, stickersWatch, setValue, isA
     setValue('stickers', [...updatedSticker]);
   };
 
+  const handleMouseTransformMove = (e: MouseEvent) => {
+    e.stopPropagation();
+    if (!isActive || !stickerRef.current) return;
+
+    const currentAngle = calculateAngle(pivotRef.current, {
+      x: e.pageX,
+      y: e.pageY,
+    });
+    const currentDistance = calculateDistance(pivotRef.current, { x: e.pageX, y: e.pageY });
+
+    // 회전 계산
+    let delta = currentAngle - startDegRef.current;
+    if (delta < 0) delta += 360;
+    const updatedRotation = previousRotationRef.current + delta;
+
+    // 스케일 조정 계산
+    const scaleFactor = currentDistance / startDistanceRef.current;
+    const updatedScale = startScaleRef.current * scaleFactor;
+
+    const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
+      if (stickerItem.id === sticker.id) {
+        return {
+          ...sticker,
+          rotation: updatedRotation,
+          scale: updatedScale,
+        };
+      } else {
+        return stickerItem;
+      }
+    });
+
+    setValue('stickers', [...updatedSticker]);
+  };
+
   const handleTouchTransformEnd = (e: TouchEvent) => {
     e.stopPropagation();
 
@@ -86,7 +140,14 @@ const useStickerTransform = ({ sticker, stickerRef, stickersWatch, setValue, isA
     document.removeEventListener('touchend', handleTouchTransformEnd);
   };
 
-  return { handleTouchTransformStart };
+  const handleMouseTransformEnd = (e: MouseEvent) => {
+    e.stopPropagation();
+
+    document.removeEventListener('mousemove', handleMouseTransformMove);
+    document.removeEventListener('mouseup', handleMouseTransformEnd);
+  };
+
+  return { handleTouchTransformStart, handleMouseTransformStart };
 };
 
 export default useStickerTransform;
