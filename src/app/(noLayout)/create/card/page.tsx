@@ -28,7 +28,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { validationSchema } from '@/lib/zod/validationSchema';
 
 const DELAY_TIME: number = 300;
-const DELAY_TIME2: number = 3000;
+const SAVE_DELAY_TIME: number = 3000;
 
 const CreateCardPage = () => {
   const router = useRouter();
@@ -153,7 +153,7 @@ const CreateCardPage = () => {
       }
       prevFormDataRef.current = JSON.stringify(formData);
     }
-  }, DELAY_TIME2);
+  }, SAVE_DELAY_TIME);
 
   const subscribeEveryValues = () => {
     const subscription = methods.watch((value) => {
