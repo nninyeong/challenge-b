@@ -27,10 +27,9 @@ const AccountInput = () => {
     closeModal,
   } = useKakaoPayModal();
 
-  // 모달의 값 설정 후 닫기
   const handleModalSubmit = () => {
     if (selectedIndex !== null) {
-      setValue(`account.${accountType}[${selectedIndex}].kakaopay`, modalValue); // 선택된 인덱스의 kakaoPay 필드에 저장
+      setValue(`account.${accountType}[${selectedIndex}].kakaopay`, modalValue); 
     }
     closeModal();
   };
