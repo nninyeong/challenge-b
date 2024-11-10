@@ -1,12 +1,11 @@
 'use client';
+import useKakaoPayModal from '@/hooks/kakaopay/useKakaoPayModal';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
+import KakaoPayModal from './modal/KakaoPayModal';
 
 const AccountInput = () => {
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [modalValue, setModalValue] = useState('');
   const { register, control, setValue, watch } = useFormContext();
 
   const { fields: groomFields } = useFieldArray({
@@ -19,19 +18,14 @@ const AccountInput = () => {
     name: 'account.bride',
   });
 
-  // 모달 열기
-  const openModal = (index: number) => {
-    setSelectedIndex(index);
-    setModalValue(''); // 모달 열 때 초기화
-    setIsModalOpen(true);
-  };
-
-  // 모달 닫기
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setModalValue('');
-    setSelectedIndex(null);
-  };
+  const {
+    isModalOpen,
+    modalValue,
+    selectedIndex,
+    setModalValue,
+    openModal,
+    closeModal,
+  } = useKakaoPayModal();
 
   // 모달의 값 설정 후 닫기
   const handleModalSubmit = () => {
@@ -117,7 +111,7 @@ const AccountInput = () => {
                 />
                 <button
                   type='button'
-                  onClick={() => openModal(index)} // 모달 열기
+                  onClick={() => openModal(index, kakaopayValue)} // 모달 열기
                 >
                   <img
                     src={
@@ -134,29 +128,13 @@ const AccountInput = () => {
         })}
       </div>
 
-      {/* 모달 */}
-      {isModalOpen && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-          <div className='bg-white p-4 rounded-md'>
-            <h2 className='text-lg font-bold mb-4'>카카오페이 정보 입력</h2>
-            <input
-              type='text'
-              value={modalValue}
-              onChange={(e) => setModalValue(e.target.value)}
-              placeholder='카카오페이 정보 입력'
-              className='w-full px-4 py-2 mb-4 border rounded'
-            />
-            <div className='flex justify-end gap-2'>
-              <button onClick={closeModal} className='px-4 py-2 bg-gray-300 rounded'>
-                취소
-              </button>
-              <button onClick={handleModalSubmit} className='px-4 py-2 bg-blue-500 text-white rounded'>
-                저장
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <KakaoPayModal
+        isModalOpen={isModalOpen}
+        value={modalValue}
+        onClose={closeModal}
+        onSave={handleModalSubmit}
+        onChange={setModalValue}
+      />
     </div>
   );
 };

@@ -20,6 +20,9 @@ const AccountModalPersonalBox = ({
       console.error(error);
     }
   };
+  const handleOpenKakaoPay = () => {
+    window.open(accountData.kakaopay, '_blank');
+  };
   return (
     <div className='pl-[16px] pr-[12px] w-[312px] h-[64px] bg-gray-50 rounded-lg flex justify-between'>
       <div className='flex flex-col justify-center'>
@@ -28,12 +31,22 @@ const AccountModalPersonalBox = ({
         </p>
         <p className='text-[14px] text-gray-500'>{accountData.accountNumber}</p>
       </div>
-      <button
-        className='self-end bg-primary-300 text-white text-[14px] rounded-full w-[73px] h-[23px] mb-[12px]'
-        onClick={handleCopyAccountNumber}
-      >
-        복사하기
-      </button>
+      <div className='self-end flex gap-1'>
+        {accountData.kakaopay && (
+          <button onClick={handleOpenKakaoPay} className='mb-[12px]'>
+            <img
+              src={'/assets/images/icons/kakaopay-button.svg'}
+              alt={'카카오페이 버튼'}
+            />
+          </button>
+        )}
+        <button
+          className='bg-primary-300 text-white text-[14px] rounded-full w-[73px] h-[25px] mb-[12px]'
+          onClick={handleCopyAccountNumber}
+        >
+          복사하기
+        </button>
+      </div>
     </div>
   );
 };
