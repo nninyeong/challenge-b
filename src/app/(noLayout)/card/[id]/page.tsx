@@ -5,7 +5,7 @@ import { createClient } from '@/utils/supabase/server';
 import { Fragment } from 'react';
 import { convertOrderToComponent } from '@/utils/convert/convertOrderToComponent';
 import { Metadata } from 'next';
-import { PersonalInfoType } from '@/types/invitationFormType.type';
+import { MainPhotoType } from '@/types/invitationFormType.type';
 
 export const generateStaticParams = async () => {
   const { data } = await supabase.from('invitation').select('id');
@@ -26,14 +26,14 @@ const fetchInvitationData = async (id: string) => {
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const { id } = params;
-  const { data } = await supabase.from('invitation').select('personal_info').eq('id', id).single();
-  const { bride, groom } = data?.personal_info as unknown as PersonalInfoType;
-  const title = (bride.name && groom.name) ?? `${bride.name}❤️${groom.name}`;
+  const { data } = await supabase.from('invitation').select('main_photo_info').eq('id', id).single();
+  const { leftName, rightName, icon } = data?.main_photo_info as unknown as MainPhotoType;
+  const title = leftName && rightName && icon ? `${leftName} ${icon} ${rightName}` : '청첩장이 도착했습니다.';
 
   return {
     metadataBase: new URL(process.env.NEXT_PUBLIC_DOMAIN || 'https://www.dream-card.co.kr'),
     openGraph: {
-      title: title || '청첩장이 도착했습니다.',
+      title: title,
       description: '링크를 눌러 확인해보세요.',
       images: [
         {
