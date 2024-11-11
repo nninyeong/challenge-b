@@ -53,7 +53,7 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
   mainPhotoInfo: {
     leftName: '',
     rightName: '',
-    icon: '',
+    icon: '♥︎',
     introduceContent: '',
     imageUrl: '',
     fontName: '',
