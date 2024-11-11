@@ -5,9 +5,9 @@ import { useCallback } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import GalleryImage from '../gallery/GalleryImage';
 
-type GalleryPropType = Pick<InvitationFormType, 'gallery'>;
+type GalleryPropType = Pick<InvitationFormType, 'gallery' | 'fontInfo'>;
 
-const WeddingGallery = ({ gallery }: GalleryPropType) => {
+const WeddingGallery = ({ gallery, fontInfo }: GalleryPropType) => {
   const { setValue } = useFormContext();
   const { images = [], grid: gridType, ratio } = gallery || {};
   const imgStyleClass = ratio === 'rectangle' ? 'w-full h-[500px]' : 'w-full h-full';
@@ -32,13 +32,12 @@ const WeddingGallery = ({ gallery }: GalleryPropType) => {
     [images, setValue],
   );
 
-  const fontSize = useWatch({ name: 'fontInfo.size' });
-  const fontColor = useWatch({ name: 'fontInfo.color' });
-  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
+  const { size, color } = fontInfo;
+  const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
 
   return (
     <div
-      style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
+      style={{ fontSize: `${16 + size}px`, color: `${rgbaColor}` }}
       className='mb-[56px] h-fit'
     >
       <p className='text-center mb-8 text-opcity-50 tracking-wider'>GALLERY</p>

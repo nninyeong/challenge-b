@@ -4,6 +4,7 @@ import MainPhoto from '@/components/card/MainPhoto';
 import { useEffect, useRef } from 'react';
 import EventBus from '@/utils/EventBus';
 import captureMainPhotoToPng from '@/utils/captureMainPhotoToPng';
+import { useFontColorStore, useFontStore } from '@/store/useFontStore';
 
 const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> }) => {
   const mainPhotoInfo = useWatch({
@@ -26,6 +27,11 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
     name: 'stickers',
   });
 
+  const fontInfo = useWatch({
+    control,
+    name: 'fontInfo',
+  });
+
   const mainPhotoRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const captureAndSendImage = async () => {
@@ -46,6 +52,7 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
       bgColor={svgBgColor}
       mainView={mainViewType}
       stickers={stickers}
+      fontInfo={fontInfo}
     />
   );
 };

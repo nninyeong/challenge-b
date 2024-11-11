@@ -3,13 +3,17 @@ import { Control, useWatch } from 'react-hook-form';
 import Greeting from '@/components/card/Greeting';
 
 const GreetingPreview = ({ control }: { control: Control<InvitationFormType> }) => {
-  const greetingMessage = useWatch({
+  const [greetingMessage, fontInfo] = useWatch({
     control,
-    name: 'greetingMessage',
+    name: ['greetingMessage', 'fontInfo'],
   });
- 
 
-  return <Greeting greetingMessage={greetingMessage} />;
+  return (
+    <Greeting
+      greetingMessage={greetingMessage}
+      fontInfo={fontInfo}
+    />
+  );
 };
 
 export default GreetingPreview;

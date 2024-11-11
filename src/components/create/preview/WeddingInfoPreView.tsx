@@ -8,7 +8,17 @@ const WeddingInfoPreView = ({ control }: { control: Control<InvitationFormType> 
     name: 'weddingInfo',
   });
 
-  return <WeddingInfo weddingInfo={weddingInfo} />;
+  const fontInfo = useWatch({
+    control,
+    name: 'fontInfo',
+  });
+
+  return (
+    <WeddingInfo
+      weddingInfo={weddingInfo}
+      fontInfo={fontInfo}
+    />
+  );
 };
 
 export default WeddingInfoPreView;

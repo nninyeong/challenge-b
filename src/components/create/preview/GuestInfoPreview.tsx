@@ -25,6 +25,7 @@ const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> })
     control,
     name: 'mainPhotoInfo',
   });
+
   return (
     <CreateGuestInfo
       attendance={attendance}

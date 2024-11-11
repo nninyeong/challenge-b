@@ -5,11 +5,11 @@ import NavigationButtons from '@/components/create/NavigationButtons';
 import NavigationDetailCard from '@/components/create/NavigationDetailCard';
 import { useFontColorStore } from '@/store/useFontStore';
 
-type NavigationDetailsPropType = Pick<InvitationFormType, 'navigationDetail' | 'weddingInfo'>;
-const NavigationDetails = ({ navigationDetail, weddingInfo }: NavigationDetailsPropType) => {
-  const fontColor = useFontColorStore((state) => state.fontColor);
+type NavigationDetailsPropType = Pick<InvitationFormType, 'navigationDetail' | 'weddingInfo' | 'fontInfo'>;
+const NavigationDetails = ({ navigationDetail, weddingInfo, fontInfo }: NavigationDetailsPropType) => {
+  const { color } = fontInfo;
+  const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
 
-  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
   return (
     <div className='mb-[75px/]'>
       {navigationDetail.map && <MapView address={weddingInfo.weddingHallAddress} />}

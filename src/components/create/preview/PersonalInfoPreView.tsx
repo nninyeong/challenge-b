@@ -9,7 +9,17 @@ const PersonalInfoPreview = ({ control }: { control: Control<InvitationFormType>
     name: 'personalInfo',
   });
 
-  return <PersonalInfoOnSharedCard personalInfo={personalInfo} />;
+  const fontInfo = useWatch({
+    control,
+    name: 'fontInfo',
+  });
+
+  return (
+    <PersonalInfoOnSharedCard
+      personalInfo={personalInfo}
+      fontInfo={fontInfo}
+    />
+  );
 };
 
 export default PersonalInfoPreview;

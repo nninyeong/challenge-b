@@ -28,6 +28,7 @@ export const convertOrderToComponent = (
     navigationDetail,
     dDay,
     mainPhotoInfo,
+    fontInfo,
   } = invitationData;
 
   const componentMap = {
@@ -37,29 +38,39 @@ export const convertOrderToComponent = (
         bgColor={bgColor}
         mainView={mainView}
         stickers={stickers}
+        fontInfo={fontInfo}
         key='mainPhoto-sharedCard'
       />
     ),
 
-    [COMPONENT_TYPES.GREETING]: <Greeting greetingMessage={greetingMessage} />,
+    [COMPONENT_TYPES.GREETING]: (
+      <Greeting
+        greetingMessage={greetingMessage}
+        fontInfo={fontInfo}
+      />
+    ),
     [COMPONENT_TYPES.PERSONAL_INFO]: [
       <PersonalInfoOnSharedCard
         personalInfo={personalInfo}
+        fontInfo={fontInfo}
         key='personalInfo-sharedCard'
       />,
       <Account
         account={account}
+        fontInfo={fontInfo}
         key='account-sharedCard'
       />,
     ],
     [COMPONENT_TYPES.WEDDING_INFO]: [
       <WeddingInfo
         weddingInfo={weddingInfo}
+        fontInfo={fontInfo}
         key='weddingInfo-sharedCard'
       />,
       <NavigationDetails
         navigationDetail={navigationDetail}
         weddingInfo={weddingInfo}
+        fontInfo={fontInfo}
         key='navigationDetail-sharedCard'
       />,
     ],

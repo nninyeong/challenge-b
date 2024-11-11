@@ -8,7 +8,17 @@ const GalleryPreview = ({ control }: { control: Control<InvitationFormType> }) =
     name: 'gallery',
   });
 
-  return <WeddingGallery gallery={gallery} />;
+  const fontInfo = useWatch({
+    control,
+    name: 'fontInfo',
+  });
+
+  return (
+    <WeddingGallery
+      gallery={gallery}
+      fontInfo={fontInfo}
+    />
+  );
 };
 
 export default GalleryPreview;

@@ -6,8 +6,8 @@ import { createPortal } from 'react-dom';
 import AccountModal from '@/components/create/modal/AccountModal';
 import { useFontStore, useFontColorStore } from '@/store/useFontStore';
 
-type AccountPropType = Pick<InvitationFormType, 'account'>;
-const Account = ({ account }: AccountPropType) => {
+type AccountPropType = Pick<InvitationFormType, 'account' | 'fontInfo'>;
+const Account = ({ account, fontInfo }: AccountPropType) => {
   const [openAccountModal, setOpenAccountModal] = useState<boolean>(false);
   const [portalElement, setPortalElement] = useState<Element | null>(null);
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
@@ -22,20 +22,19 @@ const Account = ({ account }: AccountPropType) => {
     setAccountType(type);
   };
 
-  const fontSize = useFontStore((state) => state.fontSize);
-  const fontColor = useFontColorStore((state) => state.fontColor);
-  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
+  const { size, color } = fontInfo;
+  const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
 
   return (
     <div
       style={{ color: `${rgbaColor}` }}
       className='flex flex-col justify-center items-center mb-[80px]'
     >
-      <p style={{ fontSize: ` ${20 + fontSize}px)` }}>{account.title ? account.title : '제목'}</p>
+      <p style={{ fontSize: ` ${20 + size}px)` }}>{account.title ? account.title : '제목'}</p>
       <p>{account.content ? account.content : '내용'}</p>
       <div
         className='flex flex-col gap-5 mt-5 w-full justify-center items-center'
-        style={{ fontSize: `${16 + fontSize}px` }}
+        style={{ fontSize: `${16 + size}px` }}
       >
         <button
           style={{ border: `2px solid ${rgbaColor}` }}

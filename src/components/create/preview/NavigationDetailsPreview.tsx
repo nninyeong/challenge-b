@@ -13,10 +13,16 @@ const NavigationDetailsPreview = ({ control }: { control: Control<InvitationForm
     name: 'weddingInfo',
   });
 
+  const fontInfo = useWatch({
+    control,
+    name: 'fontInfo',
+  });
+
   return (
     <NavigationDetails
       navigationDetail={navigationDetail}
       weddingInfo={weddingInfo}
+      fontInfo={fontInfo}
     />
   );
 };

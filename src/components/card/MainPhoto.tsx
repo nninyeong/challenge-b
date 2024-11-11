@@ -15,24 +15,22 @@ const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
   e.stopPropagation();
 };
 
-type MainPhotoPropType = Pick<InvitationFormType, 'mainPhotoInfo' | 'bgColor' | 'mainView' | 'stickers'>;
+type MainPhotoPropType = Pick<InvitationFormType, 'mainPhotoInfo' | 'bgColor' | 'mainView' | 'stickers' | 'fontInfo'>;
 
 const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
-  ({ mainPhotoInfo, bgColor, mainView, stickers }, ref) => {
+  ({ mainPhotoInfo, bgColor, mainView, stickers, fontInfo }, ref) => {
     const previewRef = useRef<HTMLDivElement | null>(null);
     const [activeStickerId, setActiveStickerId] = useState<string | null>(null);
     const handleActiveSticker = (id: string | null) => {
       setActiveStickerId(id);
     };
     const path = usePathname();
-    const fontSize = useFontStore((state) => state.fontSize);
-    const fontColor = useFontColorStore((state) => state.fontColor);
-
-    const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
+    const { size, color } = fontInfo;
+    const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
 
     return (
       <div
-        style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
+        style={{ fontSize: `${16 + size}px`, color: `${rgbaColor}` }}
         className='overflow-hidden w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center text-black'
       >
         <div
@@ -79,7 +77,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
           )}
         </div>
         <div
-          style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
+          style={{ fontSize: `${16 + size}px`, color: `${rgbaColor}` }}
           className='flex items-center justify-center mt-4 text-[24px]  font-semibold mb-[12px] text-center relative'
         >
           <p className='flex-1 text-right whitespace-nowrap pr-4'>{mainPhotoInfo?.leftName || '좌측 이름'}</p>
@@ -91,7 +89,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
 
         <div className=' text-opacity-75 flex flex-col'>
           <div
-            style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
+            style={{ fontSize: `${16 + size}px`, color: `${rgbaColor}` }}
             dangerouslySetInnerHTML={{
               __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
             }}

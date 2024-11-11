@@ -4,11 +4,16 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import Account from '@/components/card/Account';
 
 const AccountPreView = ({ control }: { control: Control<InvitationFormType> }) => {
-  const account = useWatch({
+  const [account, fontInfo] = useWatch({
     control,
-    name: 'account',
+    name: ['account', 'fontInfo'],
   });
 
-  return <Account account={account} />;
+  return (
+    <Account
+      account={account}
+      fontInfo={fontInfo}
+    />
+  );
 };
 export default AccountPreView;

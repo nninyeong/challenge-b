@@ -24,6 +24,7 @@ type FontColorStore = {
   fontColor: ColorType;
   setFontColor: (color: ColorType) => void;
 };
+
 export const useFontColorStore = create<FontColorStore>((set) => ({
   fontColor: { r: 255, g: 255, b: 255, a: 1, name: '커스텀' },
   setFontColor: (color: ColorType) => set(() => ({ fontColor: color })),

@@ -9,28 +9,27 @@ const DEFAULT_VALUES = {
   contact: '예식장 연락처를 입력해주세요.',
 };
 
-type WeddingInfoPropType = Pick<InvitationFormType, 'weddingInfo'>;
-const WeddingInfo = ({ weddingInfo }: WeddingInfoPropType) => {
+type WeddingInfoPropType = Pick<InvitationFormType, 'weddingInfo' | 'fontInfo'>;
+const WeddingInfo = ({ weddingInfo, fontInfo }: WeddingInfoPropType) => {
   const day = getDayOfWeek(weddingInfo.date)[0];
-  const fontSize = useFontStore((state) => state.fontSize);
-  const fontColor = useFontColorStore((state) => state.fontColor);
-  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
+  const { size, color } = fontInfo;
+  const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
 
   return (
     <div
-      style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
+      style={{ fontSize: `${16 + size}px`, color: `${rgbaColor}` }}
       className='flex flex-col items-center gap-[24px] text-center mb-[24px]'
     >
       <p className='text-opctiy-50  font-normal leading-[140%] tracking-[4px]'>INFORMATION</p>
       <p
-        style={{ fontSize: `${20 + fontSize}px` }}
+        style={{ fontSize: `${20 + size}px` }}
         className='text-opctiy-50   font-bold leading-[120%] tracking-[-0.04px]'
       >
         {weddingInfo.date} {day} {weddingInfo.time.hour}:{weddingInfo.time.minute}
       </p>
       <div className='text-opctiy-50   leading-[140%]'>
         <p
-          style={{ fontSize: `${20 + fontSize}px` }}
+          style={{ fontSize: `${20 + size}px` }}
           className='text-opctiy-50  leading-[120%] mb-[8px]'
         >
           {weddingInfo.weddingHallName || DEFAULT_VALUES.name}

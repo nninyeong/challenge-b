@@ -24,8 +24,6 @@ import { Notify } from 'notiflix';
 import EventBus from '@/utils/EventBus';
 import { motion } from 'framer-motion';
 import createCardFormHeightMapper, { FOLDED_HEIGHT } from '@/utils/createCardFormHeightMapper';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { validationSchema } from '@/lib/zod/validationSchema';
 
 const DELAY_TIME: number = 300;
 const SAVE_DELAY_TIME: number = 3000;
@@ -34,7 +32,6 @@ const CreateCardPage = () => {
   const router = useRouter();
 
   const methods = useForm<InvitationFormType>({
-    resolver: zodResolver(validationSchema),
     mode: 'onChange',
     defaultValues: INVITATION_DEFAULT_VALUE,
   });
