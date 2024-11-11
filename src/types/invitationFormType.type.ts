@@ -70,11 +70,12 @@ export type StickerType = {
   id: string;
   stickerImageId: string;
   url: string;
-  posX: string;
-  posY: string;
+  posX: number;
+  posY: number;
   width: number;
   height: number;
   rotation: number;
+  scale?: number;
 };
 
 export type DecorateImageType = {

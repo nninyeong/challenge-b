@@ -30,6 +30,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
     const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
 
     return (
+      <div className='overflow-hidden w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center text-black'>
       <div
         style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
         className='w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center '

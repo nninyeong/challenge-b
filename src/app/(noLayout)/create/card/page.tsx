@@ -28,6 +28,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { validationSchema } from '@/lib/zod/validationSchema';
 
 const DELAY_TIME: number = 300;
+const SAVE_DELAY_TIME: number = 3000;
 
 const CreateCardPage = () => {
   const router = useRouter();
@@ -55,7 +56,7 @@ const CreateCardPage = () => {
 
     return (orderA ?? a.order) - (orderB ?? b.order);
   });
-
+  const prevFormDataRef = useRef<string>('');
   const refs = useRef<null[] | HTMLDivElement[]>([]);
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
     refs,
@@ -134,6 +135,35 @@ const CreateCardPage = () => {
       setCurrentStep((prev) => prev - 1);
     }
   }, DELAY_TIME);
+
+  const handleDebouncedSave = debounce(async () => {
+    const { data: user } = await browserClient.auth.getUser();
+    const formData = methods.getValues();
+
+    const isInvitationModified = JSON.stringify(formData) !== prevFormDataRef.current;
+
+    if (isInvitationModified) {
+      if (!user.user) {
+        sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
+      } else {
+        if (existingInvitation === null) {
+          insertInvitation(formData);
+        } else {
+          updateInvitation(formData);
+        }
+      }
+      prevFormDataRef.current = JSON.stringify(formData);
+    }
+  }, SAVE_DELAY_TIME);
+
+  const subscribeEveryValues = () => {
+    const subscription = methods.watch((value) => {
+      if (value) {
+        handleDebouncedSave();
+      }
+      return () => subscription.unsubscribe();
+    });
+  };
 
   const subscribeFont = () => {
     const subscriptionFont = methods.watch((value) => {
@@ -233,6 +263,7 @@ const CreateCardPage = () => {
   }, [existingInvitation, reset]);
 
   useEffect(() => {
+    subscribeEveryValues();
     subscribeBackgroundColor();
     subscribeFont();
   }, [methods]);
