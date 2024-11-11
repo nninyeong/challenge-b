@@ -3,6 +3,9 @@ import useKakaoPayModal from '@/hooks/kakaopay/useKakaoPayModal';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import KakaoPayModal from './modal/KakaoPayModal';
+import { kakaopaySchema } from '@/lib/zod/kakaoPaySchema';
+import { z } from 'zod';
+import { Notify } from 'notiflix';
 
 const AccountInput = () => {
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
@@ -28,10 +31,17 @@ const AccountInput = () => {
   } = useKakaoPayModal();
 
   const handleModalSubmit = () => {
-    if (selectedIndex !== null) {
-      setValue(`account.${accountType}[${selectedIndex}].kakaopay`, modalValue); 
+    try {
+      kakaopaySchema.parse(modalValue);
+      if (selectedIndex !== null) {
+        setValue(`account.${accountType}[${selectedIndex}].kakaopay`, modalValue);
+        closeModal();
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        Notify.failure(error.errors[0].message);
+      }
     }
-    closeModal();
   };
 
   return (

@@ -34,7 +34,7 @@ const AccountModal = ({
         />
       </div>
       <button
-        className='w-[311px] h-[48px] bg-primary-300 text-white rounded-lg'
+        className='w-[311px] h-[48px] text-[16px] bg-primary-300 text-white rounded-lg'
         onClick={() => setOpenAccountModal(false)}
       >
         닫기

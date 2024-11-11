@@ -17,7 +17,7 @@ const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, value, onClose, onSa
           type='text'
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder='카카오페이 정보 입력'
+          placeholder='카카오페이 송금 링크 복사'
           className='w-full px-4 py-2 mb-4 border rounded'
         />
         <div className='flex justify-end gap-2'>
