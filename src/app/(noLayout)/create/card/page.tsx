@@ -242,6 +242,7 @@ const CreateCardPage = () => {
         >
           {isRendered &&
             orderList.map((e, index) => {
+              if (e.component === null) return null;
               return (
                 <div
                   key={e.labelForInput}
