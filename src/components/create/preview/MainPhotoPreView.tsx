@@ -7,29 +7,9 @@ import captureMainPhotoToPng from '@/utils/captureMainPhotoToPng';
 import { useFontColorStore, useFontStore } from '@/store/useFontStore';
 
 const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> }) => {
-  const mainPhotoInfo = useWatch({
+  const [mainPhotoInfo, svgBgColor, mainViewType, stickers, fontInfo] = useWatch({
     control,
-    name: 'mainPhotoInfo',
-  });
-
-  const svgBgColor = useWatch({
-    control,
-    name: 'bgColor',
-  });
-
-  const mainViewType = useWatch({
-    control,
-    name: 'mainView',
-  });
-
-  const stickers = useWatch({
-    control,
-    name: 'stickers',
-  });
-
-  const fontInfo = useWatch({
-    control,
-    name: 'fontInfo',
+    name: ['mainPhotoInfo', 'bgColor', 'mainView', 'stickers', 'fontInfo'],
   });
 
   const mainPhotoRef = useRef<HTMLDivElement | null>(null);

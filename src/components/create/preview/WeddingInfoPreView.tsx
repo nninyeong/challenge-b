@@ -3,14 +3,9 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import WeddingInfo from '@/components/card/WeddingInfo';
 
 const WeddingInfoPreView = ({ control }: { control: Control<InvitationFormType> }) => {
-  const weddingInfo = useWatch({
+  const [weddingInfo, fontInfo] = useWatch({
     control,
-    name: 'weddingInfo',
-  });
-
-  const fontInfo = useWatch({
-    control,
-    name: 'fontInfo',
+    name: ['weddingInfo', 'fontInfo'],
   });
 
   return (
