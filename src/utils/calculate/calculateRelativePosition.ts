@@ -1,12 +1,8 @@
 import { MutableRefObject } from 'react';
 
-export const clampValue = (value: number, min: number, max: number): number => {
-  return Math.max(min, Math.min(value, max));
-};
-
 export const calculateRelativePosition = (
-  touch: React.Touch,
-  touchOffset: MutableRefObject<{ x: number; y: number }>,
+  event: React.Touch | MouseEvent,
+  offset: MutableRefObject<{ x: number; y: number }>,
   previewRef: MutableRefObject<HTMLDivElement | null>,
   stickerRef: MutableRefObject<HTMLDivElement | null>,
 ) => {
@@ -14,9 +10,8 @@ export const calculateRelativePosition = (
 
   const previewBounds = previewRef.current.getBoundingClientRect();
 
-  // 터치 위치에서 스티커 위치 오프셋을 빼고 프리뷰 기준 상대 위치를 계산
-  const relativeX = ((touch.clientX - previewBounds.left - touchOffset.current.x) / previewBounds.width) * 100;
-  const relativeY = ((touch.clientY - previewBounds.top - touchOffset.current.y) / previewBounds.height) * 100;
+  const relativeX = ((event.clientX - previewBounds.left - offset.current.x) / previewBounds.width) * 100;
+  const relativeY = ((event.clientY - previewBounds.top - offset.current.y) / previewBounds.height) * 100;
 
   return { relativeX, relativeY };
 };
