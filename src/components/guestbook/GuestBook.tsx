@@ -7,19 +7,19 @@ import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathn
 import { useState } from 'react';
 import GuestBookPagination from './GuestBookPagination';
 import { useFontStore, useFontColorStore } from '@/store/useFontStore';
-
 const ITEMS_PER_PAGE = 6;
 
 const GuestBook = () => {
   const { isCreatePage, invitationId } = useInvitationIdByPathname();
   const [page, setPage] = useState(1);
   const fontSize = useFontStore((state) => state.fontSize);
+  const fontColor = useFontColorStore((state) => state.fontColor);
+  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
   const { data, isLoading, error } = useGuestBookEntries(invitationId, page);
+
   const guestBooks = data?.data ?? [];
   const total = data?.total ?? 0;
   const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
-  const fontColor = useFontColorStore((state) => state.fontColor);
-  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
 
   if (isLoading) return <div>방명록을 로딩중입니다...</div>;
   if (error) return <div>방명록을 불러오는 중 에러가 발생하였습니다.</div>;
@@ -44,12 +44,7 @@ const GuestBook = () => {
               src='/assets/images/empty-guestbook.svg'
               alt=''
             />
-            <span
-              style={{ fontSize: `${14 + fontSize}px` }}
-              className='text-gray-700 '
-            >
-              아직 남긴 방명록이 없어요.
-            </span>
+            <span className='text-gray-700 '>아직 남긴 방명록이 없어요.</span>
           </div>
         </div>
       ) : (

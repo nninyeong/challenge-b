@@ -27,13 +27,13 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
     const path = usePathname();
     const fontSize = useFontStore((state) => state.fontSize);
     const fontColor = useFontColorStore((state) => state.fontColor);
+
     const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
 
     return (
-      <div className='overflow-hidden w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center text-black'>
       <div
         style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
-        className='w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center '
+        className='overflow-hidden w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center text-black'
       >
         <div
           ref={previewRef}
@@ -79,7 +79,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
           )}
         </div>
         <div
-          style={{ fontSize: `${16 + fontSize}px` }}
+          style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
           className='flex items-center justify-center mt-4 text-[24px]  font-semibold mb-[12px] text-center relative'
         >
           <p className='flex-1 text-right whitespace-nowrap pr-4'>{mainPhotoInfo?.leftName || '좌측 이름'}</p>
@@ -91,6 +91,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
 
         <div className=' text-opacity-75 flex flex-col'>
           <div
+            style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
             dangerouslySetInnerHTML={{
               __html: mainPhotoInfo?.introduceContent || '대표문구를 작성해주세요',
             }}

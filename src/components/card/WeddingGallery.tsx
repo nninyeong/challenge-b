@@ -2,9 +2,8 @@
 import { useDeleteGalleryImage } from '@/hooks/queries/invitation/useUpdateImages';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { useCallback } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import GalleryImage from '../gallery/GalleryImage';
-import { useFontStore, useFontColorStore } from '@/store/useFontStore';
 
 type GalleryPropType = Pick<InvitationFormType, 'gallery'>;
 
@@ -33,8 +32,8 @@ const WeddingGallery = ({ gallery }: GalleryPropType) => {
     [images, setValue],
   );
 
-  const fontSize = useFontStore((state) => state.fontSize);
-  const fontColor = useFontColorStore((state) => state.fontColor);
+  const fontSize = useWatch({ name: 'fontInfo.size' });
+  const fontColor = useWatch({ name: 'fontInfo.color' });
   const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
 
   return (

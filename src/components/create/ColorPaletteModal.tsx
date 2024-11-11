@@ -1,4 +1,3 @@
-// ColorPaletteModal.tsx
 'use client';
 
 import { Alpha, Hue, Saturation, useColor } from 'react-color-palette';

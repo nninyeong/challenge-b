@@ -22,6 +22,8 @@ const PersonalInfoOnSharedCard = ({ personalInfo }: PersonalInfoOnSharedCardProp
               label={groom.relation}
               name={groom.name}
               phoneNumber={groom.phoneNumber}
+              fontSize={fontSize}
+              fontColor={rgbaColor}
             />
           </div>
           <p className='text-center'>신랑 측 혼주</p>
@@ -30,11 +32,15 @@ const PersonalInfoOnSharedCard = ({ personalInfo }: PersonalInfoOnSharedCardProp
               label={groom.father.relation}
               name={groom.father.isDeceased ? `故 ${groom.father.name}` : groom.father.name}
               phoneNumber={groom.father.phoneNumber}
+              fontSize={fontSize}
+              fontColor={rgbaColor}
             />
             <PersonalInfoCard
               label={groom.mother.relation}
               name={groom.mother.isDeceased ? `故 ${groom.mother.name}` : groom.mother.name}
               phoneNumber={groom.mother.phoneNumber}
+              fontSize={fontSize}
+              fontColor={rgbaColor}
             />
           </div>
         </div>
@@ -45,6 +51,8 @@ const PersonalInfoOnSharedCard = ({ personalInfo }: PersonalInfoOnSharedCardProp
               label={bride.relation}
               name={bride.name}
               phoneNumber={bride.phoneNumber}
+              fontSize={fontSize}
+              fontColor={rgbaColor}
             />
           </div>
           <p className='text-center'>신부 측 혼주</p>
@@ -53,11 +61,15 @@ const PersonalInfoOnSharedCard = ({ personalInfo }: PersonalInfoOnSharedCardProp
               label={bride.father.relation}
               name={bride.father.isDeceased ? `故 ${bride.father.name}` : bride.father.name}
               phoneNumber={bride.father.phoneNumber}
+              fontSize={fontSize}
+              fontColor={rgbaColor}
             />
             <PersonalInfoCard
               label={bride.mother.relation}
               name={bride.mother.isDeceased ? `故 ${bride.mother.name}` : bride.mother.name}
               phoneNumber={bride.mother.phoneNumber}
+              fontSize={fontSize}
+              fontColor={rgbaColor}
             />
           </div>
         </div>

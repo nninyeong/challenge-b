@@ -1,12 +1,15 @@
 import useLatLng from '@/hooks/map/useLatLng';
 import useOpenMapHandlers from '@/hooks/navigation/useNavigationButtons';
 
-const NavigationButtons = ({ address, name }: { address: string; name: string }) => {
+const NavigationButtons = ({ address, name, fontColor }: { address: string; name: string; fontColor: string }) => {
   const coords = useLatLng(address);
   const { openKakaoMap, openNaverMap, openTMap } = useOpenMapHandlers({ lat: coords.lat, lng: coords.lng }, name);
 
   return (
-    <div className='flex justify-between w-full px-8  mt-6 mb-14'>
+    <div
+      style={{ color: `${fontColor}` }}
+      className='flex justify-between w-full px-8  mt-6 mb-14'
+    >
       <button
         onClick={openTMap}
         className='flex gap-[6px] items-center'

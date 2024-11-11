@@ -46,13 +46,15 @@ const Account = ({ account }: AccountPropType) => {
         style={{ fontSize: `${16 + fontSize}px` }}
       >
         <button
-          className='rounded-full border-2 w-[343px] h-[48px] '
+          style={{ border: `2px solid ${rgbaColor}` }}
+          className='rounded-full  w-[343px] h-[48px] '
           onClick={() => handleOpenAccountModal('groom')}
         >
           신랑 측 계좌번호
         </button>
         <button
-          className='rounded-full border-2 w-[343px] h-[48px]'
+          style={{ border: `2px solid ${rgbaColor}` }}
+          className='rounded-full w-[343px] h-[48px] '
           onClick={() => handleOpenAccountModal('bride')}
         >
           신부 측 계좌번호

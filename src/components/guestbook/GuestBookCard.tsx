@@ -16,11 +16,11 @@ const GuestBookCard = ({
 }) => {
   const { isAccordionOpen, toggleAccordion } = useGuestBookDeleteButton();
   const { year, month, day, hour, minute } = convertToUserTimezone(guestBook.created_at);
-  const fontSize = useFontStore((state) => state.fontSize);
+  
 
   return (
     <div
-      style={{ fontSize: `${16 + fontSize}px` }}
+      
       className='text-black w-full px-4 mb-4'
     >
       <div className='bg-gray-50 rounded-xl px-4'>
@@ -28,7 +28,7 @@ const GuestBookCard = ({
           <div className='text-gray-900 font-bold'>{guestBook.name}</div>
           <div className='flex items-center gap-1'>
             <div
-              style={{ fontSize: `${12 + fontSize}px` }}
+             
               className='text-[12px] text-gray-300'
             >{`${year}-${month}-${day} ${hour}:${minute}`}</div>
             <img
