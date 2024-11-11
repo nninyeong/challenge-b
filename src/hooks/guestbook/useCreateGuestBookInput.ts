@@ -1,7 +1,7 @@
 import { guestBookSchema } from '@/lib/zod/guestBookSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import useAddGuestBookEntry from './useCreateGuestBookEntry';
+import useAddGuestBookEntry from '../queries/guestbook/useCreateGuestBookEntry';
 import { GuestBookFormData } from '@/types/guestInfo.types';
 import { Notify } from 'notiflix';
 

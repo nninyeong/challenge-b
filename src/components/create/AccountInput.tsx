@@ -1,11 +1,15 @@
 'use client';
+import useKakaoPayModal from '@/hooks/kakaopay/useKakaoPayModal';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { convertIndexToAccountLabel } from '@/utils/convertIndexToAccountLabel';
+import KakaoPayModal from './modal/KakaoPayModal';
+import { kakaopaySchema } from '@/lib/zod/kakaoPaySchema';
+import { z } from 'zod';
+import { Notify } from 'notiflix';
 
 const AccountInput = () => {
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
-  const { register, control } = useFormContext();
+  const { register, control, setValue, watch } = useFormContext();
 
   const { fields: groomFields } = useFieldArray({
     control,
@@ -16,6 +20,29 @@ const AccountInput = () => {
     control,
     name: 'account.bride',
   });
+
+  const {
+    isModalOpen,
+    modalValue,
+    selectedIndex,
+    setModalValue,
+    openModal,
+    closeModal,
+  } = useKakaoPayModal();
+
+  const handleModalSubmit = () => {
+    try {
+      kakaopaySchema.parse(modalValue);
+      if (selectedIndex !== null) {
+        setValue(`account.${accountType}[${selectedIndex}].kakaopay`, modalValue);
+        closeModal();
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        Notify.failure(error.errors[0].message);
+      }
+    }
+  };
 
   return (
     <div className='flex-col-center text-sm gap-4 w-full'>
@@ -64,35 +91,59 @@ const AccountInput = () => {
       </div>
 
       <div className='w-[311px]'>
-        {(accountType === 'groom' ? groomFields : brideFields).map((field, index) => (
-          <div
-            key={`${accountType}${index}`}
-            className='flex justify-center items-center text-[14px] h-[32px] mb-[8px] w-full gap-[19px]'
-          >
-            <label className='w-[37px] whitespace-nowrap'>{convertIndexToAccountLabel(index, accountType)}</label>
-            <div className='flex justify-center items-center gap-[8px]'>
-              <input
-                className='px-[8px] w-[60px] h-[30px] rounded-md'
-                {...register(`account.${accountType}[${index}].bank`)}
-                placeholder='은행'
-                maxLength={9}
-              />
-              <input
-                className='px-[8px] w-[117px] h-[30px] rounded-md'
-                {...register(`account.${accountType}[${index}].accountNumber`)}
-                placeholder='계좌번호'
-                maxLength={27}
-              />
-              <input
-                className='px-[8px] w-[60px] h-[30px] rounded-md'
-                {...register(`account.${accountType}[${index}].depositor`)}
-                placeholder='예금주'
-                maxLength={5}
-              />
+        {(accountType === 'groom' ? groomFields : brideFields).map((field, index) => {
+          const kakaopayValue = watch(`account.${accountType}[${index}].kakaopay`);
+
+          return (
+            <div
+              key={`${accountType}${index}`}
+              className='flex justify-center items-center text-[14px] h-[32px] mb-[8px] w-full gap-[19px]'
+            >
+              <div className='flex justify-center items-center gap-[8px]'>
+                <input
+                  className='px-[8px] w-[60px] h-[30px] rounded-md'
+                  {...register(`account.${accountType}[${index}].depositor`)}
+                  placeholder='예금주'
+                  maxLength={5}
+                />
+                <input
+                  className='px-[8px] w-[60px] h-[30px] rounded-md'
+                  {...register(`account.${accountType}[${index}].bank`)}
+                  placeholder='은행'
+                  maxLength={9}
+                />
+                <input
+                  className='px-[8px] w-[117px] h-[30px] rounded-md'
+                  {...register(`account.${accountType}[${index}].accountNumber`)}
+                  placeholder='계좌번호'
+                  maxLength={27}
+                />
+                <button
+                  type='button'
+                  onClick={() => openModal(index, kakaopayValue)} // 모달 열기
+                >
+                  <img
+                    src={
+                      kakaopayValue
+                        ? '/assets/images/icons/kakaomodal-on.svg'
+                        : '/assets/images/icons/kakaomodal-off.svg'
+                    }
+                    alt={kakaopayValue ? '카카오페이 활성화' : '카카오페이 비활성화'}
+                  />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
+      <KakaoPayModal
+        isModalOpen={isModalOpen}
+        value={modalValue}
+        onClose={closeModal}
+        onSave={handleModalSubmit}
+        onChange={setModalValue}
+      />
     </div>
   );
 };

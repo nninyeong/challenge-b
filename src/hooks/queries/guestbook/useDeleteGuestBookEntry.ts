@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import browserClient from '@/utils/supabase/client';
-import { QUERY_KEYS } from '../queries/queryKeys';
+import { QUERY_KEYS } from '../queryKeys';
 import { Notify } from 'notiflix';
 
 const useDeleteGuestBookEntry = (

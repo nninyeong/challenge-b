@@ -1,5 +1,5 @@
 import useLatLng from '@/hooks/map/useLatLng';
-import useOpenMapHandlers from '@/hooks/navigation/useNavigationButtons';
+import useOpenMapHandlers from '@/service/navigation/useNavigationButtons';
 
 const NavigationButtons = ({ address, name }: { address: string; name: string }) => {
   const coords = useLatLng(address);
