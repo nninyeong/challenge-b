@@ -2,7 +2,6 @@
 
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { useEffect, useState } from 'react';
-import { AccountType } from '@/types/accountType.type';
 import { createPortal } from 'react-dom';
 import AccountModal from '@/components/create/modal/AccountModal';
 import { useFontStore, useFontColorStore } from '@/store/useFontStore';
@@ -11,23 +10,16 @@ type AccountPropType = Pick<InvitationFormType, 'account'>;
 const Account = ({ account }: AccountPropType) => {
   const [openAccountModal, setOpenAccountModal] = useState<boolean>(false);
   const [portalElement, setPortalElement] = useState<Element | null>(null);
-  const [accountData, setAccountData] = useState<AccountType[]>([]);
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
+  const accountData = account[accountType];
+
   useEffect(() => {
     setPortalElement(document.getElementById('modal'));
   }, []);
+
   const handleOpenAccountModal = (type: 'bride' | 'groom') => {
     setOpenAccountModal(true);
-    if (type === 'bride') {
-      const brideAccounts = account.bride;
-      setAccountData(brideAccounts);
-      setAccountType('bride');
-    }
-    if (type === 'groom') {
-      const groomAccounts = account.groom;
-      setAccountData(groomAccounts);
-      setAccountType('groom');
-    }
+    setAccountType(type);
   };
 
   const fontSize = useFontStore((state) => state.fontSize);

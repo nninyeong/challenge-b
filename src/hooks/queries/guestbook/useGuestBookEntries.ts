@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import browserClient from '@/utils/supabase/client';
 import { GuestBookEntry } from '@/types/guestBookEntry.types';
-import { QUERY_KEYS } from '../queries/queryKeys';
+import { QUERY_KEYS } from '../queryKeys';
 
 const ITEMS_PER_PAGE = 6;
 

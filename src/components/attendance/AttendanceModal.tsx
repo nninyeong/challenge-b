@@ -145,12 +145,12 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
           )}
           <div className='flex gap-2 mt-4'>
             <button
-              className='w-24 h-12 bg-gray-300 text-white py-2 px-4 rounded-xl'
+              className='w-24 h-12 bg-gray-300 text-white text-[16px] py-2 px-4 rounded-xl'
               onClick={onClick}
             >
               취소
             </button>
-            <button className='w-[207px] h-12 bg-primary300 text-white py-2 px-4 rounded-xl'>참석 의사 전달하기</button>
+            <button className='w-[207px] h-12 bg-primary300 text-white text-[16px] py-2 px-4 rounded-xl'>참석 의사 전달하기</button>
           </div>
         </form>
       </div>
