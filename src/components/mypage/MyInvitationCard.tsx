@@ -8,8 +8,6 @@ import Button from '../ui/Button';
 import { useDeleteInvitationCard, useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 import { Confirm, Notify } from 'notiflix';
 import { IoMdDownload } from 'react-icons/io';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 const MyInvitationCard = () => {
   const { data: invitationCards, isLoading, error } = useGetAllinvitationCard();
