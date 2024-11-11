@@ -7,6 +7,9 @@ import { PiLinkSimpleBold } from 'react-icons/pi';
 import Button from '../ui/Button';
 import { useDeleteInvitationCard, useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 import { Confirm, Notify } from 'notiflix';
+import { IoMdDownload } from 'react-icons/io';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const MyInvitationCard = () => {
   const { data: invitationCards, isLoading, error } = useGetAllinvitationCard();
@@ -34,6 +37,8 @@ const MyInvitationCard = () => {
 
   const invitationCard = invitationCards?.[0];
   const invitationUrl = `${window.location.origin}/card/${invitationCard?.id}`;
+  const pdfUrl = `${window.location.origin}/card/${invitationCard?.id}`;
+
   const handleCopyLink = async () => {
     try {
       if (navigator.share) {
@@ -50,6 +55,12 @@ const MyInvitationCard = () => {
       Notify.failure('취소되었습니다.');
       console.log(error);
     }
+  };
+
+  const handlePrintAsPDF = () => {
+    const newWindow = window.open(pdfUrl, '_blank');
+
+    newWindow?.print();
   };
 
   return (
@@ -78,6 +89,16 @@ const MyInvitationCard = () => {
                     className='text-[14px] text-gray-700'
                   >
                     공유하기
+                  </button>
+                  <IoMdDownload
+                    color='gray'
+                    size='20'
+                  />
+                  <button
+                    onClick={handlePrintAsPDF}
+                    className='text-[14px] text-gray-700'
+                  >
+                    다운로드
                   </button>
                 </div>
               </div>
