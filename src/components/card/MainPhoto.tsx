@@ -25,7 +25,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
     const path = usePathname();
 
     return (
-      <div className='w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center text-black'>
+      <div className='overflow-hidden w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center text-black'>
         <div
           ref={previewRef}
           className={`flex justify-center items-center w-full overflow-hidden ${mainView.type === 'fill' ? 'px-0' : 'px-[20px]'} `}
