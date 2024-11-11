@@ -1,7 +1,6 @@
 'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import PersonalInfoCard from '../create/preview/PersonalInfoCard';
-import { useFontStore, useFontColorStore } from '@/store/useFontStore';
 
 type PersonalInfoOnSharedCardPropsType = Pick<InvitationFormType, 'personalInfo' | 'fontInfo'>;
 const PersonalInfoOnSharedCard = ({ personalInfo, fontInfo }: PersonalInfoOnSharedCardPropsType) => {

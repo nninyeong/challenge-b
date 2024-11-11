@@ -1,6 +1,5 @@
 'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import { useFontStore, useFontColorStore } from '@/store/useFontStore';
 type GreetingPropType = Pick<InvitationFormType, 'greetingMessage' | 'fontInfo'>;
 const Greeting = ({ greetingMessage, fontInfo }: GreetingPropType) => {
   const { size, color } = fontInfo;

@@ -4,7 +4,6 @@ import MainPhoto from '@/components/card/MainPhoto';
 import { useEffect, useRef } from 'react';
 import EventBus from '@/utils/EventBus';
 import captureMainPhotoToPng from '@/utils/captureMainPhotoToPng';
-import { useFontColorStore, useFontStore } from '@/store/useFontStore';
 
 const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> }) => {
   const [mainPhotoInfo, svgBgColor, mainViewType, stickers, fontInfo] = useWatch({

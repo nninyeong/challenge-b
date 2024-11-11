@@ -8,8 +8,6 @@ import { InvitationFormType, StickerType } from '@/types/invitationFormType.type
 import { usePathname } from 'next/navigation';
 import StickerOnSharedCard from '@/components/card/StickerOnSharedCard';
 
-import { useFontColorStore, useFontStore } from '@/store/useFontStore';
-
 const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
   e.preventDefault();
   e.stopPropagation();

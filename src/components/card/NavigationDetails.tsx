@@ -3,7 +3,6 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import MapView from '@/components/map/MapView';
 import NavigationButtons from '@/components/create/NavigationButtons';
 import NavigationDetailCard from '@/components/create/NavigationDetailCard';
-import { useFontColorStore } from '@/store/useFontStore';
 
 type NavigationDetailsPropType = Pick<InvitationFormType, 'navigationDetail' | 'weddingInfo' | 'fontInfo'>;
 const NavigationDetails = ({ navigationDetail, weddingInfo, fontInfo }: NavigationDetailsPropType) => {

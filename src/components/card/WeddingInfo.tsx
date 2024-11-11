@@ -1,7 +1,6 @@
 'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { getDayOfWeek } from '@/utils/date/getDayOfWeek';
-import { useFontStore, useFontColorStore } from '@/store/useFontStore';
 
 const DEFAULT_VALUES = {
   name: '예식장 이름을 입력해주세요.',

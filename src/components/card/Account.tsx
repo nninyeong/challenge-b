@@ -4,7 +4,6 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import AccountModal from '@/components/create/modal/AccountModal';
-import { useFontStore, useFontColorStore } from '@/store/useFontStore';
 
 type AccountPropType = Pick<InvitationFormType, 'account' | 'fontInfo'>;
 const Account = ({ account, fontInfo }: AccountPropType) => {

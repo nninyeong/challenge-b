@@ -2,7 +2,7 @@
 import { useDeleteGalleryImage } from '@/hooks/queries/invitation/useUpdateImages';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { useCallback } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import GalleryImage from '../gallery/GalleryImage';
 
 type GalleryPropType = Pick<InvitationFormType, 'gallery' | 'fontInfo'>;
