@@ -1,6 +1,6 @@
 'use client';
 
-import useGuestBookEntries from '@/hooks/guestbook/useGuestBookEntries';
+import useGuestBookEntries from '@/hooks/queries/guestbook/useGuestBookEntries';
 import CreateGuestBook from './CreateGuestBook';
 import GuestBookCard from './GuestBookCard';
 import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathname';
