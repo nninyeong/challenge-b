@@ -9,7 +9,7 @@ export const size = {
 };
 
 export const contentType = 'image/png';
-function arrayBufferToBase64(buffer: ArrayBuffer) {
+const arrayBufferToBase64 = (buffer: ArrayBuffer) => {
   let binary = '';
   const bytes = new Uint8Array(buffer);
   const len = bytes.byteLength;
@@ -17,9 +17,9 @@ function arrayBufferToBase64(buffer: ArrayBuffer) {
     binary += String.fromCharCode(bytes[i]);
   }
   return btoa(binary);
-}
+};
 
-export default async function Image() {
+const Image = async () => {
   const logoBuffer = await fetch(new URL('../../public/assets/images/branding/2D-logo.png', import.meta.url)).then(
     (res) => res.arrayBuffer(),
   );
@@ -51,4 +51,6 @@ export default async function Image() {
       ...size,
     },
   );
-}
+};
+
+export default Image;
