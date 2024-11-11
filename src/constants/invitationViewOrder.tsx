@@ -27,7 +27,12 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
   return [
     {
       order: 0,
-      component: methods && <MainPhotoPreView control={methods.control} />,
+      component: methods && [
+        <MainPhotoPreView
+          control={methods.control}
+          key={'photoPreview'}
+        />,
+      ],
       name: ['청첩장 대표 사진', '청첩장 무드 프리셋', '청첩장 스티커', '청첩장 메인 화면', '청첩장 배경 컬러'],
       input: [
         <MainPhotoInput key={'photoview'} />,
@@ -42,7 +47,12 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
     {
       order: 1,
       name: ['청첩장 갤러리'],
-      component: methods && <GalleryPreview control={methods.control} />,
+      component: methods && [
+        <GalleryPreview
+          control={methods.control}
+          key={'galleryPreview'}
+        />,
+      ],
       input: [<GalleryInput key={'guest'} />],
       typeOnSharedCard: COMPONENT_TYPES.GALLERY,
       labelForInput: '갤러리',
@@ -50,7 +60,12 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
     {
       order: 2,
       name: ['인사말'],
-      component: methods && <GreetingPreview control={methods.control} />,
+      component: methods && [
+        <GreetingPreview
+          control={methods.control}
+          key={'greetingPreview'}
+        />,
+      ],
       input: [<GreetingInput key={'greeting'} />],
       typeOnSharedCard: COMPONENT_TYPES.GREETING,
       labelForInput: '인사말',
@@ -92,7 +107,12 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
     {
       order: 5,
       name: ['방명록'],
-      component: methods && <GuestInfoPreview control={methods.control} />,
+      component: methods && [
+        <GuestInfoPreview
+          control={methods.control}
+          key={'guestPreview'}
+        />,
+      ],
       input: [<GuestInfoInput key={'guest'} />],
       typeOnSharedCard: COMPONENT_TYPES.GUEST_INFO,
       labelForInput: '방명록',
