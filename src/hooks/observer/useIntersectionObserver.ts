@@ -1,4 +1,5 @@
 import { MutableRefObject, useRef } from 'react';
+import { StepType } from '../create/useFormStepController';
 
 type ObserverOptions = {
   root?: HTMLElement | null;
@@ -8,14 +9,13 @@ type ObserverOptions = {
 
 const DEFAULT_OPTIONS: ObserverOptions = {
   root: null,
-  rootMargin: '0px 0px -80% 0px',
-  threshold: 0,
+  rootMargin: '0px 0px -70% 0px',
+  threshold: 0.2,
 };
 
 export const useIntersectionObserver = (
   refs: MutableRefObject<{ [key: string]: { ref: HTMLDivElement | null; order: number; inputOrder: number } }>,
-  setCurrentStep: (step: number) => void,
-  setInputIndex: (step: number) => void,
+  setCurrentStep: (step: StepType) => void,
 ) => {
   const observers = useRef<IntersectionObserver[]>([]);
   const isNavigating = useRef<boolean>(false);
@@ -26,8 +26,10 @@ export const useIntersectionObserver = (
         const label = entry.target.getAttribute('data-label');
         const currentStepIndex = refs.current[label!].order;
         const currentStepInputIndex = refs.current[label!].inputOrder;
-        setInputIndex(currentStepInputIndex);
-        setCurrentStep(currentStepIndex);
+        setCurrentStep({
+          currentPreviewStep: currentStepIndex,
+          currentInputStep: currentStepInputIndex,
+        });
       }
     });
   };
