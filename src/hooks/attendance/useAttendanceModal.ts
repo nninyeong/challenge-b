@@ -31,7 +31,7 @@ const useAttendanceModal = (invitationId: string, closeModal: () => void, isCrea
 
   const handleAttendanceModalSubmit: SubmitHandler<AttendanceFormData> = async (data) => {
     if (isCreatePage) {
-      Notify.info('제작 페이지에서는 참석여부 작성이 불가능합니다');
+      Notify.info('제작 페이지에서는 작성이 불가능합니다');
       return;
     }
 

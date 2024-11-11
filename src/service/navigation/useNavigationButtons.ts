@@ -1,4 +1,4 @@
-import useMap from '@/hooks/navigation/useMap';
+import useMap from '@/service/navigation/useMap';
 
 const useOpenMapHandlers = (coords: { lat: number; lng: number }, name: string) => {
   const openMap = useMap();

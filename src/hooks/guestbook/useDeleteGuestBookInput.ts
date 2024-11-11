@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useDeleteGuestBookEntry from './useDeleteGuestBookEntry';
+import useDeleteGuestBookEntry from '../queries/guestbook/useDeleteGuestBookEntry';
 import { Notify } from 'notiflix';
 
 const useDeleteGuestBookInput = (
