@@ -8,16 +8,14 @@ type ObserverOptions = {
 
 const DEFAULT_OPTIONS: ObserverOptions = {
   root: null,
-  rootMargin: '0px',
-  threshold: 0.65,
+  rootMargin: '0px 0px -80% 0px',
+  threshold: 0,
 };
 
 export const useIntersectionObserver = (
-  refs: MutableRefObject<(HTMLDivElement | null)[]>,
+  refs: MutableRefObject<{ [key: string]: { ref: HTMLDivElement | null; order: number; inputOrder: number } }>,
   setCurrentStep: (step: number) => void,
-  setNameIndex: (step: number) => void,
   setInputIndex: (step: number) => void,
-  setCurrentStepLabel: (step: string) => void,
 ) => {
   const observers = useRef<IntersectionObserver[]>([]);
   const isNavigating = useRef<boolean>(false);
@@ -25,27 +23,26 @@ export const useIntersectionObserver = (
     if (isNavigating.current) return;
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        const label = entry.target.getAttribute('data-group-label');
-        setCurrentStepLabel(label!);
-        // const currentStepIndex = refs.current.findIndex((ref) => ref === entry.target);
-        // setNameIndex(0);
-        // setInputIndex(0);
-        // setCurrentStep(currentStepIndex);
+        const label = entry.target.getAttribute('data-label');
+        const currentStepIndex = refs.current[label!].order;
+        const currentStepInputIndex = refs.current[label!].inputOrder;
+        setInputIndex(currentStepInputIndex);
+        setCurrentStep(currentStepIndex);
       }
     });
   };
   const initializeObserver = () => {
-    refs.current.forEach((ref, index) => {
+    Object.values(refs.current).forEach((ref, index) => {
       if (ref) {
         const observer = new IntersectionObserver(observerCallback, DEFAULT_OPTIONS);
-        observer.observe(ref);
+        observer.observe(ref.ref as Element);
         observers.current[index] = observer;
       }
     });
   };
   const unsubscribeObservers = () => {
     observers.current.forEach((observer, index) => {
-      if (refs.current[index]) observer.unobserve(refs.current[index]);
+      if (refs.current[index]) observer.unobserve(refs.current[index].ref as Element);
     });
   };
 
