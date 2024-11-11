@@ -1,7 +1,6 @@
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { convertToSnakeCase } from '@/utils/convert/invitaitonTypeConvert';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEYS } from '../queryKeys';
+import { useMutation } from '@tanstack/react-query';
 import browserClient from '@/utils/supabase/client';
 
 const insertInvitation = async (invitationData: InvitationFormType) => {
@@ -19,12 +18,7 @@ const insertInvitation = async (invitationData: InvitationFormType) => {
 };
 
 export const useInsertInvitation = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (invitationData: InvitationFormType) => insertInvitation(invitationData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
-    },
   });
 };

@@ -50,9 +50,6 @@ importers:
       rdndmb-html5-to-touch:
         specifier: ^8.0.3
         version: 8.0.3(dnd-core@16.0.1)
-      re-resizable:
-        specifier: ^6.10.0
-        version: 6.10.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1550,12 +1547,6 @@ packages:
 
   rdndmb-html5-to-touch@8.0.3:
     resolution: {integrity: sha512-VfIbLjlL9NAnZzc2M5fGPCNkDyK12+ahgILGO5RjS7jkgUlxwB0c/XvxVQNfY/2ocg7isTY/G7tqxJk5fSTZAA==}
-
-  re-resizable@6.10.0:
-    resolution: {integrity: sha512-hysSK0xmA5nz24HBVztlk4yCqCLCvS32E6ZpWxVKop9x3tqCa4yAj1++facrmkOf62JsJHjmjABdKxXofYioCw==}
-    peerDependencies:
-      react: ^16.13.1 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
 
   react-color-palette@7.3.0:
     resolution: {integrity: sha512-GCgz+XEcbyFkq5wVvrPiXp8mUnOI3oObtmOtsZBCpDXgzHcDCJdssW8lTtVXbUqodo6pOw6pwYQRlXpi/ekkzQ==}
@@ -3610,11 +3601,6 @@ snapshots:
       react-dnd-touch-backend: 16.0.1
     transitivePeerDependencies:
       - dnd-core
-
-  re-resizable@6.10.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   react-color-palette@7.3.0(react@18.3.1):
     dependencies:

@@ -9,9 +9,9 @@ const StickerOnSharedCard = ({ sticker }: { sticker: StickerType }) => {
         position: 'absolute',
         top: `${sticker.posY}%`,
         left: `${sticker.posX}%`,
-        transform: `rotate(${sticker.rotation}deg)`,
-        width: sticker.width,
-        height: sticker.height,
+        width: `${sticker.width}px`,
+        height: `${sticker.height}px`,
+        transform: `translate(-50%, -50%) rotate(${sticker.rotation}deg) scale(${sticker.scale ?? 1})`,
       }}
     />
   );
