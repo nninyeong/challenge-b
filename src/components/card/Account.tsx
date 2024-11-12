@@ -17,8 +17,14 @@ const Account = ({ account, fontInfo }: AccountPropType) => {
   }, []);
 
   const handleOpenAccountModal = (type: 'bride' | 'groom') => {
+    document.documentElement.style.overflow = 'hidden';
     setOpenAccountModal(true);
     setAccountType(type);
+  };
+
+  const handleCloseAccountModal = () => {
+    document.documentElement.style.overflow = 'auto';
+    setOpenAccountModal(false);
   };
 
   const { size, color } = fontInfo;
@@ -54,6 +60,7 @@ const Account = ({ account, fontInfo }: AccountPropType) => {
         ? createPortal(
             <AccountModal
               setOpenAccountModal={setOpenAccountModal}
+              setCloseAccountModal={handleCloseAccountModal}
               accounts={accountData}
               accountType={accountType}
             />,
