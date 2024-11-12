@@ -36,7 +36,12 @@ export const useInvitationFormActions = ({
 
   useEffect(() => {
     if (existingInvitation === null) {
-      reset(INVITATION_DEFAULT_VALUE);
+      const sessionData = sessionStorage.getItem('invitationFormData');
+      if (sessionData) {
+        reset(JSON.parse(sessionData));
+      } else {
+        reset(INVITATION_DEFAULT_VALUE);
+      }
     } else {
       loadFormData({ existingInvitation, reset });
     }
