@@ -1,10 +1,9 @@
+import './globals.css';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import './globals.css';
 import Providers from '@/app/provider';
 import { ReviewBottomSheetProvider } from '@/provider/reviewBottomSheetProvider';
 import DndProviderWrapper from '@/components/layouts/DndProvider';
-import { MOBILE_VIEW_WIDTH } from '@/constants/screenSize';
 import InitClientSettings from '@/utils/settings/InitClientSettings';
 import Script from 'next/script';
 
@@ -68,11 +67,11 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] max-w-[${MOBILE_VIEW_WIDTH}] mx-auto bg-gray-100`}
+        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] mobile:max-w-mobile desktop:max-w-desktop mx-auto bg-gray-100`}
       >
         <Providers>
           <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
-            <div className='w-full h-full flex-1 bg-white'>
+            <div className='w-full h-full flex-1 bg-white desktop:flex-col desktop:justify-center desktop:items-center'>
               <DndProviderWrapper>
                 <InitClientSettings>{children}</InitClientSettings>
               </DndProviderWrapper>

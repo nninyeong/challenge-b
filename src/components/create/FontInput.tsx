@@ -1,4 +1,3 @@
-import { useFontColorStore, useFontStore } from '@/store/useFontStore';
 import { useFormContext } from 'react-hook-form';
 import ColorPalette from './ColorPalette';
 
@@ -23,25 +22,15 @@ const FontInput = () => {
     setValue('fontInfo.fontName', selectedFontName);
   };
 
-  const { increaseFontSize, decreaseFontSize, resetFontSize } = useFontStore();
-
   const handleFontSizeChange = (size: number) => {
-    if (size > 0) {
-      increaseFontSize(size);
-    } else if (size < 0) {
-      decreaseFontSize(Math.abs(size));
-    } else {
-      resetFontSize();
-    }
     setValue('fontInfo.size', size);
   };
 
-  const { fontColor, setFontColor } = useFontColorStore();
-
   const handleFontColorChange = (color: ColorType) => {
-    setFontColor(color);
     setValue('fontInfo.color', color);
   };
+
+  const fontColor = getValues('fontInfo.color');
 
   return (
     <div>

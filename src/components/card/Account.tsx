@@ -4,6 +4,7 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import AccountModal from '@/components/create/modal/AccountModal';
+import colorConverter from '@/utils/colorConverter';
 
 type AccountPropType = Pick<InvitationFormType, 'account' | 'fontInfo'>;
 const Account = ({ account, fontInfo }: AccountPropType) => {
@@ -28,7 +29,7 @@ const Account = ({ account, fontInfo }: AccountPropType) => {
   };
 
   const { size, color } = fontInfo;
-  const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+  const rgbaColor = colorConverter(color);
 
   return (
     <div

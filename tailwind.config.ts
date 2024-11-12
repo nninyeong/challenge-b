@@ -8,6 +8,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        desktop: '1440px',
+        mobile: '375px',
+      },
+      maxWidth: {
+        desktop: '1440px',
+        mobile: '375px',
+      },
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',

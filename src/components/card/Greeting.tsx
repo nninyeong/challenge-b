@@ -1,9 +1,10 @@
 'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
+import colorConverter from '@/utils/colorConverter';
 type GreetingPropType = Pick<InvitationFormType, 'greetingMessage' | 'fontInfo'>;
 const Greeting = ({ greetingMessage, fontInfo }: GreetingPropType) => {
   const { size, color } = fontInfo;
-  const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+  const rgbaColor = colorConverter(color);
 
   return (
     <div

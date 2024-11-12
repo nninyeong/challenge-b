@@ -3,11 +3,12 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import MapView from '@/components/map/MapView';
 import NavigationButtons from '@/components/create/NavigationButtons';
 import NavigationDetailCard from '@/components/create/NavigationDetailCard';
+import colorConverter from '@/utils/colorConverter';
 
 type NavigationDetailsPropType = Pick<InvitationFormType, 'navigationDetail' | 'weddingInfo' | 'fontInfo'>;
 const NavigationDetails = ({ navigationDetail, weddingInfo, fontInfo }: NavigationDetailsPropType) => {
   const { color } = fontInfo;
-  const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+  const rgbaColor = colorConverter(color);
 
   return (
     <div className='mb-[75px/]'>

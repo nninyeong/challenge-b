@@ -1,4 +1,3 @@
-// ColorPalette.tsx
 'use client';
 import React, { useState, useEffect } from 'react';
 import { ColorType } from '@/types/invitationFormType.type';

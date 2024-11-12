@@ -7,6 +7,7 @@ import { forwardRef, useRef, useState } from 'react';
 import { InvitationFormType, StickerType } from '@/types/invitationFormType.type';
 import { usePathname } from 'next/navigation';
 import StickerOnSharedCard from '@/components/card/StickerOnSharedCard';
+import colorConverter from '@/utils/colorConverter';
 
 const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
   e.preventDefault();
@@ -24,7 +25,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
     };
     const path = usePathname();
     const { size, color } = fontInfo;
-    const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+    const rgbaColor = colorConverter(color);
 
     return (
       <div
@@ -33,7 +34,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
       >
         <div
           ref={previewRef}
-          className={`flex justify-center items-center w-full overflow-hidden ${mainView.type === 'fill' ? 'px-0' : 'px-[20px]'} `}
+          className={`flex justify-center items-center w-[375px] self-center overflow-hidden ${mainView.type === 'fill' ? 'px-0' : 'px-[20px]'} `}
         >
           {!mainPhotoInfo?.imageUrl ? (
             <p className='text-gray-500 w-[375px] h-[728px] bg-gray text-center'>이미지가 업로드되지 않았습니다.</p>

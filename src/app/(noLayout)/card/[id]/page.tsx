@@ -6,6 +6,7 @@ import { Fragment } from 'react';
 import { convertOrderToComponent } from '@/utils/convert/convertOrderToComponent';
 import { Metadata } from 'next';
 import { MainPhotoType } from '@/types/invitationFormType.type';
+import colorConverter from '@/utils/colorConverter';
 
 export const generateStaticParams = async () => {
   const { data } = await supabase.from('invitation').select('id');
@@ -59,7 +60,7 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
 
   const canView = userId === invitationData.userId || !isPrivate;
   const fontColor = invitationFetchData.fontInfo!.color;
-  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
+  const rgbaColor = colorConverter(fontColor);
 
   return canView ? (
     <div

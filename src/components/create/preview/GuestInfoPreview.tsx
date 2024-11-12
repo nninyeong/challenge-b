@@ -5,9 +5,9 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import CreateGuestInfo from '@/components/create/CreateGuestInfo';
 
 const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> }) => {
-  const [attendance, guestbook, dDay, weddingInfo, mainPhotoInfo] = useWatch({
+  const [attendance, guestbook, dDay, weddingInfo, mainPhotoInfo, fontInfo] = useWatch({
     control,
-    name: ['attendance', 'guestbook', 'dDay', 'weddingInfo', 'mainPhotoInfo'],
+    name: ['attendance', 'guestbook', 'dDay', 'weddingInfo', 'mainPhotoInfo', 'fontInfo'],
   });
 
   return (
@@ -17,6 +17,7 @@ const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> })
       dDay={dDay}
       weddingInfo={weddingInfo}
       mainPhotoInfo={mainPhotoInfo}
+      fontInfo={fontInfo}
     />
   );
 };

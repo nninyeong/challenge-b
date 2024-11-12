@@ -6,15 +6,23 @@ import GuestBookCard from './GuestBookCard';
 import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathname';
 import { useState } from 'react';
 import GuestBookPagination from './GuestBookPagination';
-import { useFontStore, useFontColorStore } from '@/store/useFontStore';
+
+import { ColorType } from '@/types/invitationFormType.type';
+import colorConverter from '@/utils/colorConverter';
 const ITEMS_PER_PAGE = 6;
 
-const GuestBook = () => {
+type GuestBookProps = {
+  fontInfo: {
+    color: ColorType;
+    size: number;
+  };
+};
+const GuestBook = ({ fontInfo }: GuestBookProps) => {
   const { isCreatePage, invitationId } = useInvitationIdByPathname();
   const [page, setPage] = useState(1);
-  const fontSize = useFontStore((state) => state.fontSize);
-  const fontColor = useFontColorStore((state) => state.fontColor);
-  const rgbaColor = `rgba(${fontColor.r}, ${fontColor.g}, ${fontColor.b}, ${fontColor.a})`;
+  const fontSize = fontInfo.size;
+  const fontColor = fontInfo.color;
+  const rgbaColor = colorConverter(fontColor);
   const { data, isLoading, error } = useGuestBookEntries(invitationId, page);
 
   const guestBooks = data?.data ?? [];
