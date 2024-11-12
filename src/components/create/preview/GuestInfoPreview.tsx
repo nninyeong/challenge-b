@@ -23,8 +23,8 @@ const GuestInfoPreview = ({ control }: { control: Control<InvitationFormType> })
   });
   const mainPhotoInfo = useWatch({
     control,
-    name: "mainPhotoInfo"
-  })
+    name: 'mainPhotoInfo',
+  });
   return (
     <CreateGuestInfo
       attendance={attendance}

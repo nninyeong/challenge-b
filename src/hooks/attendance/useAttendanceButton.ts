@@ -3,13 +3,20 @@ import { useState } from 'react';
 const useAttendanceButton = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const handleModalClick = () => {
-    setShowModal((prevState) => !prevState);
+  const openAttendanceModal = () => {
+    setShowModal(true);
+    document.documentElement.style.overflow = 'hidden';
+  };
+
+  const closeAttendanceModal = () => {
+    document.documentElement.style.overflow = 'auto';
+    setShowModal(false);
   };
 
   return {
     showModal,
-    handleModalClick,
+    openAttendanceModal,
+    closeAttendanceModal,
   };
 };
 

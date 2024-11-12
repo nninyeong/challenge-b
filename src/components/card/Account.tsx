@@ -2,7 +2,6 @@
 
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { useEffect, useState } from 'react';
-import { AccountType } from '@/types/accountType.type';
 import { createPortal } from 'react-dom';
 import AccountModal from '@/components/create/modal/AccountModal';
 
@@ -10,24 +9,24 @@ type AccountPropType = Pick<InvitationFormType, 'account'>;
 const Account = ({ account }: AccountPropType) => {
   const [openAccountModal, setOpenAccountModal] = useState<boolean>(false);
   const [portalElement, setPortalElement] = useState<Element | null>(null);
-  const [accountData, setAccountData] = useState<AccountType[]>([]);
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
+  const accountData = account[accountType];
+  
   useEffect(() => {
     setPortalElement(document.getElementById('modal'));
   }, []);
+  
   const handleOpenAccountModal = (type: 'bride' | 'groom') => {
+    document.documentElement.style.overflow = 'hidden';
     setOpenAccountModal(true);
-    if (type === 'bride') {
-      const brideAccounts = account.bride;
-      setAccountData(brideAccounts);
-      setAccountType('bride');
-    }
-    if (type === 'groom') {
-      const groomAccounts = account.groom;
-      setAccountData(groomAccounts);
-      setAccountType('groom');
-    }
+    setAccountType(type);
   };
+
+  const handleCloseAccountModal = () => {
+    document.documentElement.style.overflow = 'auto';
+    setOpenAccountModal(false);
+  }
+  
   return (
     <div className='flex flex-col justify-center items-center mb-[80px]'>
       <p className='text-xl'>{account.title ? account.title : '제목'}</p>
@@ -50,6 +49,7 @@ const Account = ({ account }: AccountPropType) => {
         ? createPortal(
             <AccountModal
               setOpenAccountModal={setOpenAccountModal}
+              setCloseAccountModal={handleCloseAccountModal}
               accounts={accountData}
               accountType={accountType}
             />,

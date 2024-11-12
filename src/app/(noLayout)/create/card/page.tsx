@@ -36,12 +36,11 @@ const CreateCardPage = () => {
     defaultValues: INVITATION_DEFAULT_VALUE,
   });
 
-  const [currentStep, setCurrentStep] = useState<number>(0);
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const [toggleInput, setToggleInput] = useToggle();
-  const [nameIndex, setNameIndex] = useState<number>(0);
+  const [currentStep, setCurrentStep] = useState<number>(0);
   const [inputIndex, setInputIndex] = useState<number>(0);
   const [isRendered, setIsRendered] = useState<boolean>(false);
   const [orderList, setOrderList] = useState(() => INITIAL_ORDER(methods));
@@ -53,14 +52,14 @@ const CreateCardPage = () => {
     return (orderA ?? a.order) - (orderB ?? b.order);
   });
   const prevFormDataRef = useRef<string>('');
-  const refs = useRef<null[] | HTMLDivElement[]>([]);
+  const refs = useRef<{ [key: string]: { ref: HTMLDivElement | null; order: number; inputOrder: number } }>({});
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(
     refs,
     setCurrentStep,
-    setNameIndex,
     setInputIndex,
   );
-  const isLastInput = refs.current.length !== 0 && currentStep === refs.current.length - 1;
+  const isFirstInput = currentStep === 0 && inputIndex === 0;
+  const isLastInput = orderList.length - 1 === currentStep;
 
   const { data: existingInvitation } = useGetInvitationQuery();
   const { mutate: updateInvitation } = useUpdateInvitation();
@@ -95,6 +94,7 @@ const CreateCardPage = () => {
   };
 
   const handleDebouncedNext = debounce(async () => {
+    isNavigating.current = true;
     const { data: user } = await browserClient.auth.getUser();
     const formData = methods.getValues();
 
@@ -113,10 +113,8 @@ const CreateCardPage = () => {
     }
 
     if (inputIndex < orderList[currentStep].input.length - 1) {
-      setNameIndex((prev) => prev + 1);
       setInputIndex((prev) => prev + 1);
     } else {
-      setNameIndex(0);
       setInputIndex(0);
       setCurrentStep((prev) => prev + 1);
     }
@@ -125,10 +123,12 @@ const CreateCardPage = () => {
   const handleDebouncedPrevious = debounce(() => {
     isNavigating.current = true;
     if (inputIndex > 0) {
-      setNameIndex((prev) => prev - 1);
       setInputIndex((prev) => prev - 1);
-    } else if (currentStep > 0) {
+    } else {
       setCurrentStep((prev) => prev - 1);
+      if (orderList[currentStep - 1].input.length > 1) {
+        setInputIndex(orderList[currentStep - 1].input.length - 1);
+      }
     }
   }, DELAY_TIME);
 
@@ -188,14 +188,14 @@ const CreateCardPage = () => {
       return () => subscription.unsubscribe();
     });
   };
-
   const scrollEvent = () => {
-    if (refs.current[currentStep]) {
-      refs.current[currentStep].scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
+    const targetRef = Object.values(refs.current).find((e) => e.order === currentStep)?.ref;
+
+    targetRef?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+
     setTimeout(() => {
       isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
     }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
@@ -253,6 +253,7 @@ const CreateCardPage = () => {
     initializeObserver();
     return () => unsubscribeObservers();
   }, [refs, isOnboardingComplete]);
+
   return (
     <FormProvider {...methods}>
       <div
@@ -272,15 +273,25 @@ const CreateCardPage = () => {
         >
           {isRendered &&
             orderList.map((e, index) => {
+              if (e.component === null) return null;
               return (
                 <div
+                  key={e.labelForInput}
                   style={{ minHeight: MOBILE_VIEW_HEIGHT }}
-                  key={e.order}
-                  ref={(el) => {
-                    refs.current[index] = el;
-                  }}
                 >
-                  {e.component}
+                  {e.component?.map((element, idx) => {
+                    return (
+                      <div
+                        key={element.key}
+                        data-label={element.key}
+                        ref={(el) => {
+                          refs.current[element.key!] = { order: index, ref: el, inputOrder: idx };
+                        }}
+                      >
+                        {element}
+                      </div>
+                    );
+                  })}
                 </div>
               );
             })}
@@ -288,12 +299,12 @@ const CreateCardPage = () => {
         <motion.div
           initial={{ height: FOLDED_HEIGHT }}
           animate={{
-            height: createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex]),
+            height: createCardFormHeightMapper(toggleInput, orderList[currentStep].name[inputIndex]),
           }}
           transition={{
             duration: 0.4,
           }}
-          className={`fixed bottom-0 px-[16px] z-10 mb-[8px] w-fit h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep].name[nameIndex])}]`}
+          className={`fixed bottom-0 px-[16px] z-10 mb-[8px] w-fit h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep].name[inputIndex])}]`}
         >
           <form
             className={`flex flex-col bg-white shadow-xl px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full`}
@@ -316,14 +327,14 @@ const CreateCardPage = () => {
                     viewBox='0 -100 320 512'
                   />
                 )}
-                {orderList[currentStep].name[nameIndex]}
+                {orderList[currentStep].name[inputIndex]}
               </button>
 
               <div className='flex items-center'>
                 <button
                   type='button'
                   onClick={handleDebouncedPrevious}
-                  disabled={currentStep === 0 && inputIndex === 0}
+                  disabled={isFirstInput}
                   className='w-[28px] h-[28px]'
                 >
                   <img
@@ -350,7 +361,7 @@ const CreateCardPage = () => {
             {toggleInput && (
               <div className={`${toggleInput ? 'display-none' : ''}`}>
                 {orderList[currentStep].input[inputIndex]}
-                {currentStep === refs.current.length - 1 && (
+                {currentStep === orderList.length - 1 && (
                   <Button
                     className='rounded-[12px] w-[311px] h-[48px]'
                     type='submit'
