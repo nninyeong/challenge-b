@@ -5,7 +5,15 @@ import DeleteGuestBookAccordion from '@/components/guestbook/DeleteGuestBookAcco
 import useGuestBookDeleteButton from '@/hooks/guestbook/useGuestBookDeleteButton';
 import convertToUserTimezone from '@/utils/date/dayToKst';
 
-const GuestBookCard = ({ guestBook, invitationId, isCreatePage }: { guestBook: GuestBookEntry; invitationId: string; isCreatePage: boolean }) => {
+const GuestBookCard = ({
+  guestBook,
+  invitationId,
+  isCreatePage,
+}: {
+  guestBook: GuestBookEntry;
+  invitationId: string;
+  isCreatePage: boolean;
+}) => {
   const { isAccordionOpen, toggleAccordion } = useGuestBookDeleteButton();
   const { year, month, day, hour, minute } = convertToUserTimezone(guestBook.created_at);
 

@@ -22,6 +22,7 @@ import { COMPONENT_TYPES } from '@/constants/componentTypes';
 import RenderOrderInput from '@/components/create/RenderOrderInput';
 import BackgroundColorInput from '@/components/create/BackgroundColorInput';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
+import FontInput from '@/components/create/FontInput';
 
 export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
   return [
@@ -40,10 +41,12 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
         <StickerInput key={'sticker'} />,
         <MainViewInput key={'mainview'} />,
         <BackgroundColorInput key={'backgroundColor'} />,
+        <FontInput key={'fontInfo'} />,
       ],
       typeOnSharedCard: COMPONENT_TYPES.MAIN_PHOTO,
       labelForInput: '청첩장 대표이미지',
     },
+
     {
       order: 1,
       name: ['청첩장 갤러리'],

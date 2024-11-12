@@ -34,7 +34,6 @@ export type MainPhotoType = {
   icon: string;
   introduceContent: string;
   imageUrl: string;
-  fontName: string;
 };
 
 export type NavigationDetailType = {
@@ -99,6 +98,7 @@ export type OrderItem = {
     | 'GUEST_INFO'
     | 'GALLERY'
     | 'ONLY_FOR_CREATE';
+
   labelForInput: string;
 };
 
@@ -137,6 +137,7 @@ export type InvitationFetchType = {
   isPrivate: boolean;
   renderOrder: OrderItem[];
   userId: string;
+  fontInfo: FontInfoType;
 };
 
 export type InvitationFormType = Omit<InvitationFetchType, 'userId'>;
@@ -151,4 +152,16 @@ export type InvitationCard = {
     title: string;
     content: string;
   };
+};
+
+export type FontInfoType = {
+  fontName: string;
+  color: {
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+    name: string;
+  };
+  size: number;
 };

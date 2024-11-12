@@ -4,18 +4,19 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import AccountModal from '@/components/create/modal/AccountModal';
+import colorConverter from '@/utils/colorConverter';
 
-type AccountPropType = Pick<InvitationFormType, 'account'>;
-const Account = ({ account }: AccountPropType) => {
+type AccountPropType = Pick<InvitationFormType, 'account' | 'fontInfo'>;
+const Account = ({ account, fontInfo }: AccountPropType) => {
   const [openAccountModal, setOpenAccountModal] = useState<boolean>(false);
   const [portalElement, setPortalElement] = useState<Element | null>(null);
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
   const accountData = account[accountType];
-  
+
   useEffect(() => {
     setPortalElement(document.getElementById('modal'));
   }, []);
-  
+
   const handleOpenAccountModal = (type: 'bride' | 'groom') => {
     document.documentElement.style.overflow = 'hidden';
     setOpenAccountModal(true);
@@ -25,21 +26,32 @@ const Account = ({ account }: AccountPropType) => {
   const handleCloseAccountModal = () => {
     document.documentElement.style.overflow = 'auto';
     setOpenAccountModal(false);
-  }
-  
+  };
+
+  const { size, color } = fontInfo;
+  const rgbaColor = colorConverter(color);
+
   return (
-    <div className='flex flex-col justify-center items-center mb-[80px]'>
-      <p className='text-xl'>{account.title ? account.title : '제목'}</p>
-      <p className=''>{account.content ? account.content : '내용'}</p>
-      <div className='flex flex-col gap-5 mt-5 w-full justify-center items-center'>
+    <div
+      style={{ color: `${rgbaColor}` }}
+      className='flex flex-col justify-center items-center mb-[80px]'
+    >
+      <p style={{ fontSize: ` ${20 + size}px)` }}>{account.title ? account.title : '제목'}</p>
+      <p>{account.content ? account.content : '내용'}</p>
+      <div
+        className='flex flex-col gap-5 mt-5 w-full justify-center items-center'
+        style={{ fontSize: `${16 + size}px` }}
+      >
         <button
-          className='rounded-full border-2 w-[343px] h-[48px]'
+          style={{ border: `2px solid ${rgbaColor}` }}
+          className='rounded-full  w-[343px] h-[48px] '
           onClick={() => handleOpenAccountModal('groom')}
         >
           신랑 측 계좌번호
         </button>
         <button
-          className='rounded-full border-2 w-[343px] h-[48px]'
+          style={{ border: `2px solid ${rgbaColor}` }}
+          className='rounded-full w-[343px] h-[48px] '
           onClick={() => handleOpenAccountModal('bride')}
         >
           신부 측 계좌번호
