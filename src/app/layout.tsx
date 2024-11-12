@@ -57,6 +57,10 @@ export default function RootLayout({
             });
           `}
         </Script>
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAOAPP_KEY}&libraries=services&autoload=false`}
+          strategy='beforeInteractive'
+        />
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1.0, maximun-scale=1.0, user-scalable=no'
