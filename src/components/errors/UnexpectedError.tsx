@@ -2,13 +2,9 @@ import { MOBILE_VIEW_HEIGHT } from '@/constants/screenSize';
 import Button from '@/components/ui/Button';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 const UnexpectedError = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
   const { refresh } = useRouter();
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
 
   return (
     <div
