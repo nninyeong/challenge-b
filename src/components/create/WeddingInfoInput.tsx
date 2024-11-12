@@ -26,13 +26,13 @@ const WeddingInfoInput = () => {
 
   const [showAddressModal, setShowAddressModal] = useState(false);
   const openAddressModal = () => {
-    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     setShowAddressModal(true);
   };
 
   const setAddress = (value: Address) => {
     setValue('weddingInfo.weddingHallAddress', value.address);
-    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
     setShowAddressModal(false);
   };
 

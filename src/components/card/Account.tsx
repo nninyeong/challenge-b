@@ -17,9 +17,15 @@ const Account = ({ account }: AccountPropType) => {
   }, []);
   
   const handleOpenAccountModal = (type: 'bride' | 'groom') => {
+    document.documentElement.style.overflow = 'hidden';
     setOpenAccountModal(true);
     setAccountType(type);
   };
+
+  const handleCloseAccountModal = () => {
+    document.documentElement.style.overflow = 'auto';
+    setOpenAccountModal(false);
+  }
   
   return (
     <div className='flex flex-col justify-center items-center mb-[80px]'>
@@ -43,6 +49,7 @@ const Account = ({ account }: AccountPropType) => {
         ? createPortal(
             <AccountModal
               setOpenAccountModal={setOpenAccountModal}
+              setCloseAccountModal={handleCloseAccountModal}
               accounts={accountData}
               accountType={accountType}
             />,
