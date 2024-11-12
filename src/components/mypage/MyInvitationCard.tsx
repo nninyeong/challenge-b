@@ -35,7 +35,6 @@ const MyInvitationCard = () => {
 
   const invitationCard = invitationCards?.[0];
   const invitationUrl = `${window.location.origin}/card/${invitationCard?.id}`;
-  const pdfUrl = `${window.location.origin}/card/${invitationCard?.id}`;
 
   const handleCopyLink = async () => {
     try {
@@ -56,7 +55,7 @@ const MyInvitationCard = () => {
   };
 
   const handlePrintAsPDF = () => {
-    const newWindow = window.open(pdfUrl, '_blank');
+    const newWindow = window.open(invitationUrl, '_blank');
 
     newWindow?.print();
   };
