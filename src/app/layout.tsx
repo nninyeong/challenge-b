@@ -37,6 +37,22 @@ export default function RootLayout({
       className='overflow-x-hidden'
     >
       <head>
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+        />
+        <meta
+          name='google-site-verification'
+          content='fZ2v9PdapWDy5-avIG7z7jgsuGEu3iUiwxxgqyGZHEc'
+        />
+        <meta
+          name='naver-site-verification'
+          content='a710075ff3af9a3f2c9ef8de1947beaab2189a13'
+        />
+      </head>
+      <body
+        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] mobile:max-w-mobile desktop:max-w-desktop mx-auto bg-gray-100`}
+      >
         {/* GA4 스크립트 로드 */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_TRACKING_ID}`}
@@ -57,18 +73,10 @@ export default function RootLayout({
             });
           `}
         </Script>
-        <meta
-          name='viewport'
-          content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_KAKAOAPP_KEY}&libraries=services&autoload=false`}
+          strategy='beforeInteractive'
         />
-        <meta
-          name='google-site-verification'
-          content='fZ2v9PdapWDy5-avIG7z7jgsuGEu3iUiwxxgqyGZHEc'
-        />
-      </head>
-      <body
-        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] mobile:max-w-mobile desktop:max-w-desktop mx-auto bg-gray-100`}
-      >
         <Providers>
           <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
             <div className='w-full h-full flex-1 bg-white desktop:flex-col desktop:justify-center desktop:items-center'>

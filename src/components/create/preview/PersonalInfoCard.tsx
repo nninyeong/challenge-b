@@ -43,14 +43,15 @@ const PersonalInfoCard = ({ label, name, phoneNumber, fontSize, fontColor }: Per
           className='flex justify-center items-center relative rounded-t-lg overflow-hidden'
           onClick={handlePhoneClick}
         >
-          <MessageIcon color={fontColor} />
+          <PhoneIcon color={fontColor} />
         </a>
         <a
           href={`sms:${phoneNumber}`}
           className='flex justify-center items-center relative rounded-t-lg overflow-hidden'
           onClick={handlePhoneClick}
         >
-          <PhoneIcon color={fontColor} />
+          {' '}
+          <MessageIcon color={fontColor} />
         </a>
       </div>
     </div>
