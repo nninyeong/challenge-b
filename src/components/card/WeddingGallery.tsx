@@ -4,6 +4,7 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import { useCallback } from 'react';
 import { useFormContext } from 'react-hook-form';
 import GalleryImage from '../gallery/GalleryImage';
+import colorConverter from '@/utils/colorConverter';
 
 type GalleryPropType = Pick<InvitationFormType, 'gallery' | 'fontInfo'>;
 
@@ -33,7 +34,7 @@ const WeddingGallery = ({ gallery, fontInfo }: GalleryPropType) => {
   );
 
   const { size, color } = fontInfo;
-  const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+  const rgbaColor = colorConverter(color);
 
   return (
     <div

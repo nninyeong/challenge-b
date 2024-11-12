@@ -12,6 +12,7 @@ const AccountModalPersonalBox = ({
   const handleCopyAccountNumber = async () => {
     try {
       await navigator.clipboard.writeText(`${accountData.bank} ${accountData.accountNumber}`);
+      document.documentElement.style.overflow = 'auto';
       setOpenAccountModal(false);
       if (accountData.bank === '') return Notify.failure('은행을 입력해주세요.');
       if (accountData.accountNumber === '') return Notify.failure('계좌번호를 입력해주세요.');

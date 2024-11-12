@@ -4,6 +4,7 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import AccountModal from '@/components/create/modal/AccountModal';
+import colorConverter from '@/utils/colorConverter';
 
 type AccountPropType = Pick<InvitationFormType, 'account' | 'fontInfo'>;
 const Account = ({ account, fontInfo }: AccountPropType) => {
@@ -17,12 +18,18 @@ const Account = ({ account, fontInfo }: AccountPropType) => {
   }, []);
 
   const handleOpenAccountModal = (type: 'bride' | 'groom') => {
+    document.documentElement.style.overflow = 'hidden';
     setOpenAccountModal(true);
     setAccountType(type);
   };
 
+  const handleCloseAccountModal = () => {
+    document.documentElement.style.overflow = 'auto';
+    setOpenAccountModal(false);
+  };
+
   const { size, color } = fontInfo;
-  const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+  const rgbaColor = colorConverter(color);
 
   return (
     <div
@@ -54,6 +61,7 @@ const Account = ({ account, fontInfo }: AccountPropType) => {
         ? createPortal(
             <AccountModal
               setOpenAccountModal={setOpenAccountModal}
+              setCloseAccountModal={handleCloseAccountModal}
               accounts={accountData}
               accountType={accountType}
             />,

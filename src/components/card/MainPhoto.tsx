@@ -7,6 +7,7 @@ import { forwardRef, useRef, useState } from 'react';
 import { InvitationFormType, StickerType } from '@/types/invitationFormType.type';
 import { usePathname } from 'next/navigation';
 import StickerOnSharedCard from '@/components/card/StickerOnSharedCard';
+import colorConverter from '@/utils/colorConverter';
 
 const preventDefaultBehaviour = (e: React.DragEvent<HTMLDivElement>) => {
   e.preventDefault();
@@ -24,7 +25,7 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
     };
     const path = usePathname();
     const { size, color } = fontInfo;
-    const rgbaColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+    const rgbaColor = colorConverter(color);
 
     return (
       <div

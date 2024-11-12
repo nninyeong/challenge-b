@@ -81,6 +81,7 @@ export const convertOrderToComponent = (
         dDay={dDay}
         weddingInfo={weddingInfo}
         mainPhotoInfo={mainPhotoInfo}
+        fontInfo={fontInfo}
         key='guestInfo-sharedCard'
       />
     ),

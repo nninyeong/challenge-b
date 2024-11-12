@@ -48,7 +48,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
     },
 
     {
-      order: 2,
+      order: 1,
       name: ['청첩장 갤러리'],
       component: methods && [
         <GalleryPreview
@@ -61,7 +61,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       labelForInput: '갤러리',
     },
     {
-      order: 3,
+      order: 2,
       name: ['인사말'],
       component: methods && [
         <GreetingPreview
@@ -74,7 +74,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       labelForInput: '인사말',
     },
     {
-      order: 4,
+      order: 3,
       name: ['개인 정보', '계좌 정보'],
       component: methods && [
         <PersonalInfoPreview
@@ -91,7 +91,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       labelForInput: '기본 정보',
     },
     {
-      order: 5,
+      order: 4,
       name: ['예식 일시', '교통수단 표시'],
       component: methods && [
         <WeddingInfoPreView
@@ -108,7 +108,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       labelForInput: '오시는 길',
     },
     {
-      order: 6,
+      order: 5,
       name: ['방명록'],
       component: methods && [
         <GuestInfoPreview
@@ -121,7 +121,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
       labelForInput: '방명록',
     },
     {
-      order: 7,
+      order: 6,
       name: ['순서변경'],
       component: null,
       input: [<RenderOrderInput key='renderOrder' />],
