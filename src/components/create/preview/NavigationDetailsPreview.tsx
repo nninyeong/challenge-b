@@ -3,20 +3,16 @@ import { Control, useWatch } from 'react-hook-form';
 import NavigationDetails from '@/components/card/NavigationDetails';
 
 const NavigationDetailsPreview = ({ control }: { control: Control<InvitationFormType> }) => {
-  const navigationDetail = useWatch({
+  const [navigationDetail, weddingInfo, fontInfo] = useWatch({
     control,
-    name: 'navigationDetail',
-  });
-
-  const weddingInfo = useWatch({
-    control,
-    name: 'weddingInfo',
+    name: ['navigationDetail', 'weddingInfo', 'fontInfo'],
   });
 
   return (
     <NavigationDetails
       navigationDetail={navigationDetail}
       weddingInfo={weddingInfo}
+      fontInfo={fontInfo}
     />
   );
 };

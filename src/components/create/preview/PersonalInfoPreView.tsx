@@ -4,12 +4,17 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import PersonalInfoOnSharedCard from '@/components/card/PersonalInfoOnSharedCard';
 
 const PersonalInfoPreview = ({ control }: { control: Control<InvitationFormType> }) => {
-  const personalInfo = useWatch({
+  const [personalInfo, fontInfo] = useWatch({
     control,
-    name: 'personalInfo',
+    name: ['personalInfo', 'fontInfo'],
   });
 
-  return <PersonalInfoOnSharedCard personalInfo={personalInfo} />;
+  return (
+    <PersonalInfoOnSharedCard
+      personalInfo={personalInfo}
+      fontInfo={fontInfo}
+    />
+  );
 };
 
 export default PersonalInfoPreview;

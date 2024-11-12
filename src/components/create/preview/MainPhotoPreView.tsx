@@ -6,24 +6,9 @@ import EventBus from '@/utils/EventBus';
 import captureMainPhotoToPng from '@/utils/captureMainPhotoToPng';
 
 const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> }) => {
-  const mainPhotoInfo = useWatch({
+  const [mainPhotoInfo, svgBgColor, mainViewType, stickers, fontInfo] = useWatch({
     control,
-    name: 'mainPhotoInfo',
-  });
-
-  const svgBgColor = useWatch({
-    control,
-    name: 'bgColor',
-  });
-
-  const mainViewType = useWatch({
-    control,
-    name: 'mainView',
-  });
-
-  const stickers = useWatch({
-    control,
-    name: 'stickers',
+    name: ['mainPhotoInfo', 'bgColor', 'mainView', 'stickers', 'fontInfo'],
   });
 
   const mainPhotoRef = useRef<HTMLDivElement | null>(null);
@@ -46,6 +31,7 @@ const MainPhotoPreView = ({ control }: { control: Control<InvitationFormType> })
       bgColor={svgBgColor}
       mainView={mainViewType}
       stickers={stickers}
+      fontInfo={fontInfo}
     />
   );
 };

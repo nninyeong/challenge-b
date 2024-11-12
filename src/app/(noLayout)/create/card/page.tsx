@@ -11,8 +11,6 @@ import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { MOBILE_VIEW_HEIGHT, PC_VIEW_WIDTH } from '@/constants/screenSize';
 import createCardFormHeightMapper from '@/utils/createCardFormHeightMapper';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { validationSchema } from '@/lib/zod/validationSchema';
 import useFormStepController from '@/hooks/create/useFormStepController';
 import { useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
 import PreviewElement from '@/components/create/PreviewElement';
@@ -27,7 +25,6 @@ const DELAY_TIME: number = 300;
 
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
-    resolver: zodResolver(validationSchema),
     mode: 'onChange',
     defaultValues: INVITATION_DEFAULT_VALUE,
   });
@@ -70,7 +67,7 @@ const CreateCardPage = () => {
 
   const subscribeFont = () => {
     const subscriptionFont = methods.watch((value) => {
-      const font = value?.mainPhotoInfo?.fontName;
+      const font = value?.fontInfo?.fontName;
       if (font) {
         setStyleSetting((prev) => {
           return { ...prev, font: font };
@@ -79,6 +76,7 @@ const CreateCardPage = () => {
       return () => subscriptionFont.unsubscribe();
     });
   };
+
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
       const color = value.bgColor;
