@@ -4,20 +4,24 @@ import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import OnBoarding from '@/components/create/OnBoarding';
-import { FaSortDown, FaSortUp } from 'react-icons/fa';
 import useToggle from '@/utils/useToggle';
 import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 import { MOBILE_VIEW_HEIGHT, PC_VIEW_WIDTH } from '@/constants/screenSize';
-import Button from '@/components/ui/Button';
-import { motion } from 'framer-motion';
-import createCardFormHeightMapper, { FOLDED_HEIGHT } from '@/utils/createCardFormHeightMapper';
+import createCardFormHeightMapper from '@/utils/createCardFormHeightMapper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { validationSchema } from '@/lib/zod/validationSchema';
 import useFormStepController from '@/hooks/create/useFormStepController';
 import { useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
+import PreviewElement from '@/components/create/PreviewElement';
+import FormMotionContainer from '@/components/create/FormMotionContainer';
+import InvitationBottomSheetFormContainer from '@/components/create/InvitationBottomSheetFormContainer';
+
+export type ScrollRefsType = {
+  [key: string]: { ref: HTMLDivElement | null; order: number; inputOrder: number };
+};
 
 const DELAY_TIME: number = 300;
 
@@ -38,26 +42,21 @@ const CreateCardPage = () => {
   const [toggleInput, setToggleInput] = useToggle();
   const renderOrderList = useWatch({ control: methods.control, name: 'renderOrder' });
 
-  const refs = useRef<{ [key: string]: { ref: HTMLDivElement | null; order: number; inputOrder: number } }>({});
+  const refs = useRef<ScrollRefsType>({});
 
   const { currentStep, setCurrentStep, goToNextStep, goToPreviousStep } = useFormStepController(orderList);
   const { isNavigating, initializeObserver, unsubscribeObservers } = useIntersectionObserver(refs, setCurrentStep);
-
-  const isFirstInput = currentStep.currentInputStep === 0 && currentStep.currentPreviewStep === 0;
-  const isLastInput = currentStep.currentPreviewStep === orderList.length - 1;
-
+  const { handleDebouncedSave } = useInvitationFormActions({
+    isNavigating,
+    methods,
+    goToNextStep,
+    goToPreviousStep,
+  });
   const sortedOrderListWithRenderOrder = orderList.sort((a, b) => {
     const orderA = renderOrderList.find((item) => item.typeOnSharedCard === a.typeOnSharedCard)?.order;
     const orderB = renderOrderList.find((item) => item.typeOnSharedCard === b.typeOnSharedCard)?.order;
 
     return (orderA ?? a.order) - (orderB ?? b.order);
-  });
-
-  const { onSubmit, handleDebouncedNext, handleDebouncedSave, handleDebouncedPrevious } = useInvitationFormActions({
-    isNavigating,
-    methods,
-    goToNextStep,
-    goToPreviousStep,
   });
 
   const subscribeEveryValues = () => {
@@ -173,103 +172,37 @@ const CreateCardPage = () => {
               >
                 {e.component?.map((element, idx) => {
                   return (
-                    <div
+                    <PreviewElement
                       key={element.key}
-                      data-label={element.key}
-                      ref={(el) => {
-                        refs.current[element.key!] = { order: index, ref: el, inputOrder: idx };
-                      }}
-                    >
-                      {element}
-                    </div>
+                      element={element}
+                      refs={refs}
+                      order={index}
+                      inputOrder={idx}
+                    />
                   );
                 })}
               </div>
             );
           })}
         </div>
-
-        <motion.div
-          initial={{ height: FOLDED_HEIGHT }}
-          animate={{
-            height: createCardFormHeightMapper(
-              toggleInput,
-              orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep],
-            ),
-          }}
-          transition={{
-            duration: 0.4,
-          }}
+        <FormMotionContainer
+          height={createCardFormHeightMapper(
+            toggleInput,
+            orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep],
+          )}
           className={`fixed bottom-0 px-[16px] z-10 mb-[8px] w-fit h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep])}]`}
         >
-          <form
-            className={`flex flex-col bg-white shadow-xl px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full`}
-            onSubmit={methods.handleSubmit(onSubmit)}
-          >
-            <div className='flex justify-between items-center'>
-              <button
-                type='button'
-                onClick={setToggleInput}
-                className='flex justify-center items-center text-gray-900 text-[18px] font-bold'
-              >
-                {toggleInput ? (
-                  <FaSortDown
-                    size={28}
-                    viewBox='0 110 320 512'
-                  />
-                ) : (
-                  <FaSortUp
-                    size={28}
-                    viewBox='0 -100 320 512'
-                  />
-                )}
-                {orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep]}
-              </button>
-
-              <div className='flex items-center'>
-                <button
-                  type='button'
-                  onClick={handleDebouncedPrevious}
-                  disabled={isFirstInput}
-                  className='w-[28px] h-[28px]'
-                >
-                  <img
-                    src='/assets/images/icons/chevron-left.svg'
-                    width={28}
-                    height={28}
-                  />
-                </button>
-                <button
-                  type='button'
-                  onClick={handleDebouncedNext}
-                  disabled={isLastInput}
-                  className='w-[28px] h-[28px]'
-                >
-                  <img
-                    src='/assets/images/icons/chevron-right.svg'
-                    width={28}
-                    height={28}
-                  />
-                </button>
-              </div>
-            </div>
-
-            {toggleInput && (
-              <div className={`${toggleInput ? 'display-none' : ''}`}>
-                {orderList[currentStep.currentPreviewStep].input[currentStep.currentInputStep]}
-
-                {isLastInput && (
-                  <Button
-                    className='rounded-[12px] w-[311px] h-[48px]'
-                    type='submit'
-                  >
-                    청첩장 제작 완료
-                  </Button>
-                )}
-              </div>
-            )}
-          </form>
-        </motion.div>
+          <InvitationBottomSheetFormContainer
+            methods={methods}
+            currentStep={currentStep}
+            isNavigating={isNavigating}
+            orderList={orderList}
+            goToNextStep={goToNextStep}
+            goToPreviousStep={goToPreviousStep}
+            toggleInput={toggleInput}
+            setToggleInput={setToggleInput}
+          />
+        </FormMotionContainer>
       </div>
     </FormProvider>
   );
