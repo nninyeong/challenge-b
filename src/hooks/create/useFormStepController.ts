@@ -6,7 +6,7 @@ export type StepType = {
   currentInputStep: number;
 };
 
-type OrderList = {
+export type OrderList = {
   order: number;
   component: React.JSX.Element[] | null | undefined;
   name: string[];
