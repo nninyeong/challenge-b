@@ -24,8 +24,6 @@ import { Notify } from 'notiflix';
 import EventBus from '@/utils/EventBus';
 import { motion } from 'framer-motion';
 import createCardFormHeightMapper, { FOLDED_HEIGHT } from '@/utils/createCardFormHeightMapper';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { validationSchema } from '@/lib/zod/validationSchema';
 
 const DELAY_TIME: number = 300;
 const SAVE_DELAY_TIME: number = 3000;
@@ -34,7 +32,6 @@ const CreateCardPage = () => {
   const router = useRouter();
 
   const methods = useForm<InvitationFormType>({
-    resolver: zodResolver(validationSchema),
     mode: 'onChange',
     defaultValues: INVITATION_DEFAULT_VALUE,
   });
@@ -231,30 +228,12 @@ const CreateCardPage = () => {
 
   useEffect(() => {
     if (existingInvitation === null) {
-      reset(INVITATION_DEFAULT_VALUE);
-    } else {
-      loadFormData({ existingInvitation, reset });
-    }
-  }, [existingInvitation, reset]);
-
-  useEffect(() => {
-    setIsRendered(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isOnboardingComplete && isRendered) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOnboardingComplete, isRendered]);
-
-  useEffect(() => {
-    if (existingInvitation === null) {
-      reset(INVITATION_DEFAULT_VALUE);
+      const sessionData = sessionStorage.getItem('invitationFormData');
+      if (sessionData) {
+        reset(JSON.parse(sessionData));
+      } else {
+        reset(INVITATION_DEFAULT_VALUE);
+      }
     } else {
       loadFormData({ existingInvitation, reset });
     }
