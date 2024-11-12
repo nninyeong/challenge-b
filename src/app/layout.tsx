@@ -45,6 +45,10 @@ export default function RootLayout({
           name='google-site-verification'
           content='fZ2v9PdapWDy5-avIG7z7jgsuGEu3iUiwxxgqyGZHEc'
         />
+        <meta
+          name='naver-site-verification'
+          content='a710075ff3af9a3f2c9ef8de1947beaab2189a13'
+        />
       </head>
       <body
         className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] mobile:max-w-mobile desktop:max-w-desktop mx-auto bg-gray-100`}
