@@ -5,13 +5,15 @@ const useKakaoPayModal = () => {
   const [modalValue, setModalValue] = useState('');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  const openModal = (index: number, value: string) => {
+  const openKakaoPayModal = (index: number, value: string) => {
     setSelectedIndex(index);
     setModalValue(value);
+    document.documentElement.style.overflow = 'hidden';
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const closeKakaoPayModal = () => {
+    document.documentElement.style.overflow = 'auto';
     setIsModalOpen(false);
     setModalValue('');
     setSelectedIndex(null);
@@ -22,8 +24,8 @@ const useKakaoPayModal = () => {
     modalValue,
     selectedIndex,
     setModalValue,
-    openModal,
-    closeModal,
+    openKakaoPayModal,
+    closeKakaoPayModal,
   };
 };
 

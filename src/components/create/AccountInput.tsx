@@ -26,8 +26,8 @@ const AccountInput = () => {
     modalValue,
     selectedIndex,
     setModalValue,
-    openModal,
-    closeModal,
+    openKakaoPayModal,
+    closeKakaoPayModal,
   } = useKakaoPayModal();
 
   const handleModalSubmit = () => {
@@ -35,7 +35,7 @@ const AccountInput = () => {
       kakaopaySchema.parse(modalValue);
       if (selectedIndex !== null) {
         setValue(`account.${accountType}[${selectedIndex}].kakaopay`, modalValue);
-        closeModal();
+        closeKakaoPayModal();
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -120,7 +120,7 @@ const AccountInput = () => {
                 />
                 <button
                   type='button'
-                  onClick={() => openModal(index, kakaopayValue)} // 모달 열기
+                  onClick={() => openKakaoPayModal(index, kakaopayValue)} // 모달 열기
                 >
                   <img
                     src={
@@ -140,7 +140,7 @@ const AccountInput = () => {
       <KakaoPayModal
         isModalOpen={isModalOpen}
         value={modalValue}
-        onClose={closeModal}
+        onClose={closeKakaoPayModal}
         onSave={handleModalSubmit}
         onChange={setModalValue}
       />
