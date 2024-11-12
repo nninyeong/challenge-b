@@ -7,13 +7,24 @@ import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathn
 import { useState } from 'react';
 import GuestBookPagination from './GuestBookPagination';
 
+import { ColorType } from '@/types/invitationFormType.type';
+import colorConverter from '@/utils/colorConverter';
 const ITEMS_PER_PAGE = 6;
 
-const GuestBook = () => {
+type GuestBookProps = {
+  fontInfo: {
+    color: ColorType;
+    size: number;
+  };
+};
+const GuestBook = ({ fontInfo }: GuestBookProps) => {
   const { isCreatePage, invitationId } = useInvitationIdByPathname();
   const [page, setPage] = useState(1);
-
+  const fontSize = fontInfo.size;
+  const fontColor = fontInfo.color;
+  const rgbaColor = colorConverter(fontColor);
   const { data, isLoading, error } = useGuestBookEntries(invitationId, page);
+
   const guestBooks = data?.data ?? [];
   const total = data?.total ?? 0;
   const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
@@ -23,8 +34,16 @@ const GuestBook = () => {
 
   return (
     <div>
-      <div className='text-gray-600 text-center mb-6 tracking-[4px]'>GUEST BOOK</div>
-      <CreateGuestBook invitationId={invitationId} isCreatePage={isCreatePage} />
+      <div
+        style={{ fontSize: `${16 + fontSize}px`, color: `${rgbaColor}` }}
+        className='text-opacity-50 text-center mb-6 tracking-[4px]'
+      >
+        GUEST BOOK
+      </div>
+      <CreateGuestBook
+        invitationId={invitationId}
+        isCreatePage
+      />
 
       {guestBooks.length === 0 ? (
         <div className='text-black w-full px-4 mb-4'>
@@ -33,7 +52,7 @@ const GuestBook = () => {
               src='/assets/images/empty-guestbook.svg'
               alt=''
             />
-            <span className='text-gray-700 text-[14px]'>아직 남긴 방명록이 없어요.</span>
+            <span className='text-gray-700 '>아직 남긴 방명록이 없어요.</span>
           </div>
         </div>
       ) : (

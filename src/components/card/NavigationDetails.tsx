@@ -3,9 +3,13 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import MapView from '@/components/map/MapView';
 import NavigationButtons from '@/components/create/NavigationButtons';
 import NavigationDetailCard from '@/components/create/NavigationDetailCard';
+import colorConverter from '@/utils/colorConverter';
 
-type NavigationDetailsPropType = Pick<InvitationFormType, 'navigationDetail' | 'weddingInfo'>;
-const NavigationDetails = ({ navigationDetail, weddingInfo }: NavigationDetailsPropType) => {
+type NavigationDetailsPropType = Pick<InvitationFormType, 'navigationDetail' | 'weddingInfo' | 'fontInfo'>;
+const NavigationDetails = ({ navigationDetail, weddingInfo, fontInfo }: NavigationDetailsPropType) => {
+  const { color } = fontInfo;
+  const rgbaColor = colorConverter(color);
+
   return (
     <div className='mb-[75px/]'>
       {navigationDetail.map && <MapView address={weddingInfo.weddingHallAddress} />}
@@ -13,18 +17,21 @@ const NavigationDetails = ({ navigationDetail, weddingInfo }: NavigationDetailsP
         <NavigationButtons
           address={weddingInfo.weddingHallAddress}
           name={weddingInfo.weddingHallName}
+          fontColor={rgbaColor}
         />
       )}
       {navigationDetail.bus && (
         <NavigationDetailCard
           label={'버스'}
           info={navigationDetail.bus}
+          fontColor={rgbaColor}
         />
       )}
       {navigationDetail.subway && (
         <NavigationDetailCard
           label={'지하철'}
           info={navigationDetail.subway}
+          fontColor={rgbaColor}
         />
       )}
     </div>

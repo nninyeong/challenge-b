@@ -6,6 +6,7 @@ import { Fragment } from 'react';
 import { convertOrderToComponent } from '@/utils/convert/convertOrderToComponent';
 import { Metadata } from 'next';
 import { MainPhotoType } from '@/types/invitationFormType.type';
+import colorConverter from '@/utils/colorConverter';
 
 export const generateStaticParams = async () => {
   const { data } = await supabase.from('invitation').select('id');
@@ -53,14 +54,18 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
   const userId = data?.user?.id;
 
   const { isPrivate, renderOrder, ...invitationData } = invitationFetchData;
-  const fontStyle = invitationFetchData.mainPhotoInfo.fontName;
+
+  const fontStyle = invitationFetchData.fontInfo!.fontName;
   const bgColor = invitationFetchData.bgColor;
 
   const canView = userId === invitationData.userId || !isPrivate;
+  const fontColor = invitationFetchData.fontInfo!.color;
+  const rgbaColor = colorConverter(fontColor);
+
   return canView ? (
     <div
       className={`flex flex-col gap-[56px] font-${fontStyle}`}
-      style={{ backgroundColor: `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})` }}
+      style={{ backgroundColor: `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})`, color: `${rgbaColor}` }}
     >
       {renderOrder
         .sort((a, b) => a.order - b.order)
