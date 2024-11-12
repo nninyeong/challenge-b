@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import usePayModalFlip from '@/hooks/kakaopay/usePayModalFlip';
 
 type ModalProps = {
   isModalOpen: boolean;
@@ -11,11 +11,7 @@ type ModalProps = {
 };
 
 const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, value, onClose, onSave, onChange }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  const handleClick = () => {
-    setIsFlipped((prev) => !prev);
-  };
+  const { isFlipped, toggleFlip } = usePayModalFlip();
 
   if (!isModalOpen) return null;
 
@@ -39,7 +35,7 @@ const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, value, onClose, onSa
         </div>
         <div
           className='relative cursor-pointer w-full h-[355px] flex justify-center items-center overflow-hidden'
-          onClick={handleClick}
+          onClick={toggleFlip}
         >
           <img
             src='/assets/images/kakaopay/pay-html-1.png'
