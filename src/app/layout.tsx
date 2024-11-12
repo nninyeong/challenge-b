@@ -24,6 +24,12 @@ export const metadata: Metadata = {
   },
   title: '드림카드 | 나만의 모바일 청첩장',
   description: '모바일 청첩장을 직접 제작하고 커스텀할 수 있는 서비스입니다. 소중한 날을 더 특별하게 만들어보세요!',
+  verification: {
+    google: 'fZ2v9PdapWDy5-avIG7z7jgsuGEu3iUiwxxgqyGZHEc',
+    other: {
+      'naver-site-verification': 'a710075ff3af9a3f2c9ef8de1947beaab2189a13',
+    },
+  },
 };
 
 export default function RootLayout({
@@ -40,14 +46,6 @@ export default function RootLayout({
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
-        />
-        <meta
-          name='google-site-verification'
-          content='fZ2v9PdapWDy5-avIG7z7jgsuGEu3iUiwxxgqyGZHEc'
-        />
-        <meta
-          name='naver-site-verification'
-          content='a710075ff3af9a3f2c9ef8de1947beaab2189a13'
         />
       </head>
       <body
