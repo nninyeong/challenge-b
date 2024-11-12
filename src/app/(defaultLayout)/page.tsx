@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className='items-center mt-[56px] px-[16px] h-full mb-[96px]'>
       <FixedQuickLink />
-      <div className='relative w-[343px] h-[328px] rounded-[12px] mx-auto mb-[56px] bg-mood-preset-01 bg-cover bg-no-repeat bg-center'>
+      <div className='relative max-w-[343px] h-[328px] rounded-[12px] mx-auto mb-[56px] bg-mood-preset-01 bg-cover bg-no-repeat bg-center'>
         <div
           className='absolute bottom-0 w-full h-[134px] rounded-[12px]'
           style={{ background: 'linear-gradient(181deg, rgba(0, 0, 0, 0.00) 7.02%, rgba(0, 0, 0, 0.90) 99.4%)' }}
