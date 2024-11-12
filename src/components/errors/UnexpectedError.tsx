@@ -16,7 +16,7 @@ const UnexpectedError = ({ error, reset }: { error: Error & { digest?: string };
         alt='not-found'
         className='w-[150px]'
       />
-      <p>에러가 발생했습니다: {error.message}</p>
+      <p className='text-[16px] font-bold text-gray-700'>에러가 발생했습니다: {error.message}</p>
       <div className='flex items-center gap-[8px]'>
         <Button
           className='w-[152px] h-[40px] mt-[16px] rounded-[12px] text-[16px] font-bold'
