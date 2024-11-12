@@ -24,8 +24,6 @@ import { Notify } from 'notiflix';
 import EventBus from '@/utils/EventBus';
 import { motion } from 'framer-motion';
 import createCardFormHeightMapper, { FOLDED_HEIGHT } from '@/utils/createCardFormHeightMapper';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { validationSchema } from '@/lib/zod/validationSchema';
 
 const DELAY_TIME: number = 300;
 const SAVE_DELAY_TIME: number = 3000;
@@ -34,13 +32,13 @@ const CreateCardPage = () => {
   const router = useRouter();
 
   const methods = useForm<InvitationFormType>({
-    resolver: zodResolver(validationSchema),
     mode: 'onChange',
     defaultValues: INVITATION_DEFAULT_VALUE,
   });
 
   const [backgroundColor, setBackgroundColor] = useState<string>('rgba(255,255,255,1)');
   const [selectedFont, setSelectedFont] = useState<string>('main');
+
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const [toggleInput, setToggleInput] = useToggle();
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -166,13 +164,14 @@ const CreateCardPage = () => {
 
   const subscribeFont = () => {
     const subscriptionFont = methods.watch((value) => {
-      const font = value?.mainPhotoInfo?.fontName;
+      const font = value?.fontInfo?.fontName;
       if (font) {
         setSelectedFont(font);
       }
       return () => subscriptionFont.unsubscribe();
     });
   };
+
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
       const color = value.bgColor;
@@ -259,7 +258,7 @@ const CreateCardPage = () => {
   return (
     <FormProvider {...methods}>
       <div
-        className={`relative w-full h-full font-${selectedFont}`}
+        className={`relative w-full h-full font-${selectedFont} `}
         style={{
           backgroundColor: backgroundColor,
         }}

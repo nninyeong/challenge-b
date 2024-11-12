@@ -5,12 +5,12 @@ const AccountModal = ({
   accounts,
   accountType,
   setOpenAccountModal,
-  setCloseAccountModal
+  setCloseAccountModal,
 }: {
   accounts: AccountType[];
   accountType: 'groom' | 'bride';
   setOpenAccountModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setCloseAccountModal: () => void
+  setCloseAccountModal: () => void;
 }) => {
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-40'>

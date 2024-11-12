@@ -1,9 +1,16 @@
+'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
+import colorConverter from '@/utils/colorConverter';
+type GreetingPropType = Pick<InvitationFormType, 'greetingMessage' | 'fontInfo'>;
+const Greeting = ({ greetingMessage, fontInfo }: GreetingPropType) => {
+  const { size, color } = fontInfo;
+  const rgbaColor = colorConverter(color);
 
-type GreetingPropType = Pick<InvitationFormType, 'greetingMessage'>;
-const Greeting = ({ greetingMessage }: GreetingPropType) => {
   return (
-    <div className={`text-black  flex flex-col justify-center items-center mt-13 gap-6 mb-[89px]`}>
+    <div
+      style={{ fontSize: `${16 + size}px`, color: `${rgbaColor}` }}
+      className={`  flex flex-col justify-center items-center mt-13 gap-6 mb-[89px]`}
+    >
       {!greetingMessage.title ? <p>제목을 입력해주세요</p> : <p>{greetingMessage.title}</p>}
       <div
         className='leading-9'
