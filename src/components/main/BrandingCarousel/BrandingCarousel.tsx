@@ -39,7 +39,7 @@ const BrandingCarousel = () => {
           />,
           ...CAROUSEL_ITEM_PROPS.map((item) => (
             <BrandingCarouselItem
-              key={`$carousel-${item}`}
+              key={`mobile-carousel-${item}`}
               src={item.mobileSrc}
               description={item.mobileDescription}
             />
@@ -61,7 +61,7 @@ const BrandingCarousel = () => {
           />,
           ...CAROUSEL_ITEM_PROPS.map((item) => (
             <BrandingCarouselItem
-              key={`$carousel-${item}`}
+              key={`desktop-carousel-${item}`}
               src={item.desktopSrc}
               description={item.desktopDescription}
             />
