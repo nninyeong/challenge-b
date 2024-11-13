@@ -69,7 +69,7 @@ const BrandingCarousel = () => {
           style={{
             transform: `translateX(${(currentIndex % MOCKUP_NUMBER) * 98}px)`,
           }}
-          className='w-1/3 h-full bg-white'
+          className='w-[98px] h-full bg-white'
         ></div>
       </div>
     </div>

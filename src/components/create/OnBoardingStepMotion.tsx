@@ -1,4 +1,7 @@
+'use client';
+
 import { motion } from 'framer-motion';
+
 const OnBoardingStepMotion = ({ step }: { step: number }) => {
   if (step === 0) {
     return (
