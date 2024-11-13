@@ -1,6 +1,6 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
 import BrandingCarouselItem from '@/components/main/BrandingCarousel/BrandingCarouselItem';
+import useCarousel from '@/hooks/ui/useCarousel';
 
 const CAROUSEL_ITEM_PROPS = [
   {
@@ -24,39 +24,7 @@ const CAROUSEL_ITEM_PROPS = [
 ];
 
 const BrandingCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [isTransitioning, setIsTransitioning] = useState(true);
-
-  const moveCarousel = useCallback(() => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => prev + 1);
-  }, []);
-
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      moveCarousel();
-    }, 3000);
-
-    return () => clearInterval(timerId);
-  }, [currentIndex, moveCarousel]);
-
-  useEffect(() => {
-    let timerId: NodeJS.Timeout;
-
-    if (currentIndex === 0) {
-      timerId = setTimeout(() => {
-        setCurrentIndex(CAROUSEL_ITEM_PROPS.length);
-        setIsTransitioning(false);
-      }, 500);
-    } else if (currentIndex === CAROUSEL_ITEM_PROPS.length + 1) {
-      timerId = setTimeout(() => {
-        setCurrentIndex(1);
-        setIsTransitioning(false);
-      }, 500);
-    }
-
-    return () => clearTimeout(timerId);
-  }, [currentIndex]);
+  const { currentIndex, isTransitioning } = useCarousel(CAROUSEL_ITEM_PROPS.length, 3000, 500);
 
   return (
     <div className='relative overflow-hidden w-full desktop:h-[588px] mobile:h-[384px] mb-[56px] bg-black'>
@@ -71,6 +39,7 @@ const BrandingCarousel = () => {
           />,
           ...CAROUSEL_ITEM_PROPS.map((item) => (
             <BrandingCarouselItem
+              key={`$carousel-${item}`}
               src={item.mobileSrc}
               description={item.mobileDescription}
             />
@@ -92,6 +61,7 @@ const BrandingCarousel = () => {
           />,
           ...CAROUSEL_ITEM_PROPS.map((item) => (
             <BrandingCarouselItem
+              key={`$carousel-${item}`}
               src={item.desktopSrc}
               description={item.desktopDescription}
             />
