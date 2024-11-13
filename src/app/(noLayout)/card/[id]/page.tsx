@@ -19,15 +19,16 @@ export const generateStaticParams = async () => {
 
 const fetchInvitationData = async (id: string) => {
   const { data, error } = await supabase.from('invitation').select('*').eq('id', id).single();
-
-  if (error || !data) notFound();
+  if (!data || error) notFound();
 
   return data;
 };
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const { id } = params;
-  const { data } = await supabase.from('invitation').select('main_photo_info').eq('id', id).single();
+  const { data, error } = await supabase.from('invitation').select('main_photo_info').eq('id', id).single();
+  if (!data || error) notFound();
+
   const { leftName, rightName, icon } = data?.main_photo_info as unknown as MainPhotoType;
   const title = leftName && rightName && icon ? `${leftName} ${icon} ${rightName}` : '청첩장이 도착했습니다.';
 
