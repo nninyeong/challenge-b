@@ -6,7 +6,7 @@ const Header = async () => {
   const isAuthenticated = await getIsLogin();
 
   return (
-    <header className='w-full h-[64px] flex justify-between items-center px-[16px] desktop:px-[152px] bg-white'>
+    <header className='w-full h-[64px] desktop:h-[86px] flex justify-between items-center px-[16px] desktop:px-[152px] bg-white'>
       <Link href='/'>
         <img
           src='/assets/images/branding/BI.webp'
