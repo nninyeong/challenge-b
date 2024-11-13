@@ -1,3 +1,4 @@
+'use client';
 import { useGetAllStickers } from '@/hooks/queries/useGetStickers';
 import { useState, useEffect } from 'react';
 import StickerCategoryButton from '@/components/create/stickerInput/StickerCategoryButton';
