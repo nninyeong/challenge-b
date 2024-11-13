@@ -39,8 +39,9 @@ const Carousel = () => {
   }, [currentIndex, extendedReviewArr.length]);
 
   const getCarouselStyle = () => {
+    const isDesktop = window.innerWidth >= 1440;
     return {
-      transform: `translateX(${-currentIndex * (216 + 16)}px)`,
+      transform: `translateX(${-currentIndex * (isDesktop ? 383 + 16 : 216 + 16)}px)`,
       transition: currentIndex === 0 ? 'none' : 'transform 0.5s ease-in-out',
     };
   };
