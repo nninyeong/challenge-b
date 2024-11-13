@@ -16,17 +16,27 @@ export default function Home() {
   }, []);
 
   return (
-    <div className='items-center mt-[56px] px-[16px] h-full mb-[96px]'>
+    <div className='items-center h-full'>
       <FixedQuickLink />
-      <div className='relative w-[343px] h-[328px] rounded-[12px] mx-auto mb-[56px]'>
+      <div className='flex overflow-hidden w-full h-[384px] mb-[56px]'>
         <BrandingCarouselItem
-          src='/assets/images/branding/mood-preset-01.png'
-          description={`소중한 기억을 위한\n맞춤형 초대장,\n드림카드와 함께`}
+          src='/assets/images/branding/main-mockup-1.webp'
+          description={`소중한 기억을 위한 맞춤형\n청첩장, 드림카드와 함께`}
+        />
+        <BrandingCarouselItem
+          src='/assets/images/branding/main-mockup-2.webp'
+          description={`드림카드로 완성하\n당신만의 특별한 무드`}
+        />
+        <BrandingCarouselItem
+          src='/assets/images/branding/main-mockup-3.webp'
+          description={`드림카드로 특별한\n초대, 참석 여부도 손쉽게`}
         />
       </div>
-      <Gallery />
-      <MoodKeyword />
-      <ReviewCarousel />
+      <div className='px-[16px] mb-[96px]'>
+        <Gallery />
+        <MoodKeyword />
+        <ReviewCarousel />
+      </div>
     </div>
   );
 }
