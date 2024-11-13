@@ -21,7 +21,7 @@ const Loading = () => {
 
         <motion.img
           src='/assets/images/branding/shadow.png'
-          alt='떨어진 후 그림자'
+          alt='Loading..'
           initial={{ width: '117px', height: '18px' }}
           animate={{
             width: ['117px', '97px', '117px'],
