@@ -1,7 +1,7 @@
 import { getReview } from '@/utils/getReview';
 import { MetadataRoute } from 'next';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const reviews = await getReview({ pageParam: 0, ROW: 100 });
 
   const dynamicRoutes = reviews.map((review) => ({
@@ -25,4 +25,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     ...dynamicRoutes,
   ];
-}
+};
+
+export default sitemap;
