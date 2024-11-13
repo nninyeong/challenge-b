@@ -1,40 +1,46 @@
 import { MutableRefObject, useRef } from 'react';
+import { StepType } from '../create/useFormStepController';
+import { debounce } from '@/utils/debounce';
 
 type ObserverOptions = {
   root?: HTMLElement | null;
   rootMargin?: string;
-  threshold?: number;
+  threshold?: number[];
 };
 
 const DEFAULT_OPTIONS: ObserverOptions = {
   root: null,
-  rootMargin: '0px 0px -80% 0px',
-  threshold: 0,
+  rootMargin: '-30% 0px',
 };
-
+const DELAY_TIME: number = 300;
 export const useIntersectionObserver = (
   refs: MutableRefObject<{ [key: string]: { ref: HTMLDivElement | null; order: number; inputOrder: number } }>,
-  setCurrentStep: (step: number) => void,
-  setInputIndex: (step: number) => void,
+  setCurrentStep: (step: StepType) => void,
 ) => {
   const observers = useRef<IntersectionObserver[]>([]);
   const isNavigating = useRef<boolean>(false);
-  const observerCallback = (entries: IntersectionObserverEntry[]) => {
+
+  const observerCallback = debounce((entries: IntersectionObserverEntry[]) => {
     if (isNavigating.current) return;
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const label = entry.target.getAttribute('data-label');
         const currentStepIndex = refs.current[label!].order;
         const currentStepInputIndex = refs.current[label!].inputOrder;
-        setInputIndex(currentStepInputIndex);
-        setCurrentStep(currentStepIndex);
+        setCurrentStep({
+          currentPreviewStep: currentStepIndex,
+          currentInputStep: currentStepInputIndex,
+        });
       }
     });
-  };
+  }, DELAY_TIME);
+
   const initializeObserver = () => {
     Object.values(refs.current).forEach((ref, index) => {
       if (ref) {
-        const observer = new IntersectionObserver(observerCallback, DEFAULT_OPTIONS);
+        const elementHeight = ref.ref!.clientHeight;
+        const threshold = elementHeight! > window.innerHeight ? 0.1 : 0.6;
+        const observer = new IntersectionObserver(observerCallback, { ...DEFAULT_OPTIONS, threshold: threshold });
         observer.observe(ref.ref as Element);
         observers.current[index] = observer;
       }

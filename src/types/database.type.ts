@@ -23,4 +23,5 @@ export type Invitation = {
   main_photo_info: Json;
   isPrivate: boolean;
   render_order: Json | null;
+  font_info: Json | null;
 };
