@@ -18,7 +18,7 @@ export const generateStaticParams = async () => {
   );
 };
 
-export const fetchInvitationData = async (id: string) => {
+const fetchInvitationData = async (id: string) => {
   const { data, error } = await supabase.from('invitation').select('*').eq('id', id).single();
   if (!data || error) notFound();
 
