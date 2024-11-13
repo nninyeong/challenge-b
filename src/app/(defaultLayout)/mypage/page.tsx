@@ -13,7 +13,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
     redirect('/signin');
   }
   const user = await getUserInfo();
-
+  const userId = user.user.id;
   const profileUrl = user?.user?.user_metadata?.avatar_url || '/assets/images/defaultImg.png';
 
   return (
@@ -40,7 +40,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
           <div>정보가 없습니다</div>
         )}
 
-        <MyInvitationCard />
+        <MyInvitationCard id={userId} />
 
         <div className='flex justify-between items-center gap-8 mt-4 p-4 bg-gray-100 rounded text-black font-bold '>
           <p>내 청첩장 공개하기 ON/OFF</p>

@@ -17,7 +17,7 @@ export const generateStaticParams = async () => {
   );
 };
 
-const fetchInvitationData = async (id: string) => {
+export const fetchInvitationData = async (id: string) => {
   const { data, error } = await supabase.from('invitation').select('*').eq('id', id).single();
 
   if (error || !data) notFound();
@@ -61,7 +61,7 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
   const canView = userId === invitationData.userId || !isPrivate;
   const fontColor = invitationFetchData.fontInfo!.color;
   const rgbaColor = colorConverter(fontColor);
-
+  console.log(rgbaColor);
   return canView ? (
     <div
       className={`flex flex-col gap-[56px] font-${fontStyle}`}

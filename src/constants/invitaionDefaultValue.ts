@@ -82,7 +82,6 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
     ratio: '',
     position: 0,
   },
-  mainText: '',
   greetingMessage: {
     title: '',
     content: '',
