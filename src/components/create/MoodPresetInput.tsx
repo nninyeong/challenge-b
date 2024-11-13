@@ -1,3 +1,4 @@
+'use client';
 import StickerCategoryButton from './stickerInput/StickerCategoryButton';
 import { useFormContext } from 'react-hook-form';
 import { useState } from 'react';

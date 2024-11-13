@@ -3,7 +3,12 @@ import { QUERY_KEYS } from '../queryKeys';
 import { useQuery } from '@tanstack/react-query';
 
 const getReviewCarousel = async () => {
-  const response = await browserClient.from('reviews').select('*').filter('image_url', 'neq', '[]').limit(8);
+  const response = await browserClient
+    .from('reviews')
+    .select('*')
+    .filter('image_url', 'neq', '[]')
+    .order('created_at', { ascending: true })
+    .limit(8);
 
   if (response.error) {
     console.error(response.error);

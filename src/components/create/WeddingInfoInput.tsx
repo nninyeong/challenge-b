@@ -46,12 +46,12 @@ const WeddingInfoInput = () => {
 
   return (
     <>
-      <div className='flex flex-col gap-[8px] text-[14px] text-gray-700 font-medium mb-[16px]'>
-        <div className='grid grid-cols-[80px_1fr] items-center'>
+      <div className='flex flex-col gap-[8px] text-[14px] text-gray-700 font-medium max-w-[312px] mb-[16px]'>
+        <div className='grid grid-cols-[76px_1fr] items-center'>
           <label className='leading-[32px]'>예식일</label>
           <input
             {...register('weddingInfo.date')}
-            placeholder='2024-11-21'
+            placeholder='2024.11.21'
             className='w-[172px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
             maxLength={21}
           />
