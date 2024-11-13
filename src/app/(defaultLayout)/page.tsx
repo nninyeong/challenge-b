@@ -15,7 +15,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className='items-center mt-[56px] px-[16px] h-full mb-[96px]'>
+    <div className='items-center mt-[56px] desktop:px-[152px] mobile:px-[16px] h-full mb-[96px]'>
       <FixedQuickLink />
       <div className='relative w-[343px] h-[328px] rounded-[12px] mx-auto mb-[56px] bg-mood-preset-01 bg-cover bg-no-repeat bg-center'>
         <div
