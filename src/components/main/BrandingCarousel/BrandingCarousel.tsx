@@ -53,7 +53,7 @@ const BrandingCarousel = () => {
         />
         <BrandingCarouselItem
           src='/assets/images/branding/main-mockup-2.webp'
-          description={`드림카드로 완성하\n당신만의 특별한 무드`}
+          description={`드림카드로 완성하는\n당신만의 특별한 무드`}
         />
         <BrandingCarouselItem
           src='/assets/images/branding/main-mockup-3.webp'
@@ -63,6 +63,14 @@ const BrandingCarousel = () => {
           src='/assets/images/branding/main-mockup-1.webp'
           description={`소중한 기억을 위한 맞춤형\n청첩장, 드림카드와 함께`}
         />
+      </div>
+      <div className='absolute bottom-4 left-1/2 transform -translate-x-1/2 w-[294px] h-[2px] bg-gray-400 z-50'>
+        <div
+          style={{
+            transform: `translateX(${(currentIndex % MOCKUP_NUMBER) * 98}px)`,
+          }}
+          className='w-1/3 h-full bg-white'
+        ></div>
       </div>
     </div>
   );
