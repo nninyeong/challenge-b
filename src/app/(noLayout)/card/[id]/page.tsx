@@ -62,7 +62,7 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
 
   return canView ? (
     <div
-      className={`flex flex-col gap-[56px]`}
+      className='flex flex-col gap-[56px]'
       style={{ backgroundColor: `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})` }}
     >
       {renderOrder
