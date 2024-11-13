@@ -42,11 +42,9 @@ export const fetchInvitationFields = async (id: string) => {
   return data?.[0];
 };
 
-// 수정된 필드 수를 계산하는 함수
 const calculateProgress = (supabaseData: Record<string, unknown>, defaultValue: Record<string, unknown>): number => {
   let completedFields = 0;
 
-  // 비교할 필드 목록 (8개 필드)
   const fieldsToCheck = [
     'personalInfo',
     'account',
