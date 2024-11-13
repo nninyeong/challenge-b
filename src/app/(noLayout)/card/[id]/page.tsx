@@ -7,10 +7,11 @@ import { convertOrderToComponent } from '@/utils/convert/convertOrderToComponent
 import { Metadata } from 'next';
 import { MainPhotoType } from '@/types/invitationFormType.type';
 import colorConverter from '@/utils/colorConverter';
-import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 
 export const generateStaticParams = async () => {
-  const { data } = await supabase.from('invitation').select('id');
+  const { data, error } = await supabase.from('invitation').select('id');
+  if (error) console.error(error);
+
   return (
     data?.map((invitation) => ({
       id: invitation.id,
@@ -58,8 +59,8 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
   const { isPrivate, renderOrder, ...invitationData } = invitationFetchData;
 
   const bgColor = invitationFetchData.bgColor;
-  const fontStyle = invitationFetchData.fontInfo?.fontName || INVITATION_DEFAULT_VALUE.fontInfo.fontName;
-  const fontColor = invitationFetchData.fontInfo?.color || INVITATION_DEFAULT_VALUE.fontInfo.color;
+  const fontStyle = invitationFetchData.fontInfo?.fontName;
+  const fontColor = invitationFetchData.fontInfo?.color;
   const rgbaColor = colorConverter(fontColor);
 
   const canView = userId === invitationData.userId || !isPrivate;
