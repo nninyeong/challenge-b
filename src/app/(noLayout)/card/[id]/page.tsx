@@ -58,12 +58,16 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
   const { isPrivate, renderOrder, ...invitationData } = invitationFetchData;
 
   const bgColor = invitationFetchData.bgColor;
+  const fontStyle = invitationFetchData.fontInfo?.fontName;
   const canView = userId === invitationData.userId || !isPrivate;
 
   return canView ? (
     <div
       className='flex flex-col gap-[56px]'
-      style={{ backgroundColor: `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})` }}
+      style={{
+        backgroundColor: `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})`,
+        fontFamily: `${fontStyle || 'main'}`,
+      }}
     >
       {renderOrder
         .sort((a, b) => a.order - b.order)
