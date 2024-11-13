@@ -5,7 +5,8 @@ import { useGetReviewCarouselQuery } from '@/hooks/queries/review/useGetReviewCa
 import { formatDate } from '@/utils/formatDate';
 import { maskIdLastFour } from '@/utils/maskIdLastFour';
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { CarouselLoading } from '../loading/CarouselLoading';
 
 const MAX_CONTENT_LENGTH = 60;
 
@@ -14,9 +15,7 @@ const Carousel = () => {
   const { data: reviewsData = [], isLoading } = useGetReviewCarouselQuery();
   const { data: users } = useAuthUserQuery();
 
-  const extendedReviewArr = useMemo(() => {
-    return isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData, reviewsData[0]];
-  }, [isLoading, reviewsData]);
+  const extendedReviewArr = [...reviewsData, ...reviewsData, ...reviewsData, reviewsData[0]];
 
   useEffect(() => {
     if (extendedReviewArr.length > 0) {
@@ -51,11 +50,11 @@ const Carousel = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CarouselLoading />;
   }
 
   return (
-    <div className='overflow-hidden w-full py-[10px]'>
+    <div className='overflow-hidden justify-center w-full py-[10px]'>
       <div
         className='flex justify-center'
         style={getCarouselStyle()}
