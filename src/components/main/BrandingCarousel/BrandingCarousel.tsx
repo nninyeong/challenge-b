@@ -34,17 +34,19 @@ const BrandingCarousel = () => {
       >
         {[
           <BrandingCarouselItem
+            key='mobile-carousel-index-0'
             src={CAROUSEL_ITEM_PROPS[CAROUSEL_ITEM_PROPS.length - 1].mobileSrc}
             description={CAROUSEL_ITEM_PROPS[CAROUSEL_ITEM_PROPS.length - 1].mobileDescription}
           />,
           ...CAROUSEL_ITEM_PROPS.map((item) => (
             <BrandingCarouselItem
-              key={`mobile-carousel-${item}`}
+              key={`mobile-carousel-${item.mobileSrc}`}
               src={item.mobileSrc}
               description={item.mobileDescription}
             />
           )),
           <BrandingCarouselItem
+            key='mobile-carousel-index-last'
             src={CAROUSEL_ITEM_PROPS[0].mobileSrc}
             description={CAROUSEL_ITEM_PROPS[0].mobileDescription}
           />,
@@ -56,17 +58,19 @@ const BrandingCarousel = () => {
       >
         {[
           <BrandingCarouselItem
+            key='desktop-carousel-index-0'
             src={CAROUSEL_ITEM_PROPS[CAROUSEL_ITEM_PROPS.length - 1].desktopSrc}
             description={CAROUSEL_ITEM_PROPS[CAROUSEL_ITEM_PROPS.length - 1].desktopDescription}
           />,
           ...CAROUSEL_ITEM_PROPS.map((item) => (
             <BrandingCarouselItem
-              key={`desktop-carousel-${item}`}
+              key={`desktop-carousel-${item.desktopSrc}`}
               src={item.desktopSrc}
               description={item.desktopDescription}
             />
           )),
           <BrandingCarouselItem
+            key='desktop-carousel-index-last'
             src={CAROUSEL_ITEM_PROPS[0].desktopSrc}
             description={CAROUSEL_ITEM_PROPS[0].desktopDescription}
           />,
