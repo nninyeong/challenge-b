@@ -70,7 +70,7 @@ const config: Config = {
         NanumPen: ['NanumPen'],
         Cafe24: ['Cafe24'],
         SCDream1: ['SCDream1'],
-        main: ['Main'],
+        Main: ['Main'],
         JejuGothic: ['JejuGothic'],
       },
       backgroundImage: {

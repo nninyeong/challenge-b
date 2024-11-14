@@ -95,7 +95,7 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
   renderOrder: extractOrderAndType(),
   fontInfo: {
     size: 0,
-    fontName: 'main',
+    fontName: 'Main',
     color: {
       r: 0,
       g: 0,
