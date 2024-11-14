@@ -7,22 +7,29 @@ const InputForValidate = ({
   validateFor,
   register,
   errorMessage,
+  guideMessage,
+  className,
 }: {
   type: string;
   placeholder: string;
   validateFor: FieldPath<SignInFormValues | SignUpFormValues>;
   register: UseFormRegister<SignInFormValues | SignUpFormValues>;
   errorMessage?: string;
+  guideMessage?: string;
+  className?: string;
 }) => {
   return (
-    <div className='grid grid-rows-[48px_16px] gap-0 w-full'>
+    <div className='grid grid-rows-[48px_24px] gap-0 w-full'>
       <input
         type={type}
         placeholder={placeholder}
         {...register(validateFor)}
-        className='border rounded-[12px] w-full h-[48px] p-[16px]'
+        className={`border rounded-[12px] w-full h-[48px] p-[16px] ${className}`}
       />
-      {errorMessage && <p className='text-red-500 text-[10px]'>{errorMessage}</p>}
+      {!errorMessage && (
+        <p className='text-gray-600 text-[12px] mt-[8px] ml-[16px]'>{validateFor === 'password' && guideMessage}</p>
+      )}
+      {errorMessage && <p className='text-primary-300 text-[12px] mt-[4px] ml-[16px]'>{errorMessage}</p>}
     </div>
   );
 };
