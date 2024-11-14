@@ -42,7 +42,6 @@ const StickerSlot = ({ stickerImage }: PropsType) => {
           src={stickerImage.url}
           className='object-contain'
           fill
-          priority={true}
         />
       </div>
     </div>

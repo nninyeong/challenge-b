@@ -49,5 +49,6 @@ export const useGetCategorizedStickers = () => {
   return useQuery({
     queryKey: QUERY_KEYS.stickerImages(),
     queryFn: fetchAllStickerImages,
+    staleTime: 60 * 60 * 24 * 1000,
   });
 };
