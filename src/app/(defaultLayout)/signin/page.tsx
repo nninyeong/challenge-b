@@ -11,21 +11,17 @@ const SignInPage = () => {
 
   return (
     <div className='flex flex-col items-center px-[16px] mb-[24px]'>
-      <div className='flex flex-col gap-[8px] items-center mt-[24px]'>
+      <div className='flex flex-col gap-[8px] desktop:gap-[16px] items-center mt-[24px]'>
         <img
           src='/assets/images/branding/3D-logo.webp'
           alt='드림카드'
-          className='w-[88px] h-[88px]'
+          className='w-[88px] desktop:w-[104px]'
         />
-        <img
-          src='/assets/images/branding/당신의-꿈을-담은-초대-드림카드에서_.webp'
-          alt='당신의 꿈을 담은 초대 드림카드에서!'
-          className='w-[163px]'
-        />
+        <h3 className='font-HakgyoansimWoojuR text-primary-300 text-[20px] desktop:text-[36px] whitespace-pre-line text-center leading-[120%]'>{`당신의 꿈을 담은 초대\n드림카드에서!`}</h3>
       </div>
       <section className='flex flex-col items-center gap-[16px] w-full'>
         <AuthForm mode='signin' />
-        <div className='flex gap-[16px] text-[12px]'>
+        <div className='flex gap-[16px] text-[12px] desktop:text-[14px]'>
           <button onClick={alertComingSoon}>아이디 찾기</button>
           <button onClick={alertComingSoon}>비밀번호 찾기</button>
           <Link href='/signup'>회원가입</Link>

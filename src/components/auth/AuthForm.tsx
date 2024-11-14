@@ -36,7 +36,7 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
   };
 
   return (
-    <div className='w-full'>
+    <div className='w-full desktop:w-[400px]'>
       <form
         onSubmit={handleSubmit(handleAuthSubmit)}
         className='flex flex-col mt-[40px] w-full'

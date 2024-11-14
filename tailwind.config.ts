@@ -72,6 +72,7 @@ const config: Config = {
         SCDream1: ['SCDream1'],
         main: ['Main'],
         JejuGothic: ['JejuGothic'],
+        HakgyoansimWoojuR: ['HakgyoansimWoojuR'],
       },
       backgroundImage: {
         'edit-contained': "url('/assets/images/icons/edit-contained.svg')",
