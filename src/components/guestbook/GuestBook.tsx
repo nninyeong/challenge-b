@@ -42,7 +42,7 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
       </div>
       <CreateGuestBook
         invitationId={invitationId}
-        isCreatePage
+        isCreatePage={isCreatePage}
       />
 
       {guestBooks.length === 0 ? (
