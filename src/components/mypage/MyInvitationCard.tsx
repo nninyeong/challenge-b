@@ -154,7 +154,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
             width={64}
             height={64}
           />
-          <p className='text-gray-50 font-[0.8rem]'>제작중인 청첩장이 없어요</p>
+          <p className='text-gray-400 font-[0.8rem]'>제작중인 청첩장이 없어요</p>
         </div>
       )}
     </div>
