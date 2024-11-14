@@ -37,8 +37,7 @@ const OnBoarding = ({
   return (
     <div
       onClick={handleNextStep}
-      className={`${isOnboardingComplete ? 'hidden' : 'flex'} inset-0 fixed flex-col items-center mx-auto text-white text-center cursor-pointer bg-opacity-80 py-5 z-50 mobile:max-w-mobile 
-      desktop:max-w-desktop`}
+      className={`${isOnboardingComplete ? 'hidden' : 'flex'} inset-0 fixed flex-col items-center mx-auto text-white text-center cursor-pointer bg-opacity-80 py-5 z-50 mobile:max-w-mobile desktop:max-w-desktop`}
       style={{ height: MOBILE_VIEW_HEIGHT }}
     >
       <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black z-10'></div>
