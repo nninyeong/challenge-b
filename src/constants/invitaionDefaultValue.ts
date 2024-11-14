@@ -100,7 +100,7 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
       r: 0,
       g: 0,
       b: 0,
-      a: 0,
+      a: 100,
       name: '커스텀',
     },
   },

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Button from '../ui/Button';
 import { useDeleteInvitationCard, useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 import { Confirm, Notify } from 'notiflix';
-import { calculateProgressPercentage } from '@/utils/formProgressbar';
+import { calculateProgressPercentage } from '@/utils/calculateProgressPercentage';
 
 type MyInvitationCardProps = {
   id: string;
