@@ -6,10 +6,11 @@ import { Fragment } from 'react';
 import { convertOrderToComponent } from '@/utils/convert/convertOrderToComponent';
 import { Metadata } from 'next';
 import { MainPhotoType } from '@/types/invitationFormType.type';
-import colorConverter from '@/utils/colorConverter';
 
 export const generateStaticParams = async () => {
-  const { data } = await supabase.from('invitation').select('id');
+  const { data, error } = await supabase.from('invitation').select('id');
+  if (error) console.error(error);
+
   return (
     data?.map((invitation) => ({
       id: invitation.id,
@@ -19,15 +20,16 @@ export const generateStaticParams = async () => {
 
 const fetchInvitationData = async (id: string) => {
   const { data, error } = await supabase.from('invitation').select('*').eq('id', id).single();
-
-  if (error || !data) notFound();
+  if (!data || error) notFound();
 
   return data;
 };
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const { id } = params;
-  const { data } = await supabase.from('invitation').select('main_photo_info').eq('id', id).single();
+  const { data, error } = await supabase.from('invitation').select('main_photo_info').eq('id', id).single();
+  if (!data || error) notFound();
+
   const { leftName, rightName, icon } = data?.main_photo_info as unknown as MainPhotoType;
   const title = leftName && rightName && icon ? `${leftName} ${icon} ${rightName}` : '청첩장이 도착했습니다.';
 
@@ -55,17 +57,16 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
 
   const { isPrivate, renderOrder, ...invitationData } = invitationFetchData;
 
-  const fontStyle = invitationFetchData.fontInfo!.fontName;
   const bgColor = invitationFetchData.bgColor;
-
+  const fontStyle = invitationFetchData.fontInfo?.fontName;
   const canView = userId === invitationData.userId || !isPrivate;
-  const fontColor = invitationFetchData.fontInfo!.color;
-  const rgbaColor = colorConverter(fontColor);
-
   return canView ? (
     <div
-      className={`flex flex-col gap-[56px] font-${fontStyle}`}
-      style={{ backgroundColor: `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})`, color: `${rgbaColor}` }}
+      className='flex flex-col gap-[56px]'
+      style={{
+        backgroundColor: `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})`,
+        fontFamily: `${fontStyle || 'main'}`,
+      }}
     >
       {renderOrder
         .sort((a, b) => a.order - b.order)

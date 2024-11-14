@@ -124,7 +124,7 @@ export type InvitationFetchType = {
   bgColor: ColorType;
   stickers: StickerType[];
   imgRatio: ImageRatioType;
-  mainText: string;
+
   personalInfo: PersonalInfoType;
   greetingMessage: GreetingMessageType;
   weddingInfo: WeddingInfoType;

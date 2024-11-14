@@ -1,3 +1,4 @@
+'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { Control, useWatch } from 'react-hook-form';
 import MainPhoto from '@/components/card/MainPhoto';

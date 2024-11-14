@@ -17,21 +17,22 @@ const GalleryInput = () => {
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     const existingImages = getValues('gallery.images') || [];
+    if (files) {
+      if (files.length + existingImages.length > MAX_FILES) {
+        Notify.failure(`사진은 최대 ${MAX_FILES}장까지 등록할 수 있습니다.`);
+        return;
+      }
 
-    if (files && files.length + existingImages.length > MAX_FILES) {
-      Notify.failure(`사진은 최대 ${MAX_FILES}장까지 등록할 수 있습니다.`);
-      return;
-    }
+      if (files.length > 0) {
+        const fileArray = Array.from(files);
 
-    if (files && files.length > 0) {
-      const fileArray = Array.from(files);
-
-      try {
-        const urls = await Promise.all(fileArray.map((file) => uploadGalleryImageToSupabaseStorage(file)));
-        const publicUrls = urls.filter((url) => url !== null);
-        setValue('gallery.images', [...existingImages, ...publicUrls]);
-      } catch (error) {
-        console.error('이미지 업로드 중 오류가 발생했습니다:', error);
+        try {
+          const urls = await Promise.all(fileArray.map((file) => uploadGalleryImageToSupabaseStorage(file)));
+          const publicUrls = urls.filter((url) => url !== null);
+          setValue('gallery.images', [...existingImages, ...publicUrls]);
+        } catch (error) {
+          console.error('이미지 업로드 중 오류가 발생했습니다:', error);
+        }
       }
     }
   };
