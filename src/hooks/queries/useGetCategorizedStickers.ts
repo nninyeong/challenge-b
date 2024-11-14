@@ -5,7 +5,7 @@ import { StickerImage } from '@/types/stickerData.types';
 import { supabase } from '@/utils/supabase/createClient';
 import getImageDimensions from '@/utils/image/getImageDimensions';
 
-const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
+export const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
   try {
     const { data, error } = await supabase.storage.from('stickers').list('', { limit: 1000 });
     if (error) {
