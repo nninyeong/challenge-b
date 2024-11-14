@@ -14,6 +14,7 @@ function deepSort(value: unknown): unknown {
       .forEach((key) => {
         sortedObj[key] = deepSort((value as Record<string, unknown>)[key]);
       });
+
     return sortedObj;
   }
 
@@ -22,7 +23,7 @@ function deepSort(value: unknown): unknown {
 
 function deepEquals(target1: unknown, target2: unknown): boolean {
   if (target1 === undefined) {
-    return true;
+    return false;
   }
 
   const sortedTarget1 = deepSort(target1);
@@ -36,8 +37,7 @@ export const fetchInvitationFields = async (id: string) => {
     .from('invitation')
     .select('*')
     .eq('user_id', id)
-    .order('created_at', { ascending: false })
-    .limit(1);
+    .order('created_at', { ascending: false });
 
   return data?.[0];
 };
@@ -68,7 +68,7 @@ const calculateProgress = (supabaseData: Record<string, unknown>, defaultValue: 
 
   const totalFields = fieldsToCheck.length;
 
-  const progressPercentage = Math.min(Math.floor((completedFields / totalFields) * 8) * 12.5, 100);
+  const progressPercentage = Math.min(Math.round((completedFields / totalFields) * 100), 100);
 
   return progressPercentage;
 };

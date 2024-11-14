@@ -7,6 +7,7 @@ import Button from '../ui/Button';
 import { useDeleteInvitationCard, useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 import { Confirm, Notify } from 'notiflix';
 import { calculateProgressPercentage } from '@/utils/calculateProgressPercentage';
+import { MyInvitationCardLoading } from '../loading/MypageLoading';
 
 type MyInvitationCardProps = {
   id: string;
@@ -29,22 +30,12 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
   const mutation = useDeleteInvitationCard();
 
   const handleDeleteCards = (invitationId: string) => {
-    Confirm.show(
-      '청첩장을 삭제하시겠습니까?',
-      '삭제를 원하시면 Yes를 눌러주세요',
-      'Yes',
-      'No',
-      () => {
-        Notify.success('청첩장이 삭제완료되었습니다.');
-        mutation.mutate(invitationId);
-      },
-      () => {
-        Notify.failure('취소되었습니다.');
-      },
-    );
+    Confirm.show('청첩장을 삭제하시겠습니까?', '삭제를 원하시면 Yes를 눌러주세요', 'Yes', 'No', () => {
+      mutation.mutate(invitationId);
+    });
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <MyInvitationCardLoading />;
   if (error) return <div>error</div>;
 
   const invitationCard = invitationCards?.[0];

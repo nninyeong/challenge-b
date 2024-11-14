@@ -16,6 +16,8 @@ const FontSizeList = [-2, -1, 0, +1, +2];
 const FontInput = () => {
   const { setValue, getValues } = useFormContext();
 
+  const currentFontName = getValues('fontInfo.fontName') || 'main';
+
   const currentFontSize = getValues('fontInfo.size') || 0;
   const handleSelectFontname = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedFontName = event.target.value;
@@ -40,12 +42,13 @@ const FontInput = () => {
           <select
             name='글꼴을 선택해주세요'
             onChange={handleSelectFontname}
+            value={currentFontName}
             className='bg-gray-50 w-[228px]  rounded-lg p-2'
           >
             {FONT_MENU.map((font) => (
               <option
-                key={font.name}
                 value={font.font}
+                key={font.name}
               >
                 {font.font}
               </option>
