@@ -7,6 +7,7 @@ import Button from '../ui/Button';
 import { useDeleteInvitationCard, useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 import { Confirm, Notify } from 'notiflix';
 import { calculateProgressPercentage } from '@/utils/calculateProgressPercentage';
+import { MyInvitationCardLoading } from '../loading/MypageLoading';
 
 type MyInvitationCardProps = {
   id: string;
@@ -34,7 +35,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
     });
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <MyInvitationCardLoading />;
   if (error) return <div>error</div>;
 
   const invitationCard = invitationCards?.[0];
