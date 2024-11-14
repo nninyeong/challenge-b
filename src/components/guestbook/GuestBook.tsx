@@ -1,14 +1,16 @@
 'use client';
 
-import useGuestBookEntries from '@/hooks/queries/guestbook/useGuestBookEntries';
+import useGuestBookEntries, { fetchGuestBook } from '@/hooks/queries/guestbook/useGuestBookEntries';
 import CreateGuestBook from './CreateGuestBook';
 import GuestBookCard from './GuestBookCard';
 import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathname';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GuestBookPagination from './GuestBookPagination';
 
 import { ColorType } from '@/types/invitationFormType.type';
 import colorConverter from '@/utils/colorConverter';
+import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
+import { useQueryClient } from '@tanstack/react-query';
 const ITEMS_PER_PAGE = 6;
 
 type GuestBookProps = {
@@ -18,6 +20,7 @@ type GuestBookProps = {
   };
 };
 const GuestBook = ({ fontInfo }: GuestBookProps) => {
+  const queryClient = useQueryClient();
   const { isCreatePage, invitationId } = useInvitationIdByPathname();
   const [page, setPage] = useState(1);
   const fontSize = fontInfo.size;
@@ -28,6 +31,15 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
   const guestBooks = data?.data ?? [];
   const total = data?.total ?? 0;
   const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    if (page < totalPages) {
+      queryClient.prefetchQuery({
+        queryKey: QUERY_KEYS.guestBook(invitationId, page + 1),
+        queryFn: () => fetchGuestBook(invitationId, page + 1),
+      });
+    }
+  }, [page, totalPages, invitationId, queryClient]);
 
   if (isLoading) return <div>방명록을 로딩중입니다...</div>;
   if (error) return <div>방명록을 불러오는 중 에러가 발생하였습니다.</div>;
