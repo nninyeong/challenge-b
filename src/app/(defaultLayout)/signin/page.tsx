@@ -17,7 +17,7 @@ const SignInPage = () => {
           alt='드림카드'
           className='w-[88px] desktop:w-[104px]'
         />
-        <h3 className='font-HakgyoansimWoojuR text-primary-300 text-[20px] desktop:text-[36px] whitespace-pre-line text-center leading-[120%]'>{`당신의 꿈을 담은 초대\n드림카드에서!`}</h3>
+        <h3 className='font-HakgyoansimWoojuR text-primary-300 text-[20px] desktop:text-[36px] whitespace-pre-line text-center leading-[120%] tracking-[-0.04px]'>{`당신의 꿈을 담은 초대\n드림카드에서!`}</h3>
       </div>
       <section className='flex flex-col items-center gap-[16px] w-full'>
         <AuthForm mode='signin' />
