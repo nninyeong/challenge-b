@@ -62,6 +62,12 @@ body {
   src: url('../../public/assets/fonts/JejuGothic.ttf');
 }
 
+
+@font-face {
+  font-family: 'HakgyoansimWoojuR';
+  src: url('../../public/assets/fonts/HakgyoansimWoojuR.ttf');
+}
+
 .custom-quill-editor .ql-toolbar {
   display: flex;
 

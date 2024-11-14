@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
+import { TogglePrivateLoading } from '../loading/MypageLoading';
 
 const TogglePrivate = () => {
   const [isPrivate, setIsPrivate] = useState(false);
@@ -39,7 +40,7 @@ const TogglePrivate = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <TogglePrivateLoading />;
   if (error) return <div>Error</div>;
 
   return (
