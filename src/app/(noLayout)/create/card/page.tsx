@@ -144,8 +144,10 @@ const CreateCardPage = () => {
       <div className='relative w-full h-full'>
         {currentWidth >= 1440 && (
           <div
-            className={'absolute z-10 inset-0 bg-black bg-opacity-60 '}
-            style={{ width: PC_VIEW_WIDTH, height: '100vh' }}
+            className={
+              'absolute z-10 inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full bg-black bg-opacity-60 '
+            }
+            style={{ width: PC_VIEW_WIDTH }}
           />
         )}
 
