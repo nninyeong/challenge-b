@@ -49,7 +49,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] mobile:max-w-mobile desktop:max-w-desktop mx-auto bg-gray-100`}
+        className={`${SUIT.variable} font-Main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] mobile:max-w-mobile desktop:max-w-desktop mx-auto bg-gray-100`}
       >
         {/* GA4 스크립트 로드 */}
         <Script

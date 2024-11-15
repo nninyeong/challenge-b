@@ -5,6 +5,7 @@ import { Review } from '@/types/review.types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { ReviewImageLoading } from '../loading/ReviewLoading';
 
 const ReviewImage = () => {
   const { data: allReviews, isLoading, error } = useReviewImage();
@@ -38,7 +39,7 @@ const ReviewImage = () => {
   }, [allReviews]);
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <ReviewImageLoading />;
   }
 
   if (error) {

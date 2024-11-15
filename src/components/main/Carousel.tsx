@@ -68,7 +68,7 @@ const Carousel = () => {
               key={`${review.id}-${index}`}
               className='mx-[8px]'
             >
-              <div className='relative desktop:w-[383px] desktop:h-[340px] mobile:w-[216px] mobile:h-[192px] rounded-t-2xl overflow-hidden shadow-md'>
+              <div className='relative desktop:w-[383px] desktop:h-[340px] w-[216px] h-[192px] rounded-t-2xl overflow-hidden shadow-md'>
                 {imgUrls.length > 0 && (
                   <Image
                     src={imgUrls[0]}
@@ -80,9 +80,9 @@ const Carousel = () => {
                 )}
                 <div className='absolute inset-0 bg-black opacity-50' />
               </div>
-              <div className='desktop:w-[383px] desktop:h-[241px] mobile:w-[216px] mobile:h-[136px] rounded-b-2xl desktop:p-[24px] mobile:p-[16px] desktop:text-[24px] mobile:text-[12px] shadow-md'>
-                <div className='flex items-center desktop:gap-[16px] mobile:gap-[6px] desktop:mb-[24px] mobile:mb-[16px]'>
-                  <div className='relative desktop:w-[42px] desktop:h-[42px] mobile:w-[16px] mobile:h-[16px] rounded-full overflow-hidden'>
+              <div className='desktop:w-[383px] desktop:h-[241px] w-[216px] h-[136px] rounded-b-2xl desktop:p-[24px] p-[16px] desktop:text-[24px] text-[12px] shadow-md'>
+                <div className='flex items-center desktop:gap-[16px] p-[6px] desktop:mb-[24px] b-[16px]'>
+                  <div className='relative desktop:w-[42px] desktop:h-[42px] w-[16px] h-[16px] rounded-full overflow-hidden'>
                     <Image
                       src={avatarUrl}
                       alt='profile'
@@ -92,10 +92,10 @@ const Carousel = () => {
                     />
                   </div>
                   <p className='text-gray-500'>
-                    {maskIdLastFour(user?.user_metadata?.email) ?? '작성자'} | {formatDate(review.created_at)}
+                    {maskIdLastFour(user?.user_metadata?.email) ?? '****'} | {formatDate(review.created_at)}
                   </p>
                 </div>
-                <p className='desktop:text-[20px] mobile:text-[12px]'>{sliceContent(review.content)}</p>
+                <p className='desktop:text-[20px] text-[12px]'>{sliceContent(review.content)}</p>
               </div>
             </div>
           );

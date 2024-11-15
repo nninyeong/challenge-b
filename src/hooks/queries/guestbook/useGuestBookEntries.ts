@@ -5,7 +5,7 @@ import { QUERY_KEYS } from '../queryKeys';
 
 const ITEMS_PER_PAGE = 6;
 
-const fetchGuestBook = async (
+export const fetchGuestBook = async (
   invitationId: string,
   page: number,
 ): Promise<{ data: GuestBookEntry[]; total: number }> => {
