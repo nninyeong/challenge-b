@@ -92,7 +92,7 @@ const Carousel = () => {
                     />
                   </div>
                   <p className='text-gray-500'>
-                    {maskIdLastFour(user?.user_metadata?.email) ?? '작성자'} | {formatDate(review.created_at)}
+                    {maskIdLastFour(user?.user_metadata?.email) ?? '****'} | {formatDate(review.created_at)}
                   </p>
                 </div>
                 <p className='desktop:text-[20px] mobile:text-[12px]'>{sliceContent(review.content)}</p>
