@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { User } from '@/types/users.types';
 import { useAuthUserQuery } from '@/hooks/queries/review/useGetReview';
 import ReviewItem from './ReviewItem';
+import { ReviewCardLoading } from '../loading/ReviewLoading';
 
 type ReviewsCardProp = {
   reviews: Review[];
@@ -17,7 +18,8 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
   const [expandedReview, setExpandedReview] = useState<string | null>(null);
   const { data: users, isLoading, error } = useAuthUserQuery();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <ReviewCardLoading />;
+
   if (error) return <div>오류 발생</div>;
 
   const handleReviewDetail = (id: string) => router.push(`/review/${id}`);
@@ -27,7 +29,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
     <div>
       {reviews.map((review) => {
         const user = users?.users.find((u: User) => u.id === review.user_id);
-        if (!user) return <div key={review.id}>사용자를 찾을 수 없습니다.</div>;
+        if (!user) return null;
 
         return (
           <ReviewItem
