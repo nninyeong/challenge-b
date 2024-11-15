@@ -39,7 +39,7 @@ const ReviewContentsBox = ({ content, created, avatar_url, user }: PropsType) =>
           alt='default'
           className='rounded-full'
         />
-        <p className='pl-[8px]'>{maskIdLastFour(user.user_metadata.email!)}</p> <p className='px-[4px]'>|</p>
+        <p className='pl-[8px]'>{maskIdLastFour(user?.user_metadata?.email) ?? '****'}</p> <p className='px-[4px]'>|</p>
         <span>{convertedCreatedDate}</span>
       </div>
       <div className='flex flex-col mt-[14px] mb-[8px]'>
