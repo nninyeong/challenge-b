@@ -59,16 +59,9 @@ const useStickerMove = ({
   };
 
   const handleTouchEnd = (e: TouchEvent) => {
+    isDragging.current = false;
     if (!previewRef.current || !stickerRef.current) return;
 
-    if (!isDragging.current) {
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-      onActivate(sticker.id);
-      return;
-    }
-
-    isDragging.current = false;
     const touch = e.changedTouches[0];
     const { relativeX, relativeY } = calculateRelativePosition(touch, offset, previewRef, stickerRef);
 
