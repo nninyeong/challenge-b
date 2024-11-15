@@ -52,7 +52,7 @@ const DraggableRenderOrder = ({
   return (
     <div
       ref={combinedRef}
-      className={`${isDragging && 'opacity-50'} flex justify-start items-center gap-[8px] h-[30px] text-[16px] text-gray-800 font-main font-medium mb-[10px]`}
+      className={`${isDragging && 'opacity-50'} flex justify-start items-center gap-[8px] h-[30px] text-[16px] text-gray-800 font-Main font-medium mb-[10px]`}
     >
       <img
         src='/assets/images/icons/equals.webp'

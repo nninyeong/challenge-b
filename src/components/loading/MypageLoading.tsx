@@ -1,6 +1,6 @@
 export const MyInvitationCardLoading = () => {
   return (
-    <div className='flex justify-between items-center w-full h-[152px] flex mx-auto rounded-xl mt-8 bg-gray-50 p-4'>
+    <div className='flex justify-between items-center w-full h-[152px] flex mx-auto rounded-xl mt-8 bg-gray-50 p-4 animate-pulse'>
       <div className='w-[90px] h-[90px] rounded-full bg-gray-200' />
       <div>
         <div className='flex justify-between'>
@@ -18,5 +18,5 @@ export const MyInvitationCardLoading = () => {
 };
 
 export const TogglePrivateLoading = () => {
-  return <div className='w-14 h-8 rounded-full bg-gray-200' />;
+  return <div className='w-14 h-8 rounded-full bg-gray-200 animate-pulse' />;
 };

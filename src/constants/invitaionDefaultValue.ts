@@ -1,7 +1,7 @@
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
 
-const extractOrderAndType = () => {
+export const extractOrderAndType = () => {
   return INITIAL_ORDER().map(({ order, typeOnSharedCard, labelForInput }) => ({
     order,
     typeOnSharedCard,
