@@ -20,7 +20,7 @@ export default function Home() {
     <div className='items-center h-full'>
       <FixedQuickLink />
       <BrandingCarousel />
-      <div className='desktop:px-[152px] mobile:px-[16px] desktop:mb-[108px] mobile:mb-[96px]'>
+      <div className='desktop:px-[152px] px-[16px] desktop:mb-[108px] mb-[96px]'>
         <Gallery />
         <MoodKeyword />
         <ReviewCarousel />
