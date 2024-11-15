@@ -49,7 +49,7 @@ export const useInvitationFormActions = ({
 
   const onSubmit = async (invitationData: InvitationFormType) => {
     const { data: user } = await browserClient.auth.getUser();
-    if (!user.user) {
+    if (!user || !user.user) {
       sessionStorage.setItem('invitationFormData', JSON.stringify(invitationData));
       Notify.success('생성을 원하시면 로그인 해주세요!');
       router.push('/signin');
@@ -73,7 +73,7 @@ export const useInvitationFormActions = ({
     isNavigating.current = true;
     const { data: user } = await browserClient.auth.getUser();
     const formData = methods.getValues();
-    if (!user.user) {
+    if (!user || !user.user) {
       sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
     } else {
       if (existingInvitation === null) {
@@ -95,7 +95,7 @@ export const useInvitationFormActions = ({
     const formData = methods.getValues();
     const isInvitationModified = JSON.stringify(formData) !== prevFormDataRef.current;
     if (isInvitationModified) {
-      if (!user.user) {
+      if (!user || !user.user) {
         sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
       } else {
         if (existingInvitation === null) {

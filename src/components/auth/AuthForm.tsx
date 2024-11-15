@@ -36,7 +36,7 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
   };
 
   return (
-    <div className='w-full'>
+    <div className='w-full desktop:w-[400px]'>
       <form
         onSubmit={handleSubmit(handleAuthSubmit)}
         className='flex flex-col mt-[40px] w-full'
@@ -63,9 +63,10 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
           validateFor='password'
           register={register}
           errorMessage={errors.password?.message}
+          guideMessage={mode === 'signup' ? '최소 6자 이상' : undefined}
         />
         {mode === 'signup' && (
-          <>
+          <div className='mt-[24px]'>
             <InputForValidate
               type='password'
               placeholder='비밀번호 확인 입력'
@@ -73,11 +74,11 @@ const AuthForm = ({ mode }: { mode: 'signin' | 'signup' }) => {
               register={register}
               errorMessage={'passwordCheck' in errors ? errors.passwordCheck?.message : undefined}
             />
-          </>
+          </div>
         )}
         <Button
           type='submit'
-          className='w-full h-[56px] rounded-[12px] text-[20px]'
+          className={`w-full h-[56px] rounded-[12px] text-[20px] ${mode === 'signup' ? 'mt-[64px]' : 'mt-[48px]'}`}
         >
           {mode === 'signup' ? '회원가입' : '로그인'}
         </Button>

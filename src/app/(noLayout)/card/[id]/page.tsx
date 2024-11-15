@@ -60,7 +60,6 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
   const bgColor = invitationFetchData.bgColor;
   const fontStyle = invitationFetchData.fontInfo?.fontName;
   const canView = userId === invitationData.userId || !isPrivate;
-
   return canView ? (
     <div
       className='flex flex-col gap-[56px]'

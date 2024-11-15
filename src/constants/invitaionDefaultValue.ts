@@ -82,7 +82,6 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
     ratio: '',
     position: 0,
   },
-  mainText: '',
   greetingMessage: {
     title: '',
     content: '',
@@ -96,12 +95,12 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
   renderOrder: extractOrderAndType(),
   fontInfo: {
     size: 0,
-    fontName: 'main',
+    fontName: 'Main',
     color: {
       r: 0,
       g: 0,
       b: 0,
-      a: 0,
+      a: 100,
       name: '커스텀',
     },
   },

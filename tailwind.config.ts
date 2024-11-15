@@ -70,8 +70,9 @@ const config: Config = {
         NanumPen: ['NanumPen'],
         Cafe24: ['Cafe24'],
         SCDream1: ['SCDream1'],
-        main: ['Main'],
+        Main: ['Main'],
         JejuGothic: ['JejuGothic'],
+        HakgyoansimWoojuR: ['HakgyoansimWoojuR'],
       },
       backgroundImage: {
         'edit-contained': "url('/assets/images/icons/edit-contained.svg')",
