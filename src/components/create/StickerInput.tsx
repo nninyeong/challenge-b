@@ -11,12 +11,6 @@ const StickerInput = () => {
 
   const { data: categorizedStickers, isLoading, error } = useGetCategorizedStickers();
 
-  useEffect(() => {
-    if (categorizedStickers && !categorizedStickers[selectedCategory]) {
-      Notify.info('준비중인 서비스입니다.');
-    }
-  }, [selectedCategory, categorizedStickers]);
-
   if (error) {
     console.error(error.message);
     throw new Error(error.message);
