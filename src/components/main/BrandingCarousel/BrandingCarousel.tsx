@@ -27,7 +27,7 @@ const BrandingCarousel = () => {
   const { currentIndex, isTransitioning } = useCarousel(CAROUSEL_ITEM_PROPS.length, 3000, 500);
 
   return (
-    <div className='relative overflow-hidden w-full desktop:h-[588px] mobile:h-[384px] mb-[56px] bg-black'>
+    <div className='relative overflow-hidden w-full desktop:h-[588px] h-[384px] mb-[56px] bg-black'>
       <div
         className={`desktop:hidden flex ${isTransitioning && 'transition-transform duration-500'}`}
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
