@@ -27,7 +27,7 @@ const BrandingCarousel = () => {
   const { currentIndex, isTransitioning } = useCarousel(CAROUSEL_ITEM_PROPS.length, 3000, 500);
 
   return (
-    <div className='relative overflow-hidden w-full desktop:h-[588px] mobile:h-[384px] mb-[56px] bg-black'>
+    <div className='relative overflow-hidden w-full aspect-square desktop:h-[588px] mb-[56px] bg-black'>
       <div
         className={`desktop:hidden flex ${isTransitioning && 'transition-transform duration-500'}`}
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -76,18 +76,18 @@ const BrandingCarousel = () => {
           />,
         ]}
       </div>
-      <div className='absolute bottom-4 desktop:bottom-[40px] left-1/2 transform -translate-x-1/2 w-[294px] desktop:w-[1136px] h-[2px] desktop:h-[4px] bg-gray-400 z-50'>
+      <div className='absolute bottom-4 desktop:bottom-[40px] left-1/2 transform -translate-x-1/2 w-[90%] mobile:w-[294px] desktop:w-[1136px] h-[2px] desktop:h-[4px] bg-gray-400 z-50'>
         <div
           style={{
             transform: `translateX(${((currentIndex + 1) % CAROUSEL_ITEM_PROPS.length) * 98}px)`,
           }}
-          className='desktop:hidden w-[98px] h-full bg-white'
+          className='desktop:hidden w-[34%] mobile:w-[98px] h-full bg-white'
         ></div>
         <div
           style={{
             transform: `translateX(${((currentIndex + 1) % CAROUSEL_ITEM_PROPS.length) * 378}px)`,
           }}
-          className='hidden desktop:block w-[378px] h-full bg-white'
+          className='hidden desktop:block w-[380px] h-full bg-white'
         ></div>
       </div>
     </div>
