@@ -15,7 +15,7 @@ const CreateGuestBook: React.FC<{ invitationId: string; isCreatePage: boolean; g
         <div className='w-full px-4 mb-2'>
           <input
             type='text'
-            className='text-black border-gray-500 border outline-none col-span-2 p-4 w-full h-12 rounded-xl font-main'
+            className='text-black border-gray-500 border outline-none col-span-2 p-4 w-full h-12 rounded-xl font-Main'
             placeholder='이름'
             {...register('name')}
           />
@@ -24,7 +24,7 @@ const CreateGuestBook: React.FC<{ invitationId: string; isCreatePage: boolean; g
         <div className='w-full px-4 mb-2'>
           <input
             type='password'
-            className='text-black border-gray-500 border outline-none col-span-2 p-4 w-full h-12 rounded-xl font-main'
+            className='text-black border-gray-500 border outline-none col-span-2 p-4 w-full h-12 rounded-xl font-Main'
             placeholder='비밀번호'
             {...register('password')}
           />
@@ -33,7 +33,7 @@ const CreateGuestBook: React.FC<{ invitationId: string; isCreatePage: boolean; g
         <div className='w-full px-4 mb-6'>
           <input
             type='text'
-            className='text-black border-gray-500 border outline-none col-span-2 p-4 w-full h-12 rounded-xl font-main'
+            className='text-black border-gray-500 border outline-none col-span-2 p-4 w-full h-12 rounded-xl font-Main'
             placeholder='축하메세지'
             {...register('content')}
           />
