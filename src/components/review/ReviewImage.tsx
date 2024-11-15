@@ -6,12 +6,15 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ReviewImageLoading } from '../loading/ReviewLoading';
+import useMediaQuery from '@/hooks/review/useMediaQuery';
+import ImagePage from '@/app/(defaultLayout)/review/images/page';
 
 const ReviewImage = () => {
   const { data: allReviews, isLoading, error } = useReviewImage();
-
   const router = useRouter();
   const [displayedReviews, setDisplayedReviews] = useState<Review[]>([]);
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
   useEffect(() => {
     const updateDisplayedReviews = () => {
@@ -47,8 +50,14 @@ const ReviewImage = () => {
   }
 
   const handleOpenNewPage = async () => {
-    await router.push('/review/images');
+    if (isDesktop) {
+      setIsImageModalOpen(true);
+    } else {
+      await router.push('/review/images');
+    }
   };
+
+  const closeImageModal = () => setIsImageModalOpen(false);
 
   return (
     <div className='w-full grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-[13px] mt-[20px] mb-[24px]'>
@@ -83,6 +92,25 @@ const ReviewImage = () => {
           </div>
         );
       })}
+      {isImageModalOpen && (
+        <div
+          className='fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50'
+          onClick={closeImageModal}
+        >
+          <div
+            className='relative bg-white p-4 rounded-[24px] w-[1136px] h-[533px] overflow-y-auto'
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src='assets/images/icons/x-03.webp'
+              alt='청첩장 삭제버튼'
+              onClick={closeImageModal}
+              className='absolute top-4 right-4 text-black w-[24px] h-[24px] '
+            />
+            <ImagePage />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
