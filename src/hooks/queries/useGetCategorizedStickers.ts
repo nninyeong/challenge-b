@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
 import { StickerImage } from '@/types/stickerData.types';
 import { supabase } from '@/utils/supabase/createClient';
-import getImageDimensions from '@/utils/image/getImageDimensions';
+import getImageDimensions from '@/utils/sticker/getImageDimensions';
 
 export const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
   try {

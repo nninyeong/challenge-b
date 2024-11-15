@@ -1,11 +1,10 @@
 'use client';
-import { useGetCategorizedStickers } from '@/hooks/queries/useGetCategorizedStickers';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import StickerCategoryButton from '@/components/create/stickerInput/StickerCategoryButton';
 import StickerSlot from '@/components/create/stickerInput/StickerSlot';
 import { MOOD_LIST } from '@/constants/invitationMoods';
-import { Notify } from 'notiflix';
 import { StickerLoading } from '../loading/StickerLoading';
+import { useGetCategorizedStickers } from '@/hooks/queries/useGetCategorizedStickers';
 
 const StickerInput = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('classic');
