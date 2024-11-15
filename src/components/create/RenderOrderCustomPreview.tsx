@@ -17,7 +17,7 @@ const RenderOrderCustomPreview = () => {
 
   return (
     <div
-      className='fixed pointer-events-none transform -translate-x-1/2 -translate-y-1/2 flex justify-start items-center gap-[8px] w-[311px] h-[24px] text-[16px] text-gray-800 font-main font-medium'
+      className='fixed pointer-events-none transform -translate-x-1/2 -translate-y-1/2 flex justify-start items-center gap-[8px] w-[311px] h-[24px] text-[16px] text-gray-800 font-Main font-medium'
       style={{
         left: 188,
         top: currentOffset.y,

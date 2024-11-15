@@ -5,7 +5,8 @@ import { useGetReviewCarouselQuery } from '@/hooks/queries/review/useGetReviewCa
 import { formatDate } from '@/utils/formatDate';
 import { maskIdLastFour } from '@/utils/maskIdLastFour';
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { CarouselLoading } from '../loading/CarouselLoading';
 
 const MAX_CONTENT_LENGTH = 60;
 
@@ -14,9 +15,7 @@ const Carousel = () => {
   const { data: reviewsData = [], isLoading } = useGetReviewCarouselQuery();
   const { data: users } = useAuthUserQuery();
 
-  const extendedReviewArr = useMemo(() => {
-    return isLoading ? [] : [...reviewsData, ...reviewsData, ...reviewsData, reviewsData[0]];
-  }, [isLoading, reviewsData]);
+  const extendedReviewArr = [...reviewsData, ...reviewsData, ...reviewsData, reviewsData[0]];
 
   useEffect(() => {
     if (extendedReviewArr.length > 0) {
@@ -39,8 +38,9 @@ const Carousel = () => {
   }, [currentIndex, extendedReviewArr.length]);
 
   const getCarouselStyle = () => {
+    const isDesktop = window.innerWidth >= 1440;
     return {
-      transform: `translateX(${-currentIndex * (216 + 16)}px)`,
+      transform: `translateX(${-currentIndex * (isDesktop ? 383 + 16 : 216 + 16)}px)`,
       transition: currentIndex === 0 ? 'none' : 'transform 0.5s ease-in-out',
     };
   };
@@ -50,11 +50,11 @@ const Carousel = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CarouselLoading />;
   }
 
   return (
-    <div className='overflow-hidden w-full py-[10px]'>
+    <div className='overflow-hidden justify-center w-full py-[10px]'>
       <div
         className='flex justify-center'
         style={getCarouselStyle()}
@@ -68,7 +68,7 @@ const Carousel = () => {
               key={`${review.id}-${index}`}
               className='mx-[8px]'
             >
-              <div className='relative w-[216px] h-[192px] rounded-t-2xl overflow-hidden shadow-md'>
+              <div className='relative desktop:w-[383px] desktop:h-[340px] w-[216px] h-[192px] rounded-t-2xl overflow-hidden shadow-md'>
                 {imgUrls.length > 0 && (
                   <Image
                     src={imgUrls[0]}
@@ -80,9 +80,9 @@ const Carousel = () => {
                 )}
                 <div className='absolute inset-0 bg-black opacity-50' />
               </div>
-              <div className='w-[216px] h-[136px] rounded-b-2xl p-[16px] text-[12px] shadow-md'>
-                <div className='flex items-center gap-[6px] mb-[16px]'>
-                  <div className='relative w-[16px] h-[16px] rounded-full overflow-hidden'>
+              <div className='desktop:w-[383px] desktop:h-[241px] w-[216px] h-[136px] rounded-b-2xl desktop:p-[24px] p-[16px] desktop:text-[24px] text-[12px] shadow-md'>
+                <div className='flex items-center desktop:gap-[16px] p-[6px] desktop:mb-[24px] b-[16px]'>
+                  <div className='relative desktop:w-[42px] desktop:h-[42px] w-[16px] h-[16px] rounded-full overflow-hidden'>
                     <Image
                       src={avatarUrl}
                       alt='profile'
@@ -92,10 +92,10 @@ const Carousel = () => {
                     />
                   </div>
                   <p className='text-gray-500'>
-                    {maskIdLastFour(user?.user_metadata?.email) ?? '작성자'} | {formatDate(review.created_at)}
+                    {maskIdLastFour(user?.user_metadata?.email) ?? '****'} | {formatDate(review.created_at)}
                   </p>
                 </div>
-                <p>{sliceContent(review.content)}</p>
+                <p className='desktop:text-[20px] text-[12px]'>{sliceContent(review.content)}</p>
               </div>
             </div>
           );

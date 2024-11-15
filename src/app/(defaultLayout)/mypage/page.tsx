@@ -4,8 +4,9 @@ import { redirect } from 'next/navigation';
 import { getUserInfo } from '@/utils/server-action';
 import LogoutButton from '@/components/mypage/LogoutButton';
 import MyInvitationCard from '@/components/mypage/MyInvitationCard';
-import TogglePrivate from '@/components/mypage/TogglePrivate';
+
 import MyPageNavigatorList from '@/components/mypage/MyPageNavigatorList';
+import SetPrivateInvitation from '@/components/mypage/SetPrivateInvitation';
 
 const MyPage = async (): Promise<JSX.Element | null> => {
   const isLogin = await getIsLogin();
@@ -13,38 +14,42 @@ const MyPage = async (): Promise<JSX.Element | null> => {
     redirect('/signin');
   }
   const user = await getUserInfo();
-
+  const userId = user.user.id;
   const profileUrl = user?.user?.user_metadata?.avatar_url || '/assets/images/defaultImg.png';
 
   return (
-    <div className='w-full mx-auto'>
-      <div className='w-[90%] mx-auto pt-4  pb-1'>
-        {user ? (
-          <div className='flex gap-8 items-center '>
-            <div className='rounded-full w-[48px] h-[48px] overflow-hidden'>
-              <Image
-                src={profileUrl}
-                width={100}
-                height={100}
-                alt='profileImage'
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                priority
-              />
+    <div className='w-full mx-auto '>
+      <div className='w-[90%] mx-auto pt-4  pb-1 '>
+        <div className='w-full desktop:flex desktop:flex-row mobile:flex mobile:flex-col desktop:mb-20'>
+          {user ? (
+            <div className='desktop:h-[228px] desktop:w-[448px] flex  desktop:flex-[2] flex-col desktop:mr-6 desktop:justify-between '>
+              <div className='w-full flex items-center  desktop:gap-6 desktop:pl-4 desktop:pr-4  desktop:pt-6 mobile:p-4 mobile:gap-4'>
+                <div className='rounded-full mobile:w-[48px] mobile:h-[48px] desktop:w-[80px] desktop:h-[80px] overflow-hidden position: relative '>
+                  <Image
+                    src={profileUrl}
+                    fill
+                    alt='profileImage'
+                    className='object-cover'
+                    priority
+                  />
+                </div>
+                <div className='flex flex-col'>
+                  <h2 className='font-bold text-[16px] desktop:text-[24px]'>{user?.user?.user_metadata?.full_name}</h2>
+                  <p className='text-[14px] desktop:text-[20px] color-gray-500'>{user?.user?.user_metadata?.email}</p>
+                </div>
+              </div>
+              <div className='hidden desktop:block'>
+                <SetPrivateInvitation />
+              </div>
             </div>
-            <div className='flex flex-col'>
-              <h2 className='font-bold text-[1rem]'>{user?.user?.user_metadata?.full_name}</h2>
-              <p className='text-[0.8rem]'>{user?.user?.user_metadata?.email}</p>
-            </div>
-          </div>
-        ) : (
-          <div>정보가 없습니다</div>
-        )}
+          ) : (
+            <div>정보가 없습니다</div>
+          )}
 
-        <MyInvitationCard />
-
-        <div className='flex justify-between items-center gap-8 mt-4 p-4 bg-gray-100 rounded text-black font-bold '>
-          <p>내 청첩장 공개하기 ON/OFF</p>
-          <TogglePrivate />
+          <MyInvitationCard id={userId} />
+        </div>
+        <div className='block desktop:hidden'>
+          <SetPrivateInvitation />
         </div>
         <MyPageNavigatorList />
 

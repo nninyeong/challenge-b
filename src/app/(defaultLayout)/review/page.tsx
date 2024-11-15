@@ -17,7 +17,7 @@ const ReviewPage = () => {
     setPortalElement(document.getElementById('modal'));
   }, []);
 
-  const { data: reviewsData, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useReviewInfinite();
+  const { data: reviewsData, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useReviewInfinite();
   const observerRef = useRef<IntersectionObserver | null>(null);
   const lastReviewRef = useCallback(
     (node: HTMLDivElement | null) => {
@@ -47,13 +47,12 @@ const ReviewPage = () => {
     };
   }, [isReviewBottomSheetOpen]);
 
-  if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러가 발생했습니다: {error.message}. 다시 시도해 주세요.</div>;
 
   const reviews = reviewsData?.pages.flatMap((page) => page) || [];
 
   return (
-    <div className={`flex flex-col w-full p-4`}>
+    <div className='flex flex-col w-full px-4 pt-4 pb-11'>
       <div className='w-full h-[47px]'>
         <h1 className='text-gray-900 text-[20px] font-semibold'>드림카드 이용 후기</h1>
         <h2 className='text-gray-700 text-[14px] font-medium'>To Speed up your Creative Workflow</h2>
