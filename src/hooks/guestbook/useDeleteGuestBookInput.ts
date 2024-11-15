@@ -7,10 +7,11 @@ const useDeleteGuestBookInput = (
   id: string | null,
   signedPassword: string | null,
   onClose: () => void,
-  isCreatePage: boolean
+  isCreatePage: boolean,
+  thisPage: number,
 ) => {
   const [password, setPassword] = useState('');
-  const { mutate: deleteGuestBookEntry } = useDeleteGuestBookEntry(invitationId, id, signedPassword, onClose);
+  const { mutate: deleteGuestBookEntry } = useDeleteGuestBookEntry(invitationId, id, signedPassword, onClose, thisPage);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);

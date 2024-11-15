@@ -9,10 +9,12 @@ const GuestBookCard = ({
   guestBook,
   invitationId,
   isCreatePage,
+  thisPage,
 }: {
   guestBook: GuestBookEntry;
   invitationId: string;
   isCreatePage: boolean;
+  thisPage: number;
 }) => {
   const { isAccordionOpen, toggleAccordion } = useGuestBookDeleteButton();
   const { year, month, day, hour, minute } = convertToUserTimezone(guestBook.created_at);
@@ -43,6 +45,7 @@ const GuestBookCard = ({
               signedPassword={guestBook.password}
               onClose={toggleAccordion}
               isCreatePage={isCreatePage}
+              thisPage={thisPage}
             />
           )}
         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import useGuestBookEntries, { fetchGuestBook } from '@/hooks/queries/guestbook/useGuestBookEntries';
+import useGuestBookEntries, { fetchGuestBook, ITEMS_PER_PAGE } from '@/hooks/queries/guestbook/useGuestBookEntries';
 import CreateGuestBook from './CreateGuestBook';
 import GuestBookCard from './GuestBookCard';
 import useInvitationIdByPathname from '@/hooks/invitation/useInvitationIdByPathname';
@@ -11,7 +11,6 @@ import { ColorType } from '@/types/invitationFormType.type';
 import colorConverter from '@/utils/colorConverter';
 import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
 import { useQueryClient } from '@tanstack/react-query';
-const ITEMS_PER_PAGE = 6;
 
 type GuestBookProps = {
   fontInfo: {
@@ -41,6 +40,8 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
     }
   }, [page, totalPages, invitationId, queryClient]);
 
+  const goOnePage = () => setPage(1);
+
   if (isLoading) return <div>방명록을 로딩중입니다...</div>;
   if (error) return <div>방명록을 불러오는 중 에러가 발생하였습니다.</div>;
 
@@ -55,6 +56,7 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
       <CreateGuestBook
         invitationId={invitationId}
         isCreatePage={isCreatePage}
+        goOnePage={goOnePage}
       />
 
       {guestBooks.length === 0 ? (
@@ -75,6 +77,7 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
               guestBook={guestBook}
               invitationId={invitationId}
               isCreatePage={isCreatePage}
+              thisPage={page}
             />
           ))}
         </div>

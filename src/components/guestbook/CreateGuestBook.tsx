@@ -2,8 +2,12 @@
 
 import useCreateGuestBookInput from '@/hooks/guestbook/useCreateGuestBookInput';
 
-const CreateGuestBook: React.FC<{ invitationId: string; isCreatePage: boolean }> = ({ invitationId, isCreatePage }) => {
-  const { register, onSubmit, errors } = useCreateGuestBookInput(invitationId, isCreatePage);
+const CreateGuestBook: React.FC<{ invitationId: string; isCreatePage: boolean; goOnePage: () => void }> = ({
+  invitationId,
+  isCreatePage,
+  goOnePage,
+}) => {
+  const { register, onSubmit, errors } = useCreateGuestBookInput(invitationId, isCreatePage, goOnePage);
 
   return (
     <div>
