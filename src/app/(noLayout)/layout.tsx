@@ -1,4 +1,3 @@
-import Providers from '@/app/provider';
 import Header from '@/components/layouts/Header';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
@@ -23,11 +22,9 @@ export default async function CreateCardLayout({
   });
 
   return (
-    <Providers>
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <Header />
-        <main>{children}</main>
-      </HydrationBoundary>
-    </Providers>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Header />
+      <main>{children}</main>
+    </HydrationBoundary>
   );
 }
