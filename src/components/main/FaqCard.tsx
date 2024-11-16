@@ -7,8 +7,7 @@ const FaqCard = ({ answer }: { answer: string }) => {
             src='/assets/images/branding/3D-logo-with-text.png'
             alt='드림카드'
             className='w-[40px] h-[40px]'
-            width='40'
-            height='40'
+            loading='lazy'
           />
         </div>
         <div style={{ width: 'calc(100% - 80px)' }}>
