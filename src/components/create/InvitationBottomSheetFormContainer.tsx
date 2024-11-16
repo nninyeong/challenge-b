@@ -5,6 +5,7 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import { UseFormReturn } from 'react-hook-form';
 import { OrderList, StepType } from '@/hooks/create/useFormStepController';
 import { useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
+import Image from 'next/image';
 
 type InvitationBottomSheetFormContainerProps = {
   methods: UseFormReturn<InvitationFormType>;
@@ -68,9 +69,11 @@ const InvitationBottomSheetFormContainer = ({
             className='w-[28px] h-[28px]'
           >
             <img
-              src='/assets/images/icons/chevron-left.svg'
+              src='/assets/images/icons/chevron-left.webp'
+              alt=''
               width={28}
               height={28}
+              loading='lazy'
             />
           </button>
           <button
@@ -80,9 +83,11 @@ const InvitationBottomSheetFormContainer = ({
             className='w-[28px] h-[28px]'
           >
             <img
-              src='/assets/images/icons/chevron-right.svg'
+              src='/assets/images/icons/chevron-right.webp'
+              alt=''
               width={28}
               height={28}
+              loading='lazy'
             />
           </button>
         </div>
