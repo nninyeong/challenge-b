@@ -93,7 +93,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
                 </div>
               </div>
               <img
-                src='assets/images/icons/write.webp'
+                src='/assets/images/icons/write.webp'
                 alt='청첩장 수정버튼'
                 className='w-[24px] h-[24px] desktop:w-[48px] desktop:h-[48px] absolute right-[-5px] top-[-5px]'
               />
@@ -106,7 +106,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
             <div className='flex justify-between '>
               <p className='text-[16px] mb-4 desktop:mb-11 font-bold desktop:text-[20px]'>내 청첩장</p>
               <img
-                src='assets/images/icons/x-03.webp'
+                src='/assets/images/icons/x-03.webp'
                 alt='청첩장 삭제버튼'
                 onClick={() => handleDeleteCards(invitationCard?.id)}
                 className='w-[24px] h-[24px] '
@@ -117,7 +117,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
                 <img
                   src='/assets/images/icons/link-icon.webp'
                   alt='청첩장 공유하기'
-                  className='w-[18px] h-[18px] desktop:w-[24px] h-[24px]'
+                  className='w-[18px] h-[18px] desktop:w-[24px] desktop:h-[24px]'
                 />
                 <button
                   onClick={handleCopyLink}

@@ -5,7 +5,6 @@ import { InvitationFormType } from '@/types/invitationFormType.type';
 import { UseFormReturn } from 'react-hook-form';
 import { OrderList, StepType } from '@/hooks/create/useFormStepController';
 import { useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
-import Image from 'next/image';
 
 type InvitationBottomSheetFormContainerProps = {
   methods: UseFormReturn<InvitationFormType>;
