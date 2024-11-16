@@ -67,16 +67,16 @@ const DesktopInputForm = ({ methods, orderList, isNavigating, currentStep, goToN
 
   return (
     <form
-      className={`flex flex-col w-full h-full relative`}
+      className={`flex flex-col h-full absolute w-[620px] right-[152px]`}
       onSubmit={methods.handleSubmit(onSubmit)}
       style={{
-        transform: `translateY(${windowHeight - 98}px)`,
+        top: `${windowHeight - 98}px`,
       }}
     >
       <div
-        className='fixed z-50 flex justify-between flex-col -translate-y-[90px] left-[45%]'
+        className='fixed z-40 flex justify-between flex-col left-[65%] top-[300px]'
         style={{
-          height: `${contentHeight + 180}px`,
+          height: `420px`,
         }}
       >
         <button
@@ -98,7 +98,7 @@ const DesktopInputForm = ({ methods, orderList, isNavigating, currentStep, goToN
       </div>
 
       <motion.div
-        className='flex flex-col gap-[24px]'
+        className='flex flex-col gap-[24px] relative will-change-transform'
         initial={{ y: 0 }}
         animate={{ y: -currentHeight }}
         transition={{ duration: 0.5 }}
@@ -106,13 +106,16 @@ const DesktopInputForm = ({ methods, orderList, isNavigating, currentStep, goToN
         {orderList.map((e, index) => (
           <div
             key={e.labelForInput}
-            className='w-full h-full flex flex-col justify-center items-center gap-[24px] relative'
+            className='w-full h-full flex flex-col justify-center items-center gap-[24px] reltaive'
           >
             {e.input.map((ele, idx) => {
               return (
                 <div
                   key={e.name[idx]}
-                  className={`w-full h-full border-[1px] border-solid shadow-md rounded-[12px] px-[24px] py-[16px] relative ${currentStep.currentPreviewStep === index && currentStep.currentInputStep === idx ? 'z-30' : ''} bg-white`}
+                  style={{
+                    zIndex: currentStep.currentPreviewStep === index && currentStep.currentInputStep === idx ? 30 : 0,
+                  }}
+                  className={`w-full h-full border-[1px] border-solid shadow-md rounded-[12px] px-[24px] py-[16px] relative bg-white`}
                   ref={(el) => {
                     ref.current[e.name[idx]] = { height: el?.offsetHeight };
                   }}
