@@ -16,7 +16,6 @@ import useViewportWidth from '@/hooks/create/useViewPortWidth';
 import dynamic from 'next/dynamic';
 import PreviewList from '@/components/create/PreviewList';
 import colorConverter from '@/utils/colorConverter';
-import { PC_VIEW_WIDTH } from '@/constants/screenSize';
 
 const DesktopInputForm = dynamic(() => import('@/components/create/DesktopInputForm'));
 const FormMotionContainer = dynamic(() => import('@/components/create/FormMotionContainer'), { ssr: false });
@@ -115,14 +114,14 @@ const CreateCardPage = () => {
     );
   }, [renderOrderList]);
 
-  // useEffect(() => {
-  //   const shouldAllowScroll = isOnboardingComplete && currentWidth < 1440;
-  //   document.documentElement.style.overflow = shouldAllowScroll ? 'unset' : 'hidden';
+  useEffect(() => {
+    const shouldAllowScroll = isOnboardingComplete && currentWidth < 1440;
+    document.documentElement.style.overflow = shouldAllowScroll ? 'unset' : 'hidden';
 
-  //   return () => {
-  //     document.documentElement.style.overflow = 'unset';
-  //   };
-  // }, [isOnboardingComplete, currentWidth]);
+    return () => {
+      document.documentElement.style.overflow = 'unset';
+    };
+  }, [isOnboardingComplete, currentWidth]);
 
   useEffect(() => {
     subscribeEveryValues();
@@ -143,12 +142,7 @@ const CreateCardPage = () => {
     <FormProvider {...methods}>
       <div className='relative w-full h-full'>
         {currentWidth >= 1440 && (
-          <div
-            className={
-              'absolute z-10 inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full bg-black bg-opacity-60 '
-            }
-            style={{ width: PC_VIEW_WIDTH }}
-          />
+          <div className={'fixed flex self-center w-full z-10 inset-0 bg-black bg-opacity-60 h-screen'} />
         )}
 
         <div className='flex w-full h-full desktop:px-[152px] desktop:gap-[65px]'>
