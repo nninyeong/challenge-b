@@ -36,6 +36,7 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
       queryClient.prefetchQuery({
         queryKey: QUERY_KEYS.guestBook(invitationId, page + 1),
         queryFn: () => fetchGuestBook(invitationId, page + 1),
+        staleTime: 0
       });
     }
   }, [page, totalPages, invitationId, queryClient]);

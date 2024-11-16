@@ -28,11 +28,12 @@ const useAddGuestBookEntry = ({ invitationId, onSuccess }: { invitationId: strin
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.guestBook(invitationId, 1),
-        exact: false
+        exact: false,
       });
       queryClient.prefetchQuery({
         queryKey: QUERY_KEYS.guestBook(invitationId, 2),
         queryFn: () => fetchGuestBook(invitationId, 2),
+        staleTime: 0,
       });
       Notify.success('방명록이 작성되었습니다.');
       onSuccess();
