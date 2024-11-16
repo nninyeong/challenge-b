@@ -1,6 +1,5 @@
 'use client';
 
-import { MOBILE_VIEW_HEIGHT } from '@/constants/screenSize';
 import ReviewContentsBox from './ReviewContentsBox';
 import ReviewSlide from './ReviewSlide';
 import { useEffect, useState } from 'react';
