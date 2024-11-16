@@ -8,6 +8,7 @@ import { ReviewType } from '@/app/(defaultLayout)/review/[id]/page';
 import { getReviewDetail } from '@/utils/server-action';
 import { getAuthUsersProfile } from '@/utils/getReview';
 import { User } from '@/types/users.types';
+import { ReviewDetailLoading } from '../loading/ReviewLoading';
 
 type Props = {
   reviewId: string;
@@ -30,7 +31,7 @@ export const ReviewDetailModal = ({ reviewId }: Props) => {
     fetchReviewData();
   }, [reviewId]);
 
-  if (!reviewData || !reviewUser) return <div>Loading...</div>;
+  if (!reviewData || !reviewUser) return <ReviewDetailLoading />;
 
   return (
     <div
