@@ -1,6 +1,7 @@
 'use client';
 
 import useDeleteGuestBookInput from '@/hooks/guestbook/useDeleteGuestBookInput';
+import { Dispatch, SetStateAction } from 'react';
 
 const DeleteGuestBookAccordion = ({
   invitationId,
@@ -8,7 +9,9 @@ const DeleteGuestBookAccordion = ({
   signedPassword,
   onClose,
   isCreatePage,
-  thisPage
+  thisPage,
+  setPage,
+  totalPages
 }: {
   invitationId: string;
   id: string | null;
@@ -16,6 +19,8 @@ const DeleteGuestBookAccordion = ({
   onClose: () => void;
   isCreatePage: boolean;
   thisPage: number;
+  setPage: Dispatch<SetStateAction<number>>;
+  totalPages: number
 }) => {
   const { password, handlePasswordChange, handleGuestBookDelete } = useDeleteGuestBookInput(
     invitationId,
@@ -23,7 +28,9 @@ const DeleteGuestBookAccordion = ({
     signedPassword,
     onClose,
     isCreatePage,
-    thisPage
+    thisPage,
+    setPage,
+    totalPages
   );
 
   return (

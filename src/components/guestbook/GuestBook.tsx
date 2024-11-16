@@ -58,6 +58,7 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
         invitationId={invitationId}
         isCreatePage={isCreatePage}
         goOnePage={goOnePage}
+        totalPages={totalPages}
       />
 
       {guestBooks.length === 0 ? (
@@ -79,6 +80,8 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
               invitationId={invitationId}
               isCreatePage={isCreatePage}
               thisPage={page}
+              setPage={setPage}
+              totalPages={totalPages}
             />
           ))}
         </div>

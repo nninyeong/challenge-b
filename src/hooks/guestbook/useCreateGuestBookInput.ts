@@ -5,7 +5,7 @@ import useAddGuestBookEntry from '../queries/guestbook/useCreateGuestBookEntry';
 import { GuestBookFormData } from '@/types/guestInfo.types';
 import { Notify } from 'notiflix';
 
-const useCreateGuestBookInput = (invitationId: string, isCreatePage: boolean, goOnePage: () => void) => {
+const useCreateGuestBookInput = (invitationId: string, isCreatePage: boolean, goOnePage: () => void, totalPages: number) => {
   const {
     register,
     handleSubmit,
@@ -21,6 +21,7 @@ const useCreateGuestBookInput = (invitationId: string, isCreatePage: boolean, go
       reset();
       goOnePage();
     },
+    totalPages
   });
 
   const onSubmit = handleSubmit((data) => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import useDeleteGuestBookEntry from '../queries/guestbook/useDeleteGuestBookEntry';
 import { Notify } from 'notiflix';
 
@@ -9,9 +9,11 @@ const useDeleteGuestBookInput = (
   onClose: () => void,
   isCreatePage: boolean,
   thisPage: number,
+  setPage: Dispatch<SetStateAction<number>>,
+  totalPages: number
 ) => {
   const [password, setPassword] = useState('');
-  const { mutate: deleteGuestBookEntry } = useDeleteGuestBookEntry(invitationId, id, signedPassword, onClose, thisPage);
+  const { mutate: deleteGuestBookEntry } = useDeleteGuestBookEntry(invitationId, id, signedPassword, onClose, thisPage, setPage, totalPages);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
