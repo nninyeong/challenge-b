@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
 import { StickerImage } from '@/types/stickerData.types';
 import { supabase } from '@/utils/supabase/createClient';
+import { validateStorageFiles } from '@/utils/supabase/validateStorageFiles';
+import { getImageDimensions } from '@/utils/sticker/getimageDimensions';
 
 const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
   try {
@@ -11,49 +13,40 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
       console.error(error);
     }
 
-    const validFiles = data?.filter((file) => file.name !== '.emptyFolderPlaceholder') || [];
-    const stickersByCategory: Record<string, StickerImage[]> = {};
-
-    const getImageDimensions = (url: string): Promise<{ width: number; height: number }> => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.src = url;
-        img.onload = () => resolve({ width: img.width, height: img.height });
-        img.onerror = reject;
-      });
-    };
+    const validFiles = validateStorageFiles(data);
+    const categorizedStickers: Record<string, StickerImage[]> = {};
 
     await Promise.all(
       validFiles?.map(async (file) => {
         const [category] = file.name.split('-');
         const { data: publicUrlData } = supabase.storage.from('stickers').getPublicUrl(file.name);
 
-        const dimensions = await getImageDimensions(publicUrlData.publicUrl);
+        const { width, height } = await getImageDimensions(publicUrlData.publicUrl);
 
         const stickerImage: StickerImage = {
           id: file.name,
           url: publicUrlData.publicUrl,
           category,
-          width: dimensions.width,
-          height: dimensions.height,
+          width: width,
+          height: height,
         };
 
-        if (!stickersByCategory[category]) {
-          stickersByCategory[category] = [];
+        if (!categorizedStickers[category]) {
+          categorizedStickers[category] = [];
         }
 
-        stickersByCategory[category].push(stickerImage);
+        categorizedStickers[category].push(stickerImage);
       }) || [],
     );
 
-    return stickersByCategory;
+    return categorizedStickers;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export const useGetAllStickers = () => {
+export const useGetCategorizedStickers = () => {
   return useQuery({
     queryKey: QUERY_KEYS.stickerImages(),
     queryFn: fetchAllStickerImages,

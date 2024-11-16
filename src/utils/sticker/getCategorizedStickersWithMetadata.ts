@@ -2,6 +2,7 @@
 import { StickerImage } from '@/types/stickerData.types';
 import { supabase } from '@/utils/supabase/createClient';
 import getImageDimensionsOnServer from '@/utils/sticker/getImageDimensionsOnServer';
+import { validateStorageFiles } from '@/utils/supabase/validateStorageFiles';
 
 const getCategorizedStickersWithMetadata = async (): Promise<Record<string, StickerImage[]>> => {
   try {
@@ -10,7 +11,7 @@ const getCategorizedStickersWithMetadata = async (): Promise<Record<string, Stic
       console.error(error);
     }
 
-    const validFiles = data?.filter((file) => file.name !== '.emptyFolderPlaceholder') || [];
+    const validFiles = validateStorageFiles(data);
     const stickersByCategory: Record<string, StickerImage[]> = {};
 
     await Promise.all(
