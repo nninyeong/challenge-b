@@ -29,7 +29,7 @@ const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
     >
       <ReviewSlide images={reviewData.image_url!} />
 
-      <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60'></div>
+      <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60' />
       <ReviewContentsBox
         user={reviewUser!}
         content={reviewData.content}
