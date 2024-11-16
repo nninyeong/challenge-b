@@ -150,7 +150,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
       ) : (
         <div className='w-full flex flex-col justify-center items-center'>
           <Image
-            src='/assets/images/card/noCard.png'
+            src='/assets/images/card/noCard.webp'
             alt='noCardImg'
             width={64}
             height={64}
