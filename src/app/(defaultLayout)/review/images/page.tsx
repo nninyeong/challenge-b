@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import useMediaQuery from '@/hooks/review/useMediaQuery';
 import ReviewDetailPage from '../[id]/page';
+import { ReviewDetailModal } from '@/components/review/ReviewDetailModal';
 
 const ImagePage = () => {
   const { data: imageReview, isLoading, error } = useGetAllImageReivews();
@@ -16,13 +17,7 @@ const ImagePage = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
 
-  console.log(isDesktop && !!selectedReviewId && isReviewModalOpen);
-  console.log(isReviewModalOpen);
-  console.log(isDesktop);
-  console.log(!!selectedReviewId);
-
   const handleReviewDetailPage = (id: string) => {
-    console.log(id);
     setSelectedReviewId(id);
     if (isDesktop) {
       setIsReviewModalOpen(true);
@@ -66,20 +61,23 @@ const ImagePage = () => {
 
       {isReviewModalOpen && (
         <div
-          className='fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-100'
-          onClick={(e) => {
-            e.stopPropagation();
-            closeModal();
-          }}
+          className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-100'
+          onClick={closeModal}
         >
-          <div className='relative bg-white p-4 rounded-[24px] w-[1136px] h-[533px] overflow-y-auto'>
+          <div
+            className='relative bg-white p-4 rounded-[24px] w-[603px] h-[812px]'
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
               src='assets/images/icons/x-03.webp'
               alt='닫기버튼'
               onClick={closeModal}
-              className='absolute top-4 right-4 text-black w-[24px] h-[24px]'
+              className='absolute top-4 right-4 text-black w-[24px] h-[24px] cursor-pointer z-50'
             />
-            <ReviewDetailPage params={{ id: selectedReviewId }} />
+
+            <div className='relative z-10'>
+              <ReviewDetailModal reviewId={selectedReviewId} />
+            </div>
           </div>
         </div>
       )}

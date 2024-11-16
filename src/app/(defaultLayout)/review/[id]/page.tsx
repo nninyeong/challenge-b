@@ -7,7 +7,7 @@ import { getReviewDetail } from '@/utils/server-action';
 interface ParamsType {
   id: string;
 }
-type ReviewType = {
+export type ReviewType = {
   id: string;
   created_at: string;
   user_id: string;

@@ -94,13 +94,13 @@ const ReviewImage = () => {
       })}
       {isImageModalOpen && (
         <div
-          className='fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50'
-          onClick={(e) => {
-            e.stopPropagation();
-            closeImageModal();
-          }}
+          className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50'
+          onClick={closeImageModal}
         >
-          <div className='relative bg-white p-4 rounded-[24px] w-[1136px] h-[533px] overflow-y-auto '>
+          <div
+            className='relative bg-white p-4 rounded-[24px] w-[1136px] h-[533px] overflow-y-auto'
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
               src='assets/images/icons/x-03.webp'
               alt='닫기버튼'
