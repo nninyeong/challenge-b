@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import useMediaQuery from '@/hooks/review/useMediaQuery';
-import ReviewDetailPage from '../[id]/page';
 import { ReviewDetailModal } from '@/components/review/ReviewDetailModal';
 
 const ImagePage = () => {

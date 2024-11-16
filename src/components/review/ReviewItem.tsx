@@ -175,7 +175,7 @@ const ReviewItem = ({
                 src='assets/images/icons/x-03.webp'
                 alt='닫기버튼'
                 onClick={closeModal}
-                className='absolute top-4 right-4 text-black w-[24px] h-[24px] cursor-pointer'
+                className='absolute top-4 right-4 text-black w-[24px] h-[24px] cursor-pointer z-[10100]'
               />
 
               <div className='relative'>
