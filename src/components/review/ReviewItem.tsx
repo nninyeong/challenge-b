@@ -21,7 +21,7 @@ const ReviewItem = ({
   likeCount,
 }: {
   review: Review;
-  user: User;
+  user: User | undefined;
   isExpanded: boolean;
   onToggle: () => void;
   onNavigate: () => void;
@@ -36,7 +36,7 @@ const ReviewItem = ({
   const handleDeleteMyReview = () => {
     deleteMyReview(review.id);
   };
-
+  console.log(user, 'usesfjiefjei');
   const handleNotYetButton = () => {
     Notify.info('준비중인 서비스입니다.');
   };
@@ -76,7 +76,7 @@ const ReviewItem = ({
           className={`w-full flex flex-col whitespace-pre-wrap break-words ${isExpanded ? 'h-auto' : 'h-[80%] overflow-hidden'}`}
         >
           <div className='flex ml-[16px] items-center text-[12px]'>
-            {user.user_metadata.avatar_url && user.user_metadata.avatar_url.length > 0 ? (
+            {user?.user_metadata.avatar_url && user?.user_metadata.avatar_url.length > 0 ? (
               <Image
                 src={user.user_metadata.avatar_url || '/assets/images/defaultImg.png'}
                 alt='profile'
@@ -93,7 +93,7 @@ const ReviewItem = ({
                 className='rounded-full h-[30px]'
               />
             )}
-            <h3 className='ml-[8px] text-gray-500'>{maskIdLastFour(user.user_metadata.email)}</h3>
+            <h3 className='ml-[8px] text-gray-500'>{maskIdLastFour(user?.user_metadata.email)}</h3>
             <p className='text-gray-500'> | {formatDate(review.created_at)}</p>
           </div>
           <p
@@ -118,7 +118,7 @@ const ReviewItem = ({
         {pathname === '/mypage' ? (
           <button
             className='text-[12px] flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[76px] h-[24px] text-primary-300'
-            onClick={() => handleDeleteMyReview()}
+            onClick={handleDeleteMyReview}
           >
             <img
               src='/assets/images/icons/trash-01.svg'
