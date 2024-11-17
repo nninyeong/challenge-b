@@ -75,7 +75,6 @@ const Carousel = () => {
                     alt='리뷰 이미지'
                     layout='fill'
                     objectFit='cover'
-                    priority
                   />
                 )}
                 <div className='absolute inset-0 bg-black opacity-50' />
@@ -88,7 +87,6 @@ const Carousel = () => {
                       alt='profile'
                       layout='fill'
                       objectFit='cover'
-                      priority
                     />
                   </div>
                   <p className='text-gray-500'>

@@ -48,7 +48,7 @@ const ReviewItem = ({
             />
           ) : (
             <img
-              src='/assets/images/card/no-review.svg'
+              src='/assets/images/card/no-review.png'
               alt='no review'
             />
           )}
