@@ -87,30 +87,30 @@ const Sticker = ({
             onClick={handleDeleteSticker}
           ></button>
           <div
-            className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
+            className='absolute bg-primary-300 w-[9px] h-[9px] rounded-full touch-none'
             style={{
-              top: '-3px',
-              left: '-3px',
+              top: '-4.5px',
+              left: '-4.5px',
               transform: `scale(${1 / (sticker.scale ?? 1)})`,
             }}
             onTouchStart={handleTouchTransformStart}
             onMouseDown={handleMouseTransformStart}
           ></div>
           <div
-            className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
+            className='absolute bg-primary-300 w-[9px] h-[9px] rounded-full touch-none'
             style={{
-              bottom: '-3px',
-              left: '-3px',
+              bottom: '-4.5px',
+              left: '-4.5px',
               transform: `scale(${1 / (sticker.scale ?? 1)})`,
             }}
             onTouchStart={handleTouchTransformStart}
             onMouseDown={handleMouseTransformStart}
           ></div>
           <div
-            className='absolute bg-primary-300 w-[6px] h-[6px] rounded-full touch-none'
+            className='absolute bg-primary-300 w-[9px] h-[9px] rounded-full touch-none'
             style={{
-              bottom: '-3px',
-              right: '-3px',
+              bottom: '-4.5px',
+              right: '-4.5px',
               transform: `scale(${1 / (sticker.scale ?? 1)})`,
             }}
             onTouchStart={handleTouchTransformStart}
