@@ -142,7 +142,9 @@ const ReviewForm = () => {
                 className='bg-white text-center cursor-pointer px-2 py-1 rounded-md text-black h-[80px] w-[80px] flex flex-col justify-center items-center border border-dashed border-gray-300 gap-[4px]'
               >
                 <img
-                  src='/assets/images/icons/image-add.svg'
+                  src='/assets/images/icons/image-add.png'
+                  loading='lazy'
+                  className='w-[24px] h-[]'
                   alt='이미지 추가 아이콘'
                 />
                 <p className='text-gray-600 text-[10px]'>
