@@ -1,7 +1,7 @@
 import { Review } from '@/types/review.types';
 import browserClient from './supabase/client';
 import { supabase } from './supabase/createClient';
-import { UsersResponse } from '@/types/users.types';
+import { User as SupabaseUser } from '@supabase/auth-js';
 
 type ReviewProps = {
   pageParam: number;
@@ -30,10 +30,32 @@ export const getAllImageReviews = async (): Promise<Review[]> => {
   return reviewsWithImages as unknown as Review[];
 };
 
-export const getAuthUsersProfile = async () => {
-  const { data, error } = await supabase.auth.admin.listUsers();
-  if (error) throw error;
-  return data as unknown as UsersResponse;
+export const getAuthUsersProfile = async (): Promise<SupabaseUser[]> => {
+  let allUsers: SupabaseUser[] = [];
+  let page = 1;
+  const pageSize = 50;
+
+  try {
+    while (true) {
+      const { data, error } = await supabase.auth.admin.listUsers({
+        page,
+        perPage: pageSize,
+      });
+
+      if (error) throw error;
+
+      if (data.users.length === 0) break;
+
+      allUsers = [...allUsers, ...data.users];
+      page++;
+    }
+
+    console.log('전체 사용자 수:', allUsers);
+    return allUsers;
+  } catch (error) {
+    console.error('전체 사용자 목록 가져오기 실패:', error);
+    return [];
+  }
 };
 
 export const getMyReview = async (id: string) => {

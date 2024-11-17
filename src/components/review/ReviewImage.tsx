@@ -18,10 +18,8 @@ const ReviewImage = () => {
       const width = window.innerWidth;
       let reviewsToShow;
 
-      if (width >= 1024) {
-        reviewsToShow = 6;
-      } else if (width >= 768) {
-        reviewsToShow = 5;
+      if (width >= 1440) {
+        reviewsToShow = 8;
       } else {
         reviewsToShow = 4;
       }
@@ -43,15 +41,15 @@ const ReviewImage = () => {
   }
 
   if (error) {
-    return <div>이미지 로드 중 에러가 발생했습니다.</div>;
+    throw new Error();
   }
 
-  const handleOpenNewPage = async () => {
-    await router.push('/review/images');
+  const handleOpenNewPage = () => {
+    router.push('/review/images');
   };
 
   return (
-    <div className='w-full grid grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-[13px] mt-[20px] mb-[24px]'>
+    <div className='w-full grid grid-cols-4  desktop:grid-cols-8  desktop:gap-[24px] desktop:mt-[54px]  pb-4  desktop:pb-20 border border-solid border-gray-200 border-t-0 border-l-0 border-r-0 '>
       {displayedReviews?.map((review, reviewIndex) => {
         const firstImage = review.image_url?.[0];
         const isLastImage = reviewIndex === displayedReviews.length - 1;
@@ -59,27 +57,27 @@ const ReviewImage = () => {
         return (
           <div
             key={reviewIndex}
-            className={`w-full h-0 pb-[100%] relative ${isLastImage ? 'opacity-50' : ''}`}
+            className={`w-full  flex justify-center relative ${isLastImage ? 'opacity-50' : ''}  `}
           >
-            {firstImage && (
-              <Image
-                src={firstImage}
-                alt={`${reviewIndex + 1}`}
-                fill
-                objectFit='cover'
-                sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
-                className='rounded-[12px]'
-                priority
-              />
-            )}
-            {isLastImage && (
-              <button
-                onClick={handleOpenNewPage}
-                className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-[12px]'
-              >
-                더보기
-              </button>
-            )}
+            <div className='desktop:w-[121px] desktop:h-[121px] relative w-[76px] h-[76px]'>
+              {firstImage && (
+                <Image
+                  src={firstImage}
+                  alt={`${reviewIndex + 1}`}
+                  fill
+                  className='rounded-xl object-cover absolute'
+                  priority
+                />
+              )}
+              {isLastImage && (
+                <button
+                  onClick={handleOpenNewPage}
+                  className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-[12px] text-[14px]'
+                >
+                  더보기
+                </button>
+              )}
+            </div>
           </div>
         );
       })}

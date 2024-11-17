@@ -2,12 +2,14 @@
 import { Review } from '@/types/review.types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { User } from '@/types/users.types';
+import { User as SupabaseUser } from '@supabase/auth-js';
 import { useAuthUserQuery } from '@/hooks/queries/review/useGetReview';
 import ReviewItem from './ReviewItem';
 import { useAddLikeMutation, useRemoveLikeMutation } from '@/hooks/queries/review/useReviewLike';
 import { useSignedAuthUser } from '@/hooks/queries/useSignedAuthUser';
-import { Notify } from 'notiflix';
+import { Confirm, Notify } from 'notiflix';
+import { ReviewCardLoading } from '../loading/ReviewLoading';
+import { useDeleteReviewMutation } from '@/hooks/queries/review/useDeleteReviewMutation';
 
 type ReviewsCardProp = {
   reviews: Review[];
@@ -19,7 +21,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
 
   const { data: users, isLoading, error } = useAuthUserQuery();
   const { data: currentUser } = useSignedAuthUser();
-
+  const deleteMyReview = useDeleteReviewMutation();
   const addLikeMutate = useAddLikeMutation();
   const removeLikeMutate = useRemoveLikeMutation();
   const signedUserId = currentUser?.id || '';
@@ -29,10 +31,16 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
 
     const isLiked = review.likes?.includes(signedUserId);
     if (isLiked) {
-      await removeLikeMutate.mutate({ postId: review.id, userId: signedUserId });
+      removeLikeMutate.mutate({ postId: review.id, userId: signedUserId });
     } else {
-      await addLikeMutate.mutate({ postId: review.id, userId: signedUserId });
+      addLikeMutate.mutate({ postId: review.id, userId: signedUserId });
     }
+  };
+
+  const handleDeleteReview = (userId: string) => {
+    Confirm.show('리뷰 삭제', '정말로 이 리뷰를 삭제하시겠습니까?', '삭제', '취소', () => {
+      deleteMyReview.mutate(userId);
+    });
   };
 
   const getLikeCount = (likes: string | string[] | null | undefined) => {
@@ -54,13 +62,13 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
 
   const toggleContent = (id: string) => setExpandedReview((prev) => (prev === id ? null : id));
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>오류 발생</div>;
+  if (isLoading) return <ReviewCardLoading />;
+  if (error) throw new Error();
 
   return (
     <div>
       {reviews.map((review) => {
-        const user = users?.users.find((u: User) => u.id === review.user_id);
+        const user = users?.find((u: SupabaseUser) => u.id === review.user_id);
 
         if (!user)
           return (
@@ -87,6 +95,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
             isLiked={isLiked}
             onLikeToggle={() => handleLikeToggle(review)}
             likeCount={likeCount}
+            onDeleteReview={() => handleDeleteReview(review.user_id)}
           />
         );
       })}

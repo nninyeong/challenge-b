@@ -1,13 +1,13 @@
 'use client';
-import { User } from '@/types/users.types';
 import { maskIdLastFour } from '@/utils/maskIdLastFour';
 import Image from 'next/image';
 import { useState } from 'react';
+import { User as SupabaseUser } from '@supabase/auth-js';
 type PropsType = {
   content: string;
   created: string;
   avatar_url: string | null;
-  user: User;
+  user: SupabaseUser;
 };
 const MAX_CONTENT_LENGTH = 50 as const;
 const ReviewContentsBox = ({ content, created, avatar_url, user }: PropsType) => {
