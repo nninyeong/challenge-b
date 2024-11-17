@@ -75,8 +75,8 @@ const config: Config = {
         HakgyoansimWoojuR: ['HakgyoansimWoojuR'],
       },
       backgroundImage: {
-        'edit-contained': "url('/assets/images/icons/edit-contained.svg')",
-        'edit-contained-selected': "url('/assets/images/icons/edit-contained-selected.svg')",
+        'edit-contained': "url('/assets/images/icons/edit-contained.png')",
+        'edit-contained-selected': "url('/assets/images/icons/edit-contained-selected.png')",
         'user-profile-02': "url('/assets/images/icons/user-profile-02.svg')",
         'user-profile-selected': "url('/assets/images/icons/user-profile-selected.svg')",
         'x-01': "url('/assets/images/icons/x-01.svg')",
