@@ -46,8 +46,8 @@ const useStickerTransform = ({ sticker, stickerRef, stickersWatch, setValue, isA
     if (!isActive || !stickerRef.current) return;
 
     const stickerBound = stickerRef.current.getBoundingClientRect();
-    const pivotX = stickerBound.left - window.scrollX + stickerBound.width / 2;
-    const pivotY = stickerBound.top - window.scrollY + stickerBound.height / 2;
+    const pivotX = stickerBound.left + stickerBound.width / 2;
+    const pivotY = stickerBound.top + stickerBound.height / 2;
     pivotRef.current = { x: pivotX, y: pivotY };
 
     startDegRef.current = calculateAngle(pivotRef.current, { x: e.pageX, y: e.pageY });

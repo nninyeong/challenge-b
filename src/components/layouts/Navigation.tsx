@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import LinkToMypage from '@/components/ui/LinkToMypage';
 import LinkToReviewPage from '@/components/ui/LinkToReviewPage';
+import { usePathname } from 'next/navigation';
 
 const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(initialAuthState);
+  const isCreateCardPage = usePathname() === '/create/card';
   const client = createClient();
 
   useEffect(() => {
@@ -24,18 +26,29 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
   }, [client]);
 
   return (
-    <nav className='flex gap-3 justify-center items-center'>
-      <LinkToReviewPage />
-      {isAuthenticated ? (
-        <>
-          <LinkToMypage />
-        </>
-      ) : (
-        <Link href='/signin'>
-          <button className='bg-user-profile-02 w-[24px] h-[24px]' />
-        </Link>
-      )}
-    </nav>
+    <div
+      className={`${isCreateCardPage ? 'hidden desktop:flex' : 'flex'} w-full h-[64px] desktop:h-[86px] justify-between items-center px-[16px] desktop:px-[152px] bg-white`}
+    >
+      <Link href='/'>
+        <img
+          src='/assets/images/branding/BI.webp'
+          alt='드림카드'
+          className='w-[97px] desktop:w-[143px]'
+        />
+      </Link>
+      <nav className={`flex gap-3 justify-center items-center`}>
+        <LinkToReviewPage />
+        {isAuthenticated ? (
+          <>
+            <LinkToMypage />
+          </>
+        ) : (
+          <Link href='/signin'>
+            <button className='bg-user-profile-02 w-[24px] h-[24px]' />
+          </Link>
+        )}
+      </nav>
+    </div>
   );
 };
 

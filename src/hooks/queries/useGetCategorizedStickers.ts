@@ -3,8 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
 import { StickerImage } from '@/types/stickerData.types';
 import { supabase } from '@/utils/supabase/createClient';
+import getImageDimensions from '@/utils/sticker/getImageDimensions';
 
-const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
+export const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
   try {
     const { data, error } = await supabase.storage.from('stickers').list('', { limit: 1000 });
     if (error) {
@@ -13,15 +14,6 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
 
     const validFiles = data?.filter((file) => file.name !== '.emptyFolderPlaceholder') || [];
     const stickersByCategory: Record<string, StickerImage[]> = {};
-
-    const getImageDimensions = (url: string): Promise<{ width: number; height: number }> => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.src = url;
-        img.onload = () => resolve({ width: img.width, height: img.height });
-        img.onerror = reject;
-      });
-    };
 
     await Promise.all(
       validFiles?.map(async (file) => {
@@ -53,9 +45,10 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
   }
 };
 
-export const useGetAllStickers = () => {
+export const useGetCategorizedStickers = () => {
   return useQuery({
     queryKey: QUERY_KEYS.stickerImages(),
     queryFn: fetchAllStickerImages,
+    staleTime: 60 * 60 * 24 * 1000,
   });
 };
