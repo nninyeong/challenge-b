@@ -99,7 +99,7 @@ const WeddingInfoInput = () => {
         <div className='grid grid-cols-[80px_1fr]'>
           <label className='leading-[32px]'>예식장명</label>
           <input
-            className='w-[235px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
+            className='w-[235px] desktop:w-[388px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
             {...register('weddingInfo.weddingHallName')}
             maxLength={21}
           />
@@ -107,7 +107,7 @@ const WeddingInfoInput = () => {
         <div className='grid grid-cols-[80px_1fr]'>
           <label className='leading-[32px]'>연락처</label>
           <input
-            className='w-[172px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
+            className='w-[172px] desktop:w-[308px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
             placeholder='연락처를 입력해주세요.'
             {...register('weddingInfo.weddingHallContact')}
             maxLength={15}
