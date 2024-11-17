@@ -34,8 +34,8 @@ export const EllipseSvg = ({ color }: { color: ColorType }) => {
     >
       <path
         className='stroke-none'
-        fill-rule='evenodd'
-        clip-rule='evenodd'
+        fillRule='evenodd'
+        clipRule='evenodd'
         d='M171.5 0C76.7832 0 0 76.7832 0 171.5V0H171.5ZM343 171.5C343 76.7832 266.217 0 171.5 0H343V171.5ZM343 276.5C343 371.217 266.217 448 171.5 448C76.7832 448 0 371.217 0 276.5V448H171.5H343V276.5Z'
         fill={colorConverter(color)}
       />
