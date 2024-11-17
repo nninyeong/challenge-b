@@ -1,22 +1,15 @@
 'use client';
-import { useGetAllStickers } from '@/hooks/queries/useGetStickers';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import StickerCategoryButton from '@/components/create/stickerInput/StickerCategoryButton';
 import StickerSlot from '@/components/create/stickerInput/StickerSlot';
 import { MOOD_LIST } from '@/constants/invitationMoods';
-import { Notify } from 'notiflix';
 import { StickerLoading } from '../loading/StickerLoading';
+import { useGetCategorizedStickers } from '@/hooks/queries/useGetCategorizedStickers';
 
 const StickerInput = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('classic');
 
-  const { data: stickerByCategory, isLoading, error } = useGetAllStickers();
-
-  useEffect(() => {
-    if (stickerByCategory && !stickerByCategory[selectedCategory]) {
-      Notify.info('준비중인 서비스입니다.');
-    }
-  }, [selectedCategory, stickerByCategory]);
+  const { data: categorizedStickers, isLoading, error } = useGetCategorizedStickers();
 
   if (error) {
     console.error(error.message);
@@ -28,11 +21,11 @@ const StickerInput = () => {
   };
 
   const renderSticker = () => {
-    if (!stickerByCategory) return null;
+    if (!categorizedStickers) return null;
 
     if (selectedCategory === null) {
-      return Object.keys(stickerByCategory).map((category) =>
-        stickerByCategory[category].map((sticker) => (
+      return Object.keys(categorizedStickers).map((category) =>
+        categorizedStickers[category].map((sticker) => (
           <StickerSlot
             key={sticker.id}
             stickerImage={sticker}
@@ -41,7 +34,7 @@ const StickerInput = () => {
       );
     }
 
-    return stickerByCategory[selectedCategory]?.map((sticker) => (
+    return categorizedStickers[selectedCategory]?.map((sticker) => (
       <StickerSlot
         key={sticker.id}
         stickerImage={sticker}
@@ -65,7 +58,7 @@ const StickerInput = () => {
       </div>
       {isLoading ? (
         <StickerLoading />
-      ) : stickerByCategory && stickerByCategory[selectedCategory] ? (
+      ) : categorizedStickers && categorizedStickers[selectedCategory] ? (
         <div className='grid grid-cols-4 gap-[9px] h-[150px] overflow-auto'>{renderSticker()}</div>
       ) : null}
     </div>

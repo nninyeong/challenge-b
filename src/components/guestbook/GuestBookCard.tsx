@@ -4,15 +4,22 @@ import { GuestBookEntry } from '@/types/guestBookEntry.types';
 import DeleteGuestBookAccordion from '@/components/guestbook/DeleteGuestBookAccordion';
 import useGuestBookDeleteButton from '@/hooks/guestbook/useGuestBookDeleteButton';
 import convertToUserTimezone from '@/utils/date/dayToKst';
+import { Dispatch, SetStateAction } from 'react';
 
 const GuestBookCard = ({
   guestBook,
   invitationId,
   isCreatePage,
+  thisPage,
+  setPage,
+  totalPages
 }: {
   guestBook: GuestBookEntry;
   invitationId: string;
   isCreatePage: boolean;
+  thisPage: number;
+  setPage: Dispatch<SetStateAction<number>>;
+  totalPages: number
 }) => {
   const { isAccordionOpen, toggleAccordion } = useGuestBookDeleteButton();
   const { year, month, day, hour, minute } = convertToUserTimezone(guestBook.created_at);
@@ -43,6 +50,9 @@ const GuestBookCard = ({
               signedPassword={guestBook.password}
               onClose={toggleAccordion}
               isCreatePage={isCreatePage}
+              thisPage={thisPage}
+              setPage={setPage}
+              totalPages={totalPages}
             />
           )}
         </div>

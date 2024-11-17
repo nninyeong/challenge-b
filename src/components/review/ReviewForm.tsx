@@ -181,7 +181,7 @@ const ReviewForm = () => {
       </div>
       <button
         type='submit'
-        className='text-white bg-primary-300 w-[343px] h-[48px] rounded-[12px] mt-[32px]'
+        className='text-white bg-primary-300 w-full h-[48px] rounded-[12px] mt-[32px]'
       >
         작성완료
       </button>

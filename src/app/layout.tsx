@@ -43,13 +43,14 @@ export default function RootLayout({
       className='overflow-x-hidden'
     >
       <head>
+        <title>드림카드</title>
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
         />
       </head>
       <body
-        className={`${SUIT.variable} font-main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] mobile:max-w-mobile desktop:max-w-desktop mx-auto bg-gray-100`}
+        className={`${SUIT.variable} font-Main antialiased flex flex-col min-h-[calc(var(--vh)_*_100)] mobile:max-w-mobile desktop:max-w-desktop mx-auto bg-gray-100`}
       >
         {/* GA4 스크립트 로드 */}
         <Script
