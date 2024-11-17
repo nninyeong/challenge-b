@@ -110,6 +110,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
                 alt='청첩장 삭제버튼'
                 onClick={() => handleDeleteCards(invitationCard?.id)}
                 className='w-[24px] h-[24px] '
+                loading='lazy'
               />
             </div>
             <div className='flex gap-2  items-center mb-2'>
