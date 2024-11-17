@@ -7,6 +7,7 @@ import { UseFormReturn } from 'react-hook-form';
 import PreviewElement from './PreviewElement';
 import { OrderList, StepType } from '@/hooks/create/useFormStepController';
 import { ScrollRefsType } from '@/app/(noLayout)/create/card/page';
+import useViewportWidth from '@/hooks/create/useViewPortWidth';
 
 const PreviewList = ({
   orderList,
@@ -21,11 +22,29 @@ const PreviewList = ({
   currentStep: StepType;
   styleSetting: { font: string; backgroundColor: string };
 }) => {
-  const frameRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
+  const currentWidth = useViewportWidth();
+
   const scrollEvent = () => {
-    const targetRef = Object.values(refs.current).find((e) => e.order === currentStep.currentPreviewStep)?.ref;
-    if (targetRef) {
-      targetRef?.scrollIntoView({
+    const targetRef = Object.values(refs.current).find((e) => {
+      if (e.order === 0) return e.order === currentStep.currentPreviewStep;
+      return e.order === currentStep.currentPreviewStep && e.inputOrder === currentStep.currentInputStep;
+    })?.ref;
+
+    if (currentWidth >= 1440 && targetRef && frameRef.current) {
+      const rect = targetRef.getBoundingClientRect();
+      const containerRect = frameRef.current.getBoundingClientRect();
+
+      const targetPosition = rect.top - containerRect.top + frameRef.current.scrollTop;
+
+      frameRef.current.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth',
+      });
+    }
+
+    if (currentWidth !== 0 && currentWidth < 1440 && targetRef) {
+      targetRef.scrollIntoView({
         block: 'start',
         behavior: 'smooth',
       });
@@ -33,16 +52,18 @@ const PreviewList = ({
   };
 
   useEffect(() => {
-    scrollEvent();
-  }, [currentStep.currentPreviewStep, currentStep.currentInputStep]);
+    if (frameRef.current) scrollEvent();
+  }, [currentStep.currentPreviewStep, currentStep.currentInputStep, currentWidth]);
   return (
     <div
-      className={`relative w-[375px] h-full desktop:h-[830px] flex flex-col justify-center desktop:justify-start gap-[100px]`}
+      ref={frameRef}
+      className={`relative w-[375px] h-full desktop:h-[830px] flex flex-col justify-center desktop:justify-start gap-[100px] overflow-auto`}
       style={{
         backgroundColor: styleSetting.backgroundColor,
         fontFamily: styleSetting.font,
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none',
       }}
-      ref={frameRef}
     >
       {orderList.map((e, index) => {
         return (
