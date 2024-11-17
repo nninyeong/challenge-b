@@ -31,7 +31,7 @@ const AccountInput = () => {
 
   const onSave = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!modalValue.startsWith('https://qr.kakaopay.com')) {
+    if (modalValue !== '' && !modalValue.startsWith('https://qr.kakaopay.com')) {
       Notify.failure('카카오페이 링크 형식에 맞지 않습니다');
       return;
     }
