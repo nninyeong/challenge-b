@@ -4,7 +4,7 @@ import { getAllImageReviews } from '@/utils/getReview';
 
 export const useGetAllImageReivews = () => {
   return useQuery({
-    queryKey: QUERY_KEYS.imageReivew(),
+    queryKey: QUERY_KEYS.imageReview(),
     queryFn: getAllImageReviews,
   });
 };

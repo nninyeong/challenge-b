@@ -8,6 +8,7 @@ import { User } from '@/types/users.types';
 import { Notify } from 'notiflix';
 import { usePathname } from 'next/navigation';
 import { useDeleteReviewMutation } from '@/hooks/queries/review/useDeleteReviewMutation';
+import SmileyHappy from '../icons/SmileyHappy';
 
 const ReviewItem = ({
   review,
@@ -15,20 +16,29 @@ const ReviewItem = ({
   isExpanded,
   onToggle,
   onNavigate,
+  onLikeToggle,
+  isLiked,
+  likeCount,
 }: {
   review: Review;
   user: User;
   isExpanded: boolean;
   onToggle: () => void;
   onNavigate: () => void;
+  onLikeToggle: () => void;
+  isLiked: boolean;
+  likeCount: number | string;
 }) => {
   const pathname = usePathname();
+
   const { mutate: deleteMyReview } = useDeleteReviewMutation();
+
+  const handleDeleteMyReview = () => {
+    deleteMyReview(review.id);
+  };
+
   const handleNotYetButton = () => {
     Notify.info('준비중인 서비스입니다.');
-  };
-  const handleDeleteMyReview = () => {
-    deleteMyReview(user.id);
   };
 
   return (
@@ -37,7 +47,7 @@ const ReviewItem = ({
         <div className='w-[80px] h-[80px] flex-shrink-0 relative'>
           {review.image_url && review.image_url.length > 0 ? (
             <Image
-              src={review.image_url?.[0]}
+              src={review.image_url[0]}
               alt='후기 이미지'
               fill
               priority
@@ -53,7 +63,7 @@ const ReviewItem = ({
             />
           )}
           {review.image_url.length > 1 && (
-            <div className='absolute right-1 bottom-1 rounded  '>
+            <div className='absolute right-1 bottom-1 rounded'>
               <img
                 src='/assets/images/icons/layers-1.svg'
                 alt='more images icon'
@@ -83,7 +93,6 @@ const ReviewItem = ({
                 className='rounded-full h-[30px]'
               />
             )}
-
             <h3 className='ml-[8px] text-gray-500'>{maskIdLastFour(user.user_metadata.email)}</h3>
             <p className='text-gray-500'> | {formatDate(review.created_at)}</p>
           </div>
@@ -109,7 +118,7 @@ const ReviewItem = ({
         {pathname === '/mypage' ? (
           <button
             className='text-[12px] flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[76px] h-[24px] text-primary-300'
-            onClick={handleDeleteMyReview}
+            onClick={() => handleDeleteMyReview()}
           >
             <img
               src='/assets/images/icons/trash-01.svg'
@@ -130,14 +139,11 @@ const ReviewItem = ({
               <span>공유하기</span>
             </button>
             <button
-              className='text-[12px] flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[76px] h-[24px] text-primary-300'
-              onClick={handleNotYetButton}
+              onClick={onLikeToggle}
+              className={`text-[12px] flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[100px] h-[24px] text-primary-300 ${isLiked && 'bg-primary-300 '} `}
             >
-              <img
-                src='/assets/images/icons/smiley-happy.svg'
-                alt='도움돼요'
-              />
-              <span>도움돼요</span>
+              <SmileyHappy isLiked={isLiked} />
+              <span className={`${isLiked ? 'text-white' : ''}`}>도움돼요({likeCount})</span>
             </button>
           </>
         )}
