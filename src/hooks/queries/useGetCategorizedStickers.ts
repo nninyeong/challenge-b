@@ -4,7 +4,7 @@ import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
 import { StickerImage } from '@/types/stickerData.types';
 import { supabase } from '@/utils/supabase/createClient';
 import { validateStorageFiles } from '@/utils/supabase/validateStorageFiles';
-import { getImageDimensions } from '@/utils/sticker/getimageDimensions';
+import getImageDimensions from '@/utils/sticker/getImageDimensions';
 
 const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
   try {
