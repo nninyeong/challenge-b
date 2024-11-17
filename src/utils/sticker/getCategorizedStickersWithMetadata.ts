@@ -1,12 +1,10 @@
-'use client';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
+'use server';
 import { StickerImage } from '@/types/stickerData.types';
 import { supabase } from '@/utils/supabase/createClient';
+import getImageDimensionsOnServer from '@/utils/sticker/getImageDimensionsOnServer';
 import { validateStorageFiles } from '@/utils/supabase/validateStorageFiles';
-import getImageDimensions from '@/utils/sticker/getImageDimensions';
 
-const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
+const getCategorizedStickersWithMetadata = async (): Promise<Record<string, StickerImage[]>> => {
   try {
     const { data, error } = await supabase.storage.from('stickers').list('', { limit: 1000 });
     if (error) {
@@ -14,14 +12,14 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
     }
 
     const validFiles = validateStorageFiles(data);
-    const categorizedStickers: Record<string, StickerImage[]> = {};
+    const stickersByCategory: Record<string, StickerImage[]> = {};
 
     await Promise.all(
       validFiles?.map(async (file) => {
         const [category] = file.name.split('-');
         const { data: publicUrlData } = supabase.storage.from('stickers').getPublicUrl(file.name);
 
-        const { width, height } = await getImageDimensions(publicUrlData.publicUrl);
+        const { width, height } = await getImageDimensionsOnServer(publicUrlData.publicUrl);
 
         const stickerImage: StickerImage = {
           id: file.name,
@@ -31,25 +29,19 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
           height: height,
         };
 
-        if (!categorizedStickers[category]) {
-          categorizedStickers[category] = [];
+        if (!stickersByCategory[category]) {
+          stickersByCategory[category] = [];
         }
 
-        categorizedStickers[category].push(stickerImage);
+        stickersByCategory[category].push(stickerImage);
       }) || [],
     );
 
-    return categorizedStickers;
+    return stickersByCategory;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
 
-export const useGetCategorizedStickers = () => {
-  return useQuery({
-    queryKey: QUERY_KEYS.stickerImages(),
-    queryFn: fetchAllStickerImages,
-    staleTime: 60 * 60 * 24 * 1000,
-  });
-};
+export default getCategorizedStickersWithMetadata;
