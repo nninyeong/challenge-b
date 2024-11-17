@@ -26,13 +26,11 @@ const WeddingInfoInput = () => {
 
   const [showAddressModal, setShowAddressModal] = useState(false);
   const openAddressModal = () => {
-    document.documentElement.style.overflow = 'hidden';
     setShowAddressModal(true);
   };
 
   const setAddress = (value: Address) => {
     setValue('weddingInfo.weddingHallAddress', value.address);
-    document.documentElement.style.overflow = 'auto';
     setShowAddressModal(false);
   };
 
@@ -52,8 +50,8 @@ const WeddingInfoInput = () => {
           <input
             {...register('weddingInfo.date')}
             placeholder='2024.11.21'
-            className='w-[172px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
-            maxLength={21}
+            className='w-[172px] desktop:w-[388px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
+            maxLength={8}
           />
         </div>
         <div className='grid grid-cols-[80px_1fr] items-center'>
@@ -63,7 +61,7 @@ const WeddingInfoInput = () => {
               onSelect={setHour}
               optionList={HOURS_FOR_WEDDING_INFO}
               value={time.hour}
-              width='92px'
+              width='w-[92px] desktop:w-[96px]'
               limitOptionHeight='128px'
               backgroundColor='#000000'
             />
