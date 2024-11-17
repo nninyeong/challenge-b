@@ -9,9 +9,12 @@ const AddressModal = ({ onComplete: setAddress }: { onComplete: (value: Address)
       document.documentElement.style.overflow = 'auto';
     };
   }, []);
+
   return (
-    <div className='fixed top-0 bottom-0 left-0 right-0 w-full h-full px-[16px] bg-[#404040]/50 flex justify-center items-center'>
-      <DaumPostcode onComplete={setAddress} />
+    <div className='fixed flex justify-center items-center inset-0 w-full h-full px-[16px] bg-[#404040]/50 z-50'>
+      <div className='w-fit'>
+        <DaumPostcode onComplete={setAddress} />
+      </div>
     </div>
   );
 };
