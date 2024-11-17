@@ -19,7 +19,7 @@ import WeddingInfoInput from '@/components/create/WeddingInfoInput';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { UseFormReturn } from 'react-hook-form';
 import { COMPONENT_TYPES } from '@/constants/componentTypes';
-import RenderOrderInput from '@/components/create/RenderOrderInput';
+import RenderOrderInput from '@/components/create/RenderingOrderInput';
 import BackgroundColorInput from '@/components/create/BackgroundColorInput';
 import NavigationDetailInput from '@/components/create/NavigationDetailInput';
 import FontInput from '@/components/create/FontInput';
