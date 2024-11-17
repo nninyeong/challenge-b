@@ -1,7 +1,7 @@
 import Header from '@/components/layouts/Header';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
-import { fetchAllStickerImages } from '@/hooks/queries/useGetCategorizedStickers';
+import getCategorizedStickersWithMetadata from '@/utils/sticker/getCategorizedStickersWithMetadata';
 
 export default async function CreateCardLayout({
   children,
@@ -18,7 +18,7 @@ export default async function CreateCardLayout({
 
   await queryClient.prefetchQuery({
     queryKey: QUERY_KEYS.stickerImages(),
-    queryFn: fetchAllStickerImages,
+    queryFn: getCategorizedStickersWithMetadata,
   });
 
   return (
