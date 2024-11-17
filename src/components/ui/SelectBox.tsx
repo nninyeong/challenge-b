@@ -53,8 +53,7 @@ const SelectBox = ({
       )}
       <div
         ref={selectBoxRef}
-        style={{ width: `${width}` }}
-        className={`relative border-[.5px] border-gray-300 ${isOpen ? 'rounded-t-[8px] bg-white z-50' : 'rounded-[8px]'} text-[12px] text-gray-400`}
+        className={`relative ${width} border-[.5px] border-gray-300 ${isOpen ? 'rounded-t-[8px] bg-white z-50' : 'rounded-[8px]'} text-[12px] text-gray-400`}
       >
         <div
           onClick={handleToggleSelect}
