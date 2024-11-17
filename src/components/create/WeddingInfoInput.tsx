@@ -69,7 +69,7 @@ const WeddingInfoInput = () => {
               onSelect={setMinute}
               optionList={MINUTES_FOR_WEDDING_INFO}
               value={time.minute}
-              width='72px'
+              width='w-[72px] desktop:w-[88px]'
               backgroundColor='#000000'
             />
           </div>
