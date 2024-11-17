@@ -33,7 +33,6 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
         className='overflow-hidden w-full flex flex-col justify-center item-center mx-auto pt-[72px] mb-[59px] text-center text-black'
       >
         <div
-          ref={previewRef}
           className={`flex justify-center items-center w-[375px] self-center overflow-hidden ${mainView.type === 'fill' ? 'px-0' : 'px-[20px]'} `}
         >
           {!mainPhotoInfo?.imageUrl ? (
@@ -56,22 +55,27 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
                 {mainView.type === 'arch' && <ArchSvg color={bgColor} />}
                 {mainView.type === 'ellipse' && <EllipseSvg color={bgColor} />}
               </div>
-              {path === '/create/card'
-                ? stickers?.map((sticker: StickerType) => (
-                    <Sticker
-                      key={sticker.id}
-                      sticker={sticker}
-                      previewRef={previewRef}
-                      activeStickerId={activeStickerId}
-                      onActivate={handleActiveSticker}
-                    />
-                  ))
-                : stickers?.map((sticker: StickerType) => (
-                    <StickerOnSharedCard
-                      key={sticker.id}
-                      sticker={sticker}
-                    />
-                  ))}
+              <div
+                ref={previewRef}
+                className='w-full h-full relative'
+              >
+                {path === '/create/card'
+                  ? stickers?.map((sticker: StickerType) => (
+                      <Sticker
+                        key={sticker.id}
+                        sticker={sticker}
+                        previewRef={previewRef}
+                        activeStickerId={activeStickerId}
+                        onActivate={handleActiveSticker}
+                      />
+                    ))
+                  : stickers?.map((sticker: StickerType) => (
+                      <StickerOnSharedCard
+                        key={sticker.id}
+                        sticker={sticker}
+                      />
+                    ))}
+              </div>
             </div>
           )}
         </div>

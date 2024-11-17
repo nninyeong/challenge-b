@@ -1,22 +1,15 @@
 'use client';
-import { useGetCategorizedStickers } from '@/hooks/queries/useGetStickers';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import StickerCategoryButton from '@/components/create/stickerInput/StickerCategoryButton';
 import StickerSlot from '@/components/create/stickerInput/StickerSlot';
 import { MOOD_LIST } from '@/constants/invitationMoods';
-import { Notify } from 'notiflix';
 import { StickerLoading } from '../loading/StickerLoading';
+import { useGetCategorizedStickers } from '@/hooks/queries/useGetCategorizedStickers';
 
 const StickerInput = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('classic');
 
   const { data: categorizedStickers, isLoading, error } = useGetCategorizedStickers();
-
-  useEffect(() => {
-    if (categorizedStickers && !categorizedStickers[selectedCategory]) {
-      Notify.info('준비중인 서비스입니다.');
-    }
-  }, [selectedCategory, categorizedStickers]);
 
   if (error) {
     console.error(error.message);

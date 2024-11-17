@@ -11,7 +11,6 @@ type UseStickerMovementProps = {
   setValue: UseFormSetValue<FieldValues>;
   onActivate: (id: string | null) => void;
 };
-
 const useStickerMove = ({
   sticker,
   previewRef,
@@ -21,9 +20,11 @@ const useStickerMove = ({
   onActivate,
 }: UseStickerMovementProps) => {
   const offset = useRef({ x: 0, y: 0 });
+  const isDragging = useRef(false);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
     if (!previewRef.current) return;
+    isDragging.current = false;
 
     const touch = e.touches[0];
     const stickerBounds = e.currentTarget.getBoundingClientRect();
@@ -45,8 +46,8 @@ const useStickerMove = ({
   };
 
   const handleTouchMove = (e: TouchEvent) => {
-    e.preventDefault();
     if (!previewRef.current || !stickerRef.current) return;
+    isDragging.current = true;
 
     const touch = e.touches[0];
     const { relativeX, relativeY } = calculateRelativePosition(touch, offset, previewRef, stickerRef);
@@ -58,6 +59,7 @@ const useStickerMove = ({
   };
 
   const handleTouchEnd = (e: TouchEvent) => {
+    isDragging.current = false;
     if (!previewRef.current || !stickerRef.current) return;
 
     const touch = e.changedTouches[0];
@@ -77,11 +79,13 @@ const useStickerMove = ({
 
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
+    isDragging.current = false;
     if (!stickerRef.current || !previewRef.current) return;
 
     const stickerBounds = e.currentTarget.getBoundingClientRect();
     const centerX = stickerBounds.left + stickerBounds.width / 2;
     const centerY = stickerBounds.top + stickerBounds.height / 2;
+
     offset.current = {
       x: e.clientX - centerX,
       y: e.clientY - centerY,
@@ -95,9 +99,9 @@ const useStickerMove = ({
 
   const handleMouseMove = (e: MouseEvent) => {
     if (!stickerRef.current || !previewRef.current) return;
+    isDragging.current = true;
 
     const { relativeX, relativeY } = calculateRelativePosition(e, offset, previewRef, stickerRef);
-
     requestAnimationFrame(() => {
       stickerRef.current!.style.left = `${relativeX}%`;
       stickerRef.current!.style.top = `${relativeY}%`;
@@ -105,10 +109,10 @@ const useStickerMove = ({
   };
 
   const handleMouseUp = (e: MouseEvent) => {
+    isDragging.current = false;
     if (!previewRef.current || !stickerRef.current) return;
 
     const { relativeX, relativeY } = calculateRelativePosition(e, offset, previewRef, stickerRef);
-
     const updatedSticker = stickersWatch.map((stickerItem: StickerType) => {
       if (stickerItem.id === sticker.id) return { ...sticker, posX: relativeX, posY: relativeY };
       else return stickerItem;
