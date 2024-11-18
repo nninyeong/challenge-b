@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { ReviewType } from '@/app/(defaultLayout)/review/[id]/page';
 import { getReviewDetail } from '@/utils/server-action';
 import { getAuthUsersProfile } from '@/utils/getReview';
-import { User } from '@/types/users.types';
 import { ReviewDetailLoading } from '../loading/ReviewLoading';
+import { User } from '@supabase/auth-js';
 
 type Props = {
   reviewId: string;
@@ -23,7 +23,8 @@ export const ReviewDetailModal = ({ reviewId }: Props) => {
       setReviewData(data);
 
       const users = await getAuthUsersProfile();
-      const user = users.users.find((e) => e.id === data.user_id);
+      const user = users.find((e) => e.id === data.user_id);
+
       setReviewUser(user || null);
     };
 
