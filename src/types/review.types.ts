@@ -5,6 +5,7 @@ export type Review = {
   content: string;
   image_url: string[];
   user_id: string;
+  likes: string[] | string | null;
 };
 
 export type ReviewResponse = {

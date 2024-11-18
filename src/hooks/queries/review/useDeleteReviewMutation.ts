@@ -11,7 +11,12 @@ export const useDeleteReviewMutation = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.reviews() });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.userReview() });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.allImageReviews() });
+
       Notify.success('성공적으로 리뷰를 삭제했습니다.');
+    },
+    onError: () => {
+      Notify.failure('리뷰를 삭제하지 못했습니다. 다시 시도해주세요');
     },
   });
 };

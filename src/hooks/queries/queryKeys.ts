@@ -8,5 +8,6 @@ export const QUERY_KEYS = {
   allImageReviews: () => ['allImageReviews'],
   reviews: () => ['reviews'],
   userReview: () => ['userReview'],
-  imageReivew: () => ['imageReview'],
+  imageReview: () => ['imageReview'],
+  loginUser: () => ['loginUser'],
 };

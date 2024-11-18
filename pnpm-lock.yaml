@@ -14,6 +14,9 @@ importers:
       '@sentry/nextjs':
         specifier: ^8
         version: 8.37.1(@opentelemetry/core@1.27.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.54.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.27.0(@opentelemetry/api@1.9.0))(next@14.2.15(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.96.1)
+      '@supabase/auth-js':
+        specifier: ^2.66.0
+        version: 2.66.0
       '@supabase/ssr':
         specifier: ^0.5.1
         version: 0.5.1(@supabase/supabase-js@2.46.1)
@@ -848,6 +851,9 @@ packages:
 
   '@supabase/auth-js@2.65.1':
     resolution: {integrity: sha512-IA7i2Xq2SWNCNMKxwmPlHafBQda0qtnFr8QnyyBr+KaSxoXXqEzFCnQ1dGTy6bsZjVBgXu++o3qrDypTspaAPw==}
+
+  '@supabase/auth-js@2.66.0':
+    resolution: {integrity: sha512-Cx+17ULXcSq/dNhwh1Qcr6tc2cwjgEMrsio5L8F5YXTEHjLfV7Ucgs+eOp/GdB3dIvO2ACHLHrWBj2F2xG8DjA==}
 
   '@supabase/functions-js@2.4.3':
     resolution: {integrity: sha512-sOLXy+mWRyu4LLv1onYydq+10mNRQ4rzqQxNhbrKLTLTcdcmS9hbWif0bGz/NavmiQfPs4ZcmQJp4WqOXlR4AQ==}
@@ -3801,6 +3807,10 @@ snapshots:
       - supports-color
 
   '@supabase/auth-js@2.65.1':
+    dependencies:
+      '@supabase/node-fetch': 2.6.15
+
+  '@supabase/auth-js@2.66.0':
     dependencies:
       '@supabase/node-fetch': 2.6.15
 

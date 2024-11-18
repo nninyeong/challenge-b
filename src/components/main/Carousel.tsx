@@ -61,7 +61,7 @@ const Carousel = () => {
       >
         {extendedReviewArr.map((review, index) => {
           const imgUrls = review.image_url || [];
-          const user = users?.users.find((user) => user.id === review.user_id);
+          const user = users?.find((user) => user.id === review.user_id);
           const avatarUrl = user?.user_metadata?.avatar_url || '/assets/images/defaultImg.png';
           return (
             <div
