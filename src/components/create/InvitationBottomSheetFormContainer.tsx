@@ -69,7 +69,7 @@ const InvitationBottomSheetFormContainer = ({
           >
             <img
               src='/assets/images/icons/chevron-left.webp'
-              alt=''
+              alt='이전'
               width={28}
               height={28}
               loading='lazy'
@@ -83,7 +83,7 @@ const InvitationBottomSheetFormContainer = ({
           >
             <img
               src='/assets/images/icons/chevron-right.webp'
-              alt=''
+              alt='다음'
               width={28}
               height={28}
               loading='lazy'

@@ -144,7 +144,7 @@ const ReviewForm = () => {
                 <img
                   src='/assets/images/icons/image-add.png'
                   loading='lazy'
-                  className='w-[24px] h-[]'
+                  className='w-[24px] h-[24px]'
                   alt='이미지 추가 아이콘'
                 />
                 <p className='text-gray-600 text-[10px]'>
