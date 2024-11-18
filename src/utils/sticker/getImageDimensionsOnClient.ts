@@ -1,4 +1,4 @@
-const getImageDimensions = (url: string): Promise<{ width: number; height: number }> => {
+const getImageDimensionsOnClient = (url: string): Promise<{ width: number; height: number }> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.src = url;
@@ -7,4 +7,4 @@ const getImageDimensions = (url: string): Promise<{ width: number; height: numbe
   });
 };
 
-export default getImageDimensions;
+export default getImageDimensionsOnClient;
