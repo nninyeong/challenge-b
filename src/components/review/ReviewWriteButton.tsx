@@ -43,7 +43,7 @@ const ReviewWriteButton = () => {
   return (
     <button
       className='fixed bottom-[13px] left-1/2 rounded-[300px] bg-primary300 
-    text-white flex justify-center items-center w-[142px] h-[40px] -translate-x-1/2
+    text-white flex justify-center items-center pt-2 pb-2 pl-4 pr-4 gap-[2.5px] -translate-x-1/2
     '
       onClick={handleOpenBottomSheetButton}
     >
