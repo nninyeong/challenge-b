@@ -30,7 +30,9 @@ const GalleryInput = () => {
         try {
           const uploadPromises = fileArray.map(async (file) => {
             const compressedFile = await compressImageTwice(file);
-
+            if (!compressedFile) {
+              throw new Error();
+            }
             const uploadedUrl = await uploadGalleryImageToSupabaseStorage(compressedFile);
             return uploadedUrl;
           });

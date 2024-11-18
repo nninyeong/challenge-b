@@ -22,6 +22,6 @@ export const compressImageTwice = async (file: File) => {
 
     return secondCompressedFile;
   } catch (error) {
-    throw new Error();
+    console.error(error);
   }
 };

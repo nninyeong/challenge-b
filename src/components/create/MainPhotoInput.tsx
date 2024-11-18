@@ -13,6 +13,9 @@ const MainPhotoInput = () => {
     const file = event.target.files?.[0];
     if (file) {
       const compressImg = await compressImageTwice(file);
+      if (!compressImg) {
+        throw new Error();
+      }
       const publicUrl = await uploadImageToSupabaseStorage(compressImg);
 
       if (publicUrl) {
