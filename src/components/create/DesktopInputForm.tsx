@@ -184,7 +184,7 @@ const DesktopInputForm = ({
       </div>
 
       <div
-        className='flex flex-col gap-[24px] relative'
+        className='flex flex-col gap-[24px] relative duration-500'
         style={{
           top: -currentOffset - 24,
         }}
