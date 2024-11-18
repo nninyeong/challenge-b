@@ -138,7 +138,7 @@ const DesktopInputForm = ({
       }}
     >
       <div
-        className='fixed top-[23px] z-40 flex gap-[8px]'
+        className='fixed top-[23px] z-30 flex gap-[8px]'
         style={{
           left: `${formPosition.left + formPosition.width - SUBMIT_BUTTON_MARGIN_RIGHT}px`,
         }}
@@ -158,7 +158,7 @@ const DesktopInputForm = ({
         </Button>
       </div>
       <div
-        className='fixed z-40 flex justify-between flex-col left-[65%]'
+        className='fixed z-30 flex justify-between flex-col left-[65%]'
         style={{
           height: NAVIGATION_BUTTON_CONTAINER_HEIGHT,
           top: `${windowHeight / 3}px`,
