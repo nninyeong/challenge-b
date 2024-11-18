@@ -6,7 +6,7 @@ import { useEffect, MutableRefObject, Dispatch, SetStateAction, useRef } from 'r
 import { UseFormReturn } from 'react-hook-form';
 import PreviewElement from './PreviewElement';
 import { OrderList, StepType } from '@/hooks/create/useFormStepController';
-import { ScrollRefsType } from '@/app/(noLayout)/create/card/page';
+import { ScrollRefsType } from '@/app/(createCardLayout)/create/card/page';
 import useViewportWidth from '@/hooks/create/useViewPortWidth';
 
 const PreviewList = ({
