@@ -90,7 +90,7 @@ const MainFaqList = () => {
 
   return (
     <div>
-      <div className='desktop:text-[36px] text-[20px] font-Main font-bold mt-8 py-6 px-0'>드림카드, 자주 묻는 질문</div>
+      <div className='desktop:text-[36px] text-[20px] text-gray-900 font-Main font-bold mt-8 py-6 px-0'>드림카드, 자주 묻는 질문</div>
       <ul className='flex flex-col items-center'>
         {FAQ_LIST.map((menu) => (
           <li
@@ -98,12 +98,12 @@ const MainFaqList = () => {
             className='w-full cursor-pointer flex flex-col items-center'
             onClick={() => toggleFAQ(menu.id)}
           >
-            <div className='w-full flex justify-between items-center border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 p-4 px-0 desktop:text-[24px]'>
+            <div className='w-full flex justify-between items-center border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 p-4 px-0 font-medium text-gray-900 text-[14px] desktop:text-[24px]'>
               {menu.question}
               {expandedIds.has(menu.id) ? (
-                <FaChevronUp className='text-gray-700' />
+                <FaChevronUp className='text-[#0A090B]' />
               ) : (
-                <FaChevronDown className='text-gray-700' />
+                <FaChevronDown className='text-[#0A090B]' />
               )}
             </div>
             {expandedIds.has(menu.id) && <FaqCard answer={menu.answer} />}
