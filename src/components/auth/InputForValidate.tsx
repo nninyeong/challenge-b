@@ -19,7 +19,7 @@ const InputForValidate = ({
   className?: string;
 }) => {
   return (
-    <div className='grid grid-rows-[48px_24px] gap-0 w-full'>
+    <div className='grid grid-rows-[48px_24px] gap-0 w-full content-center items-center'>
       <input
         type={type}
         placeholder={placeholder}
@@ -27,9 +27,11 @@ const InputForValidate = ({
         className={`border rounded-[12px] w-full h-[48px] p-[16px] ${className}`}
       />
       {!errorMessage && (
-        <p className='text-gray-600 text-[12px] mt-[8px] ml-[16px]'>{validateFor === 'password' && guideMessage}</p>
+        <p className='text-gray-600 text-[12px] ml-[16px] leading-[12px]'>
+          {validateFor === 'password' && guideMessage}
+        </p>
       )}
-      {errorMessage && <p className='text-primary-300 text-[12px] mt-[4px] ml-[16px]'>{errorMessage}</p>}
+      {errorMessage && <p className='text-primary-300 text-[12px] ml-[16px] leading-[12px]'>{errorMessage}</p>}
     </div>
   );
 };

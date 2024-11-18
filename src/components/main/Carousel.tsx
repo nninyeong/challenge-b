@@ -80,7 +80,7 @@ const Carousel = () => {
                 <div className='absolute inset-0 bg-black opacity-50' />
               </div>
               <div className='desktop:w-[383px] desktop:h-[241px] w-[216px] h-[136px] rounded-b-2xl desktop:p-[24px] p-[16px] desktop:text-[24px] text-[12px] shadow-md'>
-                <div className='flex items-center desktop:gap-[16px] p-[6px] desktop:mb-[24px] b-[16px]'>
+                <div className='flex items-center gap-[8px] desktop:gap-[16px] mb-[6px] desktop:mb-[24px] b-[16px]'>
                   <div className='relative desktop:w-[42px] desktop:h-[42px] w-[16px] h-[16px] rounded-full overflow-hidden'>
                     <Image
                       src={avatarUrl}
