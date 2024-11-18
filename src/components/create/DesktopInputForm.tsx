@@ -204,7 +204,7 @@ const DesktopInputForm = ({
                         ? 30
                         : 0,
                   }}
-                  className={`w-full h-full border-[1px] border-solid shadow-md rounded-[12px] px-[24px] py-[16px] relative bg-white`}
+                  className={`w-full h-full border-[1px] border-solid shadow-md rounded-[12px] px-[24px] pt-[16px] pb-[24px] relative bg-white`}
                   ref={(el) => {
                     inputHeightRef.current[e.name[inputStep]] = { height: el?.offsetHeight };
                   }}
