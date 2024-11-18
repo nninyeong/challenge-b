@@ -62,7 +62,6 @@ body {
   src: url('../../public/assets/fonts/JejuGothic.ttf');
 }
 
-
 @font-face {
   font-family: 'HakgyoansimWoojuR';
   src: url('../../public/assets/fonts/HakgyoansimWoojuR.ttf');
@@ -115,8 +114,8 @@ body {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   border: 1px solid #d9d9d9;
   border-radius: 3px;
   background-color: white;
@@ -132,7 +131,7 @@ body {
 .custom-checkbox:checked::after {
   content: '✔';
   color: white;
-  font-size: 14px;
+  font-size: 15px;
   position: absolute;
   top: 50%;
   left: 50%;

@@ -59,7 +59,7 @@ export const PersonalInfo = ({ type }: Props) => {
           />
         </div>
 
-        <div className='flex justify-end items-center gap-[6px]'>
+        <div className='flex justify-end items-center gap-[6px] mt-[8px]'>
           <input
             type='checkbox'
             {...register(`personalInfo.${type}.father.isDeceased`)}
@@ -93,7 +93,7 @@ export const PersonalInfo = ({ type }: Props) => {
           />
         </div>
 
-        <div className='flex justify-end items-center gap-[6px]'>
+        <div className='flex justify-end items-center gap-[6px] mt-[6px]'>
           <input
             type='checkbox'
             {...register(`personalInfo.${type}.mother.isDeceased`)}
