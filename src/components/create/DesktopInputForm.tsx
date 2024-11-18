@@ -1,5 +1,5 @@
 'use client';
-import { useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
+import { DELAY_TIME, useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
 import { OrderList, StepType } from '@/hooks/create/useFormStepController';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { UseFormReturn } from 'react-hook-form';
@@ -11,6 +11,7 @@ import {
   NAVIGATION_BUTTON_HALF_WIDTH,
   SUBMIT_BUTTON_MARGIN_RIGHT,
 } from '@/constants/invitationDesktopForm';
+import { debounce } from '@/utils/debounce';
 
 type DesktopInputPropsType = {
   methods: UseFormReturn<InvitationFormType>;
@@ -59,15 +60,15 @@ const DesktopInputForm = ({
 
   const router = useRouter();
 
-  const handleNextButton = () => {
+  const handleNextButton = debounce(() => {
     handleDebouncedNext();
     setCurrentOffset((prev) => prev + inputHeights.currentContentHeight + 24);
-  };
+  }, DELAY_TIME);
 
-  const handlePrevButton = () => {
+  const handlePrevButton = debounce(() => {
     handleDebouncedPrevious();
     setCurrentOffset((prev) => prev - (inputHeights.prevContentHeight + 24));
-  };
+  }, DELAY_TIME);
 
   const handleExitButton = () => {
     router.back();
