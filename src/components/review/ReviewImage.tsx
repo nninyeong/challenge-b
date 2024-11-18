@@ -17,6 +17,17 @@ const ReviewImage = () => {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
   useEffect(() => {
+    if (isImageModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isImageModalOpen]);
+
+  useEffect(() => {
     const updateDisplayedReviews = () => {
       const width = window.innerWidth;
       let reviewsToShow;

@@ -2,7 +2,7 @@
 import { useGetAllImageReivews } from '@/hooks/queries/review/useGetAllImageReviews';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useMediaQuery from '@/hooks/review/useMediaQuery';
 import { ReviewDetailModal } from '@/components/review/ReviewDetailModal';
 import { ReviewImageLoading } from '@/components/loading/ReviewLoading';
@@ -13,6 +13,17 @@ const ImagePage = () => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 1440px)');
   const router = useRouter();
+
+  useEffect(() => {
+    if (isReviewModalOpen) {
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.documentElement.style.overflow = 'unset';
+    }
+    return () => {
+      document.documentElement.style.overflow = 'unset';
+    };
+  }, [isReviewModalOpen]);
 
   const handleReviewDetailPage = (id: string) => {
     setSelectedReviewId(id);

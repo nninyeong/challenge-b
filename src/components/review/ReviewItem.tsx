@@ -8,7 +8,7 @@ import { User } from '@/types/users.types';
 import { Notify } from 'notiflix';
 import { usePathname } from 'next/navigation';
 import { useDeleteReviewMutation } from '@/hooks/queries/review/useDeleteReviewMutation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useMediaQuery from '@/hooks/review/useMediaQuery';
 import { ReviewDetailModal } from './ReviewDetailModal';
 
@@ -30,6 +30,17 @@ const ReviewItem = ({
   const isDesktop = useMediaQuery('(min-width: 1440px)');
   const pathname = usePathname();
   const { mutate: deleteMyReview } = useDeleteReviewMutation();
+
+  useEffect(() => {
+    if (isReviewModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isReviewModalOpen]);
 
   const handleNotYetButton = () => {
     Notify.info('준비중인 서비스입니다.');

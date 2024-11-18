@@ -6,7 +6,7 @@ import browserClient from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Notify } from 'notiflix';
 import useMediaQuery from '@/hooks/review/useMediaQuery';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReviewForm from './ReviewForm';
 
 const ReviewWriteButton = () => {
@@ -14,10 +14,23 @@ const ReviewWriteButton = () => {
   const [isReviewWriteModalOpen, setIsReviewWriteModalOpen] = useState(false);
   const router = useRouter();
   const { setIsReviewBottomSheetOpen } = useReviewBottomSheetContext((state) => state);
+
+  useEffect(() => {
+    if (isReviewWriteModalOpen) {
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.documentElement.style.overflow = 'unset';
+    }
+    return () => {
+      document.documentElement.style.overflow = 'unset';
+    };
+  }, [isReviewWriteModalOpen]);
+
   const getUserId = async () => {
     const { data } = await browserClient.auth.getUser();
     return data.user?.id;
   };
+
   const checkAccessPermissions = async () => {
     const userId = await getUserId();
 
