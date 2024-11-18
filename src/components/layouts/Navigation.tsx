@@ -44,7 +44,7 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
           </>
         ) : (
           <Link href='/signin'>
-            <button className='bg-user-profile-02 w-[24px] h-[24px]' />
+            <button className='bg-user-profile-02 w-[24px] h-[24px] bg-cover' />
           </Link>
         )}
       </nav>

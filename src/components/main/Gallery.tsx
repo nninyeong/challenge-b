@@ -30,7 +30,6 @@ const Gallery = () => {
                 alt={`디자인 이미지${index}`}
                 layout='fill'
                 objectFit='cover'
-                priority
               />
             </div>
           ))}
