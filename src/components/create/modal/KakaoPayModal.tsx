@@ -27,10 +27,11 @@ const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, value, onClose, onSa
         <div className='flex justify-between'>
           <h2 className='text-[16px] font-bold mb-4'>카카오페이 등록 방법</h2>
           <img
-            src='/assets/images/icons/x-03.svg'
+            src='/assets/images/icons/x-03.webp'
             alt='x'
             className='w-[24px] h-[24px]'
             onClick={onClose}
+            loading='lazy'
           />
         </div>
         <div

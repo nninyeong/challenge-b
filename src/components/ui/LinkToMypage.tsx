@@ -7,7 +7,7 @@ const LinkToMypage = () => {
   return (
     <Link href='/mypage'>
       <button
-        className={`w-[24px] h-[24px] ${path === '/mypage' ? 'bg-user-profile-selected' : 'bg-user-profile-02'}`}
+        className={`w-[24px] h-[24px] ${path === '/mypage' ? 'bg-user-profile-selected' : 'bg-user-profile-02'} bg-cover`}
       />
     </Link>
   );

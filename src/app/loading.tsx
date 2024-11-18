@@ -20,7 +20,7 @@ const Loading = () => {
         />
 
         <motion.img
-          src='/assets/images/branding/shadow.png'
+          src='/assets/images/branding/shadow.webp'
           alt='Loading..'
           initial={{ width: '117px', height: '18px' }}
           animate={{
