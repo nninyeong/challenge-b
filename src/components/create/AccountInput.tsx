@@ -3,13 +3,11 @@ import useKakaoPayModal from '@/hooks/kakaopay/useKakaoPayModal';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import KakaoPayModal from './modal/KakaoPayModal';
-import { kakaopaySchema } from '@/lib/zod/kakaoPaySchema';
-import { z } from 'zod';
 import { Notify } from 'notiflix';
 
 const AccountInput = () => {
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
-  const { register, control, setValue, watch } = useFormContext();
+  const { register, control, watch } = useFormContext();
 
   const { fields: groomFields } = useFieldArray({
     control,
@@ -25,23 +23,19 @@ const AccountInput = () => {
     isModalOpen,
     modalValue,
     selectedIndex,
+    isInvalid,
     setModalValue,
     openKakaoPayModal,
     closeKakaoPayModal,
   } = useKakaoPayModal();
 
-  const handleModalSubmit = () => {
-    try {
-      kakaopaySchema.parse(modalValue);
-      if (selectedIndex !== null) {
-        setValue(`account.${accountType}[${selectedIndex}].kakaopay`, modalValue);
-        closeKakaoPayModal();
-      }
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        Notify.failure(error.errors[0].message);
-      }
+  const onSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (modalValue !== '' && !modalValue.startsWith('https://qr.kakaopay.com')) {
+      Notify.failure('카카오페이 링크 형식에 맞지 않습니다');
+      return;
     }
+    closeKakaoPayModal();
   };
 
   return (
@@ -120,14 +114,15 @@ const AccountInput = () => {
                 />
                 <button
                   type='button'
-                  onClick={() => openKakaoPayModal(index, kakaopayValue)} // 모달 열기
+                  onClick={() => openKakaoPayModal(index, kakaopayValue)}
                 >
                   <img
                     src={
                       kakaopayValue
-                        ? '/assets/images/icons/kakaomodal-on.svg'
-                        : '/assets/images/icons/kakaomodal-off.svg'
+                        ? '/assets/images/icons/kakaomodal-on.webp'
+                        : '/assets/images/icons/kakaomodal-off.webp'
                     }
+                    loading='lazy'
                     alt={kakaopayValue ? '카카오페이 활성화' : '카카오페이 비활성화'}
                   />
                 </button>
@@ -139,11 +134,17 @@ const AccountInput = () => {
 
       <KakaoPayModal
         isModalOpen={isModalOpen}
-        value={modalValue}
         onClose={closeKakaoPayModal}
-        onSave={handleModalSubmit}
-        onChange={setModalValue}
-      />
+        onSave={onSave}
+      >
+        <input
+          {...register(`account.${accountType}[${selectedIndex}].kakaopay`)}
+          value={modalValue}
+          onChange={(e) => setModalValue(e.target.value)}
+          placeholder='카카오페이 송금 링크 복사'
+          className={`w-full px-4 py-2 border rounded mb-4 ${isInvalid ? 'border-red-500' : ''}`}
+        />
+      </KakaoPayModal>
     </div>
   );
 };

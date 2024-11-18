@@ -55,7 +55,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
                 onSelect={(value) => {
                   setValue('attendanceCount', parseInt(value, 10));
                 }}
-                width='79px'
+                width='w-[79px]'
                 backgroundColor='#000000'
               />
               <div>
@@ -95,9 +95,10 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
                     className={`flex justify-center items-center gap-1 w-[152px] h-10 border text-[14px] border-gray-300 rounded-md  text-gray-500 ${selected === '신랑' ? 'text-primary300 border-primary300' : ''}`}
                   >
                     <img
-                      src='/assets/images/icons/attendance-groom.svg'
+                      src='/assets/images/icons/attendance-groom.png'
                       alt='신랑'
                       className='peer-checked:hidden inline w-[24px] h-[24px] p-0'
+                      loading='lazy'
                     />
                     <span className='pt-1'>신랑측</span>
                   </div>
@@ -118,9 +119,10 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
                     className={`text-[14px] flex justify-center items-center gap-1 w-[152px] h-10 border border-gray-300 rounded-md text-gray-500 ${selected === '신부' ? 'text-primary300 border-primary300' : ''}`}
                   >
                     <img
-                      src='/assets/images/icons/attendance-bride.svg'
+                      src='/assets/images/icons/attendance-bride.png'
                       alt='신부'
                       className='peer-checked:hidden inline p-0 w-[24px] h-[24px]'
+                      loading='lazy'
                     />
                     <span className='pt-1'>신부측</span>
                   </div>

@@ -4,6 +4,7 @@ import { insertMyReview } from '@/utils/insertMyReview';
 import { updateMyReview } from '@/utils/updateMyReview';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Notify } from 'notiflix';
+import { QUERY_KEYS } from '../queryKeys';
 
 export const useReviewMutation = () => {
   const queryClient = useQueryClient();
@@ -22,7 +23,9 @@ export const useReviewMutation = () => {
     },
     onSuccess: () => {
       setIsReviewBottomSheetOpen(false);
-      queryClient.invalidateQueries({ queryKey: ['reviews'] }); //TODO 소현님 브랜치 merge후 queryKey 분리 예정
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.reviews() });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.userReview() });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.allImageReviews() });
       Notify.success('작성되었습니다.');
     },
   });

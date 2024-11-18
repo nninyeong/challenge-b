@@ -3,7 +3,7 @@ import browserClient from '@/utils/supabase/client';
 import { GuestBookEntry } from '@/types/guestBookEntry.types';
 import { QUERY_KEYS } from '../queryKeys';
 
-const ITEMS_PER_PAGE = 6;
+export const ITEMS_PER_PAGE = 5;
 
 export const fetchGuestBook = async (
   invitationId: string,

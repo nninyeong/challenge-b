@@ -7,7 +7,7 @@ import { getReviewDetail } from '@/utils/server-action';
 interface ParamsType {
   id: string;
 }
-type ReviewType = {
+export type ReviewType = {
   id: string;
   created_at: string;
   user_id: string;
@@ -20,7 +20,7 @@ type ReviewType = {
 const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
   const reviewData: ReviewType = await getReviewDetail(params.id);
   const users = await getAuthUsersProfile();
-  const reviewUser = users.users.find((e) => e.id === reviewData.user_id);
+  const reviewUser = users.find((e) => e.id === reviewData.user_id);
 
   return (
     <div
@@ -29,7 +29,7 @@ const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
     >
       <ReviewSlide images={reviewData.image_url!} />
 
-      <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60'></div>
+      <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60' />
       <ReviewContentsBox
         user={reviewUser!}
         content={reviewData.content}

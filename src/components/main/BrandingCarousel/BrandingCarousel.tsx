@@ -20,7 +20,7 @@ const CAROUSEL_ITEM_PROPS = [
     mobileSrc: '/assets/images/branding/main-mockup-2.webp',
     desktopSrc: '/assets/images/branding/desktop-main-mockup-2.webp',
     mobileDescription: `드림카드로 완성하는\n당신만의 특별한 무드`,
-    desktopDescription: `드림카드로 특별한 초대,\n참석 여부도 손쉽게`,
+    desktopDescription: `드림카드로 완성하는\n당신만의 특별한 무드`,
   },
 ];
 

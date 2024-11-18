@@ -4,13 +4,12 @@ import usePayModalFlip from '@/hooks/kakaopay/usePayModalFlip';
 
 type ModalProps = {
   isModalOpen: boolean;
-  value: string;
   onClose: () => void;
-  onSave: () => void;
-  onChange: (value: string) => void;
+  onSave: (e: React.FormEvent) => void;
+  children?: React.ReactNode;
 };
 
-const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, value, onClose, onSave, onChange }) => {
+const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, onClose, onSave, children }) => {
   const { isFlipped, toggleFlip } = usePayModalFlip();
 
   if (!isModalOpen) return null;
@@ -27,10 +26,11 @@ const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, value, onClose, onSa
         <div className='flex justify-between'>
           <h2 className='text-[16px] font-bold mb-4'>카카오페이 등록 방법</h2>
           <img
-            src='/assets/images/icons/x-03.svg'
+            src='/assets/images/icons/x-03.webp'
             alt='x'
             className='w-[24px] h-[24px]'
             onClick={onClose}
+            loading='lazy'
           />
         </div>
         <div
@@ -58,13 +58,7 @@ const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, value, onClose, onSa
           </p>
         </div>
         <h2 className='text-[16px] font-bold mb-2 desktop:mb-[14px]'>카카오페이 등록</h2>
-        <input
-          type='text'
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder='카카오페이 송금 링크 복사'
-          className='w-full px-4 py-2 border rounded mb-[28px]'
-        />
+        {children && <div className='mt-4'>{children}</div>}
         <button
           onClick={onSave}
           className='w-full h-12 bg-primary300 text-[16px] font-bold text-white rounded'

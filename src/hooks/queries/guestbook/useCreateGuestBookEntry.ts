@@ -2,8 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import browserClient from '@/utils/supabase/client';
 import { QUERY_KEYS } from '../queryKeys';
 import { Notify } from 'notiflix';
+import { fetchGuestBook } from './useGuestBookEntries';
 
-const useAddGuestBookEntry = ({ invitationId, onSuccess }: { invitationId: string; onSuccess: () => void }) => {
+const useAddGuestBookEntry = ({ invitationId, onSuccess, totalPages }: { invitationId: string; onSuccess: () => void; totalPages: number }) => {
   const queryClient = useQueryClient();
 
   const insertGuestBook = async (name: string, password: string, content: string) => {
@@ -24,11 +25,18 @@ const useAddGuestBookEntry = ({ invitationId, onSuccess }: { invitationId: strin
   return useMutation({
     mutationFn: (data: { name: string; password: string; content: string }) =>
       insertGuestBook(data.name, data.password, data.content),
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.guestBook(invitationId, 1),
-        exact: false
+        exact: false,
       });
+      if (totalPages > 1) {
+        await queryClient.prefetchQuery({
+          queryKey: QUERY_KEYS.guestBook(invitationId, 2),
+          queryFn: () => fetchGuestBook(invitationId, 2),
+          staleTime: 0,
+        });
+      }
       Notify.success('방명록이 작성되었습니다.');
       onSuccess();
     },

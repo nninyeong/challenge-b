@@ -1,10 +1,17 @@
+'use client';
+import useMediaQuery from '@/hooks/review/useMediaQuery';
+
 export const ReviewImageLoading = () => {
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
+
+  const length = isDesktop ? 8 : 4;
+
   return (
-    <div className='w-full grid grid-cols-4 gap-[13px] mt-[20px] mb-[24px]'>
-      {Array.from({ length: 4 }).map((_, index) => (
+    <div className='w-full grid grid-cols-4 desktop:grid-cols-8 gap-[13px] mt-[20px] mb-[24px]'>
+      {Array.from({ length }).map((_, index) => (
         <div
           key={index}
-          className='w-[76px] h-[76px] bg-gray-50 animate-pulse rounded-lg'
+          className='w-full h-0 pb-[100%] bg-gray-200 animate-pulse rounded-lg relative'
         />
       ))}
     </div>
@@ -37,4 +44,8 @@ export const ReviewCardLoading = () => {
       ))}
     </>
   );
+};
+
+export const ReviewDetailLoading = () => {
+  return <div className='w-[571px] h-[780px] bg-gray-50 ' />;
 };

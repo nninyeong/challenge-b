@@ -24,15 +24,15 @@ const ReviewSlide = ({ images }: { images: string[] }) => {
       />
       <button
         onClick={() => handlePrevious()}
-        className='absolute flex items-center justify-center left-4 top-1/2 transform -translate-y-1/2 bg-black/60 text-white px-4 py-2 rounded-full z-50 w-[40px] h-[40px]'
+        className='absolute flex items-center justify-center left-4 top-1/2 transform -translate-y-1/2 bg-black/60 text-white px-4 py-2 rounded-full z-50 w-[40px] h-[40px] desktop:w-[70px] desktop:h-[70px] desktop:left-[-100px]'
       >
-        <FaChevronLeft className='w-[28px] h-[28px]' />
+        <FaChevronLeft className='w-[28px] h-[28px] desktop:w-[32px] desktop:h-[32px]' />
       </button>
       <button
         onClick={() => handleNext()}
-        className='flex items-center justify-center absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/60 text-white px-4 py-2 rounded-full z-50 w-[40px] h-[40px]'
+        className='flex items-center justify-center absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/60 text-white px-4 py-2 rounded-full z-50 w-[40px] h-[40px] desktop:w-[70px] desktop:h-[70px] desktop:right-[-100px] '
       >
-        <FaChevronRight className='w-[28px] h-[28px]' />
+        <FaChevronRight className='w-[28px] h-[28px] desktop:w-[32px] desktop:h-[32px]' />
       </button>
     </>
   );
