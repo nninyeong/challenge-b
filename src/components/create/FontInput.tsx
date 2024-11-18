@@ -73,7 +73,7 @@ const FontInput = () => {
           ))}
         </div>
       </div>
-      <div className='mt-[21px]'>
+      <div className='mt-[21px] desktop:mt-[36px] desktop:flex desktop:justify-center'>
         <ColorPalette
           onChangeColor={(color) => handleFontColorChange(color)}
           selectedColor={fontColor}
