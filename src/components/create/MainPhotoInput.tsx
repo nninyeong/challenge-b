@@ -25,8 +25,8 @@ const MainPhotoInput = () => {
 
   return (
     <div className='w-full flex flex-col gap-3 justify-center mt-3.5'>
-      <div className='w-full flex justify-center items-center'>
-        <label className='font-bold text-gray-700 text-[14px] leading-[14px] w-[45px] desktop:w-[56px] whitespace-nowrap'>
+      <div className='w-full flex justify-start items-center'>
+        <label className='font-medium text-gray-700 text-[14px] leading-[14px] w-[45px] desktop:w-[56px] whitespace-nowrap'>
           이름
         </label>
         <div className='gap-2 w-full justify-center'>
