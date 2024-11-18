@@ -12,10 +12,8 @@ const MoodKeyword = () => {
   return (
     <div className='desktop:mb-[80px] mb-[56px]'>
       <div className='desktop:mb-[56px] mb-[24px]'>
-        <h1 className='desktop:text-[36px] text-[20px] font-bold'>원하는 무드가 담긴 나만의 청접장</h1>
-        <p className='desktop:text-[24px] text-[14px] font-medium'>
-          예비 신랑, 신부님의 분위기에 맞게 커스터마이징 해요!
-        </p>
+        <h1 className='desktop:text-[36px] text-[20px] font-semibold'>원하는 무드가 담긴 나만의 청접장</h1>
+        <p className='desktop:text-[24px] text-[14px]'>예비 신랑, 신부님의 분위기에 맞게 커스터마이징 해요!</p>
       </div>
 
       <div className='flex flex-col justify-start items-center gap-[16px]'>
@@ -24,7 +22,7 @@ const MoodKeyword = () => {
             <button
               key={mood.category}
               onClick={() => handleClickMood(mood.image)}
-              className={`flex-shrink-0 desktop:px-[18px] px-[12px] desktop:py-[6px] py-[4px] ${selectedMood === mood.image ? 'bg-primary300 text-white' : 'bg-white text-primary300 border border-primary300'} rounded-full desktop:text-[24px] text-[16px] text-center`}
+              className={`flex-shrink-0 px-[18px] px-[15px] py-[6px] py-[4px] ${selectedMood === mood.image ? 'bg-primary300 text-white' : 'bg-white text-primary300 border border-primary300'} rounded-full desktop:text-[24px] text-[16px] text-center`}
             >
               {mood.label}
             </button>
