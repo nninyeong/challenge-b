@@ -5,12 +5,14 @@ import { ColorType } from '@/types/invitationFormType.type';
 import SelectBox from '@/components/ui/SelectBox';
 
 const FONT_MENU = [
+  { name: '고운 바탕체', font: 'GowunBatang-Regular' },
+  { name: 'Hahmlet', font: 'Hahmlet-VariableFont_wght' },
   { name: '나눔손글씨', font: 'NanumPen' },
+  { name: '하이멜로디', font: 'HiMelody-Regular' },
   { name: '카페24 아네모네', font: 'Cafe24' },
   { name: '제주고딕', font: 'JejuGothic' },
   { name: '배달의민족 도현체', font: 'Bmdohyeon' },
   { name: '에스코어 드림', font: 'SCDream1' },
-  { name: '눈누 난나체', font: 'Main' },
 ];
 
 const FontSizeList = [-2, -1, 0, +1, +2];
