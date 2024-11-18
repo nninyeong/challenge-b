@@ -67,7 +67,7 @@ const AccountInput = () => {
         <button
           type='button'
           onClick={() => setAccountType('groom')}
-          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out ${
+          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out font-bold ${
             accountType === 'groom' ? 'text-white' : 'text-[#8c8c8c]'
           } mr-3`}
         >
@@ -76,7 +76,7 @@ const AccountInput = () => {
         <button
           type='button'
           onClick={() => setAccountType('bride')}
-          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out ${
+          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out font-bold ${
             accountType === 'bride' ? 'text-white' : 'text-[#8c8c8c]'
           }`}
         >
