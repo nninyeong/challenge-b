@@ -61,7 +61,7 @@ const SelectBox = ({
         >
           <span>{value}</span>
           <Image
-            src='/assets/images/icons/expand_more.svg'
+            src='/assets/images/icons/expand_more.png'
             alt=''
             width={24}
             height={24}
