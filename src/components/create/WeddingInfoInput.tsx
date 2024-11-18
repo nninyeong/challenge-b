@@ -26,13 +26,11 @@ const WeddingInfoInput = () => {
 
   const [showAddressModal, setShowAddressModal] = useState(false);
   const openAddressModal = () => {
-    document.documentElement.style.overflow = 'hidden';
     setShowAddressModal(true);
   };
 
   const setAddress = (value: Address) => {
     setValue('weddingInfo.weddingHallAddress', value.address);
-    document.documentElement.style.overflow = 'auto';
     setShowAddressModal(false);
   };
 
@@ -52,8 +50,8 @@ const WeddingInfoInput = () => {
           <input
             {...register('weddingInfo.date')}
             placeholder='2024.11.21'
-            className='w-[172px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
-            maxLength={21}
+            className='w-[172px] desktop:w-[388px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
+            maxLength={8}
           />
         </div>
         <div className='grid grid-cols-[80px_1fr] items-center'>
@@ -63,7 +61,7 @@ const WeddingInfoInput = () => {
               onSelect={setHour}
               optionList={HOURS_FOR_WEDDING_INFO}
               value={time.hour}
-              width='92px'
+              width='w-[92px] desktop:w-[96px]'
               limitOptionHeight='128px'
               backgroundColor='#000000'
             />
@@ -71,7 +69,7 @@ const WeddingInfoInput = () => {
               onSelect={setMinute}
               optionList={MINUTES_FOR_WEDDING_INFO}
               value={time.minute}
-              width='72px'
+              width='w-[72px] desktop:w-[88px]'
               backgroundColor='#000000'
             />
           </div>
@@ -101,7 +99,7 @@ const WeddingInfoInput = () => {
         <div className='grid grid-cols-[80px_1fr]'>
           <label className='leading-[32px]'>예식장명</label>
           <input
-            className='w-[235px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
+            className='w-[235px] desktop:w-[388px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
             {...register('weddingInfo.weddingHallName')}
             maxLength={21}
           />
@@ -109,7 +107,7 @@ const WeddingInfoInput = () => {
         <div className='grid grid-cols-[80px_1fr]'>
           <label className='leading-[32px]'>연락처</label>
           <input
-            className='w-[172px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
+            className='w-[172px] desktop:w-[308px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
             placeholder='연락처를 입력해주세요.'
             {...register('weddingInfo.weddingHallContact')}
             maxLength={15}

@@ -35,7 +35,6 @@ const MoodKeyword = () => {
             alt='무드에 맞는 청첩장 이미지'
             layout='fill'
             objectFit='cover'
-            priority
           />
         </div>
       </div>

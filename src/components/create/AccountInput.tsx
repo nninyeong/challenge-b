@@ -21,14 +21,8 @@ const AccountInput = () => {
     name: 'account.bride',
   });
 
-  const {
-    isModalOpen,
-    modalValue,
-    selectedIndex,
-    setModalValue,
-    openKakaoPayModal,
-    closeKakaoPayModal,
-  } = useKakaoPayModal();
+  const { isModalOpen, modalValue, selectedIndex, setModalValue, openKakaoPayModal, closeKakaoPayModal } =
+    useKakaoPayModal();
 
   const handleModalSubmit = () => {
     try {
@@ -125,9 +119,10 @@ const AccountInput = () => {
                   <img
                     src={
                       kakaopayValue
-                        ? '/assets/images/icons/kakaomodal-on.svg'
-                        : '/assets/images/icons/kakaomodal-off.svg'
+                        ? '/assets/images/icons/kakaomodal-on.webp'
+                        : '/assets/images/icons/kakaomodal-off.webp'
                     }
+                    loading='lazy'
                     alt={kakaopayValue ? '카카오페이 활성화' : '카카오페이 비활성화'}
                   />
                 </button>

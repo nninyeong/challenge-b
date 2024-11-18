@@ -20,7 +20,7 @@ export type ReviewType = {
 const ReviewDetailPage = async ({ params }: { params: ParamsType }) => {
   const reviewData: ReviewType = await getReviewDetail(params.id);
   const users = await getAuthUsersProfile();
-  const reviewUser = users.users.find((e) => e.id === reviewData.user_id);
+  const reviewUser = users.find((e) => e.id === reviewData.user_id);
 
   return (
     <div

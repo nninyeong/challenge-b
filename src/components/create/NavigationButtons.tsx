@@ -15,7 +15,8 @@ const NavigationButtons = ({ address, name, fontColor }: { address: string; name
         className='flex gap-[6px] items-center'
       >
         <img
-          src='/assets/images/icons/tmap.svg'
+          src='/assets/images/icons/tmap.png'
+          loading='lazy'
           alt='티맵'
           className='w-[24px] h-[24px]'
         />
@@ -26,8 +27,9 @@ const NavigationButtons = ({ address, name, fontColor }: { address: string; name
         className='flex gap-[6px] items-center'
       >
         <img
-          src='/assets/images/icons/kakaomap.svg'
+          src='/assets/images/icons/kakaomap.png'
           alt='카카오맵'
+          loading='lazy'
           className='w-[24px] h-[24px]'
         />
         카카오맵
@@ -37,7 +39,8 @@ const NavigationButtons = ({ address, name, fontColor }: { address: string; name
         className='flex gap-[6px] items-center'
       >
         <img
-          src='/assets/images/icons/naver-map.svg'
+          src='/assets/images/icons/naver-map.png'
+          loading='lazy'
           alt='네이버지도'
           className='w-[24px] h-[24px]'
         />

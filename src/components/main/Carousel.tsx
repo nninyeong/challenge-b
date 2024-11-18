@@ -61,7 +61,7 @@ const Carousel = () => {
       >
         {extendedReviewArr.map((review, index) => {
           const imgUrls = review.image_url || [];
-          const user = users?.users.find((user) => user.id === review.user_id);
+          const user = users?.find((user) => user.id === review.user_id);
           const avatarUrl = user?.user_metadata?.avatar_url || '/assets/images/defaultImg.png';
           return (
             <div
@@ -75,7 +75,6 @@ const Carousel = () => {
                     alt='리뷰 이미지'
                     layout='fill'
                     objectFit='cover'
-                    priority
                   />
                 )}
                 <div className='absolute inset-0 bg-black opacity-50' />
@@ -88,7 +87,6 @@ const Carousel = () => {
                       alt='profile'
                       layout='fill'
                       objectFit='cover'
-                      priority
                     />
                   </div>
                   <p className='text-gray-500'>
