@@ -50,7 +50,6 @@ export const getAuthUsersProfile = async (): Promise<SupabaseUser[]> => {
       page++;
     }
 
-    console.log('전체 사용자 수:', allUsers);
     return allUsers;
   } catch (error) {
     console.error('전체 사용자 목록 가져오기 실패:', error);

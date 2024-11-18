@@ -5,6 +5,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 import GalleryButton from '../gallery/GalleryButton';
 import { Notify } from 'notiflix';
+import { compressImageTwice } from '@/utils/compressImg';
 
 const MAX_FILES = 18;
 
@@ -27,8 +28,16 @@ const GalleryInput = () => {
         const fileArray = Array.from(files);
 
         try {
-          const urls = await Promise.all(fileArray.map((file) => uploadGalleryImageToSupabaseStorage(file)));
+          const uploadPromises = fileArray.map(async (file) => {
+            const compressedFile = await compressImageTwice(file);
+
+            const uploadedUrl = await uploadGalleryImageToSupabaseStorage(compressedFile);
+            return uploadedUrl;
+          });
+
+          const urls = await Promise.all(uploadPromises);
           const publicUrls = urls.filter((url) => url !== null);
+
           setValue('gallery.images', [...existingImages, ...publicUrls]);
         } catch (error) {
           console.error('이미지 업로드 중 오류가 발생했습니다:', error);

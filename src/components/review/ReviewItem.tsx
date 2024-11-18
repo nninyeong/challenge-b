@@ -31,7 +31,7 @@ const ReviewItem = ({
   signedUserId: string | undefined;
 }) => {
   const pathname = usePathname();
-  console.log(review.image_url);
+
   return (
     <div className='flex flex-col justify-between  items-center border-b border-gray-200 border-solid mt-[16px] pb-[16px]'>
       <div className='w-full flex cursor-pointer relative'>
