@@ -62,7 +62,7 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
   const canView = userId === invitationData.userId || !isPrivate;
   return canView ? (
     <div
-      className='flex flex-col gap-[56px] max-w-[375px]'
+      className='flex flex-col gap-[56px] max-w-[375px] mx-auto'
       style={{
         backgroundColor: `rgba(${bgColor.r}, ${bgColor.g}, ${bgColor.b}, ${bgColor.a})`,
         fontFamily: `${fontStyle || 'main'}`,
