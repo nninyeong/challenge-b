@@ -4,7 +4,7 @@ import { memo, useCallback } from 'react';
 import DraggableRenderOrder from '@/components/create/DraggableRenderOrder';
 import RenderOrderCustomPreview from '@/components/create/RenderOrderCustomPreview';
 
-const RenderOrderInput = () => {
+const RenderingOrderInput = () => {
   const { setValue } = useFormContext();
   const renderOrder = useWatch({ name: 'renderOrder' });
 
@@ -59,4 +59,4 @@ const RenderOrderInput = () => {
   );
 };
 
-export default memo(RenderOrderInput);
+export default memo(RenderingOrderInput);

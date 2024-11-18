@@ -209,7 +209,7 @@ const DesktopInputForm = ({
                     inputHeightRef.current[e.name[inputStep]] = { height: el?.offsetHeight };
                   }}
                 >
-                  <p>{e.name[inputStep]}</p>
+                  <p className='text-gray-900 text-[18px] font-bold mb-[14px]'>{e.name[inputStep]}</p>
                   {inputElement}
                 </div>
               );

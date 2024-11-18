@@ -9,10 +9,13 @@ const RenderOrderCustomPreview = () => {
     isDragging: monitor.isDragging(),
     currentOffset: monitor.getSourceClientOffset(),
   }));
+
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+
   useEffect(() => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, [isTouchDevice]);
+
   if (!isDragging || !currentOffset || !isTouchDevice) return null;
 
   return (
