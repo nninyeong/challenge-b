@@ -44,7 +44,6 @@ const ReviewWriteButton = () => {
       const hasPermissions = await checkAccessPermissions();
       if (hasPermissions) {
         setIsReviewBottomSheetOpen(true);
-        // setOpenBottomSheet(true);
       }
     }
   };
