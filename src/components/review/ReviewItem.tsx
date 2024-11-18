@@ -6,6 +6,9 @@ import Image from 'next/image';
 import { Review } from '@/types/review.types';
 import { Notify } from 'notiflix';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import useMediaQuery from '@/hooks/review/useMediaQuery';
+import { ReviewDetailModal } from './ReviewDetailModal';
 import SmileyHappy from '../icons/SmileyHappy';
 import { User as SupabaseUser } from '@supabase/auth-js';
 const ReviewItem = ({
@@ -29,10 +32,38 @@ const ReviewItem = ({
   isLiked: boolean;
   likeCount: number | string;
 }) => {
+  const [selectedReviewId, setSelectedReviewId] = useState('');
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (isReviewModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isReviewModalOpen]);
 
   const handleNotYetButton = () => {
     Notify.info('준비중인 서비스입니다.');
+  };
+
+  const handleReviewDetailPage = (id: string) => {
+    setSelectedReviewId(id);
+    if (isDesktop) {
+      setIsReviewModalOpen(true);
+    } else {
+      onNavigate();
+    }
+  };
+
+  const closeModal = () => {
+    setSelectedReviewId('');
+    setIsReviewModalOpen(false);
   };
 
   return (
@@ -46,7 +77,8 @@ const ReviewItem = ({
               fill
               priority
               className='rounded-[12px]  object-cover'
-              onClick={review.image_url ? onNavigate : undefined}
+              onClick={review.image_url ? () => handleReviewDetailPage(review.id) : undefined}
+              sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
             />
           ) : (
             <img
@@ -143,6 +175,28 @@ const ReviewItem = ({
               <span className={`${isLiked ? 'text-white' : ''}`}>도움돼요({likeCount})</span>
             </button>
           </>
+        )}
+        {isReviewModalOpen && (
+          <div
+            className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-[9999]'
+            onClick={closeModal}
+          >
+            <div
+              className='relative bg-white p-4 rounded-[24px] w-[603px] h-[812px] z-[10000]'
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src='assets/images/icons/x-03.webp'
+                alt='닫기버튼'
+                onClick={closeModal}
+                className='absolute top-4 right-4 text-black w-[24px] h-[24px] cursor-pointer z-[10100]'
+              />
+
+              <div className='relative'>
+                <ReviewDetailModal reviewId={selectedReviewId} />
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>

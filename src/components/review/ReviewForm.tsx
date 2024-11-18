@@ -131,7 +131,7 @@ const ReviewForm = () => {
         <p className='text-gray-900 text-[18px] font-bold'>사진을 등록해주세요</p>
         <p className='text-gray-500 text-[16px] font-semibold'>최대 5장</p>
       </div>
-      <div className='flex justify-center h-[80px] mt-[14px] gap-[16px]'>
+      <div className='flex justify-center desktop:justify-start h-[80px] mt-[14px] gap-[16px]'>
         <Controller
           name='images'
           control={control}
