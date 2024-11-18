@@ -7,7 +7,7 @@ import { Notify } from 'notiflix';
 
 const AccountInput = () => {
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
-  const { register, setValue, control, watch } = useFormContext();
+  const { register, control, watch } = useFormContext();
 
   const { fields: groomFields } = useFieldArray({
     control,
@@ -35,7 +35,6 @@ const AccountInput = () => {
       Notify.failure('카카오페이 링크 형식에 맞지 않습니다');
       return;
     }
-    setValue(`account.${accountType}[${selectedIndex}].kakaopay`, modalValue);
     closeKakaoPayModal();
   };
 
