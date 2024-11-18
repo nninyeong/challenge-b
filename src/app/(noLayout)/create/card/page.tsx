@@ -7,21 +7,22 @@ import OnBoarding from '@/components/create/OnBoarding';
 import useToggle from '@/utils/useToggle';
 import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
-import colorConverter from '@/utils/colorConverter';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
-import { MOBILE_VIEW_HEIGHT, PC_VIEW_WIDTH } from '@/constants/screenSize';
 import createCardFormHeightMapper from '@/utils/createCardFormHeightMapper';
 import useFormStepController from '@/hooks/create/useFormStepController';
 import { useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
-import PreviewElement from '@/components/create/PreviewElement';
-import FormMotionContainer from '@/components/create/FormMotionContainer';
 import InvitationBottomSheetFormContainer from '@/components/create/InvitationBottomSheetFormContainer';
+import useViewportWidth from '@/hooks/create/useViewPortWidth';
+import dynamic from 'next/dynamic';
+import PreviewList from '@/components/create/PreviewList';
+import colorConverter from '@/utils/colorConverter';
+
+const DesktopInputForm = dynamic(() => import('@/components/create/DesktopInputForm'));
+const FormMotionContainer = dynamic(() => import('@/components/create/FormMotionContainer'), { ssr: false });
 
 export type ScrollRefsType = {
   [key: string]: { ref: HTMLDivElement | null; order: number; inputOrder: number };
 };
-
-const DELAY_TIME: number = 300;
 
 const CreateCardPage = () => {
   const methods = useForm<InvitationFormType>({
@@ -29,16 +30,16 @@ const CreateCardPage = () => {
     defaultValues: INVITATION_DEFAULT_VALUE,
   });
 
+  const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
+  const [orderList, setOrderList] = useState(() => INITIAL_ORDER(methods));
   const [styleSetting, setStyleSetting] = useState({
     backgroundColor: 'rgba(255,255,255,1)',
     font: 'main',
   });
-  const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
-  const [orderList, setOrderList] = useState(() => INITIAL_ORDER(methods));
-
   const [toggleInput, setToggleInput] = useToggle();
-  const renderOrderList = useWatch({ control: methods.control, name: 'renderOrder' });
+  const currentWidth = useViewportWidth();
 
+  const renderOrderList = useWatch({ control: methods.control, name: 'renderOrder' });
   const refs = useRef<ScrollRefsType>({});
 
   const { currentStep, setCurrentStep, goToNextStep, goToPreviousStep } = useFormStepController(orderList);
@@ -49,6 +50,7 @@ const CreateCardPage = () => {
     goToNextStep,
     goToPreviousStep,
   });
+
   const sortedOrderListWithRenderOrder = orderList.sort((a, b) => {
     const orderA = renderOrderList.find((item) => item.typeOnSharedCard === a.typeOnSharedCard)?.order;
     const orderB = renderOrderList.find((item) => item.typeOnSharedCard === b.typeOnSharedCard)?.order;
@@ -64,7 +66,6 @@ const CreateCardPage = () => {
       return () => subscription.unsubscribe();
     });
   };
-
   const subscribeFont = () => {
     const subscriptionFont = methods.watch((value) => {
       const font = value?.fontInfo?.fontName;
@@ -76,7 +77,6 @@ const CreateCardPage = () => {
       return () => subscriptionFont.unsubscribe();
     });
   };
-
   const subscribeBackgroundColor = () => {
     const subscription = methods.watch((value) => {
       const color = value.bgColor;
@@ -98,18 +98,10 @@ const CreateCardPage = () => {
       return () => subscription.unsubscribe();
     });
   };
-  const scrollEvent = () => {
-    const targetRef = Object.values(refs.current).find((e) => e.order === currentStep.currentPreviewStep)?.ref;
-
-    targetRef?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-
-    setTimeout(() => {
-      isNavigating.current = false; // 수동 전환 완료 후 상태 초기화
-    }, DELAY_TIME); // 스크롤 애니메이션 지속 시간 후 재활성화
-  };
+  useEffect(() => {
+    subscribeBackgroundColor();
+    subscribeFont();
+  }, [methods]);
 
   useEffect(() => {
     setOrderList(
@@ -123,84 +115,111 @@ const CreateCardPage = () => {
   }, [renderOrderList]);
 
   useEffect(() => {
-    document.documentElement.style.overflow = isOnboardingComplete ? 'unset' : 'hidden';
+    const shouldAllowScroll = isOnboardingComplete && currentWidth < 1440;
+    document.documentElement.style.overflow = shouldAllowScroll ? 'unset' : 'hidden';
 
     return () => {
       document.documentElement.style.overflow = 'unset';
     };
-  }, [isOnboardingComplete]);
+  }, [isOnboardingComplete, currentWidth]);
 
   useEffect(() => {
     subscribeEveryValues();
-    subscribeBackgroundColor();
-    subscribeFont();
   }, [methods]);
 
   useEffect(() => {
-    scrollEvent();
-  }, [currentStep.currentPreviewStep]);
-
-  useEffect(() => {
-    initializeObserver();
-    return () => unsubscribeObservers();
-  }, [refs, isOnboardingComplete]);
+    if (currentWidth < 1440) {
+      initializeObserver();
+    } else {
+      unsubscribeObservers();
+    }
+    return () => {
+      unsubscribeObservers();
+    };
+  }, [currentWidth, refs, isOnboardingComplete]);
 
   return (
     <FormProvider {...methods}>
-      <div
-        className={`relative w-full h-full font-${styleSetting.font} desktop:w-[${PC_VIEW_WIDTH}] flex justify-center`}
-        style={{
-          backgroundColor: styleSetting.backgroundColor,
-        }}
-      >
-        <OnBoarding
-          setIsOnboardingComplete={setIsOnboardingComplete}
-          isOnboardingComplete={isOnboardingComplete}
-        />
-        <div
-          style={{
-            fontFamily: styleSetting.font,
-          }}
-        >
-          {orderList.map((e, index) => {
-            return (
-              <div
-                key={e.labelForInput}
-                style={{ minHeight: MOBILE_VIEW_HEIGHT }}
-              >
-                {e.component?.map((element, idx) => {
-                  return (
-                    <PreviewElement
-                      key={element.key}
-                      element={element}
-                      refs={refs}
-                      order={index}
-                      inputOrder={idx}
-                    />
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
-        <FormMotionContainer
-          height={createCardFormHeightMapper(
-            toggleInput,
-            orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep],
-          )}
-          className={`fixed bottom-0 px-[16px] z-10 mb-[8px] w-fit h-[${createCardFormHeightMapper(toggleInput, orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep])}]`}
-        >
-          <InvitationBottomSheetFormContainer
-            methods={methods}
-            currentStep={currentStep}
-            isNavigating={isNavigating}
-            orderList={orderList}
-            goToNextStep={goToNextStep}
-            goToPreviousStep={goToPreviousStep}
-            toggleInput={toggleInput}
-            setToggleInput={setToggleInput}
+      <div className='relative w-full h-full'>
+        {currentWidth >= 1440 && (
+          <div className={'fixed flex self-center w-full z-10 inset-0 bg-black bg-opacity-60 h-screen'} />
+        )}
+
+        <div className='flex w-full h-full desktop:px-[152px] desktop:gap-[65px]'>
+          <OnBoarding
+            setIsOnboardingComplete={setIsOnboardingComplete}
+            isOnboardingComplete={isOnboardingComplete}
           />
-        </FormMotionContainer>
+          <div className='relative'>
+            {currentWidth >= 1440 ? (
+              <div className='flex relative w-[450px] h-[850px] bg-no-repeat bg-cover bg-center items-center justify-center desktop:z-30'>
+                <img
+                  src='/assets/images/device.svg'
+                  alt='device'
+                  className='absolute z-50 pointer-events-none'
+                />
+                {/* 핸드폰 프레임 내에 PreviewList 배치 */}
+                <div
+                  className='overflow-auto flex justify-center desktop:rounded-[35px]'
+                  style={{
+                    backgroundColor: styleSetting.backgroundColor,
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                  }}
+                >
+                  <PreviewList
+                    methods={methods}
+                    refs={refs}
+                    orderList={orderList}
+                    currentStep={currentStep}
+                    setCurrentStep={setCurrentStep}
+                    styleSetting={styleSetting}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className='desktop:hidden'>
+                <PreviewList
+                  methods={methods}
+                  refs={refs}
+                  orderList={orderList}
+                  currentStep={currentStep}
+                  styleSetting={styleSetting}
+                  setCurrentStep={setCurrentStep}
+                />
+              </div>
+            )}
+          </div>
+          {currentWidth < 1440 ? (
+            <FormMotionContainer
+              height={createCardFormHeightMapper(
+                toggleInput,
+                orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep],
+              )}
+              className={`fixed bottom-0 px-[16px] z-10 mb-[8px] w-fit desktop:hidden`}
+            >
+              <InvitationBottomSheetFormContainer
+                methods={methods}
+                currentStep={currentStep}
+                isNavigating={isNavigating}
+                orderList={orderList}
+                goToNextStep={goToNextStep}
+                goToPreviousStep={goToPreviousStep}
+                toggleInput={toggleInput}
+                setToggleInput={setToggleInput}
+              />
+            </FormMotionContainer>
+          ) : (
+            <DesktopInputForm
+              goToNextStep={goToNextStep}
+              goToPreviousStep={goToPreviousStep}
+              currentStep={currentStep}
+              methods={methods}
+              isNavigating={isNavigating}
+              orderList={orderList}
+            />
+          )}
+        </div>
       </div>
     </FormProvider>
   );

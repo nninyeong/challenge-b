@@ -6,7 +6,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { OrderList, StepType } from '@/hooks/create/useFormStepController';
 import { useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
 
-type InvitationBottomSheetFormContainerProps = {
+export type InvitationBottomSheetFormContainerProps = {
   methods: UseFormReturn<InvitationFormType>;
   currentStep: StepType;
   orderList: OrderList[];
