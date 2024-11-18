@@ -12,7 +12,7 @@ type ModalProps = {
 const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, onClose, onSave, children }) => {
   const { isFlipped, toggleFlip } = usePayModalFlip();
 
-  if (!isModalOpen) return <></>;
+  if (!isModalOpen) return null;
 
   return (
     <div
