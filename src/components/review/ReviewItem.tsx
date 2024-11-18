@@ -48,15 +48,17 @@ const ReviewItem = ({
             />
           ) : (
             <img
-              src='/assets/images/card/no-review.svg'
+              src='/assets/images/card/no-review.png'
               alt='no review'
             />
           )}
           {review.image_url.length > 1 && (
-            <div className='absolute right-1 bottom-1 rounded  '>
+            <div className='absolute right-[8px] bottom-[8px] rounded'>
               <img
-                src='/assets/images/icons/layers-1.svg'
+                src='/assets/images/icons/layers-1.png'
                 alt='more images icon'
+                loading='lazy'
+                className='w-[24px] h-[24px]'
               />
             </div>
           )}

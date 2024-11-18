@@ -1,10 +1,14 @@
+import Image from 'next/image';
+
 const BrandingCarouselItem = ({ src, description }: { src: string; description: string }) => {
   return (
     <div className='relative w-full aspect-square desktop:h-[588px] flex-shrink-0'>
-      <img
+      <Image
         className='w-full h-full object-cover object-top'
         src={src}
         alt={description}
+        priority
+        fill
       />
       <div
         className='absolute bottom-0 w-full h-[134px] desktop:h-[278px]'

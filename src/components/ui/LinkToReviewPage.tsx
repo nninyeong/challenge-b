@@ -7,7 +7,7 @@ const LinkToReviewPage = () => {
   return (
     <Link href='/review'>
       <button
-        className={`w-[24px] h-[24px] ${path === '/review' ? 'bg-edit-contained-selected' : 'bg-edit-contained'}`}
+        className={`w-[24px] h-[24px] ${path === '/review' ? 'bg-edit-contained-selected' : 'bg-edit-contained'} bg-cover`}
       />
     </Link>
   );

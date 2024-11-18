@@ -34,7 +34,14 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
           key={'photoPreview'}
         />,
       ],
-      name: ['청첩장 대표 사진', '청첩장 무드 프리셋', '청첩장 스티커', '청첩장 메인 화면', '청첩장 배경 컬러'],
+      name: [
+        '청첩장 대표 사진',
+        '청첩장 무드 프리셋',
+        '청첩장 스티커',
+        '청첩장 메인 화면',
+        '청첩장 배경 컬러',
+        '청첩장 글꼴',
+      ],
       input: [
         <MainPhotoInput key={'photoview'} />,
         <MoodPresetInput key={'mood'} />,
@@ -56,7 +63,7 @@ export const INITIAL_ORDER = (methods?: UseFormReturn<InvitationFormType>) => {
           key={'galleryPreview'}
         />,
       ],
-      input: [<GalleryInput key={'guest'} />],
+      input: [<GalleryInput key={'gallery'} />],
       typeOnSharedCard: COMPONENT_TYPES.GALLERY,
       labelForInput: '갤러리',
     },
