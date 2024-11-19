@@ -4,11 +4,12 @@ import { useState } from 'react';
 
 const MoodKeyword = () => {
   const initialMood = MOOD_LIST.find((mood) => mood.category === 'classic')!.image;
-  const [selectedMood, setSelectedMood] = useState<string>(initialMood);
+  const [selectedMood, setSelectedMood] = useState(initialMood);
 
   const handleClickMood = (image: string) => {
     setSelectedMood(image);
   };
+
   return (
     <div className='desktop:mb-[80px] mb-[56px]'>
       <div className='desktop:mb-[56px] mb-[24px]'>
