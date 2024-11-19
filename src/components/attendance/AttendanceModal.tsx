@@ -21,19 +21,18 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
   useEffect(() => {
     const handleResize = () => {
       const isWideScreen = window.innerWidth >= 1440;
-    setIsLargeScreen(isWideScreen);
+      setIsLargeScreen(isWideScreen);
 
       if (isCreatePage && isWideScreen && accountRef.current) {
         const { left, width } = accountRef.current.getBoundingClientRect();
-        console.log(left + width / 2);
-        if (window.innerWidth >= 1440) {
+        if (isWideScreen) {
           setLeftPosition(left + width / 2);
         } else {
           setLeftPosition(0);
         }
       }
     };
-  
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
