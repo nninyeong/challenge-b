@@ -8,9 +8,8 @@ dayjs.extend(localizedFormat);
 dayjs.locale('ko');
 
 export const useGetValidatedDay = (date: Date | string) => {
-  if (date === '') return;
-
   const notifyTimer = useRef<NodeJS.Timeout | null>(null);
+  if (date === '') return;
 
   const day = dayjs(date).format('dddd');
   if (day === 'Invalid Date' && !notifyTimer.current) {
