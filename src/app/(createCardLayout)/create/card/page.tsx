@@ -128,11 +128,7 @@ const CreateCardPage = () => {
   }, [methods]);
 
   useEffect(() => {
-    if (currentWidth < 1440) {
-      initializeObserver();
-    } else {
-      unsubscribeObservers();
-    }
+    initializeObserver();
     return () => {
       unsubscribeObservers();
     };
