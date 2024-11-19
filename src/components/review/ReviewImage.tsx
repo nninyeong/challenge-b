@@ -77,22 +77,22 @@ const ReviewImage = () => {
         return (
           <div
             key={reviewIndex}
-            className={`w-full  flex justify-center relative ${isLastImage ? 'opacity-50' : ''}  `}
+            className='w-full  flex justify-center relative  '
           >
-            <div className='desktop:w-[121px] desktop:h-[121px] relative w-[76px] h-[76px]'>
+            <div className='desktop:w-[121px] desktop:h-[121px] relative w-[76px] h-[76px] border border-gray-50 rounded-[12px] '>
               {firstImage && (
                 <Image
                   src={firstImage}
                   alt={`${reviewIndex + 1}`}
                   fill
-                  className='rounded-xl object-cover absolute'
+                  className='rounded-[12px] object-cover '
                   priority
                 />
               )}
               {isLastImage && (
                 <button
                   onClick={handleOpenNewPage}
-                  className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white rounded-[12px] text-[14px]'
+                  className='absolute inset-0  z-20  bg-black opacity-60 text-white rounded-[12px] text-[14px]'
                 >
                   더보기
                 </button>

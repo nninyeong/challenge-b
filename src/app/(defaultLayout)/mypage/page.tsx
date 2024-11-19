@@ -35,7 +35,9 @@ const MyPage = async (): Promise<JSX.Element | null> => {
                 </div>
                 <div className='flex flex-col'>
                   <h2 className='font-bold text-[16px] desktop:text-[24px]'>{user?.user?.user_metadata?.full_name}</h2>
-                  <p className='text-[14px] desktop:text-[20px] color-gray-500'>{user?.user?.user_metadata?.email}</p>
+                  <p className='text-[14px] desktop:text-[20px] text-gray-500 font-medium'>
+                    {user?.user?.user_metadata?.email}
+                  </p>
                 </div>
               </div>
               <div className='hidden desktop:block'>
