@@ -83,13 +83,11 @@ export const useInvitationFormActions = ({
       }
     }
     goToNextStep();
-    isNavigating.current = false;
   }, DELAY_TIME);
 
   const handleDebouncedPrevious = debounce(() => {
     isNavigating.current = true;
     goToPreviousStep();
-    isNavigating.current = false;
   }, DELAY_TIME);
 
   const handleDebouncedSave = debounce(async () => {
