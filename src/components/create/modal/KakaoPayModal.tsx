@@ -38,18 +38,20 @@ const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, onClose, onSave, chi
           onClick={toggleFlip}
         >
           <img
-            src='/assets/images/kakaopay/pay-html-1.png'
+            src='/assets/images/kakaopay/pay-html-1.webp'
             alt='Card_1'
             className={`absolute w-[183px] h-[355px] transition-transform duration-500 ${
               isFlipped ? 'z-10 translate-x-2' : 'z-20 -translate-x-2'
             } desktop:translate-x-0 desktop:z-10 desktop:relative`}
+            loading='lazy'
           />
           <img
-            src='/assets/images/kakaopay/pay-html-2.png'
+            src='/assets/images/kakaopay/pay-html-2.webp'
             alt='Card_2'
             className={`absolute w-[183px] h-[355px] transition-transform duration-500 ${
               isFlipped ? 'z-20 -translate-x-2' : 'z-10 translate-x-2'
             } desktop:translate-x-0 desktop:z-10 desktop:relative`}
+            loading='lazy'
           />
         </div>
         <div className='flex justify-center items-center desktop:hidden'>

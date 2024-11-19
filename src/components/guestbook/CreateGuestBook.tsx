@@ -2,11 +2,12 @@
 
 import useCreateGuestBookInput from '@/hooks/guestbook/useCreateGuestBookInput';
 
-const CreateGuestBook: React.FC<{ invitationId: string; isCreatePage: boolean; goOnePage: () => void; totalPages: number }> = ({
+const CreateGuestBook: React.FC<{ invitationId: string; isCreatePage: boolean; goOnePage: () => void; totalPages: number; rgbaColor: string; }> = ({
   invitationId,
   isCreatePage,
   goOnePage,
-  totalPages
+  totalPages,
+  rgbaColor
 }) => {
   const { register, onSubmit, errors } = useCreateGuestBookInput(invitationId, isCreatePage, goOnePage, totalPages);
 
@@ -41,7 +42,8 @@ const CreateGuestBook: React.FC<{ invitationId: string; isCreatePage: boolean; g
           {errors.content && <p className='text-red-500'>{errors.content.message}</p>}
         </div>
         <button
-          className='w-[calc(100%-32px)] ml-4 mb-14 h-12 bg-gray-900 rounded-xl text-white'
+          style={{ border: `2px solid ${rgbaColor}`, color: `${rgbaColor}` }}
+          className='w-[calc(100%-32px)] ml-4 mb-14 h-12 rounded-xl text-white'
           type='submit'
         >
           축하메세지 남기기

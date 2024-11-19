@@ -71,11 +71,11 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
       : 'conic-gradient( #e0e0e0 0%, #FFFFFF 100%)';
 
   return (
-    <div className='mobile:w-full  desktop:h-[228px] mobile:h-[152px] flex mx-auto rounded-xl  shadow-sm shadow-gray-400 p-4 relative desktop:flex-[3] '>
+    <div className='w-full  desktop:h-[228px] h-[152px] flex mx-auto rounded-xl  shadow-sm shadow-gray-400 p-4 relative desktop:flex-[3] '>
       {invitationCard ? (
-        <div className='w-full flex desktop:justify-center mobile:justify-between  items-center  mobile:gap-8 desktop:gap-14'>
+        <div className='w-full flex desktop:justify-center justify-between  items-center  gap-8 desktop:gap-14'>
           <Link href={`/create/card`}>
-            <div className='desktop:w-[136px] desktop:h-[136px] mobile:w-[96px] mobile:h-[96px] relative flex justify-center items-center '>
+            <div className='desktop:w-[136px] desktop:h-[136px] w-[96px] h-[96px] relative flex justify-center items-center '>
               <div
                 className='w-[96px] desktop:w-[136px] desktop:h-[136px] h-[96px] absolute inset-0 rounded-full flex justify-center items-center overflow-hidden'
                 style={{
@@ -122,7 +122,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
                 />
                 <button
                   onClick={handleCopyLink}
-                  className='mobile:text-[12px] desktop:text-[14px] text-gray-400 white-space-nowrap'
+                  className='text-[12px] desktop:text-[14px] text-gray-400 white-space-nowrap'
                 >
                   공유하기
                 </button>
@@ -135,7 +135,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
                 />
                 <button
                   onClick={handlePrintAsPDF}
-                  className='mobile:text-[12px] desktop:text-[14px] text-gray-400 '
+                  className='text-[12px] desktop:text-[14px] text-gray-400 '
                 >
                   다운로드
                 </button>

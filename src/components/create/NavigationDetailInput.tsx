@@ -12,14 +12,16 @@ const NavigationDetailInput = () => {
             {...register('navigationDetail.map')}
           />
           <img
-            src='/assets/images/icons/selected-on.svg'
+            src='/assets/images/icons/selected-on.webp'
             alt='지도 표시 활성화'
-            className='peer-checked:inline hidden'
+            className='peer-checked:inline hidden w-4 h-4'
+            loading='lazy'
           />
           <img
-            src='/assets/images/icons/selected-off.svg'
+            src='/assets/images/icons/selected-off.webp'
             alt='지도 표시 비활성화'
-            className='peer-checked:hidden inline'
+            className='peer-checked:hidden inline w-4 h-4'
+            loading='lazy'
           />
           <span className='ml-2'>지도 표시</span>
         </label>
@@ -32,14 +34,16 @@ const NavigationDetailInput = () => {
             {...register('navigationDetail.navigationButton')}
           />
           <img
-            src='/assets/images/icons/selected-on.svg'
+            src='/assets/images/icons/selected-on.webp'
             alt='네비게이션 버튼 활성화'
-            className='peer-checked:inline hidden'
+            className='peer-checked:inline hidden w-4 h-4'
+            loading='lazy'
           />
           <img
-            src='/assets/images/icons/selected-off.svg'
+            src='/assets/images/icons/selected-off.webp'
             alt='네비게이션 버튼 비활성화'
-            className='peer-checked:hidden inline'
+            className='peer-checked:hidden inline w-4 h-4'
+            loading='lazy'
           />
           <span className='ml-2'>네비게이션 앱 버튼 표시</span>
           <span className='text-[12px] text-gray-600'>(카카오맵, 티맵, 네이버)</span>

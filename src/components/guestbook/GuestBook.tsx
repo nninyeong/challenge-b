@@ -36,7 +36,7 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
       queryClient.prefetchQuery({
         queryKey: QUERY_KEYS.guestBook(invitationId, page + 1),
         queryFn: () => fetchGuestBook(invitationId, page + 1),
-        staleTime: 0
+        staleTime: 0,
       });
     }
   }, [page, totalPages, invitationId, queryClient]);
@@ -59,6 +59,7 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
         isCreatePage={isCreatePage}
         goOnePage={goOnePage}
         totalPages={totalPages}
+        rgbaColor={rgbaColor}
       />
 
       {guestBooks.length === 0 ? (
@@ -88,13 +89,12 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
       )}
 
       {totalPages > 0 && (
-        <div className='w-full px-4 mt-6 mb-6'>
-          <GuestBookPagination
-            page={page}
-            setPage={setPage}
-            totalPages={totalPages}
-          />
-        </div>
+        <GuestBookPagination
+          page={page}
+          setPage={setPage}
+          totalPages={totalPages}
+          rgbaColor={rgbaColor}
+        />
       )}
     </div>
   );
