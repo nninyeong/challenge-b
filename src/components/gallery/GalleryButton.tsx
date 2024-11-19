@@ -11,7 +11,7 @@ const GalleryButton = ({ children, isActive, onClick }: GalleryButtonProps) => {
     <button
       type='button'
       onClick={onClick}
-      className={` pl-2 pr-2 pt-1 pb-1 mr-1 rounded-full text-[14px] ${isActive ? 'bg-primary300 text-white' : 'bg-gray-100 text-gray-400'}`}
+      className={`px-2 py-1 mr-1 desktop:mr-2 rounded-full text-[14px] font-medium ${isActive ? 'bg-primary300 text-white' : 'bg-gray-100 text-gray-400'}`}
     >
       {children}
     </button>

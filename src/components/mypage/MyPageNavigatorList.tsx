@@ -33,12 +33,12 @@ const MyPageNavigatorList = () => {
   };
 
   return (
-    <nav className='mt-4'>
-      <ul className='flex flex-col gap-4 items-center'>
+    <nav>
+      <ul className='flex flex-col  items-center'>
         {MENU_LISTS.map((menu) => (
           <li
             key={menu.name}
-            className='w-full border border-solid border-l-0 border-r-0 border-t-0 border-gray-100 cursor-pointer flex justify-between items-center p-2'
+            className='w-full border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 cursor-pointer flex justify-between items-center pt-[19.5px] pb-[19.5px] font-medium'
             onClick={() => handleMyReviewNavigator(menu.name)}
           >
             {menu.name}

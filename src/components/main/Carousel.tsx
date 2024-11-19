@@ -81,7 +81,7 @@ const Carousel = () => {
               </div>
               <div className='desktop:w-[383px] desktop:h-[241px] w-[216px] h-[136px] rounded-b-2xl desktop:p-[24px] p-[16px] desktop:text-[24px] text-[12px] shadow-md'>
                 <div className='flex items-center gap-[8px] desktop:gap-[16px] mb-[6px] desktop:mb-[24px] b-[16px]'>
-                  <div className='relative desktop:w-[42px] desktop:h-[42px] w-[16px] h-[16px] rounded-full overflow-hidden'>
+                  <div className='relative desktop:w-[42px] desktop:h-[42px] w-[24px] h-[24px] rounded-full overflow-hidden'>
                     <Image
                       src={avatarUrl}
                       alt='profile'
@@ -89,11 +89,13 @@ const Carousel = () => {
                       objectFit='cover'
                     />
                   </div>
-                  <p className='text-gray-500'>
+                  <p className='text-gray-500 text-[14px] desktop:text-[24px]'>
                     {maskIdLastFour(user?.user_metadata?.email) ?? '****'} | {formatDate(review.created_at)}
                   </p>
                 </div>
-                <p className='desktop:text-[20px] text-[12px]'>{sliceContent(review.content)}</p>
+                <p className='desktop:text-[20px] text-[12px] text-[#595959] font-medium'>
+                  {sliceContent(review.content)}
+                </p>
               </div>
             </div>
           );
