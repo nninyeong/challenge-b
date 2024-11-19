@@ -23,7 +23,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
       const isWideScreen = window.innerWidth >= 1440;
     setIsLargeScreen(isWideScreen);
 
-      if (isWideScreen && accountRef.current) {
+      if (isCreatePage && isWideScreen && accountRef.current) {
         const { left, width } = accountRef.current.getBoundingClientRect();
         console.log(left + width / 2);
         if (window.innerWidth >= 1440) {
@@ -48,7 +48,7 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
       <div
         className='bg-white text-black w-[343px] h-auto p-4 rounded-md'
         style={
-          isLargeScreen && leftPosition !== null
+          isCreatePage && isLargeScreen && leftPosition !== null
             ? {
                 right: `${leftPosition}px`,
                 transform: 'translate(-50%, -50%)',
