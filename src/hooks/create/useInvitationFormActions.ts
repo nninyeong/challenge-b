@@ -12,6 +12,7 @@ import browserClient from '@/utils/supabase/client';
 import EventBus from '@/utils/EventBus';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
+import useMediaQuery from '../review/useMediaQuery';
 
 export const DELAY_TIME = 300;
 const SAVE_DELAY_TIME = 3000;
@@ -33,6 +34,7 @@ export const useInvitationFormActions = ({
   const { data: existingInvitation } = useGetInvitationQuery();
   const { mutate: updateInvitation } = useUpdateInvitation();
   const { mutate: insertInvitation } = useInsertInvitation();
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
 
   useEffect(() => {
     if (existingInvitation === null) {
@@ -83,11 +85,13 @@ export const useInvitationFormActions = ({
       }
     }
     goToNextStep();
+    if (!isDesktop) isNavigating.current = false;
   }, DELAY_TIME);
 
   const handleDebouncedPrevious = debounce(() => {
     isNavigating.current = true;
     goToPreviousStep();
+    if (!isDesktop) isNavigating.current = false;
   }, DELAY_TIME);
 
   const handleDebouncedSave = debounce(async () => {
