@@ -55,7 +55,7 @@ const DesktopInputForm = ({
   });
 
   const [formPosition, setFormPosition] = useState<FormPositionType>({ left: 0, top: 0, width: 0 });
-  const inputHeightRef = useRef<{ [key: string]: { height: number | undefined } }>({});
+  const inputHeightRef = useRef<{ [key: string]: { height: number | undefined; offsetTop: number | undefined } }>({});
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const router = useRouter();
@@ -106,6 +106,12 @@ const DesktopInputForm = ({
     return 0;
   };
 
+  const getInitialOffset = () => {
+    const currentName = orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep];
+    const currentStepOffsetTop = inputHeightRef.current[currentName].offsetTop;
+    setCurrentOffset(currentStepOffsetTop!);
+  };
+
   useEffect(() => {
     setInputHeights((prev) => {
       return {
@@ -128,6 +134,10 @@ const DesktopInputForm = ({
   useEffect(() => {
     getCurrentElementHeight();
   }, [currentStep, orderList]);
+
+  useEffect(() => {
+    getInitialOffset();
+  }, []);
 
   return (
     <form
@@ -207,7 +217,7 @@ const DesktopInputForm = ({
                   }}
                   className={`w-full h-full border-[1px] border-solid shadow-md rounded-[12px] px-[24px] py-[12px] relative bg-white`}
                   ref={(el) => {
-                    inputHeightRef.current[e.name[inputStep]] = { height: el?.offsetHeight };
+                    inputHeightRef.current[e.name[inputStep]] = { height: el?.offsetHeight, offsetTop: el?.offsetTop };
                   }}
                 >
                   <p className='text-gray-900 text-[18px] font-bold mb-[14px]'>{e.name[inputStep]}</p>
