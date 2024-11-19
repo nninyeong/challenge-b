@@ -9,8 +9,8 @@ export default function DefaultLayout({
 }>) {
   return (
     <ReviewBottomSheetProvider isReviewBottomSheetOpen={false}>
-      <Header />
-      <main>{children}</main>
+      <Header zIndex={50} />
+      <main className='desktop:mt-[86px] mt-[64px]'>{children}</main>
       <div id='modal'></div>
       <Footer />
     </ReviewBottomSheetProvider>

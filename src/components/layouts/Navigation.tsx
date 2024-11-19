@@ -6,7 +6,12 @@ import LinkToMypage from '@/components/ui/LinkToMypage';
 import LinkToReviewPage from '@/components/ui/LinkToReviewPage';
 import { usePathname } from 'next/navigation';
 
-const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
+type NavigationProps = {
+  initialAuthState: boolean;
+  zIndex?: number;
+};
+
+const Navigation = ({ initialAuthState, zIndex }: NavigationProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(initialAuthState);
   const isCreateCardPage = usePathname() === '/create/card';
   const client = createClient();
@@ -27,7 +32,9 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
 
   return (
     <div
-      className={`${isCreateCardPage ? 'hidden desktop:flex' : 'flex'} w-full h-[64px] desktop:h-[86px] justify-between items-center px-[16px] desktop:px-[152px] bg-white`}
+      className={`${isCreateCardPage ? 'hidden desktop:flex' : 'flex'} fixed top-0 left-0 w-full h-[64px] desktop:h-[86px] justify-between items-center px-[16px] desktop:px-[152px] bg-white shadow-[0_10px_20px_rgba(0,0,0,0.1)] ${
+        zIndex ? `z-${zIndex}` : ''
+      }`}
     >
       <Link href='/'>
         <img
