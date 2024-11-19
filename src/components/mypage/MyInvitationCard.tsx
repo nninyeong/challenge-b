@@ -55,7 +55,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
       }
     } catch (error) {
       Notify.failure('취소되었습니다.');
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -82,7 +82,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
                 }}
               >
                 <div className='w-full h-full rounded-full flex justify-center items-center bg-white'>
-                  <div className='relative overflow-hidden rounded-full w-[80px] h-[80px] m-[2px]'>
+                  <div className='relative overflow-hidden rounded-full w-[80px] h-[80px] desktop:w-[110px] desktop:h-[110px] m-[2px]'>
                     <Image
                       src={invitationCard.main_photo_info?.imageUrl || '/assets/images/defaultImg.png'}
                       alt='invitationImg'

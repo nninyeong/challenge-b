@@ -2,7 +2,7 @@
 import { useFormContext, useWatch } from 'react-hook-form';
 import TextEditor from './TextEditor';
 import { FaPlus } from 'react-icons/fa6';
-
+import { compressImageTwice } from '@/utils/compressImg';
 import { uploadImageToSupabaseStorage } from '@/utils/uploadImg';
 
 const MainPhotoInput = () => {
@@ -12,7 +12,13 @@ const MainPhotoInput = () => {
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const publicUrl = await uploadImageToSupabaseStorage(file);
+      const compressFile = await compressImageTwice(file);
+      if (!compressFile) {
+        throw new Error();
+      }
+
+      const publicUrl = await uploadImageToSupabaseStorage(compressFile);
+
       if (publicUrl) {
         setValue('mainPhotoInfo.imageUrl', publicUrl);
       }
