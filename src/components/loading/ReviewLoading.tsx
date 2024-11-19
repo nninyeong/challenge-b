@@ -7,11 +7,11 @@ export const ReviewImageLoading = () => {
   const length = isDesktop ? 8 : 4;
 
   return (
-    <div className='w-full grid grid-cols-4 desktop:grid-cols-8 gap-[13px] mt-[20px] mb-[24px]'>
+    <div className='w-full grid grid-cols-4 desktop:grid-cols-8 gap-[13px] desktop:gap-[24px] mt-[20px] desktop:mt-[54px] mb-[16px] pb-[16px] desktop:pb-[80px] border-b border-gray-50'>
       {Array.from({ length }).map((_, index) => (
         <div
           key={index}
-          className='w-full h-0 pb-[100%] bg-gray-200 animate-pulse rounded-lg relative'
+          className='w-full h-0 pb-[100%] bg-gray-50 animate-pulse rounded-lg relative'
         />
       ))}
     </div>
@@ -21,24 +21,28 @@ export const ReviewImageLoading = () => {
 export const ReviewCardLoading = () => {
   return (
     <>
-      {Array.from({ length: 3 }).map((_, index) => (
+      {Array.from({ length: 4 }).map((_, index) => (
         <div
           key={index}
-          className='flex flex-col justify-between min-h-[159px] items-center border-b border-gray-50 border-solid mb-4 pb-[15px] animate-pulse'
+          className='flex flex-col justify-between items-center border-b border-gray-50 border-solid mb-[16px] pb-[16px] animate-pulse'
         >
           <div className='w-full flex cursor-pointer relative'>
-            <div className='w-[80px] h-[80px] flex-shrink-0 bg-gray-50 rounded-[12px]' />
+            <div className='w-[88px] h-[88px] desktop:w-[112px] desktop:h-[112px] flex-shrink-0 bg-gray-50 rounded-[12px]' />
+
             <div className='w-full flex flex-col ml-[16px]'>
-              <div className='flex items-center mb-2'>
-                <div className='w-[30px] h-[30px] bg-gray-50 rounded-full' />
-                <div className='ml-[8px] w-[100px] h-[12px] bg-gray-50 rounded' />
+              <div className='flex justify-between items-center mb-2 '>
+                <div className='flex items-center'>
+                  <div className='w-[30px] h-[30px] bg-gray-50 rounded-full' />
+                  <div
+                    className='ml-[8px] w-[100px] h-[12px]
+                   bg-gray-50 rounded'
+                  />
+                </div>
+
+                <div className='w-[43px] h-[18px] bg-gray-50 rounded-full' />
               </div>
-              <div className='h-[40px] w-full bg-gray-50 rounded mb-2' />
+              <div className='h-[40px] desktop:h-[66px] w-full bg-gray-50 rounded mb-2' />
             </div>
-          </div>
-          <div className='self-end flex gap-[8px] mt-2'>
-            <div className='w-[76px] h-[24px] bg-gray-50 rounded-[90px]' />
-            <div className='w-[76px] h-[24px] bg-gray-50 rounded-[90px]' />
           </div>
         </div>
       ))}

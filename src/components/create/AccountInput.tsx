@@ -19,15 +19,8 @@ const AccountInput = () => {
     name: 'account.bride',
   });
 
-  const {
-    isModalOpen,
-    modalValue,
-    selectedIndex,
-    isInvalid,
-    setModalValue,
-    openKakaoPayModal,
-    closeKakaoPayModal,
-  } = useKakaoPayModal();
+  const { isModalOpen, modalValue, selectedIndex, isInvalid, setModalValue, openKakaoPayModal, closeKakaoPayModal } =
+    useKakaoPayModal();
 
   const onSave = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,20 +32,20 @@ const AccountInput = () => {
   };
 
   return (
-    <div className='flex-col-center text-sm gap-4 w-full'>
+    <div className='flex-col-center text-sm gap-4 w-full text-gray-900 text-[12px]'>
       <div className='flex gap-3 h-[32px] w-full'>
-        <label className='self-center w-[50px]'>제목</label>
+        <label className='self-center w-[50px] text-gray-700 text-[14px] font-medium'>제목</label>
         <input
-          className='px-[8px] w-full rounded-md border-[1px] border-solid border-gray-300'
+          className='px-[8px] w-full rounded-[8px] border-[.5px] border-gray-300'
           {...register('account.title')}
           placeholder='신랑 & 신부에게 마음 전하기'
           maxLength={20}
         />
       </div>
       <div className='flex gap-3 h-[32px] w-full'>
-        <label className='self-center w-[50px]'>내용</label>
+        <label className='self-center w-[50px] text-gray-700 text-[14px] font-medium'>내용</label>
         <input
-          className='px-[8px] w-full rounded-md border-[1px] border-solid border-gray-300'
+          className='px-[8px] w-full rounded-[8px] border-[.5px] border-gray-300'
           {...register('account.content')}
           placeholder='축복의 의미로 축의금을 전달해보세요.'
           maxLength={20}
@@ -95,19 +88,19 @@ const AccountInput = () => {
             >
               <div className='flex justify-center items-center gap-[8px] desktop:w-full'>
                 <input
-                  className='px-[8px] w-[60px] h-[30px] rounded-md border-[1px] border-solid border-gray-300 desktop:basis-1/6'
+                  className='px-[8px] w-[60px] h-[30px] rounded-[8px] border-[.5px] border-gray-300 desktop:basis-1/6'
                   {...register(`account.${accountType}[${index}].depositor`)}
                   placeholder='예금주'
                   maxLength={5}
                 />
                 <input
-                  className='px-[8px] w-[60px] h-[30px] rounded-md border-[1px] border-solid border-gray-300 desktop:basis-1/6'
+                  className='px-[8px] w-[60px] h-[30px] rounded-[8px] border-[.5px] border-gray-300 desktop:basis-1/6'
                   {...register(`account.${accountType}[${index}].bank`)}
                   placeholder='은행'
                   maxLength={9}
                 />
                 <input
-                  className='px-[8px] w-[117px] h-[30px] rounded-md border-[1px] border-solid border-gray-300 desktop:basis-3/6'
+                  className='px-[8px] w-[117px] h-[30px] rounded-[8px] border-[.5px] border-gray-300 desktop:basis-3/6'
                   {...register(`account.${accountType}[${index}].accountNumber`)}
                   placeholder='계좌번호'
                   maxLength={27}
