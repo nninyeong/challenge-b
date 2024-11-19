@@ -44,7 +44,7 @@ const DeleteGuestBookAccordion = ({
           onChange={handlePasswordChange}
         />
         <button
-          className='w-full mb-3 text-[14px] text-white bg-primary300 py-2 rounded-lg'
+          className='w-full mb-3 text-[14px] text-white font-semibold bg-primary300 py-2 rounded-lg'
           type='submit'
         >
           확인

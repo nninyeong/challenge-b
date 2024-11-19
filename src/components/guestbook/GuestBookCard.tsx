@@ -30,7 +30,7 @@ const GuestBookCard = ({
         <div className='flex justify-between pt-4'>
           <div className='text-gray-900 font-bold'>{guestBook.name}</div>
           <div className='flex items-center gap-1'>
-            <div className='text-[12px] text-gray-300'>{`${year}-${month}-${day} ${hour}:${minute}`}</div>
+            <div className='text-[12px] text-[#A6A6A6]'>{`${year}-${month}-${day} ${hour}:${minute}`}</div>
             <img
               src='/assets/images/icons/x-03-gray.webp'
               alt='x'
@@ -40,7 +40,7 @@ const GuestBookCard = ({
             />
           </div>
         </div>
-        <div className='text-gray-700 mt-[5px] mb-[14px] break-words whitespace-pre-wrap'>{guestBook.content}</div>
+        <div className='text-gray-700 text-[14px] font-medium mt-[5px] mb-[14px] break-words whitespace-pre-wrap'>{guestBook.content}</div>
         <div
           className={`transition-[max-height] duration-300 overflow-hidden ${isAccordionOpen ? 'max-h-[300px]' : 'max-h-0'}`}
         >

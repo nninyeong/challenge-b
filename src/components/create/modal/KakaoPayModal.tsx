@@ -20,7 +20,7 @@ const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, onClose, onSave, chi
       onClick={onClose}
     >
       <div
-        className='bg-white p-4 desktop:px-9 desktop:py-8 rounded-md w-[343px] desktop:w-[612px]'
+        className='bg-white p-4 desktop:px-9 desktop:py-8 rounded-xl w-[343px] desktop:w-[612px]'
         onClick={(e) => e.stopPropagation()}
       >
         <div className='flex justify-between'>
@@ -63,7 +63,7 @@ const KakaoPayModal: React.FC<ModalProps> = ({ isModalOpen, onClose, onSave, chi
         {children && <div className='mt-4'>{children}</div>}
         <button
           onClick={onSave}
-          className='w-full h-12 bg-primary300 text-[16px] font-bold text-white rounded'
+          className='w-full h-12 bg-primary300 text-[16px] font-bold text-white rounded-xl'
         >
           저장
         </button>
