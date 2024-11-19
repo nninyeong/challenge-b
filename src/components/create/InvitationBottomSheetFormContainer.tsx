@@ -33,27 +33,29 @@ const InvitationBottomSheetFormContainer = ({
     goToNextStep,
     goToPreviousStep,
   });
+
   const isFirstInput = currentStep.currentInputStep === 0 && currentStep.currentPreviewStep === 0;
   const isLastInput = currentStep.currentPreviewStep === orderList.length - 1;
+
   return (
     <form
-      className={`flex flex-col bg-white shadow-xl px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full`}
+      className={`flex flex-col bg-white ${toggleInput || 'border border-gray-300'} px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full`}
       onSubmit={methods.handleSubmit(onSubmit)}
     >
       <div className='flex justify-between items-center'>
         <button
           type='button'
           onClick={setToggleInput}
-          className='flex justify-center items-center text-gray-900 text-[18px] font-bold'
+          className='flex justify-center items-center gap-[4px] text-gray-900 text-[18px] font-bold'
         >
           {toggleInput ? (
             <FaSortDown
-              size={28}
+              size={24}
               viewBox='0 110 320 512'
             />
           ) : (
             <FaSortUp
-              size={28}
+              size={24}
               viewBox='0 -100 320 512'
             />
           )}
