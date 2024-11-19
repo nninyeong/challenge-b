@@ -12,8 +12,8 @@ const MoodKeyword = () => {
   return (
     <div className='desktop:mb-[80px] mb-[56px]'>
       <div className='desktop:mb-[56px] mb-[24px]'>
-        <h1 className='desktop:text-[36px] text-[20px] font-bold'>원하는 무드가 담긴 나만의 청접장</h1>
-        <p className='desktop:text-[24px] text-[14px] font-medium'>
+        <h1 className='desktop:text-[36px] text-[20px] font-bold text-[#262626]'>원하는 무드가 담긴 나만의 청접장</h1>
+        <p className='desktop:text-[24px] text-[14px] font-medium text-[#595959]'>
           예비 신랑, 신부님의 분위기에 맞게 커스터마이징 해요!
         </p>
       </div>

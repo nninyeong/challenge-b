@@ -46,9 +46,9 @@ const GalleryInput = () => {
   };
 
   return (
-    <div className='text-black'>
+    <div>
       <div className='flex items-center mb-3'>
-        <p className='mr-4'>사진비율</p>
+        <p className='font-medium text-gray-700 text-[14px] leading-[14px] mr-4'>사진비율</p>
         <GalleryButton
           onClick={() => handleImgCutStyle('square')}
           isActive={ratio === 'square'}
@@ -63,7 +63,7 @@ const GalleryInput = () => {
         </GalleryButton>
       </div>
       <div className='flex items-center'>
-        <p className='mr-4'>배치방법</p>
+        <p className='font-medium text-gray-700 text-[14px] leading-[14px] mr-4'>배치방법</p>
         <GalleryButton
           onClick={() => handleGridTypeStyle(2)}
           isActive={gridType === 2}
@@ -94,9 +94,9 @@ const GalleryInput = () => {
             onChange={handleFileChange}
             multiple
           />
-          <div className='flex gap-2'>
+          <div className='flex items-center gap-2'>
             <IoIosInformationCircleOutline />
-            <p className='text-[12px] text-gray-600'>최대 18장까지 등록할 수 있습니다.</p>
+            <p className='text-[10px] font-medium text-gray-600'>최대 18장까지 등록할 수 있습니다.</p>
           </div>
         </div>
       </div>
