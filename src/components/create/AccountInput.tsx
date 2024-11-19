@@ -32,7 +32,7 @@ const AccountInput = () => {
   };
 
   return (
-    <div className='flex-col-center text-sm gap-4 w-full text-gray-900 text-[12px]'>
+    <div className='flex-col-center text-sm gap-[8px] w-full text-gray-900 text-[12px] mt-[8px]'>
       <div className='flex gap-3 h-[32px] w-full'>
         <label className='self-center w-[50px] text-gray-700 text-[14px] font-medium'>제목</label>
         <input
@@ -51,7 +51,7 @@ const AccountInput = () => {
           maxLength={20}
         />
       </div>
-      <div className='relative w-[267px] h-[31px] bg-gray-100 rounded-full p-1 flex items-center cursor-pointer'>
+      <div className='relative w-[267px] h-[31px] bg-gray-100 rounded-full p-1 flex items-center cursor-pointer mt-[13px] mb-[6px]'>
         <div
           className={`absolute top-0 left-0 w-[49%] h-full bg-[#FF6666] shadow-[1px_1px_5px_rgba(255,102,102,0.4)] rounded-full transition-transform duration-300 ease-in-out ${
             accountType === 'bride' ? 'translate-x-[103%]' : ''
