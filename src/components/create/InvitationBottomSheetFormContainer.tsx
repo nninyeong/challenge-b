@@ -98,7 +98,7 @@ const InvitationBottomSheetFormContainer = ({
 
           {isLastInput && (
             <Button
-              className='rounded-[12px] w-[311px] h-[48px]'
+              className='rounded-[12px] w-[311px] h-[40px] text-[16px] font-bold'
               type='submit'
             >
               청첩장 제작 완료
