@@ -44,7 +44,7 @@ const OnBoarding = ({
 
       <div className='absolute inset-0 z-0'>
         <Image
-          src='/assets/images/presets/modernPreset1.svg'
+          src='/assets/images/presets/modernPreset1.png'
           alt='온보딩 사진'
           layout='fill'
           objectFit='cover'
