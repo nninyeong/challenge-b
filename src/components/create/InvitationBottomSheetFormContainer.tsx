@@ -35,6 +35,17 @@ const InvitationBottomSheetFormContainer = ({
   });
   const isFirstInput = currentStep.currentInputStep === 0 && currentStep.currentPreviewStep === 0;
   const isLastInput = currentStep.currentPreviewStep === orderList.length - 1;
+
+  const handleNextButton = () => {
+    handleDebouncedNext();
+    isNavigating.current = false;
+  };
+
+  const handlePreviousButton = () => {
+    handleDebouncedPrevious();
+    isNavigating.current = false;
+  };
+
   return (
     <form
       className={`flex flex-col bg-white shadow-xl px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full`}
@@ -63,7 +74,7 @@ const InvitationBottomSheetFormContainer = ({
         <div className='flex items-center'>
           <button
             type='button'
-            onClick={handleDebouncedPrevious}
+            onClick={handlePreviousButton}
             disabled={isFirstInput}
             className='w-[28px] h-[28px]'
           >
@@ -77,7 +88,7 @@ const InvitationBottomSheetFormContainer = ({
           </button>
           <button
             type='button'
-            onClick={handleDebouncedNext}
+            onClick={handleNextButton}
             disabled={isLastInput}
             className='w-[28px] h-[28px]'
           >
