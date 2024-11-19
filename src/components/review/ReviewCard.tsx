@@ -96,6 +96,7 @@ const ReviewCard = ({ reviews }: ReviewsCardProp) => {
             onLikeToggle={() => handleLikeToggle(review)}
             likeCount={likeCount}
             onDeleteReview={() => handleDeleteReview(review.user_id)}
+            signedUserId={signedUserId}
           />
         );
       })}

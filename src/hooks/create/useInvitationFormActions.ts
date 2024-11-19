@@ -12,6 +12,8 @@ import browserClient from '@/utils/supabase/client';
 import EventBus from '@/utils/EventBus';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEYS } from '../queries/queryKeys';
 
 export const DELAY_TIME = 300;
 const SAVE_DELAY_TIME = 3000;
@@ -33,6 +35,7 @@ export const useInvitationFormActions = ({
   const { data: existingInvitation } = useGetInvitationQuery();
   const { mutate: updateInvitation } = useUpdateInvitation();
   const { mutate: insertInvitation } = useInsertInvitation();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (existingInvitation === null) {
@@ -64,7 +67,7 @@ export const useInvitationFormActions = ({
     } else {
       updateInvitation(invitationData);
     }
-
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
     Notify.success('청첩장이 성공적으로 제출되었습니다.');
     router.push('/mypage');
   };
@@ -83,6 +86,7 @@ export const useInvitationFormActions = ({
       }
     }
     goToNextStep();
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
     isNavigating.current = false;
   }, DELAY_TIME);
 
@@ -108,6 +112,7 @@ export const useInvitationFormActions = ({
       }
       prevFormDataRef.current = JSON.stringify(formData);
     }
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
   }, SAVE_DELAY_TIME);
 
   return {

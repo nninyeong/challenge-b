@@ -4,13 +4,13 @@ import { maskIdLastFour } from '@/utils/maskIdLastFour';
 import { getContentPreview, MAX_CONTENT_LENGTH } from '@/utils/getContentPreview';
 import Image from 'next/image';
 import { Review } from '@/types/review.types';
-import { Notify } from 'notiflix';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import useMediaQuery from '@/hooks/review/useMediaQuery';
 import { ReviewDetailModal } from './ReviewDetailModal';
-import SmileyHappy from '../icons/SmileyHappy';
+
 import { User as SupabaseUser } from '@supabase/auth-js';
+import HeartIcon from '../icons/HeartIcon';
 const ReviewItem = ({
   review,
   user,
@@ -21,6 +21,7 @@ const ReviewItem = ({
   onDeleteReview,
   isLiked,
   likeCount,
+  signedUserId,
 }: {
   review: Review;
   user: SupabaseUser;
@@ -31,11 +32,13 @@ const ReviewItem = ({
   onDeleteReview: () => void;
   isLiked: boolean;
   likeCount: number | string;
+  signedUserId: string | undefined;
 }) => {
   const [selectedReviewId, setSelectedReviewId] = useState('');
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 1440px)');
   const pathname = usePathname();
+  console.log(review.image_url);
 
   useEffect(() => {
     if (isReviewModalOpen) {
@@ -47,10 +50,6 @@ const ReviewItem = ({
       document.body.style.overflow = 'unset';
     };
   }, [isReviewModalOpen]);
-
-  const handleNotYetButton = () => {
-    Notify.info('준비중인 서비스입니다.');
-  };
 
   const handleReviewDetailPage = (id: string) => {
     setSelectedReviewId(id);
@@ -67,16 +66,16 @@ const ReviewItem = ({
   };
 
   return (
-    <div className='flex flex-col justify-between min-h-[159px] items-center border-b border-gray-200 border-solid mt-4 pb-[15px]'>
+    <div className='flex flex-col justify-between  items-center border-b border-gray-200 border-solid mt-[16px] pb-[16px]'>
       <div className='w-full flex cursor-pointer relative'>
-        <div className='w-[88px] h-[88px] desktop:w-[112px] desktop:h-[112px] flex-shrink-0 relative'>
+        <div className='w-[88px] h-[88px] desktop:w-[112px] desktop:h-[112px] flex-shrink-0 relative border border-gray-50 rounded-[12px]'>
           {review.image_url && review.image_url.length > 0 ? (
             <Image
               src={review.image_url[0]}
               alt='후기 이미지'
               fill
               priority
-              className='rounded-[12px]  object-cover'
+              className='object-cover rounded-[12px]'
               onClick={review.image_url ? () => handleReviewDetailPage(review.id) : undefined}
               sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
             />
@@ -87,13 +86,8 @@ const ReviewItem = ({
             />
           )}
           {review.image_url.length > 1 && (
-            <div className='absolute right-1 bottom-1 rounded'>
-              <img
-                src='/assets/images/icons/layers-1.png'
-                alt='more images icon'
-                loading='lazy'
-                className='w-[24px] h-[24px]'
-              />
+            <div className='w-[24px] h-[24px] text-white text-center absolute right-[4px] bottom-[4px] rounded-[8px] bg-black opacity-60'>
+              {review.image_url.length}
             </div>
           )}
         </div>
@@ -101,10 +95,10 @@ const ReviewItem = ({
         <div
           className={`w-full flex flex-col whitespace-pre-wrap break-words ${isExpanded ? 'h-auto' : 'h-[80%] overflow-hidden'}`}
         >
-          <div className='flex'>
-            <div className='flex ml-[16px] items-center  desktop:mb-6'>
+          <div className='flex ml-[16px] items-center  desktop:mb-[12px] justify-between'>
+            <div className='flex items-center'>
               {user?.user_metadata.avatar_url && user?.user_metadata.avatar_url.length > 0 ? (
-                <div className='w-[16px] h-[16px] relative desktop:w-[24px] desktop:h-[24px]'>
+                <div className='w-[24px] h-[24px] relative '>
                   <Image
                     src={user.user_metadata.avatar_url || '/assets/images/defaultImg.png'}
                     alt='profile'
@@ -122,20 +116,33 @@ const ReviewItem = ({
                   />
                 </div>
               )}
-              <h3 className='ml-[8px] text-gray-500 text-[12px] desktop:text-[14px]'>
+
+              <h3 className='ml-[8px] text-gray-500 text-[14px] desktop:text-[14px]'>
                 {maskIdLastFour(user?.user_metadata.email)}
               </h3>
-              <p className='text-gray-500 text-[12px] desktop:text-[14px]'> | {formatDate(review.created_at)}</p>
+              <p className='text-gray-500 text-[14px] desktop:text-[14px]'> | {formatDate(review.created_at)}</p>
             </div>
+            <button
+              onClick={onLikeToggle}
+              className=' gap-[4px] text-[12px]  flex items-center justify-center  rounded-[24px]  text-primary-300 '
+            >
+              <HeartIcon
+                isLiked={isLiked}
+                signedUserId={signedUserId}
+              />
+
+              <span>{likeCount}</span>
+            </button>
           </div>
-          <div className='flex pl-4 pb-4 pr-4 pt-[6px]'>
-            <p className='break-words  leading-[140%] text-[12px] text-gray-800  basis-48 desktop:text-16px'>
+
+          <div className={`${isExpanded ? 'h-auto' : 'mobile:h-[80px]'} flex pl-[16px] pb-[16px] pr-[16px] pt-[6px] `}>
+            <p className='break-words    text-[14px] desktop:text-[16px] font-medium text-gray-800  desktop:text-16px mobile:w-[194px]'>
               {getContentPreview(review.content, isExpanded)}
             </p>
             {review.content.length > MAX_CONTENT_LENGTH && (
               <button
                 onClick={onToggle}
-                className='text-[10px] border-b border-gray-500 text-gray-500 absolute right-2 bottom-4 basis-2/10'
+                className='text-[10px] border-b border-gray-500 text-gray-500 absolute right-0 bottom-0 desktop:hidden text-right'
               >
                 {isExpanded ? '접기' : '더보기'}
               </button>
@@ -144,7 +151,7 @@ const ReviewItem = ({
         </div>
       </div>
       <div className='self-end flex gap-[8px]'>
-        {pathname === '/mypage' ? (
+        {pathname === '/mypage' && (
           <button
             className='text-[12px] flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[76px] h-[24px] text-primary-300'
             onClick={onDeleteReview}
@@ -155,27 +162,8 @@ const ReviewItem = ({
             />
             <span>삭제하기</span>
           </button>
-        ) : (
-          <>
-            <button
-              className='text-[12px] gap-0.5 flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[76px] h-[24px] text-primary-300'
-              onClick={handleNotYetButton}
-            >
-              <img
-                src='/assets/images/icons/link-angled.svg'
-                alt='공유하기'
-              />
-              <span>공유하기</span>
-            </button>
-            <button
-              onClick={onLikeToggle}
-              className={`text-[12px] gap-0.5 flex items-center justify-center border-primary-300 border-[1px] border-solid rounded-[90px] w-[100px] h-[24px] text-primary-300 ${isLiked && 'bg-primary-300 '} `}
-            >
-              <SmileyHappy isLiked={isLiked} />
-              <span className={`${isLiked ? 'text-white' : ''}`}>도움돼요({likeCount})</span>
-            </button>
-          </>
         )}
+
         {isReviewModalOpen && (
           <div
             className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-[9999]'

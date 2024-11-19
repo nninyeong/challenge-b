@@ -46,10 +46,10 @@ const TogglePrivate = () => {
   return (
     <div
       onClick={toggleSwitch}
-      className={`w-14 h-8 flex items-center rounded-full p-1 cursor-pointer ${isPrivate ? 'bg-gray-400' : 'bg-primary-300'}`}
+      className={`w-[43px] h-[30px] flex items-center rounded-full pl-[5px] pr-[5px] pt-[6px] pb-[6px] cursor-pointer ${isPrivate ? 'bg-gray-400' : 'bg-primary-300'}`}
     >
       <div
-        className={`bg-white w-6 h-6 rounded-full shadow-md transform duration-300 ${isPrivate ? '' : 'translate-x-6'}`}
+        className={`bg-white w-[18px] h-[18px] rounded-full  transform duration-300 ${isPrivate ? '' : 'translate-x-[14px]'}`}
       ></div>
     </div>
   );
