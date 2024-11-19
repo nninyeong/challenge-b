@@ -62,7 +62,7 @@ const WeddingInfoInput = () => {
             maxLength={10}
           />
         </div>
-        <div className='grid grid-cols-[80px_1fr] items-center'>
+        <div className='grid grid-cols-[76px_1fr] items-center'>
           <label className='leading-[32px] text-[14px] text-gray-700 font-medium'>예식 시간</label>
           <div className='flex gap-[8px]'>
             <SelectBox
@@ -95,7 +95,7 @@ const WeddingInfoInput = () => {
               {...register('weddingInfo.weddingHallAddress')}
             />
             <button
-              className='bg-primary-300 rounded w-[55px] h-[32px] text-white font-bold'
+              className='bg-primary-300 rounded-[8px] w-[56px] h-[32px] text-white font-bold text-[16px] tracking-[-0.032px]'
               onClick={openAddressModal}
               type='button'
             >
