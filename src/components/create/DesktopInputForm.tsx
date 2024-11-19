@@ -1,5 +1,5 @@
 'use client';
-import { DELAY_TIME, useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
+import { useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
 import { OrderList, StepType } from '@/hooks/create/useFormStepController';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { UseFormReturn } from 'react-hook-form';
@@ -11,7 +11,6 @@ import {
   NAVIGATION_BUTTON_HALF_WIDTH,
   SUBMIT_BUTTON_MARGIN_RIGHT,
 } from '@/constants/invitationDesktopForm';
-import { debounce } from '@/utils/debounce';
 
 type DesktopInputPropsType = {
   methods: UseFormReturn<InvitationFormType>;
@@ -62,22 +61,23 @@ const DesktopInputForm = ({
   const isFirstInput = currentStep.currentInputStep === 0 && currentStep.currentPreviewStep === 0;
   const isLastInput = currentStep.currentPreviewStep === orderList.length - 1;
 
-  const getCarouselScrollDelay = () => {
+  const getScrollDelay = () => {
     setIsDisabled(true);
     setTimeout(() => {
       setIsDisabled(false);
+      isNavigating.current = false;
     }, SCROLL_DELAY_TIME);
   };
 
-  const handleNextButton = debounce(() => {
+  const handleNextButton = () => {
     handleDebouncedNext();
-    getCarouselScrollDelay();
-  }, DELAY_TIME);
+    getScrollDelay();
+  };
 
-  const handlePrevButton = debounce(() => {
+  const handlePrevButton = () => {
     handleDebouncedPrevious();
-    getCarouselScrollDelay();
-  }, DELAY_TIME);
+    getScrollDelay();
+  };
 
   const handleExitButton = () => {
     router.back();
