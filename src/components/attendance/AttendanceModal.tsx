@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
 import useAttendanceModal from '@/hooks/attendance/useAttendanceModal';
 import SelectBox from '../ui/SelectBox';
+import { useEffect, useRef, useState } from 'react';
 
 const ATTENDANCE_PEOPLE = ['1', '2', '3', '4', '5'];
 
@@ -14,20 +14,49 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
   const { selected, handleSelection, register, setValue, watch, handleSubmit, handleAttendanceModalSubmit, errors } =
     useAttendanceModal(invitationId, onClick, isCreatePage);
 
+  const accountRef = useRef<HTMLDivElement | null>(null);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const [leftPosition, setLeftPosition] = useState<number>(0);
+
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'auto';
+    const handleResize = () => {
+      const isWideScreen = window.innerWidth >= 1440;
+    setIsLargeScreen(isWideScreen);
+
+      if (isWideScreen && accountRef.current) {
+        const { left, width } = accountRef.current.getBoundingClientRect();
+        console.log(left + width / 2);
+        if (window.innerWidth >= 1440) {
+          setLeftPosition(left + width / 2);
+        } else {
+          setLeftPosition(0);
+        }
+      }
     };
-  }, []);
+  
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [accountRef.current]);
 
   return (
     <div
-      className='fixed top-0 bottom-0 left-0 right-0 w-full h-full px-[16px] bg-[#404040]/50 flex justify-center items-center z-50'
+      ref={accountRef}
+      className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50'
       onClick={onClick}
     >
       <div
         className='bg-white text-black w-[343px] h-auto p-4 rounded-md'
+        style={
+          isLargeScreen && leftPosition !== null
+            ? {
+                right: `${leftPosition}px`,
+                transform: 'translate(-50%, -50%)',
+                position: 'fixed',
+                top: '40%',
+              }
+            : undefined
+        }
         onClick={(e) => e.stopPropagation()}
       >
         <div className='flex flex-col justify-center items-center'>
