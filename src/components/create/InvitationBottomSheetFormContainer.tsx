@@ -39,10 +39,10 @@ const InvitationBottomSheetFormContainer = ({
 
   return (
     <form
-      className={`flex flex-col bg-white ${toggleInput || 'border border-gray-300'} px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full`}
+      className={`flex flex-col bg-white px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full ${toggleInput || 'border border-gray-300'}`}
       onSubmit={methods.handleSubmit(onSubmit)}
     >
-      <div className='flex justify-between items-center'>
+      <div className={`flex justify-between items-center ${toggleInput || 'h-[52px]'}`}>
         <button
           type='button'
           onClick={setToggleInput}
