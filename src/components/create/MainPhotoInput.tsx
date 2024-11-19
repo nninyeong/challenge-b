@@ -4,12 +4,11 @@ import TextEditor from './TextEditor';
 import { FaPlus } from 'react-icons/fa6';
 import { compressImageTwice } from '@/utils/compressImg';
 import { uploadImageToSupabaseStorage } from '@/utils/uploadImg';
-import { useMainImagePreviewStore } from '@/store/useCompressedImages';
 
 const MainPhotoInput = () => {
   const { register, setValue } = useFormContext();
   const introduceContent = useWatch({ name: 'mainPhotoInfo.introduceContent' });
-  const { setMainPreviewUrl } = useMainImagePreviewStore();
+
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -17,10 +16,8 @@ const MainPhotoInput = () => {
       if (!compressFile) {
         throw new Error();
       }
-      const compressImgUrl = URL.createObjectURL(compressFile);
-      setMainPreviewUrl(compressImgUrl);
 
-      const publicUrl = await uploadImageToSupabaseStorage(file);
+      const publicUrl = await uploadImageToSupabaseStorage(compressFile);
 
       if (publicUrl) {
         setValue('mainPhotoInfo.imageUrl', publicUrl);
