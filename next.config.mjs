@@ -34,6 +34,29 @@ const nextConfig = {
     ],
     formats: ['image/avif', 'image/webp'],
   },
+
+  async headers() {
+    return [
+      {
+        // 동적 경로에 대해 Cache-Control 헤더 추가
+        source: '/card/:id', // /card/[id]에 해당
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+          {
+            key: 'Pragma',
+            value: 'no-cache',
+          },
+          {
+            key: 'Expires',
+            value: '0',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default withSentryConfig(nextConfig, {
