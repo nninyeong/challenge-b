@@ -12,7 +12,7 @@ const DEFAULT_VALUES = {
 
 type WeddingInfoPropType = Pick<InvitationFormType, 'weddingInfo' | 'fontInfo'>;
 const WeddingInfo = ({ weddingInfo, fontInfo }: WeddingInfoPropType) => {
-  const day = getDayOfWeek(weddingInfo.date)[0];
+  const day = getDayOfWeek(weddingInfo.date);
   const { size, color } = fontInfo;
   const rgbaColor = colorConverter(color);
 

@@ -4,6 +4,7 @@ import { Address } from 'react-daum-postcode';
 import { useState } from 'react';
 import AddressModal from '@/components/create/modal/AddressModal';
 import SelectBox from '@/components/ui/SelectBox';
+import { formatDate } from '@/utils/date/formatDate';
 
 const HOURS_FOR_WEDDING_INFO = [
   '오전 09',
@@ -42,13 +43,20 @@ const WeddingInfoInput = () => {
     setValue('weddingInfo.time.minute', value);
   };
 
+  const setDate = (value: string) => {
+    const formattedValue = formatDate(value);
+    setValue('weddingInfo.date', formattedValue);
+  };
+
   return (
     <>
       <div className='flex flex-col gap-[8px] text-[12px] text-gray-900 max-w-[312px] mb-[16px]'>
         <div className='grid grid-cols-[76px_1fr] items-center'>
           <label className='leading-[32px] text-[14px] text-gray-700 font-medium'>예식일</label>
           <input
-            {...register('weddingInfo.date')}
+            {...register('weddingInfo.date', {
+              onChange: (e) => setDate(e.target.value),
+            })}
             placeholder='2024.11.21'
             className='w-[172px] desktop:w-[388px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px]'
             maxLength={10}
