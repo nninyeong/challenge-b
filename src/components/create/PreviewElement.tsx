@@ -1,4 +1,4 @@
-import { ScrollRefsType } from '@/app/(noLayout)/create/card/page';
+import { ScrollRefsType } from '@/app/(createCardLayout)/create/card/page';
 import { MutableRefObject } from 'react';
 
 type PreviewElementPropsType = {
