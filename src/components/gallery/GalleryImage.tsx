@@ -13,8 +13,6 @@ const GalleryImage = ({
   handleDeleteImage,
   ratio,
   imgStyleClass,
-  loading,
-  handleLoading,
 }: {
   image: string;
   index: number;
@@ -22,8 +20,6 @@ const GalleryImage = ({
   handleDeleteImage: (url: string) => void;
   ratio: string;
   imgStyleClass: string;
-  loading: boolean;
-  handleLoading: () => void;
 }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'image',
@@ -59,7 +55,6 @@ const GalleryImage = ({
         className={`${imgStyleClass} cursor-pointer`}
         layout='fill'
         objectFit='cover'
-        onLoad={handleLoading}
       />
       <IoClose
         className='cursor-pointer text-white absolute right-2 top-2 bg-gray-800/50'

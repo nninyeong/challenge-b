@@ -55,7 +55,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
       }
     } catch (error) {
       Notify.failure('취소되었습니다.');
-      console.log(error);
+      console.error(error);
     }
   };
 

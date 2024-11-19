@@ -5,7 +5,6 @@ import { FaPlus } from 'react-icons/fa6';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 import GalleryButton from '../gallery/GalleryButton';
 import { Notify } from 'notiflix';
-import { useGalleryImagePreviewStore } from '@/store/useCompressedImages';
 import { compressImageTwice } from '@/utils/compressImg';
 
 const MAX_FILES = 18;
@@ -13,7 +12,6 @@ const MAX_FILES = 18;
 const GalleryInput = () => {
   const { setValue, getValues } = useFormContext();
 
-  const { setGalleryPreviewUrls } = useGalleryImagePreviewStore();
   const ratio = useWatch({ name: 'gallery.ratio' });
   const gridType = useWatch({ name: 'gallery.grid' });
 
@@ -38,14 +36,11 @@ const GalleryInput = () => {
           const compressedFile = await compressImageTwice(file);
           if (!compressedFile) throw new Error('압축 실패');
 
-          const compressImgUrl = URL.createObjectURL(compressedFile);
-          setGalleryPreviewUrls(compressImgUrl);
-
-          const uploadedUrl = await uploadGalleryImageToSupabaseStorage(file);
+          const uploadedUrl = await uploadGalleryImageToSupabaseStorage(compressedFile);
           return uploadedUrl;
         } catch (error) {
           console.error('파일 업로드 실패:', error);
-          return null; // 실패한 파일은 null 반환
+          return null;
         }
       });
 

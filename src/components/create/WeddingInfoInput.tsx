@@ -51,7 +51,7 @@ const WeddingInfoInput = () => {
             {...register('weddingInfo.date')}
             placeholder='2024.11.21'
             className='w-[172px] desktop:w-[388px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px]'
-            maxLength={10}
+            maxLength={12}
           />
         </div>
         <div className='grid grid-cols-[80px_1fr] items-center'>
