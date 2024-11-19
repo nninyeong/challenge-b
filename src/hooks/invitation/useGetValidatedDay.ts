@@ -7,7 +7,7 @@ import { useRef } from 'react';
 dayjs.extend(localizedFormat);
 dayjs.locale('ko');
 
-export const getDayOfWeek = (date: Date | string) => {
+export const useGetValidatedDay = (date: Date | string) => {
   if (date === '') return;
 
   const notifyTimer = useRef<NodeJS.Timeout | null>(null);
