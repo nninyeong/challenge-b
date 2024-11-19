@@ -53,15 +53,15 @@ const AccountInput = () => {
       </div>
       <div className='relative w-[267px] h-[31px] bg-gray-100 rounded-full p-1 flex items-center cursor-pointer'>
         <div
-          className={`absolute top-0 left-0 w-[49%] h-full bg-[#FF6666] rounded-full transition-transform duration-300 ease-in-out ${
+          className={`absolute top-0 left-0 w-[49%] h-full bg-[#FF6666] shadow-[1px_1px_5px_rgba(255,102,102,0.4)] rounded-full transition-transform duration-300 ease-in-out ${
             accountType === 'bride' ? 'translate-x-[103%]' : ''
           }`}
         ></div>
         <button
           type='button'
           onClick={() => setAccountType('groom')}
-          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out font-bold ${
-            accountType === 'groom' ? 'text-white' : 'text-[#8c8c8c]'
+          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out ${
+            accountType === 'groom' ? 'text-white font-bold' : 'text-[#8c8c8c]'
           } mr-3`}
         >
           신랑측 계좌번호
@@ -69,8 +69,8 @@ const AccountInput = () => {
         <button
           type='button'
           onClick={() => setAccountType('bride')}
-          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out font-bold ${
-            accountType === 'bride' ? 'text-white' : 'text-[#8c8c8c]'
+          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out ${
+            accountType === 'bride' ? 'text-white font-bold' : 'text-[#8c8c8c]'
           }`}
         >
           신부측 계좌번호
