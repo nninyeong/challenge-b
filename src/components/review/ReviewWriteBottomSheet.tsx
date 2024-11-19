@@ -20,8 +20,10 @@ const ReviewWriteBottomSheet = () => {
         className='absolute top-[16px] right-[16px]'
       >
         <img
-          src='/assets/images/icons/x-03.svg'
+          src='/assets/images/icons/x-03.webp'
           alt='close'
+          className='w-[24px] h-[24px]'
+          loading='lazy'
         />
       </button>
       <ReviewForm />

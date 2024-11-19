@@ -1,10 +1,11 @@
 'use client';
 
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import AccountModal from '@/components/create/modal/AccountModal';
 import colorConverter from '@/utils/colorConverter';
+import useMediaQuery from '@/hooks/review/useMediaQuery';
 
 type AccountPropType = Pick<InvitationFormType, 'account' | 'fontInfo'>;
 const Account = ({ account, fontInfo }: AccountPropType) => {
@@ -12,29 +13,31 @@ const Account = ({ account, fontInfo }: AccountPropType) => {
   const [portalElement, setPortalElement] = useState<Element | null>(null);
   const [accountType, setAccountType] = useState<'groom' | 'bride'>('groom');
   const accountData = account[accountType];
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
+  const accountRef = useRef<HTMLDivElement | null>(null);
+  const { size, color } = fontInfo;
+  const rgbaColor = colorConverter(color);
 
   useEffect(() => {
     setPortalElement(document.getElementById('modal'));
   }, []);
 
   const handleOpenAccountModal = (type: 'bride' | 'groom') => {
-    document.documentElement.style.overflow = 'hidden';
+    if (!isDesktop) document.documentElement.style.overflow = 'hidden';
     setOpenAccountModal(true);
     setAccountType(type);
   };
 
   const handleCloseAccountModal = () => {
-    document.documentElement.style.overflow = 'auto';
+    if (!isDesktop) document.documentElement.style.overflow = 'auto';
     setOpenAccountModal(false);
   };
-
-  const { size, color } = fontInfo;
-  const rgbaColor = colorConverter(color);
 
   return (
     <div
       style={{ color: `${rgbaColor}` }}
       className='flex flex-col justify-center items-center mb-[80px]'
+      ref={accountRef}
     >
       <p style={{ fontSize: ` ${20 + size}px)` }}>{account.title ? account.title : '제목'}</p>
       <p>{account.content ? account.content : '내용'}</p>
@@ -60,6 +63,7 @@ const Account = ({ account, fontInfo }: AccountPropType) => {
       {openAccountModal && portalElement
         ? createPortal(
             <AccountModal
+              accountRef={accountRef}
               setOpenAccountModal={setOpenAccountModal}
               setCloseAccountModal={handleCloseAccountModal}
               accounts={accountData}

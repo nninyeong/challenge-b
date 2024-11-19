@@ -78,7 +78,7 @@ const Sticker = ({
       {isActive && (
         <>
           <button
-            className={`absolute bg-x-circle-contained w-[24px] h-[24px] z-10`}
+            className={`absolute bg-x-circle-contained bg-cover w-[24px] h-[24px] z-10`}
             style={{
               top: '-12px',
               right: '-12px',

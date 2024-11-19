@@ -5,6 +5,10 @@ import { getContentPreview, MAX_CONTENT_LENGTH } from '@/utils/getContentPreview
 import Image from 'next/image';
 import { Review } from '@/types/review.types';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import useMediaQuery from '@/hooks/review/useMediaQuery';
+import { ReviewDetailModal } from './ReviewDetailModal';
+
 import { User as SupabaseUser } from '@supabase/auth-js';
 import HeartIcon from '../icons/HeartIcon';
 const ReviewItem = ({
@@ -30,7 +34,35 @@ const ReviewItem = ({
   likeCount: number | string;
   signedUserId: string | undefined;
 }) => {
+  const [selectedReviewId, setSelectedReviewId] = useState('');
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (isReviewModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isReviewModalOpen]);
+
+  const handleReviewDetailPage = (id: string) => {
+    setSelectedReviewId(id);
+    if (isDesktop) {
+      setIsReviewModalOpen(true);
+    } else {
+      onNavigate();
+    }
+  };
+
+  const closeModal = () => {
+    setSelectedReviewId('');
+    setIsReviewModalOpen(false);
+  };
 
   return (
     <div className='flex flex-col justify-between  items-center border-b border-gray-200 border-solid mt-[16px] pb-[16px]'>
@@ -42,12 +74,13 @@ const ReviewItem = ({
               alt='후기 이미지'
               fill
               priority
-              className='object-cover rounded-[12px]'
-              onClick={review.image_url ? onNavigate : undefined}
+              className='rounded-[12px]  object-cover'
+              onClick={review.image_url ? () => handleReviewDetailPage(review.id) : undefined}
+              sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
             />
           ) : (
             <img
-              src='/assets/images/card/no-review.svg'
+              src='/assets/images/card/no-review.png'
               alt='no review'
             />
           )}
@@ -128,6 +161,28 @@ const ReviewItem = ({
             />
             <span>삭제하기</span>
           </button>
+        )}
+        {isReviewModalOpen && (
+          <div
+            className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-[9999]'
+            onClick={closeModal}
+          >
+            <div
+              className='relative bg-white p-4 rounded-[24px] w-[603px] h-[812px] z-[10000]'
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src='assets/images/icons/x-03.webp'
+                alt='닫기버튼'
+                onClick={closeModal}
+                className='absolute top-4 right-4 text-black w-[24px] h-[24px] cursor-pointer z-[10100]'
+              />
+
+              <div className='relative'>
+                <ReviewDetailModal reviewId={selectedReviewId} />
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>

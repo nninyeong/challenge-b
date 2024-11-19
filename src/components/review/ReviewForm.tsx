@@ -131,7 +131,7 @@ const ReviewForm = () => {
         <p className='text-gray-900 text-[18px] font-bold'>사진을 등록해주세요</p>
         <p className='text-gray-500 text-[16px] font-semibold'>최대 5장</p>
       </div>
-      <div className='flex justify-center h-[80px] mt-[14px] gap-[16px]'>
+      <div className='flex justify-center desktop:justify-start h-[80px] mt-[14px] gap-[16px]'>
         <Controller
           name='images'
           control={control}
@@ -142,7 +142,9 @@ const ReviewForm = () => {
                 className='bg-white text-center cursor-pointer px-2 py-1 rounded-md text-black h-[80px] w-[80px] flex flex-col justify-center items-center border border-dashed border-gray-300 gap-[4px]'
               >
                 <img
-                  src='/assets/images/icons/image-add.svg'
+                  src='/assets/images/icons/image-add.png'
+                  loading='lazy'
+                  className='w-[24px] h-[24px]'
                   alt='이미지 추가 아이콘'
                 />
                 <p className='text-gray-600 text-[10px]'>

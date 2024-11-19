@@ -94,7 +94,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
                 </div>
               </div>
               <img
-                src='assets/images/icons/write.webp'
+                src='/assets/images/icons/write.webp'
                 alt='청첩장 수정버튼'
                 className='w-[32px] h-[32px] desktop:w-[48px] desktop:h-[48px] absolute right-0 top-0'
               />
@@ -107,10 +107,11 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
             <div className='flex justify-between'>
               <p className='text-[16px] mb-[16px] desktop:mb-11 font-bold desktop:text-[20px]'>내 청첩장</p>
               <img
-                src='assets/images/icons/x-03.webp'
+                src='/assets/images/icons/x-03.webp'
                 alt='청첩장 삭제버튼'
                 onClick={() => handleDeleteCards(invitationCard?.id)}
-                className='w-[24px] h-[24px]'
+                className='w-[24px] h-[24px] '
+                loading='lazy'
               />
             </div>
             <div className='flex gap-[8px] items-center mb-[8px]'>
@@ -149,7 +150,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
       ) : (
         <div className='w-full flex flex-col justify-center items-center'>
           <Image
-            src='/assets/images/card/noCard.png'
+            src='/assets/images/card/noCard.webp'
             alt='noCardImg'
             width={64}
             height={64}

@@ -13,7 +13,7 @@ import EventBus from '@/utils/EventBus';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 
-const DELAY_TIME = 300;
+export const DELAY_TIME = 300;
 const SAVE_DELAY_TIME = 3000;
 
 export const useInvitationFormActions = ({
@@ -83,11 +83,13 @@ export const useInvitationFormActions = ({
       }
     }
     goToNextStep();
+    isNavigating.current = false;
   }, DELAY_TIME);
 
   const handleDebouncedPrevious = debounce(() => {
     isNavigating.current = true;
     goToPreviousStep();
+    isNavigating.current = false;
   }, DELAY_TIME);
 
   const handleDebouncedSave = debounce(async () => {

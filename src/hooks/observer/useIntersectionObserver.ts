@@ -39,7 +39,7 @@ export const useIntersectionObserver = (
     Object.values(refs.current).forEach((ref, index) => {
       if (ref) {
         const elementHeight = ref.ref!.clientHeight;
-        const threshold = elementHeight! > window.innerHeight ? 0.1 : 0.6;
+        const threshold = elementHeight! > window.innerHeight ? 0.01 : 0.6;
         const observer = new IntersectionObserver(observerCallback, { ...DEFAULT_OPTIONS, threshold: threshold });
         observer.observe(ref.ref as Element);
         observers.current[index] = observer;
