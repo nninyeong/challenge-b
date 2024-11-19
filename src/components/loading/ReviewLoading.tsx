@@ -11,7 +11,7 @@ export const ReviewImageLoading = () => {
       {Array.from({ length }).map((_, index) => (
         <div
           key={index}
-          className='w-full h-0 pb-[100%] bg-gray-200 animate-pulse rounded-lg relative'
+          className='w-full h-0 pb-[100%] bg-gray-50 animate-pulse rounded-lg relative'
         />
       ))}
     </div>
