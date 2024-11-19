@@ -13,7 +13,7 @@ const useDeleteGuestBookEntry = (
   onSuccess: () => void,
   thisPage: number,
   setPage: Dispatch<SetStateAction<number>>,
-  totalPages: number
+  totalPages: number,
 ) => {
   const queryClient = useQueryClient();
 
@@ -59,6 +59,7 @@ const useDeleteGuestBookEntry = (
           queryClient.prefetchQuery({
             queryKey: QUERY_KEYS.guestBook(invitationId, page),
             queryFn: () => fetchGuestBook(invitationId, page),
+            staleTime: 0,
           }),
         ),
       );

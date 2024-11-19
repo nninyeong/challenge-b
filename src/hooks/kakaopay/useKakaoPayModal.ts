@@ -4,6 +4,7 @@ const useKakaoPayModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalValue, setModalValue] = useState('');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [isInvalid, setIsInvalid] = useState(false);
 
   const openKakaoPayModal = (index: number, value: string) => {
     setSelectedIndex(index);
@@ -23,9 +24,11 @@ const useKakaoPayModal = () => {
     isModalOpen,
     modalValue,
     selectedIndex,
+    isInvalid,
     setModalValue,
     openKakaoPayModal,
     closeKakaoPayModal,
+    setIsInvalid
   };
 };
 

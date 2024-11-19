@@ -12,14 +12,14 @@ const GuestBookCard = ({
   isCreatePage,
   thisPage,
   setPage,
-  totalPages
+  totalPages,
 }: {
   guestBook: GuestBookEntry;
   invitationId: string;
   isCreatePage: boolean;
   thisPage: number;
   setPage: Dispatch<SetStateAction<number>>;
-  totalPages: number
+  totalPages: number;
 }) => {
   const { isAccordionOpen, toggleAccordion } = useGuestBookDeleteButton();
   const { year, month, day, hour, minute } = convertToUserTimezone(guestBook.created_at);
@@ -32,10 +32,11 @@ const GuestBookCard = ({
           <div className='flex items-center gap-1'>
             <div className='text-[12px] text-gray-300'>{`${year}-${month}-${day} ${hour}:${minute}`}</div>
             <img
-              src='/assets/images/icons/x-03-gray.svg'
+              src='/assets/images/icons/x-03-gray.webp'
               alt='x'
               className='w-[24px] h-[24px]'
               onClick={toggleAccordion}
+              loading='lazy'
             />
           </div>
         </div>

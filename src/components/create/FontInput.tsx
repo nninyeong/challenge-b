@@ -2,14 +2,17 @@ import { useFormContext } from 'react-hook-form';
 import ColorPalette from './ColorPalette';
 
 import { ColorType } from '@/types/invitationFormType.type';
+import SelectBox from '@/components/ui/SelectBox';
 
 const FONT_MENU = [
+  { name: '고운 바탕체', font: 'GowunBatang-Regular' },
+  { name: 'Hahmlet', font: 'Hahmlet-VariableFont_wght' },
   { name: '나눔손글씨', font: 'NanumPen' },
+  { name: '하이멜로디', font: 'HiMelody-Regular' },
   { name: '카페24 아네모네', font: 'Cafe24' },
   { name: '제주고딕', font: 'JejuGothic' },
   { name: '배달의민족 도현체', font: 'Bmdohyeon' },
   { name: '에스코어 드림', font: 'SCDream1' },
-  { name: '눈누 난나체', font: 'Main' },
 ];
 
 const FontSizeList = [-2, -1, 0, +1, +2];
@@ -19,9 +22,9 @@ const FontInput = () => {
   const currentFontName = getValues('fontInfo.fontName') || 'main';
 
   const currentFontSize = getValues('fontInfo.size') || 0;
-  const handleSelectFontname = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedFontName = event.target.value;
-    setValue('fontInfo.fontName', selectedFontName);
+
+  const handleSelectFontName = (fontName: string) => {
+    setValue('fontInfo.fontName', fontName);
   };
 
   const handleFontSizeChange = (size: number) => {
@@ -38,23 +41,13 @@ const FontInput = () => {
     <div>
       <div className='flex w-full gap-6 items-center'>
         <label className='text-[14px]'>글꼴 선택</label>
-        <form>
-          <select
-            name='글꼴을 선택해주세요'
-            onChange={handleSelectFontname}
-            value={currentFontName}
-            className='bg-gray-50 w-[228px]  rounded-lg p-2'
-          >
-            {FONT_MENU.map((font) => (
-              <option
-                value={font.font}
-                key={font.name}
-              >
-                {font.font}
-              </option>
-            ))}
-          </select>
-        </form>
+        <SelectBox
+          onSelect={handleSelectFontName}
+          optionList={FONT_MENU.map((font) => font.font)}
+          value={currentFontName}
+          width='w-[228px]'
+          limitOptionHeight='128px'
+        />
       </div>
       <div className='flex w-full gap-6 items-center mt-2'>
         <label className='text-[14px]'>글꼴 크기</label>
@@ -73,7 +66,7 @@ const FontInput = () => {
           ))}
         </div>
       </div>
-      <div className='mt-[21px]'>
+      <div className='mt-[21px] desktop:mt-[36px] desktop:flex desktop:justify-center desktop:mb-[4px]'>
         <ColorPalette
           onChangeColor={(color) => handleFontColorChange(color)}
           selectedColor={fontColor}
