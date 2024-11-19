@@ -38,8 +38,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // 동적 경로에 대해 Cache-Control 헤더 추가
-        source: '/card/:id', // /card/[id]에 해당
+        source: '/card/:id',
         headers: [
           {
             key: 'Cache-Control',
