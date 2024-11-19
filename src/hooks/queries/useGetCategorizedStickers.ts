@@ -4,7 +4,7 @@ import { QUERY_KEYS } from '@/hooks/queries/queryKeys';
 import { StickerImage } from '@/types/stickerData.types';
 import { supabase } from '@/utils/supabase/createClient';
 import { validateStorageFiles } from '@/utils/supabase/validateStorageFiles';
-import getImageDimensions from '@/utils/sticker/getImageDimensions';
+import getImageDimensionsOnClient from '@/utils/sticker/getImageDimensionsOnClient';
 
 const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> => {
   try {
@@ -21,7 +21,7 @@ const fetchAllStickerImages = async (): Promise<Record<string, StickerImage[]>> 
         const [category] = file.name.split('-');
         const { data: publicUrlData } = supabase.storage.from('stickers').getPublicUrl(file.name);
 
-        const { width, height } = await getImageDimensions(publicUrlData.publicUrl);
+        const { width, height } = await getImageDimensionsOnClient(publicUrlData.publicUrl);
 
         const stickerImage: StickerImage = {
           id: file.name,

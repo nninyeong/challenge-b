@@ -29,7 +29,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
   }, []);
 
   return (
-    <div className='grid grid-cols-5 place-content-center place-items-center text-sm gap-y-[27px]'>
+    <div className='grid grid-cols-5 place-content-center place-items-center text-sm gap-y-[27px] desktop:w-[391px]'>
       <div className='flex-col-center'>
         <button
           type='button'
@@ -66,7 +66,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
         </div>
       ))}
 
-      <div className='flex flex-col-center justify-center items-center '>
+      <div className='flex flex-col-center justify-center items-center'>
         <button
           type='button'
           className='w-[35px] h-[35px] border-[1px] border-solid border-gray-200 rounded-full flex justify-center items-center bg-white'

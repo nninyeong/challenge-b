@@ -73,6 +73,9 @@ const config: Config = {
         Main: ['Main'],
         JejuGothic: ['JejuGothic'],
         HakgyoansimWoojuR: ['HakgyoansimWoojuR'],
+        GowunBatang: ['GowunBatang-Regular'],
+        Hahmlet: ['Hahmlet-VariableFont_wght'],
+        HiMelody: ['HiMelody-Regular'],
       },
       backgroundImage: {
         'edit-contained': "url('/assets/images/icons/edit-contained.png')",

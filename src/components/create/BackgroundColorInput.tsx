@@ -23,7 +23,7 @@ const BackgroundColorInput = () => {
   };
 
   return (
-    <div className='mt-[21px]'>
+    <div className='mt-[17px] desktop:mt-[44px] desktop:flex desktop:justify-center'>
       <ColorPalette
         selectedColor={myColor}
         onChangeColor={handleColorChange}
