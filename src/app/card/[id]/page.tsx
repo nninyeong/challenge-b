@@ -6,6 +6,7 @@ import { Fragment } from 'react';
 import { convertOrderToComponent } from '@/utils/convert/convertOrderToComponent';
 import { Metadata } from 'next';
 import { MainPhotoType } from '@/types/invitationFormType.type';
+import PrivateCard from '@/components/card/PrivateCard';
 
 export const generateStaticParams = async () => {
   const { data, error } = await supabase.from('invitation').select('id');
@@ -75,7 +76,9 @@ const CardPage = async ({ params }: { params: { id: string } }) => {
         ))}
     </div>
   ) : (
-    <div className='flex justify-center items-center text-[16px]'>아직 공개되지 않은 청첩장입니다.</div>
+    <div className='max-w-[375px] h-screen mx-auto flex justify-center items-center'>
+      <PrivateCard />
+    </div>
   );
 };
 
