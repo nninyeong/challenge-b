@@ -74,7 +74,7 @@ const ReviewItem = ({
               alt='후기 이미지'
               fill
               priority
-              className='rounded-[12px]  object-cover'
+              className='object-cover rounded-[12px]'
               onClick={review.image_url ? () => handleReviewDetailPage(review.id) : undefined}
               sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
             />
@@ -162,6 +162,7 @@ const ReviewItem = ({
             <span>삭제하기</span>
           </button>
         )}
+
         {isReviewModalOpen && (
           <div
             className='fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-[9999]'

@@ -5,6 +5,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 import GalleryButton from '../gallery/GalleryButton';
 import { Notify } from 'notiflix';
+import { useGalleryImagePreviewStore } from '@/store/useCompressedImages';
 import { compressImageTwice } from '@/utils/compressImg';
 
 const MAX_FILES = 18;
@@ -12,39 +13,49 @@ const MAX_FILES = 18;
 const GalleryInput = () => {
   const { setValue, getValues } = useFormContext();
 
+  const { setGalleryPreviewUrls } = useGalleryImagePreviewStore();
   const ratio = useWatch({ name: 'gallery.ratio' });
   const gridType = useWatch({ name: 'gallery.grid' });
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
+    const files = event.target?.files;
     const existingImages = getValues('gallery.images') || [];
-    if (files) {
-      if (files.length + existingImages.length > MAX_FILES) {
-        Notify.failure(`사진은 최대 ${MAX_FILES}장까지 등록할 수 있습니다.`);
-        return;
-      }
 
-      if (files.length > 0) {
-        const fileArray = Array.from(files);
+    if (!files || files.length === 0) {
+      Notify.failure('파일을 선택하지 않았습니다.');
+      return;
+    }
 
+    const fileArray = Array.from(files);
+    if (fileArray.length + existingImages.length > MAX_FILES) {
+      Notify.failure(`사진은 최대 ${MAX_FILES}장까지 등록할 수 있습니다.`);
+      return;
+    }
+
+    try {
+      const uploadPromises = fileArray.map(async (file) => {
         try {
-          const uploadPromises = fileArray.map(async (file) => {
-            const compressedFile = await compressImageTwice(file);
-            if (!compressedFile) {
-              throw new Error();
-            }
-            const uploadedUrl = await uploadGalleryImageToSupabaseStorage(compressedFile);
-            return uploadedUrl;
-          });
+          const compressedFile = await compressImageTwice(file);
+          if (!compressedFile) throw new Error('압축 실패');
 
-          const urls = await Promise.all(uploadPromises);
-          const publicUrls = urls.filter((url) => url !== null);
+          const compressImgUrl = URL.createObjectURL(compressedFile);
+          setGalleryPreviewUrls(compressImgUrl);
 
-          setValue('gallery.images', [...existingImages, ...publicUrls]);
+          const uploadedUrl = await uploadGalleryImageToSupabaseStorage(file);
+          return uploadedUrl;
         } catch (error) {
-          console.error('이미지 업로드 중 오류가 발생했습니다:', error);
+          console.error('파일 업로드 실패:', error);
+          return null; // 실패한 파일은 null 반환
         }
-      }
+      });
+
+      const urls = await Promise.all(uploadPromises);
+      const publicUrls = urls.filter((url) => url !== null);
+
+      setValue('gallery.images', [...existingImages, ...publicUrls]);
+    } catch (error) {
+      console.error('이미지 업로드 중 오류가 발생했습니다:', error);
+      Notify.failure('이미지 업로드 중 오류가 발생했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -57,9 +68,9 @@ const GalleryInput = () => {
   };
 
   return (
-    <div className='text-black'>
+    <div>
       <div className='flex items-center mb-3'>
-        <p className='mr-4'>사진비율</p>
+        <p className='font-medium text-gray-700 text-[14px] leading-[14px] mr-4'>사진비율</p>
         <GalleryButton
           onClick={() => handleImgCutStyle('square')}
           isActive={ratio === 'square'}
@@ -74,7 +85,7 @@ const GalleryInput = () => {
         </GalleryButton>
       </div>
       <div className='flex items-center'>
-        <p className='mr-4'>배치방법</p>
+        <p className='font-medium text-gray-700 text-[14px] leading-[14px] mr-4'>배치방법</p>
         <GalleryButton
           onClick={() => handleGridTypeStyle(2)}
           isActive={gridType === 2}
@@ -105,9 +116,9 @@ const GalleryInput = () => {
             onChange={handleFileChange}
             multiple
           />
-          <div className='flex gap-2'>
+          <div className='flex items-center gap-2'>
             <IoIosInformationCircleOutline />
-            <p className='text-[12px] text-gray-600'>최대 18장까지 등록할 수 있습니다.</p>
+            <p className='text-[10px] font-medium text-gray-600'>최대 18장까지 등록할 수 있습니다.</p>
           </div>
         </div>
       </div>

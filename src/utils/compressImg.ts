@@ -5,7 +5,7 @@ export const compressImageTwice = async (file: File) => {
     maxSizeMB: 1,
     maxWidthOrHeight: 1000,
     useWebWorker: true,
-    initialQuality: 0.8,
+    initialQuality: 0.7,
   };
 
   try {
@@ -13,7 +13,7 @@ export const compressImageTwice = async (file: File) => {
 
     const secondCompressionOptions = {
       maxSizeMB: 0.8,
-      maxWidthOrHeight: 800,
+      maxWidthOrHeight: 900,
       useWebWorker: true,
       initialQuality: 0.7,
     };

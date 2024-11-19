@@ -67,6 +67,21 @@ body {
   src: url('../../public/assets/fonts/HakgyoansimWoojuR.ttf');
 }
 
+@font-face {
+  font-family: 'GowunBatang-Regular';
+  src: url('../../public/assets/fonts/GowunBatang-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Hahmlet-VariableFont_wght';
+  src: url('../../public/assets/fonts/Hahmlet-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: 'HiMelody-Regular';
+  src: url('../../public/assets/fonts/HiMelody-Regular.ttf');
+}
+
 .custom-quill-editor .ql-toolbar {
   display: flex;
 
