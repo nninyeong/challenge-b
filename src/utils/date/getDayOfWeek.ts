@@ -8,6 +8,8 @@ dayjs.extend(localizedFormat);
 dayjs.locale('ko');
 
 export const getDayOfWeek = (date: Date | string) => {
+  if (date === '') return;
+
   const notifyTimer = useRef<NodeJS.Timeout | null>(null);
 
   const day = dayjs(date).format('dddd');
