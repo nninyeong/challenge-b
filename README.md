@@ -50,21 +50,19 @@
 - feat :
   해당 파일에 새로운 기능이 생김
 - add: 없던 파일을 생성함, 초기 세팅
-- bugfix: 버그 수정.
+- bugfix: 버그 수정
 - refactor: 코드 리팩토링
 - fix: 코드 수정
 - move: 파일 옮김/정리
-- del: 기능/파일을 삭제
+- delete: 기능/파일을 삭제
 - test: 테스트 코드를 작성
 - style: css
 - gitfix: gitignore 수정
-- script: package.json 변경(npm 설치 등)
+- script: package.json 변경(npm 설치 등)
 
 ## 📋 ERD 설계도
 
 ![](https://velog.velcdn.com/images/alice0751/post/5fd090ba-af77-43d9-9ffa-2c1bb297c5c6/image.png)
-
----
 
 ## 📌 주요 기능 소개
 
@@ -192,13 +190,14 @@
 
 ### 김민영
 
-1. [제목](#)
-2. [제목](#)
+1. [우리 팀의 협업효율을 높인 규칙들](https://nninyeong.tistory.com/149)
+2. [내 prefetchQuery가 작동하지 않는 이유](https://nninyeong.tistory.com/151)
 
 ### 이기성
 
-1. [제목](#)
-2. [제목](#)
+1. [스크롤 이벤트 개선하기](https://velog.io/@leekee0905/TIL-%EC%8A%A4%ED%81%AC%EB%A1%A4-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0)
+2. [프로젝트에서 react-hook-form을 사용한 이유](https://velog.io/@leekee0905/TIL-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90%EC%84%9C-react-hook-form%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%9D%B4%EC%9C%A0)
+3. [z-index가 왜 안될까?](https://velog.io/@leekee0905/z-index%EA%B0%80-%EC%99%9C-%EC%95%88%EB%90%A0%EA%B9%8C)
 
 ### 한수빈
 
@@ -214,10 +213,8 @@
 
 ### 김진형
 
-
 1. [지도 연동 네비게이션 버튼 개발 스토리](https://velog.io/@lukby2457/117-%EC%9D%B4%EC%A0%84-%EA%B0%9C%EB%B0%9C-%EC%A0%95%EB%A6%AC)
 2. [청첩장 방명록에 페이지네이션 적용하기](https://velog.io/@lukby2457/1117-%EA%B0%9C%EB%B0%9C-%EB%82%B4%EC%9A%A9-%EC%9A%94%EC%95%BD-%EC%A0%95%EB%A6%AC)
-
 
 <br/>
 
