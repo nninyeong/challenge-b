@@ -11,12 +11,12 @@ const GreetingInput = () => {
   };
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col text-[12px] text-gray-900'>
       <div className='flex'>
         <label className='text-gray-700 text-[14px] font-medium mr-5 desktop:mr-[31px]'>제목</label>
         <input
           type='text'
-          className='w-[266px] desktop:w-[460px] h-[32px] rounded-lg mb-2 p-2 border border-solid border-gray-300 text-[12px] placeholder:text-gray-300 text-gray-300'
+          className='w-[266px] desktop:w-[460px] h-[32px] rounded-lg mb-2 p-2 border-[.5px] border-gray-300 placeholder:text-gray-300'
           {...register('greetingMessage.title')}
           maxLength={20}
         />

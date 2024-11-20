@@ -52,7 +52,6 @@ const useAuthWithEmail = () => {
     if (userId) {
       await saveSessionDataToSupabase(browserClient, userId);
     }
-    console.log('here is emailSinIn Fn, user: ', data.user);
 
     router.refresh();
     router.push('/');

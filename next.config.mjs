@@ -34,6 +34,28 @@ const nextConfig = {
     ],
     formats: ['image/avif', 'image/webp'],
   },
+
+  async headers() {
+    return [
+      {
+        source: '/card/:id',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+          {
+            key: 'Pragma',
+            value: 'no-cache',
+          },
+          {
+            key: 'Expires',
+            value: '0',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default withSentryConfig(nextConfig, {
