@@ -36,7 +36,7 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
       queryClient.prefetchQuery({
         queryKey: QUERY_KEYS.guestBook(invitationId, page + 1),
         queryFn: () => fetchGuestBook(invitationId, page + 1),
-        staleTime: 0
+        staleTime: 0,
       });
     }
   }, [page, totalPages, invitationId, queryClient]);
@@ -59,16 +59,19 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
         isCreatePage={isCreatePage}
         goOnePage={goOnePage}
         totalPages={totalPages}
+        rgbaColor={rgbaColor}
       />
 
       {guestBooks.length === 0 ? (
         <div className='text-black w-full px-4 mb-4'>
           <div className='bg-gray-50 rounded-xl px-4 h-[96px] flex flex-col justify-center items-center gap-[3px]'>
             <img
-              src='/assets/images/empty-guestbook.svg'
-              alt=''
+              src='/assets/images/empty-guestbook.webp'
+              alt='청첩장게시글'
+              className='w-[53px] h-[48px]'
+              loading='lazy'
             />
-            <span className='text-gray-700 '>아직 남긴 방명록이 없어요.</span>
+            <span className='text-gray-700 font-medium'>아직 남긴 방명록이 없어요.</span>
           </div>
         </div>
       ) : (
@@ -88,13 +91,12 @@ const GuestBook = ({ fontInfo }: GuestBookProps) => {
       )}
 
       {totalPages > 0 && (
-        <div className='w-full px-4 mt-6 mb-6'>
-          <GuestBookPagination
-            page={page}
-            setPage={setPage}
-            totalPages={totalPages}
-          />
-        </div>
+        <GuestBookPagination
+          page={page}
+          setPage={setPage}
+          totalPages={totalPages}
+          rgbaColor={rgbaColor}
+        />
       )}
     </div>
   );

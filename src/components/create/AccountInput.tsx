@@ -137,7 +137,7 @@ const AccountInput = () => {
           value={modalValue}
           onChange={(e) => setModalValue(e.target.value)}
           placeholder='카카오페이 송금 링크 복사'
-          className={`w-full px-4 py-2 border rounded mb-4 ${isInvalid ? 'border-red-500' : ''}`}
+          className={`w-full px-4 pl-2 py-2 border rounded-lg mb-4 ${isInvalid ? 'border-red-500' : ''}`}
         />
       </KakaoPayModal>
     </div>

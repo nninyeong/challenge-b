@@ -20,11 +20,11 @@ const MyPage = async (): Promise<JSX.Element | null> => {
   return (
     <div className='w-full mx-auto '>
       <div className='w-[90%] mx-auto pt-4  pb-1 '>
-        <div className='w-full desktop:flex desktop:flex-row mobile:flex mobile:flex-col desktop:mb-20'>
+        <div className='w-full flex flex-col desktop:flex-row desktop:mb-20'>
           {user ? (
-            <div className='desktop:h-[228px] desktop:w-[448px] flex  desktop:flex-[2] flex-col desktop:mr-6 desktop:justify-between '>
-              <div className='w-full flex items-center  desktop:gap-6 desktop:pl-4 desktop:pr-4  desktop:pt-6 mobile:p-4 mobile:gap-4'>
-                <div className='rounded-full mobile:w-[48px] mobile:h-[48px] desktop:w-[80px] desktop:h-[80px] overflow-hidden position: relative '>
+            <div className='desktop:h-[228px] desktop:w-[448px] flex desktop:flex-[2] flex-col desktop:mr-6 desktop:justify-between '>
+              <div className='w-full flex items-center desktop:gap-6 desktop:pl-4 desktop:pr-4  desktop:pt-6 p-4 gap-4'>
+                <div className='rounded-full w-[48px] h-[48px] desktop:w-[80px] desktop:h-[80px] overflow-hidden position: relative '>
                   <Image
                     src={profileUrl}
                     fill
