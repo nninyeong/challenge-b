@@ -197,10 +197,12 @@
 
 ### 이기성
 
-1. [제목](#)
-2. [제목](#)
+1. [스크롤 이벤트 개선하기](https://velog.io/@leekee0905/TIL-%EC%8A%A4%ED%81%AC%EB%A1%A4-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0)
+2. [프로젝트에서 react-hook-form을 사용한 이유](https://velog.io/@leekee0905/TIL-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90%EC%84%9C-react-hook-form%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%9D%B4%EC%9C%A0)
+3. [z-index가 왜 안될까?](https://velog.io/@leekee0905/z-index%EA%B0%80-%EC%99%9C-%EC%95%88%EB%90%A0%EA%B9%8C)
 
 ### 한수빈
+
 1. [Carousel](https://onetwothreechachacha.tistory.com/152)
 2. [비회원과 회원 사용자의 폼 데이터 매끄럽고 안전하게 저장하는 방법 - 세션스토리지와 Supabase 활용](https://onetwothreechachacha.tistory.com/154)
 
@@ -211,6 +213,7 @@
 3. [All about Infinite Scroll (무한스크롤에 대하여)](https://velog.io/@alice0751/All-about-Infinite-Scroll-%EB%AC%B4%ED%95%9C%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC)
 
 ### 김진형
+
 1. [지도 연동 네비게이션 버튼 개발 스토리](https://velog.io/@lukby2457/117-%EC%9D%B4%EC%A0%84-%EA%B0%9C%EB%B0%9C-%EC%A0%95%EB%A6%AC)
 2. [청첩장 방명록에 페이지네이션 적용하기](https://velog.io/@lukby2457/1117-%EA%B0%9C%EB%B0%9C-%EB%82%B4%EC%9A%A9-%EC%9A%94%EC%95%BD-%EC%A0%95%EB%A6%AC)
 
