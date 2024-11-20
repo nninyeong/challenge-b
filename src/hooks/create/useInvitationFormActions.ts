@@ -75,19 +75,7 @@ export const useInvitationFormActions = ({
 
   const handleDebouncedNext = debounce(async () => {
     isNavigating.current = true;
-    const { data: user } = await browserClient.auth.getUser();
-    const formData = methods.getValues();
-    if (!user || !user.user) {
-      sessionStorage.setItem('invitationFormData', JSON.stringify(formData));
-    } else {
-      if (existingInvitation === null) {
-        insertInvitation(formData);
-      } else {
-        updateInvitation(formData);
-      }
-    }
     goToNextStep();
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
     if (!isDesktop) isNavigating.current = false;
   }, DELAY_TIME);
 
