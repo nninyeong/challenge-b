@@ -66,7 +66,7 @@ const FontInput = () => {
           ))}
         </div>
       </div>
-      <div className='mt-[21px] desktop:mt-[36px] desktop:flex desktop:justify-center desktop:mb-[4px]'>
+      <div className='mt-[21px] desktop:flex desktop:justify-center desktop:mb-[4px]'>
         <ColorPalette
           onChangeColor={(color) => handleFontColorChange(color)}
           selectedColor={fontColor}
