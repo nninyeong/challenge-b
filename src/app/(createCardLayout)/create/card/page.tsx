@@ -31,7 +31,6 @@ const CreateCardPage = () => {
     defaultValues: INVITATION_DEFAULT_VALUE,
   });
 
-  const { data: existingInvitation } = useGetInvitationQuery();
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(false);
   const [orderList, setOrderList] = useState(() => INITIAL_ORDER(methods));
   const [styleSetting, setStyleSetting] = useState({
@@ -144,13 +143,10 @@ const CreateCardPage = () => {
         )}
 
         <div className='flex w-full h-full desktop:px-[152px] desktop:gap-[65px]'>
-          {!existingInvitation && (
-            <OnBoarding
-              setIsOnboardingComplete={setIsOnboardingComplete}
-              isOnboardingComplete={isOnboardingComplete}
-            />
-          )}
-
+          <OnBoarding
+            setIsOnboardingComplete={setIsOnboardingComplete}
+            isOnboardingComplete={isOnboardingComplete}
+          />
           <div className='relative'>
             {currentWidth >= 1440 ? (
               <div className='flex relative w-[451px] h-[850px] bg-no-repeat bg-cover bg-center items-center justify-center desktop:z-30'>
