@@ -18,7 +18,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
   const profileUrl = user?.user?.user_metadata?.avatar_url || '/assets/images/defaultImg.png';
 
   return (
-    <div className='w-full mx-auto p-[16px]'>
+    <div className='w-full mx-auto p-[16px] desktop:pt-20'>
       <div className=' desktop:w-[1136px] mx-auto pt-[16px]  pb-[4px] '>
         <div className='w-full desktop:w-[448px] desktop:flex desktop:flex-row mobile:flex mobile:flex-col desktop:mb-[80px]'>
           {user ? (
