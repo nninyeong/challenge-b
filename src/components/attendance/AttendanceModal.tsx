@@ -61,8 +61,10 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
         <div className='flex flex-col justify-center items-center'>
           <div className='flex justify-center mb-6'>
             <img
-              src='/assets/images/check-broken.svg'
-              alt=''
+              src='/assets/images/check-broken.webp'
+              alt='참여의사모달그림'
+              className='w-[88px] h-[88px]'
+              loading='lazy'
             />
           </div>
           <div className='w-[230px] text-center mb-[30px]  text-primary300'>
@@ -94,14 +96,16 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
                     {...register('mealOption')}
                   />
                   <img
-                    src='/assets/images/icons/selected-on.svg'
+                    src='/assets/images/icons/selected-on.webp'
                     alt='식사여부 활성화'
-                    className='peer-checked:inline hidden'
+                    className='peer-checked:inline hidden w-4 h-4'
+                    loading='lazy'
                   />
                   <img
-                    src='/assets/images/icons/selected-off.svg'
+                    src='/assets/images/icons/selected-off.webp'
                     alt='식사여부 비활성화'
-                    className='peer-checked:hidden inline'
+                    className='peer-checked:hidden inline w-4 h-4'
+                    loading='lazy'
                   />
                   <span className='ml-2'>식사여부</span>
                 </label>
@@ -161,12 +165,12 @@ const AttendanceModal: React.FC<{ invitationId: string; onClick: () => void; isC
           {errors.name && <span className='text-red-500 text-[12px]'>{errors.name.message}</span>}
           <div className='flex gap-2 mt-4'>
             <button
-              className='w-24 h-12 bg-gray-300 text-white text-[16px] py-2 px-4 rounded-xl'
+              className='w-24 h-12 bg-gray-300 text-white text-[16px] py-2 px-4 font-bold rounded-xl'
               onClick={onClick}
             >
               취소
             </button>
-            <button className='w-[207px] h-12 bg-primary300 text-white text-[16px] py-2 px-4 rounded-xl'>
+            <button className='w-[207px] h-12 bg-primary300 text-white text-[16px] py-2 px-4 font-bold rounded-xl'>
               참석 의사 전달하기
             </button>
           </div>

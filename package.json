@@ -22,7 +22,6 @@
     "browser-image-compression": "^2.0.2",
     "dayjs": "^1.11.13",
     "framer-motion": "^11.11.9",
-    "html-to-image": "^1.11.11",
     "lodash": "^4.17.21",
     "next": "14.2.15",
     "notiflix": "^3.2.7",

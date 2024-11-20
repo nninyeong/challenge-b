@@ -1,7 +1,7 @@
 'use client';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import colorConverter from '@/utils/colorConverter';
-import { getDayOfWeek } from '@/utils/date/getDayOfWeek';
+import { useGetValidatedDay } from '@/hooks/invitation/useGetValidatedDay';
 import PhoneIcon from '../icons/PhoneIcon';
 
 const DEFAULT_VALUES = {
@@ -12,7 +12,7 @@ const DEFAULT_VALUES = {
 
 type WeddingInfoPropType = Pick<InvitationFormType, 'weddingInfo' | 'fontInfo'>;
 const WeddingInfo = ({ weddingInfo, fontInfo }: WeddingInfoPropType) => {
-  const day = getDayOfWeek(weddingInfo.date)[0];
+  const day = useGetValidatedDay(weddingInfo.date);
   const { size, color } = fontInfo;
   const rgbaColor = colorConverter(color);
 

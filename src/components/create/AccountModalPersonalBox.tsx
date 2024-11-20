@@ -34,10 +34,15 @@ const AccountModalPersonalBox = ({
       </div>
       <div className='self-end flex gap-1'>
         {accountData.kakaopay && (
-          <button onClick={handleOpenKakaoPay} className='mb-[12px]'>
+          <button
+            onClick={handleOpenKakaoPay}
+            className='mb-[12px]'
+          >
             <img
-              src={'/assets/images/icons/kakaopay-button.svg'}
+              src={'/assets/images/icons/kakaopay-button.webp'}
               alt={'카카오페이 버튼'}
+              className='w-[51px] h-[25px]'
+              loading='lazy'
             />
           </button>
         )}

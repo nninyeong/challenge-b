@@ -39,10 +39,10 @@ const Account = ({ account, fontInfo }: AccountPropType) => {
       className='flex flex-col justify-center items-center mb-[80px]'
       ref={accountRef}
     >
-      <p style={{ fontSize: ` ${20 + size}px)` }}>{account.title ? account.title : '제목'}</p>
+      <span className='font-medium' style={{ fontSize: `${20 + size}px` }}>{account.title ? account.title : '제목'}</span>
       <p>{account.content ? account.content : '내용'}</p>
       <div
-        className='flex flex-col gap-5 mt-5 w-full justify-center items-center'
+        className='flex flex-col gap-2 mt-5 w-full justify-center items-center'
         style={{ fontSize: `${16 + size}px` }}
       >
         <button
