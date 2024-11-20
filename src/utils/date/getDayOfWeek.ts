@@ -5,7 +5,7 @@ import 'dayjs/locale/ko';
 dayjs.extend(localizedFormat);
 dayjs.locale('ko');
 
-export const useGetValidatedDay = (date: string) => {
+export const getDayOfWeek = (date: string) => {
   if (date === '') return;
 
   const dateObj = new Date(date.replace(/\./g, '-'));
