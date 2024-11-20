@@ -87,7 +87,7 @@ const WeddingInfoInput = () => {
       <div className='flex flex-col gap-[8px] text-[14px] text-gray-700 font-medium'>
         <div className='grid grid-cols-[80px_1fr]'>
           <label className='leading-[32px]'>주소</label>
-          <div className='grid grid-cols-[1fr_auto] gap-[8px]'>
+          <div className='grid grid-cols-[1fr_auto] desktop:grid-cols-[308px_1fr] gap-[8px]'>
             <input
               readOnly={true}
               placeholder='주소를 검색해주세요.'
@@ -95,7 +95,7 @@ const WeddingInfoInput = () => {
               {...register('weddingInfo.weddingHallAddress')}
             />
             <button
-              className='bg-primary-300 rounded-[8px] w-[56px] h-[32px] text-white font-bold text-[16px] tracking-[-0.032px]'
+              className='bg-primary-300 rounded-[8px] w-[56px] desktop:w-[72px] h-[32px] text-white font-bold text-[16px] tracking-[-0.032px]'
               onClick={openAddressModal}
               type='button'
             >
@@ -110,13 +110,14 @@ const WeddingInfoInput = () => {
             className='w-[235px] desktop:w-[388px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px]'
             {...register('weddingInfo.weddingHallName')}
             maxLength={21}
+            placeholder='예식장명을 입력해주세요.'
           />
         </div>
         <div className='grid grid-cols-[80px_1fr]'>
           <label className='text-[14px] text-gray-700 font-medium leading-[32px]'>연락처</label>
           <input
             className='w-[172px] desktop:w-[308px] h-[32px] rounded-[8px] border-[.5px] border-gray-300 px-[8px] py-[9px] text-gray-400 text-[12px]'
-            placeholder='연락처를 입력해주세요.'
+            placeholder='예식장 연락처를 입력해주세요.'
             {...register('weddingInfo.weddingHallContact')}
             maxLength={15}
           />

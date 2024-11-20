@@ -25,7 +25,7 @@ const CAROUSEL_ITEM_PROPS = [
 ];
 
 const BrandingCarousel = () => {
-  const { currentIndex, isTransitioning } = useCarousel(CAROUSEL_ITEM_PROPS.length, 3000, 500);
+  const { currentIndex, isTransitioning } = useCarousel(CAROUSEL_ITEM_PROPS.length, 2700, 500);
   const indicatorBackgroundRef = useRef<HTMLDivElement | null>(null);
   const indicatorWidth = useMemo(
     () => (indicatorBackgroundRef.current?.offsetWidth ?? 0) / 3,
