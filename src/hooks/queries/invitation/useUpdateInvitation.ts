@@ -24,6 +24,7 @@ export const useUpdateInvitation = () => {
   return useMutation({
     mutationFn: (invitationData: InvitationFormType) => updateInvitation(invitationData),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitationCard() });
     },
   });
