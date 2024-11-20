@@ -7,10 +7,12 @@ import { useEffect, useState } from 'react';
 import { revalidateInvitation } from '@/utils/revalidateInvitation';
 import { Notify } from 'notiflix';
 import { TogglePrivateLoading } from '../loading/MypageLoading';
+import { useRouter } from 'next/navigation';
 
 const TogglePrivate = () => {
   const [isPrivate, setIsPrivate] = useState(false);
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { data: invitationCard, isLoading, error, isSuccess } = useGetAllinvitationCard();
 
@@ -35,6 +37,7 @@ const TogglePrivate = () => {
     setIsPrivate(newIsPrivate);
     const { isSuccess } = await revalidateInvitation(invitationCard[0].id);
     if (isSuccess) {
+      router.refresh();
       mutation.mutate(newIsPrivate);
       Notify.success('공개여부가 변경되었습니다.');
     }

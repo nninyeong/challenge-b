@@ -87,14 +87,14 @@ const ReviewWriteButton = () => {
           onClick={closeModal}
         >
           <div
-            className='relative bg-white py-4 px-6 rounded-[24px] w-[612px] h-[544px] z-[10000]'
+            className='relative bg-white py-[32px] px-[36px] rounded-[24px] w-[612px] h-[544px] z-[10000]'
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src='/assets/images/icons/x-03.webp'
               alt='닫기버튼'
               onClick={closeModal}
-              className='absolute top-4 right-4 text-black w-[24px] h-[24px] cursor-pointer z-[10100]'
+              className='absolute top-7 right-7 text-black w-[32px] h-[32px] cursor-pointer z-[10100]'
             />
 
             <div className='relative mt-[50px]'>

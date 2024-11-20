@@ -78,8 +78,9 @@ const FAQ_LIST = [
     id: 9,
     question: '청첩장 내용만 보이게 다운받을 수 있나요?',
     answer: `
-      디데이 · 참석의사 · RSVP를 잠시 사용안함으로 변경하고 다운로드를 진행하시면 깔끔하게 다운로드가 가능합니다.
+      디데이 · 참석의사 · RSVP를 잠시 '사용 안 함'으로 변경하고 다운로드를 진행하시면 깔끔하게 다운로드가 가능합니다.
       기존에 작성한 참석의사 정보는 삭제되지 않으니 크게 걱정하지 않으셔도 괜찮습니다:)
+      또한, PDF 다운로드 시 '설정 더보기'에서 배경 그래픽을 설정하시면 선택한 색상이 잘 적용됩니다.
     `.trim(),
   },
 ];
@@ -99,7 +100,7 @@ const MainFaqList = () => {
             className='w-full cursor-pointer flex flex-col items-center'
             onClick={() => toggleFAQ(menu.id)}
           >
-            <div className='w-full flex justify-between items-center border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 p-[19.5px] desktop:py-[25.5px] px-0 font-medium text-gray-900 text-[14px] desktop:text-[24px]'>
+            <div className='w-full flex justify-between items-center border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 p-[19.5px] desktop:py-[25.5px] px-0 font-medium text-gray-900 text-[14px] desktop:text-[24px] h-[56px] desktop:h-[80px]'>
               {menu.question}
               {expandedIds.has(menu.id) ? (
                 <img

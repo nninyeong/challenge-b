@@ -14,8 +14,11 @@ import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '../queries/queryKeys';
 import useMediaQuery from '../review/useMediaQuery';
+import { revalidateInvitation } from '@/utils/revalidateInvitation';
+import { useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 
 export const DELAY_TIME = 300;
+const SCROLL_DELAY_TIME = 1000;
 const SAVE_DELAY_TIME = 3000;
 
 export const useInvitationFormActions = ({
@@ -37,6 +40,9 @@ export const useInvitationFormActions = ({
   const { mutate: insertInvitation } = useInsertInvitation();
   const queryClient = useQueryClient();
   const isDesktop = useMediaQuery('(min-width: 1440px)');
+  const { data: invitationCards } = useGetAllinvitationCard();
+  const invitationCard = invitationCards?.[0];
+  const invitationCardId = invitationCard?.id;
 
   useEffect(() => {
     if (existingInvitation === null) {
@@ -68,6 +74,9 @@ export const useInvitationFormActions = ({
       updateInvitation(invitationData);
     }
 
+    const { isSuccess } = await revalidateInvitation(invitationCardId as string);
+    if (isSuccess) router.refresh();
+
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
     Notify.success('청첩장이 성공적으로 제출되었습니다.');
     router.push('/mypage');
@@ -76,13 +85,21 @@ export const useInvitationFormActions = ({
   const handleDebouncedNext = debounce(async () => {
     isNavigating.current = true;
     goToNextStep();
-    if (!isDesktop) isNavigating.current = false;
+    if (!isDesktop) {
+      setTimeout(() => {
+        isNavigating.current = false;
+      }, SCROLL_DELAY_TIME);
+    }
   }, DELAY_TIME);
 
   const handleDebouncedPrevious = debounce(() => {
     isNavigating.current = true;
     goToPreviousStep();
-    if (!isDesktop) isNavigating.current = false;
+    if (!isDesktop) {
+      setTimeout(() => {
+        isNavigating.current = false;
+      }, SCROLL_DELAY_TIME);
+    }
   }, DELAY_TIME);
 
   const handleDebouncedSave = debounce(async () => {

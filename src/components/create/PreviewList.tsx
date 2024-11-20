@@ -65,10 +65,12 @@ const PreviewList = ({
       }}
     >
       {orderList.map((e, index) => {
+        const isGallery = e.typeOnSharedCard === 'GALLERY';
+
         return (
           <div
             key={e.labelForInput}
-            style={{ minHeight: MOBILE_VIEW_HEIGHT }}
+            style={currentWidth > 1440 && isGallery ? {} : { minHeight: MOBILE_VIEW_HEIGHT }}
           >
             {e.component?.map((element, idx) => {
               return (

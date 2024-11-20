@@ -60,7 +60,7 @@ const AccountInput = () => {
         <button
           type='button'
           onClick={() => setAccountType('groom')}
-          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out ${
+          className={`z-10 w-[50%] h-[31px] desktop:text-[16px] rounded-full transition-colors duration-300 ease-in-out ${
             accountType === 'groom' ? 'text-white font-bold' : 'text-[#8c8c8c]'
           } mr-3`}
         >
@@ -69,7 +69,7 @@ const AccountInput = () => {
         <button
           type='button'
           onClick={() => setAccountType('bride')}
-          className={`z-10 w-[50%] h-[30px] rounded-full transition-colors duration-300 ease-in-out ${
+          className={`z-10 w-[50%] h-[31px] desktop:text-[16px] rounded-full transition-colors duration-300 ease-in-out ${
             accountType === 'bride' ? 'text-white font-bold' : 'text-[#8c8c8c]'
           }`}
         >
@@ -88,19 +88,19 @@ const AccountInput = () => {
             >
               <div className='flex justify-center items-center gap-[8px] desktop:w-full'>
                 <input
-                  className='px-[8px] w-[60px] h-[30px] rounded-[8px] border-[.5px] border-gray-300 desktop:basis-1/6'
+                  className='px-[8px] w-[60px] desktop:w-[81px] h-[30px] desktop:h-[32px] rounded-[8px] border-[.5px] border-gray-300'
                   {...register(`account.${accountType}[${index}].depositor`)}
                   placeholder='예금주'
                   maxLength={5}
                 />
                 <input
-                  className='px-[8px] w-[60px] h-[30px] rounded-[8px] border-[.5px] border-gray-300 desktop:basis-1/6'
+                  className='px-[8px] w-[60px] desktop:w-[112px] h-[30px] desktop:h-[32px] rounded-[8px] border-[.5px] border-gray-300'
                   {...register(`account.${accountType}[${index}].bank`)}
                   placeholder='은행'
                   maxLength={9}
                 />
                 <input
-                  className='px-[8px] w-[117px] h-[30px] rounded-[8px] border-[.5px] border-gray-300 desktop:basis-3/6'
+                  className='px-[8px] w-[117px] desktop:w-[203px] h-[30px] desktop:h-[32px] rounded-[8px] border-[.5px] border-gray-300'
                   {...register(`account.${accountType}[${index}].accountNumber`)}
                   placeholder='계좌번호'
                   maxLength={27}
