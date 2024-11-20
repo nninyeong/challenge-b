@@ -40,7 +40,7 @@ const FontInput = () => {
   return (
     <div>
       <div className='flex w-full gap-6 items-center'>
-        <label className='text-[14px]'>글꼴 선택</label>
+        <label className='text-[14px] text-gray-700 font-medium'>글꼴 선택</label>
         <SelectBox
           onSelect={handleSelectFontName}
           optionList={FONT_MENU.map((font) => font.font)}
@@ -50,7 +50,7 @@ const FontInput = () => {
         />
       </div>
       <div className='flex w-full gap-6 items-center mt-2'>
-        <label className='text-[14px]'>글꼴 크기</label>
+        <label className='text-[14px] text-gray-700 font-medium'>글꼴 크기</label>
         <div className='flex justify-between w-[228px]'>
           {FontSizeList.map((size) => (
             <button
