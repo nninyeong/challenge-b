@@ -159,8 +159,8 @@
 2. [제목](#)
 
 ### 한수빈
-1. [제목](#)
-2. [제목](#)
+1. [Carousel](https://onetwothreechachacha.tistory.com/152)
+2. [비회원과 회원 사용자의 폼 데이터 매끄럽고 안전하게 저장하는 방법 - 세션스토리지와 Supabase 활용](https://onetwothreechachacha.tistory.com/154)
 
 ### 정소현
 1. [제목](#)
