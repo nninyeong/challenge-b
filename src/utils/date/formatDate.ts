@@ -1,5 +1,9 @@
 import dayjs from 'dayjs';
 import { Notify } from 'notiflix';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+
+dayjs.extend(localizedFormat);
+dayjs.locale('ko');
 
 export const formatDate = (value: string) => {
   const inputNumbers = value.replace(/\D/g, '');
