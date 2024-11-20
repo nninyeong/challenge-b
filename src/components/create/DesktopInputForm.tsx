@@ -12,6 +12,7 @@ import {
   SUBMIT_BUTTON_MARGIN_RIGHT,
 } from '@/constants/invitationDesktopForm';
 import Image from 'next/image';
+import { createCardDesktopInputFormHeightMapper } from '@/utils/createCardFormHeightMapper';
 
 type DesktopInputPropsType = {
   methods: UseFormReturn<InvitationFormType>;
@@ -184,8 +185,8 @@ const DesktopInputForm = ({
             <Image
               alt='up'
               src='/assets/images/icons/up.png'
-              width={50}
-              height={25}
+              width={32}
+              height={16}
             />
           </button>
         ) : (
@@ -201,8 +202,8 @@ const DesktopInputForm = ({
             <Image
               alt='down'
               src='/assets/images/icons/down.png'
-              width={50}
-              height={25}
+              width={32}
+              height={16}
             />
           </button>
         )}
@@ -228,13 +229,14 @@ const DesktopInputForm = ({
                       currentStep.currentPreviewStep === previewStep && currentStep.currentInputStep === inputStep
                         ? 30
                         : 0,
+                    height: createCardDesktopInputFormHeightMapper(e.name[inputStep]),
                   }}
                   className={`w-full h-full border-[1px] border-solid shadow-md rounded-[12px] px-[24px] py-[12px] relative bg-white`}
                   ref={(el) => {
                     inputHeightRef.current[e.name[inputStep]] = { offsetTop: el?.offsetTop };
                   }}
                 >
-                  <p className='text-gray-900 text-[18px] font-bold mb-[14px]'>{e.name[inputStep]}</p>
+                  <p className='text-gray-900 text-[18px] font-bold mb-[12px]'>{e.name[inputStep]}</p>
                   {inputElement}
                 </div>
               );

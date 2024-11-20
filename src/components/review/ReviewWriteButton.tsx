@@ -69,7 +69,7 @@ const ReviewWriteButton = () => {
     <>
       <button
         className='fixed bottom-[12px] left-1/2 rounded-[300px] bg-primary300
-    text-white flex justify-center items-center w-[150px] h-[40px] -translate-x-1/2 gap-[6px] px-[16px]
+    text-white flex justify-center items-center w-[150px] h-[40px] -translate-x-1/2 gap-[6px] px-[16px] z-10
     '
         onClick={handleOpenReviewWrite}
       >

@@ -27,7 +27,7 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
 
   return (
     <div
-      className={`${isCreateCardPage ? 'hidden desktop:flex' : 'flex z-50'} fixed top-0 left-0 w-full h-[64px] desktop:h-[86px] justify-between items-center px-[16px] desktop:px-[152px] bg-white shadow-[0_10px_20px_rgba(0,0,0,0.1)]`}
+      className={`${isCreateCardPage ? 'hidden desktop:z-10 desktop:flex' : 'flex z-50'} fixed top-0 left-0 w-full h-[64px] desktop:h-[86px] justify-between items-center px-[16px] desktop:px-[152px] bg-white shadow-[0_10px_20px_rgba(0,0,0,0.1)]`}
     >
       <Link href='/'>
         <img
@@ -36,7 +36,7 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
           className='w-[97px] desktop:w-[143px]'
         />
       </Link>
-      <nav className={`flex gap-3 justify-center items-center`}>
+      <nav className={`flex gap-3 desktop:gap-[24px] justify-center items-center`}>
         <LinkToReviewPage />
         {isAuthenticated ? (
           <>
@@ -44,7 +44,7 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
           </>
         ) : (
           <Link href='/signin'>
-            <button className='bg-user-profile-02 w-[24px] h-[24px] bg-cover' />
+            <button className='bg-user-profile-02 w-[24px] h-[24px] desktop:w-[32px] desktop:h-[32px] bg-cover' />
           </Link>
         )}
       </nav>
