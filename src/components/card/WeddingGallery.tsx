@@ -39,12 +39,12 @@ const WeddingGallery = ({ gallery, fontInfo }: GalleryPropType) => {
   return (
     <div
       style={{ fontSize: `${16 + size}px`, color: `${rgbaColor}` }}
-      className='mb-[56px] h-fit'
+      className='mb-[56px] '
     >
       <p className='text-center mb-8 text-opcity-50 tracking-[4px]'>GALLERY</p>
 
       {images.length > 0 ? (
-        <div className={`${gridClass} gap-3.5 p-4`}>
+        <div className={`${gridClass} gap-3.5 p-4 `}>
           {images.map((image, index) => (
             <GalleryImage
               key={image}
