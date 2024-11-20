@@ -2,7 +2,6 @@
 
 import { useGetAllinvitationCard } from '@/hooks/queries/mypage/useMypage';
 import { useDownloadCsv } from '@/hooks/queries/mypage/useDownloadCsv';
-import { FaChevronRight } from 'react-icons/fa';
 
 type MenuItemProps = {
   name: string;
@@ -29,7 +28,11 @@ const MyPageMenuItem: React.FC<MenuItemProps> = ({ name, onClick }) => {
     >
       <div className='flex justify-between items-center p-2'>
         {name}
-        <FaChevronRight className='text-gray-700' />
+        <img
+          src='/assets/images/icons/chevron-right.webp'
+          alt='필드펴기'
+          className='desktop:w-[32px] desktop:h-[32px] w-[24px] h-[24px]'
+        />
       </div>
     </li>
   );
