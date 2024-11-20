@@ -39,6 +39,7 @@ type FormPositionType = {
 const SCROLL_DELAY_TIME = 1000;
 const HEADER_LENGTH = 86;
 const FIRST_INPUT_HALF_HEIGHT = 117;
+const SCROLL_GAP = 24;
 const DesktopInputForm = ({
   methods,
   orderList,
@@ -230,7 +231,7 @@ const DesktopInputForm = ({
       <div
         className='flex flex-col gap-[24px] relative duration-700'
         style={{
-          top: -inputOffset.currentContentOffsetTop - 24,
+          top: -inputOffset.currentContentOffsetTop - SCROLL_GAP,
         }}
       >
         {orderList.map((e, previewStep) => (
