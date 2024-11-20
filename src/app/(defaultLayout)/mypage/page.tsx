@@ -22,14 +22,14 @@ const MyPage = async (): Promise<JSX.Element | null> => {
       <div className=' desktop:w-[1136px] mx-auto pt-[16px]  pb-[4px] '>
         <div className='w-full desktop:w-[448px] desktop:flex desktop:flex-row mobile:flex mobile:flex-col desktop:mb-[80px]'>
           {user ? (
-            <div className='desktop:h-[228px] desktop:w-[448px] flex  desktop:flex-[2] flex-col desktop:mr-[24px] desktop:justify-between w-[343px] h-[80px]'>
-              <div className='desktop:h-[128px] flex items-center  desktop:gap-[24px] desktop:pr-[16px]  desktop:pt-[24px]  mobile:gap-[16px] mobile:pl-[16px]'>
-                <div className='rounded-full mobile:w-[48px] mobile:h-[48px] desktop:w-[80px] desktop:h-[80px] overflow-hidden position: relative '>
+            <div className='desktop:h-[228px] desktop:w-[448px] flex  desktop:flex-[2] flex-col desktop:mr-[24px] desktop:justify-between  h-[80px]'>
+              <div className='desktop:h-[128px] h-[80px] items-center   desktop:gap-[24px] desktop:pr-[16px]  desktop:pt-[24px]   flex gap-[16px] pl-[16px] desktop:pl-0 mb-[16px]'>
+                <div className='  w-[48px] h-[48px] desktop:w-[80px] desktop:h-[80px]  position: relative '>
                   <Image
                     src={profileUrl}
                     fill
                     alt='profileImage'
-                    className='object-cover'
+                    className='object-cover rounded-full'
                     priority
                   />
                 </div>
