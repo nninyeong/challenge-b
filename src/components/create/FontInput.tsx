@@ -54,7 +54,7 @@ const FontInput = () => {
         <div className='flex justify-between w-[228px]'>
           {FontSizeList.map((size) => (
             <button
-              className={`w-[40px] h-[32px] rounded-xl text-[12px] ${
+              className={`w-[40px] h-[32px] rounded-[8px] text-[12px] ${
                 currentFontSize === size ? 'bg-primary-300 text-white' : 'bg-gray-50 text-gray-400 hover:bg-primary-300'
               }`}
               key={size}
