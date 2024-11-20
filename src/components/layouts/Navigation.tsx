@@ -36,7 +36,7 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
           className='w-[97px] desktop:w-[143px]'
         />
       </Link>
-      <nav className={`flex gap-3 justify-center items-center`}>
+      <nav className={`flex gap-3 desktop:gap-[24px] justify-center items-center`}>
         <LinkToReviewPage />
         {isAuthenticated ? (
           <>
