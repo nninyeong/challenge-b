@@ -7,6 +7,7 @@ import { useRef } from 'react';
 dayjs.extend(localizedFormat);
 dayjs.locale('ko');
 
+const DELAY_TIME = 1500;
 export const useGetValidatedDay = (date: Date | string) => {
   const notifyTimer = useRef<NodeJS.Timeout | null>(null);
   if (date === '') return;
@@ -17,7 +18,7 @@ export const useGetValidatedDay = (date: Date | string) => {
 
     notifyTimer.current = setTimeout(() => {
       notifyTimer.current = null;
-    }, 1000);
+    }, DELAY_TIME);
 
     return;
   }
