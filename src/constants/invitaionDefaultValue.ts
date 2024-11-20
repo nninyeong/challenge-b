@@ -44,7 +44,7 @@ export const INVITATION_DEFAULT_VALUE: InvitationFormType = {
   guestbook: true,
   attendance: false,
   weddingInfo: {
-    date: '20241122',
+    date: '2024.11.22',
     time: { hour: '오전 00', minute: '00' },
     weddingHallAddress: '',
     weddingHallName: '',

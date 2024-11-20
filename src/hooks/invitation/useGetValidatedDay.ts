@@ -12,7 +12,8 @@ export const useGetValidatedDay = (date: Date | string) => {
   const notifyTimer = useRef<NodeJS.Timeout | null>(null);
   if (date === '') return;
 
-  const day = dayjs(date).format('dddd');
+  const dateObj = new Date(date);
+  const day = dayjs(dateObj).format('dddd');
   if (day === 'Invalid Date' && !notifyTimer.current) {
     Notify.failure('알맞은 형태의 날짜를 입력해주세요.');
 
