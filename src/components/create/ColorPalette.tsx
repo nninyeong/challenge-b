@@ -29,7 +29,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
   }, []);
 
   return (
-    <div className='grid grid-cols-5 place-content-center place-items-center text-sm gap-y-[27px] desktop:w-[391px]'>
+    <div className='grid grid-cols-5 place-content-center place-items-center text-sm desktop:gap-x-[54px] gap-y-[27px] desktop:w-[398.5px]'>
       <div className='flex-col-center'>
         <button
           type='button'
@@ -42,7 +42,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
             className='w-[27px] h-[27px] rounded-full bg-gray-200'
           />
         </button>
-        <p className='mt-[12px] text-[#737373]'>원본</p>
+        <p className='mt-[12px] text-[#737373] whitespace-nowrap'>원본</p>
       </div>
 
       {COLOR_DEFAULT_PALETTE.map((colorElement) => (
@@ -62,7 +62,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
               }}
             />
           </button>
-          <p className='mt-[12px] text-[#737373]'>{colorElement.name}</p>
+          <p className='mt-[12px] text-[#737373] whitespace-nowrap text-center'>{colorElement.name}</p>
         </div>
       ))}
 
@@ -80,7 +80,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
             alt='직접선택'
           />
         </button>
-        <p className='mt-[12px] text-[#737373]'>직접 선택</p>
+        <p className='mt-[12px] text-[#737373] whitespace-nowrap'>커스텀</p>
 
         {openModal &&
           portalElement &&
