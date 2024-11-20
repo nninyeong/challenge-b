@@ -1,8 +1,6 @@
 'use client';
 import { uploadGalleryImageToSupabaseStorage } from '@/utils/uploadImg';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { FaPlus } from 'react-icons/fa6';
-import { IoIosInformationCircleOutline } from 'react-icons/io';
 import GalleryButton from '../gallery/GalleryButton';
 import { Notify } from 'notiflix';
 import { compressImageTwice } from '@/utils/compressImg';
@@ -15,7 +13,7 @@ const GalleryInput = () => {
   const ratio = useWatch({ name: 'gallery.ratio' });
   const gridType = useWatch({ name: 'gallery.grid' });
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleGalleryFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target?.files;
     const existingImages = getValues('gallery.images') || [];
 
@@ -97,22 +95,30 @@ const GalleryInput = () => {
 
       <div className='flex gap-2 items-end mt-7'>
         <label
-          htmlFor='file'
+          htmlFor='galleryImageFile'
           className='bg-white text-center cursor-pointer px-2 py-1 rounded-xl text-black h-[80px] w-[80px] flex justify-center items-center border border-dashed border-[#A6A6A6]'
         >
-          <FaPlus size={20} />
+          <img
+            src='/assets/images/icons/plus-02.webp'
+            alt='plus'
+            className='w-[24px] h-[24px] '
+          />
         </label>
         <div className='flex'>
           <input
             type='file'
-            id='file'
+            id='galleryImageFile'
             className='hidden'
             accept='image/*'
-            onChange={handleFileChange}
+            onChange={handleGalleryFileChange}
             multiple
           />
-          <div className='flex items-center gap-[1px] text-gray-400'>
-            <IoIosInformationCircleOutline />
+          <div className='flex items-center gap-[1px] text-gray-400  '>
+            <img
+              src='/assets/images/icons/information-circle-contained.webp'
+              alt='information'
+              className='w-[20px] h-[20px] '
+            />
             <p className='text-[10px] font-medium'>최대 18장까지 등록할 수 있습니다.</p>
           </div>
         </div>

@@ -1,4 +1,3 @@
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import FaqCard from './FaqCard';
 import useFAQ from '@/hooks/main/useFAQ';
 
@@ -56,7 +55,7 @@ const FAQ_LIST = [
     id: 6,
     question: '제작중 나가더라도 저장이 되나요?',
     answer: `
-      "청첩장 제작하기" 페이지에서 페이지에서 3초 이상 입력 없이 머무르거나, 다음 버튼을 누르고 나가면 자동으로 저장됩니다.
+      "청첩장 제작하기" 페이지에서 3초 이상 입력 없이 머무르면 자동으로 저장됩니다.
     `.trim(),
   },
   {
@@ -90,7 +89,9 @@ const MainFaqList = () => {
 
   return (
     <div>
-      <div className='desktop:text-[36px] text-[20px] text-gray-900 font-Main font-bold mt-8 py-6 px-0'>드림카드, 자주 묻는 질문</div>
+      <div className='desktop:text-[36px] text-[20px] text-gray-900 font-Main font-bold mt-8 py-6 px-0'>
+        드림카드, 자주 묻는 질문
+      </div>
       <ul className='flex flex-col items-center'>
         {FAQ_LIST.map((menu) => (
           <li
@@ -101,9 +102,17 @@ const MainFaqList = () => {
             <div className='w-full flex justify-between items-center border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 p-[19.5px] desktop:py-[25.5px] px-0 font-medium text-gray-900 text-[14px] desktop:text-[24px]'>
               {menu.question}
               {expandedIds.has(menu.id) ? (
-                <FaChevronUp className='text-[#0A090B]' />
+                <img
+                  src='/assets/images/icons/chevron-right.webp'
+                  alt='필드펴기'
+                  className='w-[32px] h-[32px] '
+                />
               ) : (
-                <FaChevronDown className='text-[#0A090B]' />
+                <img
+                  src='/assets/images/icons/chevron-down.webp'
+                  alt='필드펴기'
+                  className='w-[32px] h-[32px] '
+                />
               )}
             </div>
             {expandedIds.has(menu.id) && <FaqCard answer={menu.answer} />}

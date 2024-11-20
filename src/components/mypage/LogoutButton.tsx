@@ -4,12 +4,14 @@ import useSignOut from '@/hooks/auth/useSignOut';
 const LogoutButton = () => {
   const { handleSignOut } = useSignOut();
   return (
-    <button
-      className='w-full bg-primary-300  font-bold p-4 mt-4 mb-12 rounded-[8px] text-center cursor-pointer text-white'
-      onClick={handleSignOut}
-    >
-      로그아웃
-    </button>
+    <div className='w-full flex justify-center'>
+      <button
+        className='w-[343px] bg-primary-300 text-[16px] mt-[16px] mb-[16px] h-[40px] font-bold rounded-[8px] text-center cursor-pointer text-white desktop:w-[400px] desktop:h-[56px] mx-auto'
+        onClick={handleSignOut}
+      >
+        로그아웃
+      </button>
+    </div>
   );
 };
 
