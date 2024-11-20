@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 const useCarousel = (itemNumber: number, interval: number, duration: number) => {
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(itemNumber - 1);
   const [isTransitioning, setIsTransitioning] = useState(true);
 
   const moveCarousel = () => {
