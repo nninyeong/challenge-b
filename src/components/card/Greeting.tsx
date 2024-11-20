@@ -8,8 +8,8 @@ const Greeting = ({ greetingMessage, fontInfo }: GreetingPropType) => {
 
   return (
     <div
-      style={{ fontSize: `${16 + size}px`, color: `${rgbaColor}` }}
-      className={`  flex flex-col justify-center items-center mt-13 gap-6 mb-[89px]`}
+      style={{ fontSize: `${20 + size}px`, color: `${rgbaColor}` }}
+      className={`flex flex-col justify-center items-center mt-13 gap-6 mb-[89px] font-medium`}
     >
       {!greetingMessage.title ? <p>제목을 입력해주세요</p> : <p>{greetingMessage.title}</p>}
       <div
