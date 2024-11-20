@@ -3,7 +3,6 @@
 import { useGetReviewOnlyUser } from '@/hooks/queries/review/useGetReview';
 import { useReviewBottomSheetContext } from '@/provider/reviewBottomSheetProvider';
 import { Notify } from 'notiflix';
-import { FaChevronRight, FaChevronDown } from 'react-icons/fa';
 import ReviewCard from '../review/ReviewCard';
 import { useDownloadCsv } from '@/hooks/queries/mypage/useDownloadCsv';
 import Image from 'next/image';
