@@ -1,5 +1,5 @@
 'use client';
-import { FaSortDown, FaSortUp } from 'react-icons/fa6';
+
 import Button from '../ui/Button';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { UseFormReturn } from 'react-hook-form';
@@ -49,14 +49,16 @@ const InvitationBottomSheetFormContainer = ({
           className='flex justify-center items-center gap-[4px] text-gray-900 text-[18px] font-bold'
         >
           {toggleInput ? (
-            <FaSortDown
-              size={24}
-              viewBox='0 110 320 512'
+            <img
+              src='/assets/images/icons/downFill.webp'
+              alt='필드펴기'
+              className='w-[24px] h-[24px] '
             />
           ) : (
-            <FaSortUp
-              size={24}
-              viewBox='0 -100 320 512'
+            <img
+              src='/assets/images/icons/upFill.webp'
+              alt='필드접기'
+              className='w-[24px] h-[24px] '
             />
           )}
           {orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep]}
