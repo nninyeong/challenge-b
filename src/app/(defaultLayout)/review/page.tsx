@@ -52,7 +52,7 @@ const ReviewPage = () => {
   const reviews = reviewsData?.pages.flatMap((page) => page) || [];
 
   return (
-    <div className='flex flex-col w-full mx-auto desktop:w-[1136px] px-4 pt-4 desktop:pb-11 desktop:mt-20 mt-4'>
+    <div className='flex flex-col w-full mx-auto desktop:w-[1136px] px-4 desktop:px-0 pt-4 desktop:pb-11 desktop:mt-[160px] mt-4'>
       <div className='w-full h-[47px] gap-[6px] desktop:gap-3 desktop:mb-[54px] mb-6'>
         <h2 className='text-gray-900 text-[20px] font-bold desktop:text-[36px] '>드림카드 이용 후기</h2>
         <h3 className='text-gray-700 text-[14px] font-medium desktop:text-[24px]'>

@@ -69,7 +69,7 @@ const ReviewImage = () => {
   const closeImageModal = () => setIsImageModalOpen(false);
 
   return (
-    <div className='w-full grid grid-cols-4  desktop:grid-cols-8  desktop:gap-[24px] desktop:mt-[54px]  pb-4  desktop:pb-20 border border-solid border-gray-200 border-t-0 border-l-0 border-r-0 '>
+    <div className='w-full grid grid-cols-4  desktop:grid-cols-8 desktop:gap-[24px] desktop:mt-[54px] pb-4 desktop:pb-20 border border-solid border-gray-200 border-t-0 border-l-0 border-r-0'>
       {displayedReviews?.map((review, reviewIndex) => {
         const firstImage = review.image_url?.[0];
         const isLastImage = reviewIndex === displayedReviews.length - 1;
@@ -77,24 +77,25 @@ const ReviewImage = () => {
         return (
           <div
             key={reviewIndex}
-            className='w-full  flex justify-center relative  '
+            className='w-full flex justify-center relative'
           >
-            <div className='desktop:w-[121px] desktop:h-[121px] relative w-[76px] h-[76px] border border-gray-50 rounded-[12px] '>
+            <div className='desktop:w-[121px] desktop:h-[121px] relative w-[76px] h-[76px] border border-gray-50 rounded-[12px]'>
               {firstImage && (
                 <Image
                   src={firstImage}
                   alt={`${reviewIndex + 1}`}
                   fill
-                  className='rounded-[12px] object-cover '
+                  unoptimized
+                  className='rounded-[12px] object-cover'
                   priority
                 />
               )}
               {isLastImage && (
                 <button
                   onClick={handleOpenNewPage}
-                  className='absolute inset-0  z-20  bg-black opacity-60 text-white rounded-[12px] text-[14px]'
+                  className='absolute inset-0 bg-[rgba(0,0,0,0.6)] rounded-[12px]'
                 >
-                  더보기
+                  <span className='absolute inset-0 flex items-center justify-center text-white opacity-100 font-medium text-[14px] desktop:text-[20px]'>더보기</span>
                 </button>
               )}
             </div>
