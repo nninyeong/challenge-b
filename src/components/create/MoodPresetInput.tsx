@@ -7,6 +7,7 @@ import { PRESETS } from '@/constants/invitationPresets';
 import { MOOD_PRESETS } from '@/constants/invitationMoodPresets';
 import { MOOD_LIST } from '@/constants/invitationMoods';
 import { Notify } from 'notiflix';
+import Image from 'next/image';
 
 const MoodPresetInput = () => {
   const { setValue } = useFormContext();
@@ -59,13 +60,13 @@ const MoodPresetInput = () => {
         ))}
       </div>
 
-      <div className='flex justify-center items-center gap-[35px]'>
+      <div className='flex justify-center items-center gap-[35px] desktop:gap-[80px]'>
         {PRESETS[selectedCategory].map((preset) => (
           <div
             key={preset.name}
             className='flex flex-col justify-center items-center cursor-pointer'
           >
-            <label className='flex text-[12px] mb-[6px]'>
+            <label className='flex justify-center items-center text-[12px] mb-[6px]'>
               <input
                 type='radio'
                 className='custom-radio mr-[4px]'
@@ -79,18 +80,21 @@ const MoodPresetInput = () => {
               onClick={() => {
                 if (selectedCategory !== 'none') handleSelectPreset(preset);
               }}
-              className={`w-[80px] h-[152px] rounded-lg ${
+              className={`rounded-[12px] ${
                 selectedPreset === preset.name ? 'border border-primary-300' : 'border border-gray-300'
               }`}
             >
               {preset.image ? (
-                <img
-                  src={preset.image}
-                  alt={preset.label}
-                  className='w-full h-full object-cover rounded-lg'
-                />
+                <div className='relative h-[152px] w-[80px] rounded-[12px] overflow-hidden'>
+                  <Image
+                    src={preset.image}
+                    alt={preset.label}
+                    layout='fill'
+                    objectFit='cover'
+                  />
+                </div>
               ) : (
-                <div className='w-full h-full bg-gray-200 rounded-lg' />
+                <div className='h-[152px] w-[80px] bg-gray-200 rounded-[12px]' />
               )}
             </div>
           </div>
