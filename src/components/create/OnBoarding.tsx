@@ -4,6 +4,7 @@ import { useState } from 'react';
 import OnBoardingStepMotion from './OnBoardingStepMotion';
 import { MOBILE_VIEW_HEIGHT } from '@/constants/screenSize';
 import Image from 'next/image';
+import useMediaQuery from '@/hooks/review/useMediaQuery';
 
 const ONBOARDING_MESSAGE_DATA: string[] = [
   '스크롤 해주세요',
@@ -12,11 +13,19 @@ const ONBOARDING_MESSAGE_DATA: string[] = [
 ] as const;
 
 const ONBOARDING_STEP: string[] = ['STEP 1', 'STEP 2', 'STEP 3'];
-const ONBOARDING_STEP_MESSAGE: string[] = [
-  '화면을 터치하여 다음 단계로 이동하세요',
-  '화면을 터치하여 다음 단계로 이동하세요',
-  '화면을 터치하여 드림카드 제작을 시작하세요',
-];
+
+const ONBOARDING_STEP_MESSAGE = {
+  mobile: [
+    '화면을 터치하여 다음 단계로 이동하세요',
+    '화면을 터치하여 다음 단계로 이동하세요',
+    '화면을 터치하여 드림카드 제작을 시작하세요',
+  ],
+  desktop: [
+    '화면을 클릭하여 다음 단계로 이동하세요',
+    '화면을 클릭하여 다음 단계로 이동하세요',
+    '화면을 클릭하여 드림카드 제작을 시작하세요',
+  ],
+};
 
 const OnBoarding = ({
   isOnboardingComplete,
@@ -25,6 +34,7 @@ const OnBoarding = ({
   isOnboardingComplete: boolean;
   setIsOnboardingComplete: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
   const [onBoardStep, setOnBoardStep] = useState<number>(0);
   const handleNextStep = () => {
     if (onBoardStep < ONBOARDING_MESSAGE_DATA.length - 1) {
@@ -60,7 +70,9 @@ const OnBoarding = ({
         <div className='w-[60px] h-[100px] border-2 border-white border-solid rounded-lg flex justify-center items-end pb-2 mb-10'>
           <OnBoardingStepMotion step={onBoardStep} />
         </div>
-        <p className='text-[14px] opacity-80'>{ONBOARDING_STEP_MESSAGE[onBoardStep]}</p>
+        <p className='text-[14px] opacity-80'>
+          {isDesktop ? ONBOARDING_STEP_MESSAGE.desktop[onBoardStep] : ONBOARDING_STEP_MESSAGE.mobile[onBoardStep]}
+        </p>
       </div>
     </div>
   );
