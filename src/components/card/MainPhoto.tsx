@@ -80,14 +80,14 @@ const MainPhoto = forwardRef<HTMLDivElement, MainPhotoPropType>(
           )}
         </div>
         <div
-          style={{ fontSize: `${16 + size}px`, color: `${rgbaColor}` }}
-          className='flex items-center justify-center mt-4 text-[24px]  font-semibold mb-[12px] text-center relative'
+          style={{ fontSize: `${24 + size}px`, color: `${rgbaColor}` }}
+          className='flex items-center justify-center mt-4 text-[24px]  font-medium mb-[12px] text-center relative'
         >
-          <p className='flex-1 text-right whitespace-nowrap pr-4'>{mainPhotoInfo?.leftName || '좌측 이름'}</p>
-          <p className='absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap'>
+          <span className='flex-1 text-right whitespace-nowrap pr-5'>{mainPhotoInfo?.leftName || '좌측 이름'}</span>
+          <span style={{ fontSize: `${18 + size}px`, color: `${rgbaColor}` }} className='absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap'>
             {mainPhotoInfo?.icon || '♥︎'}
-          </p>
-          <p className='flex-1 text-left whitespace-nowrap pl-4'>{mainPhotoInfo?.rightName || '우측 이름'}</p>
+          </span>
+          <span className='flex-1 text-left whitespace-nowrap pl-5'>{mainPhotoInfo?.rightName || '우측 이름'}</span>
         </div>
 
         <div className=' text-opacity-75 flex flex-col'>
