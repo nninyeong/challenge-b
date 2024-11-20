@@ -64,8 +64,6 @@
 
 ![](https://velog.velcdn.com/images/alice0751/post/5fd090ba-af77-43d9-9ffa-2c1bb297c5c6/image.png)
 
----
-
 ## 📌 주요 기능 소개
 
 <details>
@@ -205,6 +203,7 @@
 
 1. [Carousel](https://onetwothreechachacha.tistory.com/152)
 2. [비회원과 회원 사용자의 폼 데이터 매끄럽고 안전하게 저장하는 방법 - 세션스토리지와 Supabase 활용](https://onetwothreechachacha.tistory.com/154)
+
 
 ### 정소현
 
