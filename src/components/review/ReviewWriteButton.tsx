@@ -68,8 +68,8 @@ const ReviewWriteButton = () => {
   return (
     <>
       <button
-        className='fixed bottom-[13px] left-1/2 rounded-[300px] bg-primary300 
-    text-white flex justify-center items-center w-[142px] h-[40px] -translate-x-1/2 gap-[6px]
+        className='fixed bottom-[12px] left-1/2 rounded-[300px] bg-primary300
+    text-white flex justify-center items-center w-[150px] h-[40px] -translate-x-1/2 gap-[6px] px-[16px]
     '
         onClick={handleOpenReviewWrite}
       >
@@ -79,7 +79,7 @@ const ReviewWriteButton = () => {
           className='w-[24px] h-[24px]'
           loading='lazy'
         />
-        <p className='font-bold text-[16px] leading-[120%] tracking-[-0.032px] mt-[]'>후기 작성 열기</p>
+        <p className='font-bold text-[16px] leading-[120%] tracking-[-0.032px]'>후기 작성하기</p>
       </button>
       {isReviewWriteModalOpen && (
         <div
@@ -91,7 +91,7 @@ const ReviewWriteButton = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src='assets/images/icons/x-03.webp'
+              src='/assets/images/icons/x-03.webp'
               alt='닫기버튼'
               onClick={closeModal}
               className='absolute top-4 right-4 text-black w-[24px] h-[24px] cursor-pointer z-50'
