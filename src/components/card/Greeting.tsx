@@ -13,6 +13,7 @@ const Greeting = ({ greetingMessage, fontInfo }: GreetingPropType) => {
     >
       {!greetingMessage.title ? <p>제목을 입력해주세요</p> : <p>{greetingMessage.title}</p>}
       <div
+        style={{ fontSize: `${16 + size}px`, color: `${rgbaColor}` }}
         className='leading-9'
         dangerouslySetInnerHTML={{
           __html: greetingMessage?.content || '대표문구를 작성해주세요',

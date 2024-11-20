@@ -27,7 +27,7 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
 
   return (
     <div className={`${isCreateCardPage ? 'hidden desktop:flex' : 'flex z-50'} fixed top-0 left-0 w-full bg-gray-100`}>
-      <div className=' w-[375px] desktop:w-[1440px] mx-auto flex items-center justify-between h-[64px] px-4 desktop:px-8 desktop:h-[86px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.1)]'>
+      <div className=' w-[375px] desktop:w-[1440px] mx-auto flex h-[64px]  desktop:h-[86px] justify-between items-center px-[16px] desktop:px-[152px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.1)]'>
         <Link href='/'>
           <img
             src='/assets/images/branding/BI.webp'
@@ -36,13 +36,13 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
           />
         </Link>
 
-        <nav className='flex gap-3 items-center'>
+        <nav className='flex gap-3 desktop:gap-[24px] justify-center items-center'>
           <LinkToReviewPage />
           {isAuthenticated ? (
             <LinkToMypage />
           ) : (
             <Link href='/signin'>
-              <button className='bg-user-profile-02 w-[24px] h-[24px] bg-cover' />
+              <button className='bg-user-profile-02 w-[24px] h-[24px] desktop:w-[32px] desktop:h-[32px] bg-cover' />
             </Link>
           )}
         </nav>

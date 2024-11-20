@@ -70,11 +70,11 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
       : 'conic-gradient(#e0e0e0 0%, #FFFFFF 100%)';
 
   return (
-    <div className='w-full  desktop:h-[228px] h-[152px] flex mx-auto rounded-xl shadow-sm shadow-gray-400 p-4 relative desktop:flex-[3] '>
+    <div className='w-full desktop:w-[664px] desktop:h-[228px] h-[152px] flex mx-auto rounded-xl shadow-sm shadow-gray-400 p-[16px] relative '>
       {invitationCard ? (
-        <div className='w-full flex desktop:justify-center justify-between items-center gap-[26px] mobile:gap-8 desktop:gap-14'>
+        <div className=' flex desktop:justify-center justify-between items-center gap-[26px] mobile:gap-[32px] desktop:gap-[56px]'>
           <Link href={`/create/card`}>
-            <div className='desktop:w-[136px] desktop:h-[136px] w-[96px] h-[96px] relative flex justify-center items-center '>
+            <div className='desktop:w-[136px] desktop:h-[136px] w-[96px] h-[96px] relative flex justify-center items-center translate-y-[-8px]'>
               <div
                 className='w-[96px] desktop:w-[136px] desktop:h-[136px] h-[96px] absolute inset-0 rounded-full flex justify-center items-center overflow-hidden p-[5px] bg-${gradientColor}'
                 style={{
