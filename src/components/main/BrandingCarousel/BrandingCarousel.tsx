@@ -84,7 +84,7 @@ const BrandingCarousel = () => {
       </div>
       <div
         ref={indicatorBackgroundRef}
-        className='absolute bottom-4 desktop:bottom-[40px] left-1/2 transform -translate-x-1/2 w-[90%] mobile:w-[294px] desktop:w-[1136px] h-[2px] desktop:h-[4px] bg-gray-400 z-50'
+        className='absolute bottom-4 desktop:bottom-[40px] left-1/2 transform -translate-x-1/2 w-[90%] mobile:w-[294px] desktop:w-[1136px] h-[2px] desktop:h-[4px] bg-gray-400 z-40'
       >
         <div
           style={{

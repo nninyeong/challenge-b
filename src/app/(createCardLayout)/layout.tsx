@@ -24,7 +24,7 @@ export default async function CreateCardLayout({
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Header />
-      <main>{children}</main>
+      <main className='desktop:mt-[86px]'>{children}</main>
     </HydrationBoundary>
   );
 }
