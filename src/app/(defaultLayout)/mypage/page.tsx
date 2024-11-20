@@ -18,12 +18,12 @@ const MyPage = async (): Promise<JSX.Element | null> => {
   const profileUrl = user?.user?.user_metadata?.avatar_url || '/assets/images/defaultImg.png';
 
   return (
-    <div className='w-full mx-auto '>
-      <div className='w-[90%] mx-auto pt-4  pb-1 '>
-        <div className='w-full desktop:flex desktop:flex-row mobile:flex mobile:flex-col desktop:mb-20'>
+    <div className='w-full mx-auto p-[16px]'>
+      <div className=' desktop:w-[1136px] mx-auto pt-[16px]  pb-[4px] '>
+        <div className='w-full desktop:w-[448px] desktop:flex desktop:flex-row mobile:flex mobile:flex-col desktop:mb-[80px]'>
           {user ? (
-            <div className='desktop:h-[228px] desktop:w-[448px] flex  desktop:flex-[2] flex-col desktop:mr-6 desktop:justify-between '>
-              <div className='w-full flex items-center  desktop:gap-6 desktop:pl-4 desktop:pr-4  desktop:pt-6 mobile:p-4 mobile:gap-4'>
+            <div className='desktop:h-[228px] desktop:w-[448px] flex  desktop:flex-[2] flex-col desktop:mr-[24px] desktop:justify-between w-[343px] h-[80px]'>
+              <div className='desktop:h-[128px] flex items-center  desktop:gap-[24px] desktop:pr-[16px]  desktop:pt-[24px]  mobile:gap-[16px] mobile:pl-[16px]'>
                 <div className='rounded-full mobile:w-[48px] mobile:h-[48px] desktop:w-[80px] desktop:h-[80px] overflow-hidden position: relative '>
                   <Image
                     src={profileUrl}
@@ -33,8 +33,10 @@ const MyPage = async (): Promise<JSX.Element | null> => {
                     priority
                   />
                 </div>
-                <div className='flex flex-col'>
-                  <h2 className='font-bold text-[16px] desktop:text-[24px]'>{user?.user?.user_metadata?.full_name}</h2>
+                <div className='flex flex-col '>
+                  <h2 className='font-bold text-[16px] desktop:text-[24px] font-gray-800'>
+                    {user?.user?.user_metadata?.full_name}
+                  </h2>
                   <p className='text-[14px] desktop:text-[20px] text-gray-500 font-medium'>
                     {user?.user?.user_metadata?.email}
                   </p>
@@ -50,7 +52,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
 
           <MyInvitationCard id={userId} />
         </div>
-        <div className='block desktop:hidden'>
+        <div className='block desktop:hidden mobile:mt-[16px]'>
           <SetPrivateInvitation />
         </div>
         <MyPageNavigatorList />

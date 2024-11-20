@@ -6,6 +6,7 @@ import { Notify } from 'notiflix';
 import { FaChevronRight, FaChevronDown } from 'react-icons/fa';
 import ReviewCard from '../review/ReviewCard';
 import { useDownloadCsv } from '@/hooks/queries/mypage/useDownloadCsv';
+import Image from 'next/image';
 
 const MENU_LISTS = [
   { name: '결제내역' },
@@ -38,14 +39,28 @@ const MyPageNavigatorList = () => {
         {MENU_LISTS.map((menu) => (
           <li
             key={menu.name}
-            className='w-full border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 cursor-pointer flex justify-between items-center pt-[19.5px] pb-[19.5px] font-medium'
+            className='w-full border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 cursor-pointer flex justify-between items-center   text-[14px] desktop:text-[24px] desktop:pt-[25.5px] desktop:pb-[25.5px] font-medium h-[56px] desktop:h-[80px]'
             onClick={() => handleMyReviewNavigator(menu.name)}
           >
             {menu.name}
             {isReviewBottomSheetOpen && menu.name === '나의 후기관리' ? (
-              <FaChevronDown className='text-gray-700' />
+              <div className='position: relative desktop:w-[32px] desktop:h-[32px] w-[24px] h-[24px]'>
+                <Image
+                  src='/assets/images/icons/chevron-down.webp'
+                  alt='downArrow'
+                  fill
+                  className='object-cover'
+                />
+              </div>
             ) : (
-              <FaChevronRight className='text-gray-700' />
+              <div className='position: relative desktop:w-[32px] desktop:h-[32px] w-[24px] h-[24px]'>
+                <Image
+                  src='/assets/images/icons/chevron-right.webp'
+                  alt='rightArrow'
+                  fill
+                  className='object-cover'
+                />
+              </div>
             )}
           </li>
         ))}
