@@ -1,3 +1,4 @@
+import handlePageClick from '@/utils/guestbook/handlePageClick';
 import { Dispatch, SetStateAction } from 'react';
 
 const GuestBookPagination = ({
@@ -62,8 +63,7 @@ const GuestBookPagination = ({
         {paginationRange.map((pageNumber, index) => (
           <button
             key={index}
-            onClick={() => typeof pageNumber === 'number' && setPage(pageNumber)}
-            disabled={pageNumber === '...' || (typeof pageNumber === 'number' && pageNumber > totalPages)}
+            onClick={() => handlePageClick(pageNumber, setPage)}
             className={`w-8 h-8 rounded-full text-[16px] flex items-center justify-center
               ${page === pageNumber ? 'text-[20px] font-bold' : 'font-medium opacity-70'}
             `}
