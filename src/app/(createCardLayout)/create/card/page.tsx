@@ -153,7 +153,7 @@ const CreateCardPage = () => {
 
           <div className='relative'>
             {currentWidth >= 1440 ? (
-              <div className='flex relative w-[451px] h-[850px] bg-no-repeat bg-cover bg-center items-center justify-center desktop:z-30'>
+              <div className='flex relative w-[451px] h-[850px] bg-no-repeat bg-cover bg-center items-center justify-center desktop:z-30 mt-[40px]'>
                 <img
                   src='/assets/images/device.svg'
                   alt='device'
