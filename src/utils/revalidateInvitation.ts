@@ -1,6 +1,4 @@
 export const revalidateInvitation = async (invitationId: string) => {
-  console.log('revalidateInvitation 실행');
-  console.log('revalidate id: ', invitationId);
   const response = await fetch(`/api/revalidate?id=${invitationId}`);
   const result = await response.json();
 

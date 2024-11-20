@@ -74,9 +74,7 @@ export const useInvitationFormActions = ({
     }
 
     const { isSuccess } = await revalidateInvitation(invitationCardId as string);
-    if (isSuccess) {
-      router.refresh();
-    }
+    if (isSuccess) router.refresh();
 
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
     Notify.success('청첩장이 성공적으로 제출되었습니다.');
