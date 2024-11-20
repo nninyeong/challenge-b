@@ -192,8 +192,8 @@
 
 ### 김민영
 
-1. [제목](#)
-2. [제목](#)
+1. [우리 팀의 협업효율을 높인 규칙들](https://nninyeong.tistory.com/149)
+2. [내 prefetchQuery가 작동하지 않는 이유](https://nninyeong.tistory.com/151)
 
 ### 이기성
 
