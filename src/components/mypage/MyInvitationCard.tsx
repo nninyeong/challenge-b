@@ -55,7 +55,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
       }
     } catch (error) {
       Notify.failure('취소되었습니다.');
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -70,11 +70,11 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
       : 'conic-gradient(#e0e0e0 0%, #FFFFFF 100%)';
 
   return (
-    <div className='mobile:w-full desktop:h-[228px] mobile:h-[152px] flex mx-auto rounded-xl shadow-sm shadow-gray-400 p-[16px] relative desktop:flex-[3]'>
+    <div className='w-full  desktop:h-[228px] h-[152px] flex mx-auto rounded-xl shadow-sm shadow-gray-400 p-4 relative desktop:flex-[3] '>
       {invitationCard ? (
-        <div className='w-full flex desktop:justify-center mobile:justify-between items-center mobile:gap-[32px] desktop:gap-[56px]'>
+        <div className='w-full flex desktop:justify-center justify-between items-center gap-[26px] mobile:gap-8 desktop:gap-14'>
           <Link href={`/create/card`}>
-            <div className='desktop:w-[136px] desktop:h-[136px] mobile:w-[96px] mobile:h-[96px] relative flex justify-center items-center mb-[12px]'>
+            <div className='desktop:w-[136px] desktop:h-[136px] w-[96px] h-[96px] relative flex justify-center items-center '>
               <div
                 className='w-[96px] desktop:w-[136px] desktop:h-[136px] h-[96px] absolute inset-0 rounded-full flex justify-center items-center overflow-hidden p-[5px] bg-${gradientColor}'
                 style={{
@@ -82,7 +82,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
                 }}
               >
                 <div className='w-full h-full rounded-full flex justify-center items-center bg-white'>
-                  <div className='relative overflow-hidden rounded-full w-[80px] h-[80px] m-[2px]'>
+                  <div className='relative overflow-hidden rounded-full w-[80px] h-[80px] desktop:w-[110px] desktop:h-[110px] m-[2px]'>
                     <Image
                       src={invitationCard.main_photo_info?.imageUrl || '/assets/images/defaultImg.png'}
                       alt='invitationImg'
@@ -97,6 +97,7 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
                 src='/assets/images/icons/write.webp'
                 alt='청첩장 수정버튼'
                 className='w-[32px] h-[32px] desktop:w-[48px] desktop:h-[48px] absolute right-0 top-0'
+                loading='lazy'
               />
               <div className='pl-[8px] pr-[8px] pt-[4px] pb-[4px] bg-primary-300 text-white absolute bottom-[-18px] left-1/2 transform -translate-x-1/2 rounded-[12px] text-[14px] text-center whitespace-nowrap desktop:text-[16px]'>
                 {progressPercentage}% 완성
@@ -115,15 +116,16 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
               />
             </div>
             <div className='flex gap-[8px] items-center mb-[8px]'>
-              <div className='flex gap-[4px] border border-solid border-gray-200 pt-[4px] pb-[4px] pl-[6px] pr-[6px] rounded-[24px]'>
+              <div className='flex gap-[4px] desktop:gap-[4px] border border-solid border-gray-200 pt-[4px] pb-[4px] pl-[6px] pr-[6px] rounded-[24px]'>
                 <img
                   src='/assets/images/icons/link-icon.webp'
                   alt='청첩장 공유하기'
-                  className='w-[18px] h-[18px] desktop:w-[24px] desktop:h-[24px]'
+                  className='w-[17px] h-[17px] mobile:w-[18px] mobile:h-[18px] desktop:w-[24px] desktop:h-[24px]'
+                  loading='lazy'
                 />
                 <button
                   onClick={handleCopyLink}
-                  className='mobile:text-[12px] desktop:text-[14px] text-gray-400'
+                  className='text-[11px] mobile:text-[12px] desktop:text-[14px] text-gray-400 white-space-nowrap'
                 >
                   공유하기
                 </button>
@@ -132,11 +134,11 @@ const MyInvitationCard: React.FC<MyInvitationCardProps> = ({ id }) => {
                 <img
                   src='/assets/images/icons/download-02-selceted.webp'
                   alt='청첩장 다운로드'
-                  className='w-[18px] h-[18px] desktop:w-[24px] desktop:h-[24px]'
+                  className='w-[17px] h-[17px] mobile:w-[18px] mobile:h-[18px] desktop:w-[24px] desktop:h-[24px]'
                 />
                 <button
                   onClick={handlePrintAsPDF}
-                  className='mobile:text-[12px] desktop:text-[14px] text-gray-400'
+                  className='text-[11px] mobile:text-[12px] desktop:text-[14px] text-gray-400 white-space-nowrap'
                 >
                   다운로드
                 </button>

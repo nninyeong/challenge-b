@@ -2,7 +2,7 @@
 import { useFormContext, useWatch } from 'react-hook-form';
 import TextEditor from './TextEditor';
 import { FaPlus } from 'react-icons/fa6';
-
+import { compressImageTwice } from '@/utils/compressImg';
 import { uploadImageToSupabaseStorage } from '@/utils/uploadImg';
 
 const MainPhotoInput = () => {
@@ -12,7 +12,13 @@ const MainPhotoInput = () => {
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const publicUrl = await uploadImageToSupabaseStorage(file);
+      const compressFile = await compressImageTwice(file);
+      if (!compressFile) {
+        throw new Error();
+      }
+
+      const publicUrl = await uploadImageToSupabaseStorage(compressFile);
+
       if (publicUrl) {
         setValue('mainPhotoInfo.imageUrl', publicUrl);
       }
@@ -24,7 +30,7 @@ const MainPhotoInput = () => {
   };
 
   return (
-    <div className='w-full flex flex-col gap-3 justify-center mt-3.5'>
+    <div className='w-full flex flex-col gap-3 justify-center mt-3.5 text-[12px] text-gray-900'>
       <div className='w-full flex justify-start items-center'>
         <label className='font-medium text-gray-700 text-[14px] leading-[14px] w-[45px] desktop:w-[56px] whitespace-nowrap'>
           이름
@@ -35,20 +41,20 @@ const MainPhotoInput = () => {
             placeholder='좌측'
             {...register('mainPhotoInfo.leftName')}
             maxLength={5}
-            className='h-[32px] w-[72px] desktop:w-[80px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black mr-2'
+            className='h-[32px] w-[72px] desktop:w-[80px] pl-[8px] py-[9px] border-[.5px] border-gray-300 rounded-[8px] mr-2'
           />
           <input
             type='text'
             placeholder='♥︎'
             {...register('mainPhotoInfo.icon')}
-            className='text-center h-[32px] w-[48px] desktop:w-[51px] pl-4 pr-4 border text-[12px] rounded-[8px]  text-black mr-2'
+            className='text-center h-[32px] w-[48px] desktop:w-[51px] pl-4 pr-4 border-[.5px] border-gray-300 rounded-[8px] mr-2'
             maxLength={1}
           />
           <input
             type='text'
             placeholder='우측'
             {...register('mainPhotoInfo.rightName')}
-            className='h-[32px] w-[72px] desktop:w-[80px] pl-[8px] py-[9px] border text-[12px] rounded-[8px] text-black'
+            className='h-[32px] w-[72px] desktop:w-[80px] pl-[8px] py-[9px] border-[.5px] border-gray-300 rounded-[8px]'
             maxLength={5}
           />
         </div>

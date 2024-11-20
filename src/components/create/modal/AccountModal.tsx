@@ -21,19 +21,19 @@ const AccountModal = ({
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-40'>
       <div
         className='w-[343px] h-[382px] inset-0 rounded-lg bg-white shadow-md 
-    z-50 flex flex-col justify-center items-center fixed top-1/2 -translate-x-1/2 -translate-y-1/2 pb-[16px] pl-[16px] pr-[16px] pt-[24px]'
+    z-50 flex flex-col justify-center items-center fixed top-1/2 -translate-x-1/2 -translate-y-1/2 pb-[16px] pl-[16px] pr-[16px] pt-[20px]'
         style={{
           left: left + width / 2,
         }}
       >
         <div className='flex flex-col justify-center'>
-          <p className='text-gray-900 font-semibold'>{accountType === 'groom' ? '신랑' : '신부'} 계좌</p>
+          <p className='text-gray-900 font-semibold pb-2'>{accountType === 'groom' ? '신랑' : '신부'} 계좌</p>
           <AccountModalPersonalBox
             accountData={accounts[0]}
             setOpenAccountModal={setOpenAccountModal}
           />
         </div>
-        <div className='flex flex-col gap-[8px] mb-[16px] mt-[24px]'>
+        <div className='flex flex-col gap-[8px] mb-[16px] mt-[16px]'>
           <p className='text-gray-900 font-semibold text-[16px]'>
             {accountType === 'groom' ? '신랑' : '신부'}혼주 계좌
           </p>

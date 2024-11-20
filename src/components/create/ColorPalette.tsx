@@ -33,7 +33,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
       <div className='flex-col-center'>
         <button
           type='button'
-          className='w-[35px] h-[35px] border-2 border-solid rounded-full flex justify-center items-center bg-white'
+          className='w-[35px] h-[35px] border border-solid rounded-full flex justify-center items-center bg-white'
           onClick={() => onChangeColor({ r: 255, g: 255, b: 255, a: 1, name: 'default' })}
         >
           <img
@@ -42,7 +42,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
             className='w-[27px] h-[27px] rounded-full bg-gray-200'
           />
         </button>
-        <p>원본</p>
+        <p className='mt-[12px] text-[#737373]'>원본</p>
       </div>
 
       {COLOR_DEFAULT_PALETTE.map((colorElement) => (
@@ -62,7 +62,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
               }}
             />
           </button>
-          <p>{colorElement.name}</p>
+          <p className='mt-[12px] text-[#737373]'>{colorElement.name}</p>
         </div>
       ))}
 
@@ -80,7 +80,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({ selectedColor, onChangeColo
             alt='직접선택'
           />
         </button>
-        <p>직접 선택</p>
+        <p className='mt-[12px] text-[#737373]'>직접 선택</p>
 
         {openModal &&
           portalElement &&

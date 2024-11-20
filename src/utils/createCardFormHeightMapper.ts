@@ -1,4 +1,4 @@
-export const FOLDED_HEIGHT = '54px';
+export const FOLDED_HEIGHT = '52px';
 const MAIN_OR_BACKGROUND_HEIGHT = '240px';
 const DEFAULT_HEIGHT = '320px';
 

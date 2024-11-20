@@ -11,7 +11,7 @@ const StickerCategoryButton = ({ category, onClick, isSelected }: PropsType) => 
     <button
       type='button'
       onClick={onClick}
-      className={`rounded-[12px] px-[8px] py-[4px] text-[14px] font-bold ${isSelected ? 'bg-primary-300 text-white' : 'bg-gray-100 text-gray-400'}`}
+      className={`rounded-full px-[8px] py-[4px] text-[14px] font-medium ${isSelected ? 'bg-primary-300 text-white' : 'bg-gray-100 text-gray-400'}`}
     >
       {label}
     </button>

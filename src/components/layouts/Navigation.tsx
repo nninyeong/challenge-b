@@ -27,7 +27,7 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
 
   return (
     <div
-      className={`${isCreateCardPage ? 'hidden desktop:flex' : 'flex'} w-full h-[64px] desktop:h-[86px] justify-between items-center px-[16px] desktop:px-[152px] bg-white`}
+      className={`${isCreateCardPage ? 'hidden desktop:flex' : 'flex z-50'} fixed top-0 left-0 w-full h-[64px] desktop:h-[86px] justify-between items-center px-[16px] desktop:px-[152px] bg-white shadow-[0_10px_20px_rgba(0,0,0,0.1)]`}
     >
       <Link href='/'>
         <img

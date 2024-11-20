@@ -9,11 +9,11 @@ import { Notify } from 'notiflix';
 import { debounce } from '@/utils/debounce';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import browserClient from '@/utils/supabase/client';
-import EventBus from '@/utils/EventBus';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '../queries/queryKeys';
+import useMediaQuery from '../review/useMediaQuery';
 
 export const DELAY_TIME = 300;
 const SAVE_DELAY_TIME = 3000;
@@ -36,6 +36,7 @@ export const useInvitationFormActions = ({
   const { mutate: updateInvitation } = useUpdateInvitation();
   const { mutate: insertInvitation } = useInsertInvitation();
   const queryClient = useQueryClient();
+  const isDesktop = useMediaQuery('(min-width: 1440px)');
 
   useEffect(() => {
     if (existingInvitation === null) {
@@ -60,13 +61,13 @@ export const useInvitationFormActions = ({
     }
 
     Notify.success('청첩장 생성을 시작합니다.');
-    await EventBus.publish('invitationSaved', null);
 
     if (existingInvitation === null) {
       insertInvitation(invitationData);
     } else {
       updateInvitation(invitationData);
     }
+
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
     Notify.success('청첩장이 성공적으로 제출되었습니다.');
     router.push('/mypage');
@@ -87,13 +88,13 @@ export const useInvitationFormActions = ({
     }
     goToNextStep();
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
-    isNavigating.current = false;
+    if (!isDesktop) isNavigating.current = false;
   }, DELAY_TIME);
 
   const handleDebouncedPrevious = debounce(() => {
     isNavigating.current = true;
     goToPreviousStep();
-    isNavigating.current = false;
+    if (!isDesktop) isNavigating.current = false;
   }, DELAY_TIME);
 
   const handleDebouncedSave = debounce(async () => {

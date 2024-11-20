@@ -1,5 +1,5 @@
 'use client';
-import { DELAY_TIME, useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
+import { useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
 import { OrderList, StepType } from '@/hooks/create/useFormStepController';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import { UseFormReturn } from 'react-hook-form';
@@ -11,7 +11,7 @@ import {
   NAVIGATION_BUTTON_HALF_WIDTH,
   SUBMIT_BUTTON_MARGIN_RIGHT,
 } from '@/constants/invitationDesktopForm';
-import { debounce } from '@/utils/debounce';
+import Image from 'next/image';
 
 type DesktopInputPropsType = {
   methods: UseFormReturn<InvitationFormType>;
@@ -22,9 +22,9 @@ type DesktopInputPropsType = {
   currentStep: StepType;
 };
 
-type InputHeightsType = {
-  currentContentHeight: number;
-  prevContentHeight: number;
+type InputOffsetTopType = {
+  currentContentOffsetTop: number;
+  prevContentOffsetTop: number;
 };
 
 type FormPositionType = {
@@ -33,6 +33,8 @@ type FormPositionType = {
   top: number;
 };
 
+const SCROLL_DELAY_TIME = 1000;
+const SCROLL_GAP = 48;
 const DesktopInputForm = ({
   methods,
   orderList,
@@ -48,27 +50,35 @@ const DesktopInputForm = ({
     goToPreviousStep,
   });
   const [windowHeight, setWindowHeight] = useState(0);
-  const [currentOffset, setCurrentOffset] = useState(0);
-  const [inputHeights, setInputHeights] = useState<InputHeightsType>({
-    currentContentHeight: 0,
-    prevContentHeight: 0,
+  const [inputOffset, setInputOffset] = useState<InputOffsetTopType>({
+    currentContentOffsetTop: 0,
+    prevContentOffsetTop: 0,
   });
-
   const [formPosition, setFormPosition] = useState<FormPositionType>({ left: 0, top: 0, width: 0 });
-  const inputHeightRef = useRef<{ [key: string]: { height: number | undefined } }>({});
+  const inputHeightRef = useRef<{ [key: string]: { offsetTop: number | undefined } }>({});
   const formRef = useRef<HTMLFormElement | null>(null);
-
+  const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
+  const isFirstInput = currentStep.currentInputStep === 0 && currentStep.currentPreviewStep === 0;
+  const isLastInput = currentStep.currentPreviewStep === orderList.length - 1;
 
-  const handleNextButton = debounce(() => {
+  const getScrollDelay = () => {
+    setIsDisabled(true);
+    setTimeout(() => {
+      setIsDisabled(false);
+      isNavigating.current = false;
+    }, SCROLL_DELAY_TIME);
+  };
+
+  const handleNextButton = () => {
     handleDebouncedNext();
-    setCurrentOffset((prev) => prev + inputHeights.currentContentHeight + 24);
-  }, DELAY_TIME);
+    getScrollDelay();
+  };
 
-  const handlePrevButton = debounce(() => {
+  const handlePrevButton = () => {
     handleDebouncedPrevious();
-    setCurrentOffset((prev) => prev - (inputHeights.prevContentHeight + 24));
-  }, DELAY_TIME);
+    getScrollDelay();
+  };
 
   const handleExitButton = () => {
     router.back();
@@ -81,36 +91,34 @@ const DesktopInputForm = ({
     }
   };
 
-  const getCurrentElementHeight = () => {
+  const getCurrentElementOffsetTop = () => {
     const currentName = orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep];
-    const currentElement = inputHeightRef.current[currentName];
-    if (currentElement.height) {
-      setInputHeights((prev) => {
-        return {
-          ...prev,
-          currentContentHeight: currentElement.height!,
-        };
-      });
-    }
+    const currentElementOffsetTop = inputHeightRef.current[currentName].offsetTop;
+    setInputOffset((prev) => {
+      return {
+        ...prev,
+        currentContentOffsetTop: currentElementOffsetTop!,
+      };
+    });
   };
 
-  const getPreviousInputHeight = () => {
+  const getPreviousInputOffsetTop = () => {
     if (currentStep.currentInputStep > 0) {
       const prevName = orderList[currentStep.currentPreviewStep]?.name[currentStep.currentInputStep - 1];
-      return inputHeightRef.current[prevName]?.height || 0;
+      return inputHeightRef.current[prevName]?.offsetTop || 0;
     }
     if (currentStep.currentPreviewStep > 0) {
       const prevPreview = orderList[currentStep.currentPreviewStep - 1]?.name.slice(-1)[0];
-      return inputHeightRef.current[prevPreview]?.height || 0;
+      return inputHeightRef.current[prevPreview]?.offsetTop || 0;
     }
     return 0;
   };
 
   useEffect(() => {
-    setInputHeights((prev) => {
+    setInputOffset((prev) => {
       return {
         ...prev,
-        prevContentHeight: getPreviousInputHeight(),
+        prevContentOffsetTop: getPreviousInputOffsetTop(),
       };
     });
   }, [currentStep, orderList]);
@@ -126,7 +134,7 @@ const DesktopInputForm = ({
   }, []);
 
   useEffect(() => {
-    getCurrentElementHeight();
+    getCurrentElementOffsetTop();
   }, [currentStep, orderList]);
 
   return (
@@ -159,35 +167,51 @@ const DesktopInputForm = ({
         </Button>
       </div>
       <div
-        className='fixed z-30 flex justify-between flex-col left-[65%]'
+        className={`fixed z-30 flex ${isFirstInput ? 'justify-end' : 'justify-between'} flex-col`}
         style={{
           height: NAVIGATION_BUTTON_CONTAINER_HEIGHT,
           top: `${windowHeight / 3}px`,
           left: `${formPosition.left + formPosition.width / 2 - NAVIGATION_BUTTON_HALF_WIDTH}px`,
         }}
       >
-        <button
-          type='button'
-          className='w-[64px] h-[64px] bg-black bg-opacity-60 rounded-full flex-col-center'
-          onClick={handlePrevButton}
-          disabled={currentStep.currentInputStep === 0 && currentStep.currentPreviewStep === 0}
-        >
-          <img src='/assets/images/icons/up.svg' />
-        </button>
-        <button
-          type='button'
-          className='w-[64px] h-[64px] bg-black bg-opacity-60 rounded-full flex-col-center'
-          onClick={handleNextButton}
-          disabled={currentStep.currentPreviewStep === orderList.length - 1}
-        >
-          <img src='/assets/images/icons/down.svg' />
-        </button>
+        {!isFirstInput ? (
+          <button
+            type='button'
+            className='w-[64px] h-[64px] bg-black bg-opacity-60 rounded-full flex-col-center'
+            onClick={handlePrevButton}
+            disabled={isDisabled}
+          >
+            <Image
+              alt='up'
+              src='/assets/images/icons/up.png'
+              width={50}
+              height={25}
+            />
+          </button>
+        ) : (
+          <></>
+        )}
+        {!isLastInput && (
+          <button
+            type='button'
+            className='w-[64px] h-[64px] bg-black bg-opacity-60 rounded-full flex-col-center'
+            onClick={handleNextButton}
+            disabled={isDisabled}
+          >
+            <Image
+              alt='down'
+              src='/assets/images/icons/down.png'
+              width={50}
+              height={25}
+            />
+          </button>
+        )}
       </div>
 
       <div
-        className='flex flex-col gap-[24px] relative duration-500'
+        className='flex flex-col gap-[24px] relative duration-700'
         style={{
-          top: -currentOffset - 24,
+          top: -inputOffset.currentContentOffsetTop - SCROLL_GAP,
         }}
       >
         {orderList.map((e, previewStep) => (
@@ -207,7 +231,7 @@ const DesktopInputForm = ({
                   }}
                   className={`w-full h-full border-[1px] border-solid shadow-md rounded-[12px] px-[24px] py-[12px] relative bg-white`}
                   ref={(el) => {
-                    inputHeightRef.current[e.name[inputStep]] = { height: el?.offsetHeight };
+                    inputHeightRef.current[e.name[inputStep]] = { offsetTop: el?.offsetTop };
                   }}
                 >
                   <p className='text-gray-900 text-[18px] font-bold mb-[14px]'>{e.name[inputStep]}</p>

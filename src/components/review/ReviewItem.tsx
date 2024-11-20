@@ -38,7 +38,6 @@ const ReviewItem = ({
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 1440px)');
   const pathname = usePathname();
-  console.log(review.image_url);
 
   useEffect(() => {
     if (isReviewModalOpen) {
