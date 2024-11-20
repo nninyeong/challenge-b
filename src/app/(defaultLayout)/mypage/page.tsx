@@ -42,7 +42,7 @@ const MyPage = async (): Promise<JSX.Element | null> => {
                   </p>
                 </div>
               </div>
-              <div className='hidden desktop:block'>
+              <div className='hidden  desktop:block'>
                 <SetPrivateInvitation />
               </div>
             </div>
