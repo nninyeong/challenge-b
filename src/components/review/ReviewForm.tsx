@@ -139,7 +139,7 @@ const ReviewForm = () => {
             <div className='flex flex-col items-center'>
               <label
                 htmlFor='file-input'
-                className='bg-white text-center cursor-pointer px-2 py-1 rounded-md text-black h-[80px] w-[80px] flex flex-col justify-center items-center border border-dashed border-gray-300 gap-[4px]'
+                className='bg-white text-center cursor-pointer px-2 py-1 rounded-[12px] text-black h-[80px] w-[80px] flex flex-col justify-center items-center border border-dashed border-gray-300 gap-[4px]'
               >
                 <img
                   src='/assets/images/icons/image-add.png'
@@ -183,7 +183,7 @@ const ReviewForm = () => {
       </div>
       <button
         type='submit'
-        className='text-white bg-primary-300 w-full h-[48px] rounded-[12px] mt-[32px]'
+        className='text-white bg-primary-300 w-full h-[48px] rounded-[12px] mt-[32px] desktop:mt-[24px]'
       >
         작성완료
       </button>
