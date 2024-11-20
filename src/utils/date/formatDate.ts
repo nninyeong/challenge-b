@@ -14,5 +14,5 @@ export const formatDate = (value: string) => {
     Notify.failure('유효한 날짜를 입력해주세요.');
   }
 
-  return formattedDate;
+  return `${inputNumbers.slice(0, 4)}.${inputNumbers.slice(4, 6)}.${inputNumbers.slice(6, 8)}`;
 };
