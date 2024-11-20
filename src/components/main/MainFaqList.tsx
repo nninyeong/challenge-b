@@ -1,4 +1,3 @@
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import FaqCard from './FaqCard';
 import useFAQ from '@/hooks/main/useFAQ';
 
@@ -103,9 +102,17 @@ const MainFaqList = () => {
             <div className='w-full flex justify-between items-center border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 p-[19.5px] desktop:py-[25.5px] px-0 font-medium text-gray-900 text-[14px] desktop:text-[24px]'>
               {menu.question}
               {expandedIds.has(menu.id) ? (
-                <FaChevronUp className='text-[#0A090B]' />
+                <img
+                  src='/assets/images/icons/chevron-right.webp'
+                  alt='필드펴기'
+                  className='w-[32px] h-[32px] '
+                />
               ) : (
-                <FaChevronDown className='text-[#0A090B]' />
+                <img
+                  src='/assets/images/icons/chevron-down.webp'
+                  alt='필드펴기'
+                  className='w-[32px] h-[32px] '
+                />
               )}
             </div>
             {expandedIds.has(menu.id) && <FaqCard answer={menu.answer} />}

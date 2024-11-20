@@ -1,7 +1,6 @@
 'use client';
 import { useFormContext, useWatch } from 'react-hook-form';
 import TextEditor from './TextEditor';
-import { FaPlus } from 'react-icons/fa6';
 import { compressImageTwice } from '@/utils/compressImg';
 import { uploadImageToSupabaseStorage } from '@/utils/uploadImg';
 
@@ -9,7 +8,7 @@ const MainPhotoInput = () => {
   const { register, setValue } = useFormContext();
   const introduceContent = useWatch({ name: 'mainPhotoInfo.introduceContent' });
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMainFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const compressFile = await compressImageTwice(file);
@@ -62,17 +61,21 @@ const MainPhotoInput = () => {
 
       <div className='h-[80px] desktop:h-[128px] desktop:ml-[56px] flex gap-[8px]'>
         <label
-          htmlFor='file'
+          htmlFor='mainImageFile'
           className='bg-white text-center cursor-pointer px-2 py-1 rounded-xl text-black h-[80px] w-[80px] flex justify-center items-center border border-dashed border-gray-400'
         >
-          <FaPlus size={18} />
+          <img
+            src='/assets/images/icons/plus-02.webp'
+            alt='필드펴기'
+            className='w-[24px] h-[24px]'
+          />
         </label>
         <input
           type='file'
-          id='file'
+          id='mainImageFile'
           className='hidden'
           accept='image/*'
-          onChange={handleFileChange}
+          onChange={handleMainFileChange}
         />
         <div className='w-[200px] desktop:w-[382px] h-full'>
           <TextEditor

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useDrag, useDrop } from 'react-dnd';
-import { IoClose } from 'react-icons/io5';
+
 type GalleryImageType = {
   imageUrl: string;
   index: number;
@@ -56,9 +56,10 @@ const GalleryImage = ({
         layout='fill'
         objectFit='cover'
       />
-      <IoClose
-        className='cursor-pointer text-white absolute right-2 top-2 bg-gray-800/50'
-        size={15}
+      <img
+        src='/assets/images/icons/closeGallery.webp'
+        alt='사진삭제'
+        className='w-[16px] h-[16px] absolute right-[8px] top-[8px]'
         onClick={() => handleDeleteImage(image)}
       />
     </div>

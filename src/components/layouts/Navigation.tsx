@@ -26,8 +26,10 @@ const Navigation = ({ initialAuthState }: { initialAuthState: boolean }) => {
   }, [client]);
 
   return (
-    <div className={`${isCreateCardPage ? 'hidden desktop:flex' : 'flex z-50'} fixed top-0 left-0 w-full bg-gray-100`}>
-      <div className=' w-[375px] desktop:w-[1440px] mx-auto flex h-[64px]  desktop:h-[86px] justify-between items-center px-[16px] desktop:px-[152px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.1)]'>
+    <div
+      className={`${isCreateCardPage ? 'hidden desktop:z-10 desktop:flex' : 'flex z-50'} fixed top-0 left-0 w-full bg-gray-100`}
+    >
+      <div className=' w-[375px] desktop:w-[1440px] mx-auto flex h-[64px] desktop:h-[86px] justify-between items-center px-[16px] desktop:px-[152px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.1)]'>
         <Link href='/'>
           <img
             src='/assets/images/branding/BI.webp'
