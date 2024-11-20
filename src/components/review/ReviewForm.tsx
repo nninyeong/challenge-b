@@ -118,7 +118,7 @@ const ReviewForm = () => {
       </div>
       <div className='relative w-full mt-[14px] h-[184px]'>
         <textarea
-          className='w-full h-full rounded-[12px] border-[1px] border-gray-200 p-[16px] resize-none text-[12px] text-gray-700'
+          className='w-full h-full rounded-[12px] border-[1px] border-gray-200 p-[16px] resize-none text-[14px] text-gray-700'
           maxLength={200}
           placeholder='리뷰를 입력해주세요.'
           {...register('content')}
