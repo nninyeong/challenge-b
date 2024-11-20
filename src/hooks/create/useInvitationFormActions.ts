@@ -9,7 +9,6 @@ import { Notify } from 'notiflix';
 import { debounce } from '@/utils/debounce';
 import { InvitationFormType } from '@/types/invitationFormType.type';
 import browserClient from '@/utils/supabase/client';
-import EventBus from '@/utils/EventBus';
 import { loadFormData } from '@/utils/form/loadFormData';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 import { useQueryClient } from '@tanstack/react-query';
@@ -60,13 +59,13 @@ export const useInvitationFormActions = ({
     }
 
     Notify.success('청첩장 생성을 시작합니다.');
-    await EventBus.publish('invitationSaved', null);
 
     if (existingInvitation === null) {
       insertInvitation(invitationData);
     } else {
       updateInvitation(invitationData);
     }
+
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.invitation() });
     Notify.success('청첩장이 성공적으로 제출되었습니다.');
     router.push('/mypage');
