@@ -16,7 +16,6 @@ import useViewportWidth from '@/hooks/create/useViewPortWidth';
 import dynamic from 'next/dynamic';
 import PreviewList from '@/components/create/PreviewList';
 import colorConverter from '@/utils/colorConverter';
-import { useGetInvitationQuery } from '@/hooks/queries/invitation/useGetInvitationQuery';
 
 const DesktopInputForm = dynamic(() => import('@/components/create/DesktopInputForm'));
 const FormMotionContainer = dynamic(() => import('@/components/create/FormMotionContainer'), { ssr: false });
