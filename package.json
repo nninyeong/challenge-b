@@ -20,6 +20,7 @@
     "@types/lodash": "^4.17.13",
     "@types/papaparse": "^5.3.15",
     "browser-image-compression": "^2.0.2",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "framer-motion": "^11.11.9",
     "lodash": "^4.17.21",
