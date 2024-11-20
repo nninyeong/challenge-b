@@ -8,7 +8,7 @@ import useToggle from '@/utils/useToggle';
 import { useIntersectionObserver } from '@/hooks/observer/useIntersectionObserver';
 import { INVITATION_DEFAULT_VALUE } from '@/constants/invitaionDefaultValue';
 import { INITIAL_ORDER } from '@/constants/invitationViewOrder';
-import createCardFormHeightMapper from '@/utils/createCardFormHeightMapper';
+import { createCardFormHeightMapper } from '@/utils/createCardFormHeightMapper';
 import useFormStepController from '@/hooks/create/useFormStepController';
 import { useInvitationFormActions } from '@/hooks/create/useInvitationFormActions';
 import InvitationBottomSheetFormContainer from '@/components/create/InvitationBottomSheetFormContainer';
@@ -117,7 +117,7 @@ const CreateCardPage = () => {
   }, [renderOrderList]);
 
   useEffect(() => {
-    const shouldAllowScroll = isOnboardingComplete && currentWidth < 1440;
+    const shouldAllowScroll = currentWidth < 1440;
     document.documentElement.style.overflow = shouldAllowScroll ? 'unset' : 'hidden';
 
     return () => {
