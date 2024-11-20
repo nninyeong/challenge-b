@@ -32,7 +32,7 @@ const ReviewSlide = ({ images }: { images: string[] }) => {
           <img
             src='/assets/images/icons/left-arrow.webp'
             alt='왼쪽'
-            className='w-[28px]   '
+            className='w-[28px]'
           />
         </button>
       )}

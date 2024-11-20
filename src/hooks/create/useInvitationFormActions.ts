@@ -16,6 +16,7 @@ import { QUERY_KEYS } from '../queries/queryKeys';
 import useMediaQuery from '../review/useMediaQuery';
 
 export const DELAY_TIME = 300;
+const SCROLL_DELAY_TIME = 1000;
 const SAVE_DELAY_TIME = 3000;
 
 export const useInvitationFormActions = ({
@@ -76,13 +77,21 @@ export const useInvitationFormActions = ({
   const handleDebouncedNext = debounce(async () => {
     isNavigating.current = true;
     goToNextStep();
-    if (!isDesktop) isNavigating.current = false;
+    if (!isDesktop) {
+      setTimeout(() => {
+        isNavigating.current = false;
+      }, SCROLL_DELAY_TIME);
+    }
   }, DELAY_TIME);
 
   const handleDebouncedPrevious = debounce(() => {
     isNavigating.current = true;
     goToPreviousStep();
-    if (!isDesktop) isNavigating.current = false;
+    if (!isDesktop) {
+      setTimeout(() => {
+        isNavigating.current = false;
+      }, SCROLL_DELAY_TIME);
+    }
   }, DELAY_TIME);
 
   const handleDebouncedSave = debounce(async () => {
