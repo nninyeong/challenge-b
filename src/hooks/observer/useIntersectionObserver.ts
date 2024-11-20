@@ -1,5 +1,7 @@
 import { MutableRefObject, useRef } from 'react';
 import { StepType } from '../create/useFormStepController';
+import { debounce } from '@/utils/debounce';
+import { DELAY_TIME } from '../create/useInvitationFormActions';
 
 export const useIntersectionObserver = (
   refs: MutableRefObject<{ [key: string]: { ref: HTMLDivElement | null; order: number; inputOrder: number } }>,
@@ -8,7 +10,7 @@ export const useIntersectionObserver = (
   const observers = useRef<IntersectionObserver[]>([]);
   const isNavigating = useRef<boolean>(false);
 
-  const observerCallback = (entries: IntersectionObserverEntry[]) => {
+  const observerCallback = debounce((entries: IntersectionObserverEntry[]) => {
     if (isNavigating.current) return;
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -22,7 +24,7 @@ export const useIntersectionObserver = (
         });
       }
     });
-  };
+  }, DELAY_TIME);
 
   const initializeObserver = () => {
     unsubscribeObservers();
