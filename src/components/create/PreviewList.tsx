@@ -2,7 +2,7 @@
 
 import { MOBILE_VIEW_HEIGHT } from '@/constants/screenSize';
 import { InvitationFormType } from '@/types/invitationFormType.type';
-import { useEffect, MutableRefObject, Dispatch, SetStateAction, useRef } from 'react';
+import { useEffect, MutableRefObject, useRef } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import PreviewElement from './PreviewElement';
 import { OrderList, StepType } from '@/hooks/create/useFormStepController';
@@ -17,7 +17,6 @@ const PreviewList = ({
 }: {
   methods: UseFormReturn<InvitationFormType>;
   orderList: OrderList[];
-  setCurrentStep: Dispatch<SetStateAction<StepType>>;
   refs: MutableRefObject<ScrollRefsType>;
   currentStep: StepType;
   styleSetting: { font: string; backgroundColor: string };
