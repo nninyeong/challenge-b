@@ -65,7 +65,7 @@ const ReviewItem = ({
   };
 
   return (
-    <div className='flex flex-col justify-between  items-center border-b border-gray-200 border-solid mt-[16px] pb-[16px]'>
+    <div className='flex flex-col justify-between items-center border-b border-gray-200 border-solid mt-[16px] pb-[16px]'>
       <div className='w-full flex cursor-pointer relative'>
         <div className='w-[88px] h-[88px] desktop:w-[112px] desktop:h-[112px] flex-shrink-0 relative border border-gray-50 rounded-[12px]'>
           {review.image_url && review.image_url.length > 0 ? (
@@ -134,9 +134,9 @@ const ReviewItem = ({
             </button>
           </div>
 
-          <div className={`${isExpanded ? 'h-auto' : 'mobile:h-[80px]'} flex pl-[16px] pb-[16px] pr-[16px] pt-[6px] `}>
-            <p className='break-words    text-[14px] desktop:text-[16px] font-medium text-gray-800  desktop:text-16px mobile:w-[194px]'>
-              {getContentPreview(review.content, isExpanded)}
+          <div className={`${isExpanded ? 'h-auto' : 'mobile:h-[80px] desktop:h-[88px]'} flex pl-[16px] pb-[16px] pr-[16px] pt-[6px] `}>
+            <p className='break-words desktop:break-normal desktop:overflow-visible text-[14px] desktop:text-[16px] font-medium text-gray-800  desktop:text-16px mobile:w-[194px] desktop:w-[927px]'>
+              {isDesktop ? review.content : getContentPreview(review.content, isExpanded)}
             </p>
             {review.content.length > MAX_CONTENT_LENGTH && (
               <button

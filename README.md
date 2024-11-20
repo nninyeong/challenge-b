@@ -50,15 +50,15 @@
 - feat :
   해당 파일에 새로운 기능이 생김
 - add: 없던 파일을 생성함, 초기 세팅
-- bugfix: 버그 수정.
+- bugfix: 버그 수정
 - refactor: 코드 리팩토링
 - fix: 코드 수정
 - move: 파일 옮김/정리
-- del: 기능/파일을 삭제
+- delete: 기능/파일을 삭제
 - test: 테스트 코드를 작성
 - style: css
 - gitfix: gitignore 수정
-- script: package.json 변경(npm 설치 등)
+- script: package.json 변경(npm 설치 등)
 
 ## 📋 ERD 설계도
 
@@ -201,9 +201,8 @@
 2. [제목](#)
 
 ### 한수빈
-
-1. [제목](#)
-2. [제목](#)
+1. [Carousel](https://onetwothreechachacha.tistory.com/152)
+2. [비회원과 회원 사용자의 폼 데이터 매끄럽고 안전하게 저장하는 방법 - 세션스토리지와 Supabase 활용](https://onetwothreechachacha.tistory.com/154)
 
 ### 정소현
 
@@ -212,9 +211,8 @@
 3. [All about Infinite Scroll (무한스크롤에 대하여)](https://velog.io/@alice0751/All-about-Infinite-Scroll-%EB%AC%B4%ED%95%9C%EC%8A%A4%ED%81%AC%EB%A1%A4%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC)
 
 ### 김진형
-
-1. [제목](#)
-2. [제목](#)
+1. [지도 연동 네비게이션 버튼 개발 스토리](https://velog.io/@lukby2457/117-%EC%9D%B4%EC%A0%84-%EA%B0%9C%EB%B0%9C-%EC%A0%95%EB%A6%AC)
+2. [청첩장 방명록에 페이지네이션 적용하기](https://velog.io/@lukby2457/1117-%EA%B0%9C%EB%B0%9C-%EB%82%B4%EC%9A%A9-%EC%9A%94%EC%95%BD-%EC%A0%95%EB%A6%AC)
 
 <br/>
 
