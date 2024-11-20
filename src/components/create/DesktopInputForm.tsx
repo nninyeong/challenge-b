@@ -26,6 +26,8 @@ type DesktopInputPropsType = {
 type InputOffsetTopType = {
   currentContentOffsetTop: number;
   prevContentOffsetTop: number;
+  currentHeight: number;
+  prevHeight: number;
 };
 
 type FormPositionType = {
@@ -35,7 +37,8 @@ type FormPositionType = {
 };
 
 const SCROLL_DELAY_TIME = 1000;
-const SCROLL_GAP = 48;
+const HEADER_LENGTH = 86;
+const FIRST_INPUT_HALF_HEIGHT = 117;
 const DesktopInputForm = ({
   methods,
   orderList,
@@ -54,9 +57,11 @@ const DesktopInputForm = ({
   const [inputOffset, setInputOffset] = useState<InputOffsetTopType>({
     currentContentOffsetTop: 0,
     prevContentOffsetTop: 0,
+    currentHeight: 0,
+    prevHeight: 0,
   });
   const [formPosition, setFormPosition] = useState<FormPositionType>({ left: 0, top: 0, width: 0 });
-  const inputHeightRef = useRef<{ [key: string]: { offsetTop: number | undefined } }>({});
+  const inputHeightRef = useRef<{ [key: string]: { offsetTop: number | undefined; height: number | undefined } }>({});
   const formRef = useRef<HTMLFormElement | null>(null);
   const [isDisabled, setIsDisabled] = useState(false);
   const router = useRouter();
@@ -95,10 +100,12 @@ const DesktopInputForm = ({
   const getCurrentElementOffsetTop = () => {
     const currentName = orderList[currentStep.currentPreviewStep].name[currentStep.currentInputStep];
     const currentElementOffsetTop = inputHeightRef.current[currentName].offsetTop;
+    const currentElementHeight = inputHeightRef.current[currentName].height;
     setInputOffset((prev) => {
       return {
         ...prev,
         currentContentOffsetTop: currentElementOffsetTop!,
+        currentHeight: currentElementHeight!,
       };
     });
   };
@@ -115,11 +122,24 @@ const DesktopInputForm = ({
     return 0;
   };
 
+  const getPreviousInputHeight = () => {
+    if (currentStep.currentInputStep > 0) {
+      const prevName = orderList[currentStep.currentPreviewStep]?.name[currentStep.currentInputStep - 1];
+      return inputHeightRef.current[prevName]?.height || 0;
+    }
+    if (currentStep.currentPreviewStep > 0) {
+      const prevPreview = orderList[currentStep.currentPreviewStep - 1]?.name.slice(-1)[0];
+      return inputHeightRef.current[prevPreview]?.height || 0;
+    }
+    return 0;
+  };
+
   useEffect(() => {
     setInputOffset((prev) => {
       return {
         ...prev,
         prevContentOffsetTop: getPreviousInputOffsetTop(),
+        prevHeight: getPreviousInputHeight(),
       };
     });
   }, [currentStep, orderList]);
@@ -131,7 +151,7 @@ const DesktopInputForm = ({
   }, []);
 
   useEffect(() => {
-    setWindowHeight(Math.floor(window.innerHeight / 2));
+    setWindowHeight(window.innerHeight);
   }, []);
 
   useEffect(() => {
@@ -144,7 +164,7 @@ const DesktopInputForm = ({
       className={`flex flex-col h-full relative w-full`}
       onSubmit={methods.handleSubmit(onSubmit)}
       style={{
-        top: `${windowHeight / 2}px`,
+        top: `${windowHeight / 2 - HEADER_LENGTH - FIRST_INPUT_HALF_HEIGHT}px`,
       }}
     >
       <div
@@ -168,14 +188,15 @@ const DesktopInputForm = ({
         </Button>
       </div>
       <div
-        className={`fixed z-30 flex ${isFirstInput ? 'justify-end' : 'justify-between'} flex-col`}
+        className={`fixed z-40 flex ${isFirstInput ? 'justify-end' : 'justify-between'} flex-col`}
         style={{
           height: NAVIGATION_BUTTON_CONTAINER_HEIGHT,
-          top: `${windowHeight / 3}px`,
+          top: `${windowHeight / 2 + 8}px`,
           left: `${formPosition.left + formPosition.width / 2 - NAVIGATION_BUTTON_HALF_WIDTH}px`,
+          transform: 'translateY(-50%)',
         }}
       >
-        {!isFirstInput ? (
+        {!isFirstInput && (
           <button
             type='button'
             className='w-[64px] h-[64px] bg-black bg-opacity-60 rounded-full flex-col-center'
@@ -189,8 +210,6 @@ const DesktopInputForm = ({
               height={16}
             />
           </button>
-        ) : (
-          <></>
         )}
         {!isLastInput && (
           <button
@@ -208,11 +227,10 @@ const DesktopInputForm = ({
           </button>
         )}
       </div>
-
       <div
         className='flex flex-col gap-[24px] relative duration-700'
         style={{
-          top: -inputOffset.currentContentOffsetTop - SCROLL_GAP,
+          top: -inputOffset.currentContentOffsetTop - 24,
         }}
       >
         {orderList.map((e, previewStep) => (
@@ -233,7 +251,7 @@ const DesktopInputForm = ({
                   }}
                   className={`w-full h-full border-[1px] border-solid shadow-md rounded-[12px] px-[24px] py-[12px] relative bg-white`}
                   ref={(el) => {
-                    inputHeightRef.current[e.name[inputStep]] = { offsetTop: el?.offsetTop };
+                    inputHeightRef.current[e.name[inputStep]] = { offsetTop: el?.offsetTop, height: el?.offsetHeight };
                   }}
                 >
                   <p className='text-gray-900 text-[18px] font-bold mb-[12px]'>{e.name[inputStep]}</p>
