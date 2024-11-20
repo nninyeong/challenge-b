@@ -81,7 +81,9 @@ const MoodPresetInput = () => {
                 if (selectedCategory !== 'none') handleSelectPreset(preset);
               }}
               className={`rounded-[12px] ${
-                selectedPreset === preset.name ? 'border border-primary-300' : 'border border-gray-300'
+                selectedPreset === preset.name
+                  ? 'border border-primary-300 shadow-[1px_1px_5px_rgba(255,102,102,0.4)]'
+                  : 'border border-gray-300'
               }`}
             >
               {preset.image ? (
