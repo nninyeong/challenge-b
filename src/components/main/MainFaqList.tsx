@@ -99,7 +99,7 @@ const MainFaqList = () => {
             className='w-full cursor-pointer flex flex-col items-center'
             onClick={() => toggleFAQ(menu.id)}
           >
-            <div className='w-full flex justify-between items-center border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 p-[19.5px] desktop:py-[25.5px] px-0 font-medium text-gray-900 text-[14px] desktop:text-[24px]'>
+            <div className='w-full flex justify-between items-center border border-solid border-l-0 border-r-0 border-t-0 border-gray-200 p-[19.5px] desktop:py-[25.5px] px-0 font-medium text-gray-900 text-[14px] desktop:text-[24px] h-[56px] desktop:h-[80px]'>
               {menu.question}
               {expandedIds.has(menu.id) ? (
                 <img

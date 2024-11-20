@@ -202,8 +202,9 @@
 
 ### 한수빈
 
-1. [제목](#)
-2. [제목](#)
+1. [Carousel](https://onetwothreechachacha.tistory.com/152)
+2. [비회원과 회원 사용자의 폼 데이터 매끄럽고 안전하게 저장하는 방법 - 세션스토리지와 Supabase 활용](https://onetwothreechachacha.tistory.com/154)
+
 
 ### 정소현
 
@@ -213,8 +214,10 @@
 
 ### 김진형
 
-1. [제목](#)
-2. [제목](#)
+
+1. [지도 연동 네비게이션 버튼 개발 스토리](https://velog.io/@lukby2457/117-%EC%9D%B4%EC%A0%84-%EA%B0%9C%EB%B0%9C-%EC%A0%95%EB%A6%AC)
+2. [청첩장 방명록에 페이지네이션 적용하기](https://velog.io/@lukby2457/1117-%EA%B0%9C%EB%B0%9C-%EB%82%B4%EC%9A%A9-%EC%9A%94%EC%95%BD-%EC%A0%95%EB%A6%AC)
+
 
 <br/>
 
