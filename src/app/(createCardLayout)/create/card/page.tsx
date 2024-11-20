@@ -168,7 +168,6 @@ const CreateCardPage = () => {
                     refs={refs}
                     orderList={orderList}
                     currentStep={currentStep}
-                    setCurrentStep={setCurrentStep}
                     styleSetting={styleSetting}
                   />
                 </div>
@@ -181,7 +180,6 @@ const CreateCardPage = () => {
                   orderList={orderList}
                   currentStep={currentStep}
                   styleSetting={styleSetting}
-                  setCurrentStep={setCurrentStep}
                 />
               </div>
             )}
