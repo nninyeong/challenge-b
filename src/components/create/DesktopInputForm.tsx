@@ -11,6 +11,7 @@ import {
   NAVIGATION_BUTTON_HALF_WIDTH,
   SUBMIT_BUTTON_MARGIN_RIGHT,
 } from '@/constants/invitationDesktopForm';
+import Image from 'next/image';
 
 type DesktopInputPropsType = {
   methods: UseFormReturn<InvitationFormType>;
@@ -33,7 +34,7 @@ type FormPositionType = {
 };
 
 const SCROLL_DELAY_TIME = 1000;
-
+const SCROLL_GAP = 48;
 const DesktopInputForm = ({
   methods,
   orderList,
@@ -180,7 +181,12 @@ const DesktopInputForm = ({
             onClick={handlePrevButton}
             disabled={isDisabled}
           >
-            <img src='/assets/images/icons/up.svg' />
+            <Image
+              alt='up'
+              src='/assets/images/icons/up.png'
+              width={50}
+              height={25}
+            />
           </button>
         ) : (
           <></>
@@ -192,7 +198,12 @@ const DesktopInputForm = ({
             onClick={handleNextButton}
             disabled={isDisabled}
           >
-            <img src='/assets/images/icons/down.svg' />
+            <Image
+              alt='down'
+              src='/assets/images/icons/down.png'
+              width={50}
+              height={25}
+            />
           </button>
         )}
       </div>
@@ -200,7 +211,7 @@ const DesktopInputForm = ({
       <div
         className='flex flex-col gap-[24px] relative duration-700'
         style={{
-          top: -inputOffset.currentContentOffsetTop - 48,
+          top: -inputOffset.currentContentOffsetTop - SCROLL_GAP,
         }}
       >
         {orderList.map((e, previewStep) => (
