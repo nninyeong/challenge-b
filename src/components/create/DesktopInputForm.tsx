@@ -184,8 +184,8 @@ const DesktopInputForm = ({
             <Image
               alt='up'
               src='/assets/images/icons/up.png'
-              width={50}
-              height={25}
+              width={32}
+              height={16}
             />
           </button>
         ) : (
@@ -201,8 +201,8 @@ const DesktopInputForm = ({
             <Image
               alt='down'
               src='/assets/images/icons/down.png'
-              width={50}
-              height={25}
+              width={32}
+              height={16}
             />
           </button>
         )}
