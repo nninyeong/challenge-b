@@ -39,7 +39,7 @@ const InvitationBottomSheetFormContainer = ({
 
   return (
     <form
-      className={`flex flex-col bg-white px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full ${toggleInput || 'border border-gray-300'}`}
+      className={`flex flex-col bg-white px-[16px] py-[8px] gap-[6px] box-sizing rounded-lg z-10 w-[343px] h-full ${toggleInput || 'border border-gray-300'} shadow-[1px_1px_5px_0px_rgba(0,0,0,0.2)] p-4`}
       onSubmit={methods.handleSubmit(onSubmit)}
     >
       <div className={`flex justify-between items-center ${toggleInput || 'h-[52px]'}`}>
