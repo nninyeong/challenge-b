@@ -189,7 +189,7 @@ const DesktopInputForm = ({
         </Button>
       </div>
       <div
-        className={`fixed z-40 flex ${isFirstInput ? 'justify-end' : 'justify-between'} flex-col`}
+        className={`fixed z-30 flex ${isFirstInput ? 'justify-end' : 'justify-between'} flex-col`}
         style={{
           height: NAVIGATION_BUTTON_CONTAINER_HEIGHT,
           top: `${windowHeight / 2 + 8}px`,
@@ -200,7 +200,7 @@ const DesktopInputForm = ({
         {!isFirstInput && (
           <button
             type='button'
-            className='w-[64px] h-[64px] bg-black bg-opacity-60 rounded-full flex-col-center'
+            className='w-[64px] h-[64px] z-40 bg-black bg-opacity-60 rounded-full flex-col-center'
             onClick={handlePrevButton}
             disabled={isDisabled}
           >
@@ -215,7 +215,7 @@ const DesktopInputForm = ({
         {!isLastInput && (
           <button
             type='button'
-            className='w-[64px] h-[64px] bg-black bg-opacity-60 rounded-full flex-col-center'
+            className='w-[64px] h-[64px] z-40 bg-black bg-opacity-60 rounded-full flex-col-center'
             onClick={handleNextButton}
             disabled={isDisabled}
           >
